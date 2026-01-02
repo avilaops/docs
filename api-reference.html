@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="API Reference for Arxis Core - Comprehensive documentation for all packages and modules">
+    <meta name="keywords" content="arxis, rust, api, reference, documentation, packages">
+    <title>API Reference - Arxis Core Documentation</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="assets/css/search.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-avx">Avx</span>
+                <span class="logo-text">Docs</span>
+            </a>
+            <div class="nav-links">
+                <a href="getting-started.html">Getting Started</a>
+                <a href="packages/index.html">Packages</a>
+                <a href="examples.html">Examples</a>
+                <a href="api-reference.html" class="active">API Reference</a>
+                <a href="https://github.com/avilaops/docs" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav>
+                <h3>API Reference</h3>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#core">Core APIs</a></li>
+                    <li><a href="#crypto">Cryptography</a></li>
+                    <li><a href="#network">Network</a></li>
+                    <li><a href="#database">Database</a></li>
+                    <li><a href="#ai">AI & ML</a></li>
+                    <li><a href="#conventions">Conventions</a></li>
+                    <li><a href="#versioning">Versioning</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1>📚 API Reference</h1>
+            <p class="lead">Comprehensive API documentation for all Arxis Core packages</p>
+
+            <section id="overview">
+                <h2>Overview</h2>
+                <p>This reference documentation covers all public APIs across the 120+ packages in the Arxis Core ecosystem. Each package follows consistent naming conventions and design patterns.</p>
+
+                <div class="info-box">
+                    <p><strong>💡 Tip:</strong> Use <kbd>Ctrl+K</kbd> to quickly search for any API, type, or function.</p>
+                </div>
+
+                <h3>Documentation Format</h3>
+                <p>Each API entry includes:</p>
+                <ul>
+                    <li><strong>Signature</strong>: Function or type signature</li>
+                    <li><strong>Description</strong>: What it does and when to use it</li>
+                    <li><strong>Parameters</strong>: Input parameters and their types</li>
+                    <li><strong>Returns</strong>: Return type and value</li>
+                    <li><strong>Examples</strong>: Practical code examples</li>
+                    <li><strong>Errors</strong>: Possible error conditions</li>
+                </ul>
+            </section>
+
+            <section id="core">
+                <h2>Core APIs</h2>
+                
+                <h3>avx-std</h3>
+                <p>Standard library extensions and common utilities.</p>
+
+                <div class="api-item">
+                    <h4><code>Result&lt;T, E&gt;</code></h4>
+                    <p>Type alias for error handling across all Arxis packages.</p>
+                    <pre><code class="language-rust">pub type Result&lt;T, E = Error&gt; = std::result::Result&lt;T, E&gt;;
+
+// Usage
+use avx_std::Result;
+
+fn process() -> Result&lt;String&gt; {
+    Ok("success".to_string())
+}</code></pre>
+                </div>
+
+                <div class="api-item">
+                    <h4><code>prelude</code></h4>
+                    <p>Common imports included in all Arxis packages.</p>
+                    <pre><code class="language-rust">use avx_std::prelude::*;
+
+// Includes:
+// - Result, Error
+// - Arc, Mutex, RwLock
+// - Duration, Instant
+// - HashMap, HashSet
+// - Vec, String</code></pre>
+                </div>
+
+                <h3>avx-error</h3>
+                <p>Unified error handling system.</p>
+
+                <div class="api-item">
+                    <h4><code>Error</code></h4>
+                    <p>Main error type used throughout Arxis Core.</p>
+                    <pre><code class="language-rust">pub enum Error {
+    Io(std::io::Error),
+    Parse(String),
+    NotFound(String),
+    Invalid(String),
+    Timeout,
+    // ... more variants
+}
+
+impl Error {
+    pub fn kind(&self) -> ErrorKind { /* ... */ }
+    pub fn message(&self) -> &str { /* ... */ }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="crypto">
+                <h2>Cryptography APIs</h2>
+
+                <h3>avx-crypto</h3>
+                <p>Core cryptographic primitives.</p>
+
+                <div class="api-item">
+                    <h4><code>hash::sha256(data: &[u8]) -> [u8; 32]</code></h4>
+                    <p>Computes SHA-256 hash of input data.</p>
+                    <pre><code class="language-rust">use avx_crypto::hash;
+
+let data = b"Hello, World!";
+let hash = hash::sha256(data);
+println!("Hash: {:x?}", hash);</code></pre>
+                </div>
+
+                <div class="api-item">
+                    <h4><code>Ed25519Keypair</code></h4>
+                    <p>Ed25519 digital signature keypair.</p>
+                    <pre><code class="language-rust">use avx_crypto::Ed25519Keypair;
+
+// Generate new keypair
+let keypair = Ed25519Keypair::generate();
+
+// Sign message
+let message = b"Important message";
+let signature = keypair.sign(message);
+
+// Verify signature
+assert!(keypair.verify(message, &signature));</code></pre>
+                </div>
+
+                <div class="api-item">
+                    <h4><code>Aes256Gcm</code></h4>
+                    <p>AES-256-GCM authenticated encryption.</p>
+                    <pre><code class="language-rust">use avx_crypto::Aes256Gcm;
+
+let key = Aes256Gcm::generate_key();
+let cipher = Aes256Gcm::new(&key);
+
+// Encrypt
+let plaintext = b"Secret data";
+let ciphertext = cipher.encrypt(plaintext)?;
+
+// Decrypt
+let decrypted = cipher.decrypt(&ciphertext)?;
+assert_eq!(plaintext, decrypted.as_slice());</code></pre>
+                </div>
+            </section>
+
+            <section id="network">
+                <h2>Network APIs</h2>
+
+                <h3>avx-http</h3>
+                <p>HTTP/2 client and server implementation.</p>
+
+                <div class="api-item">
+                    <h4><code>Server::bind(addr: &str)</code></h4>
+                    <p>Creates a new HTTP server bound to the specified address.</p>
+                    <pre><code class="language-rust">use avx_http::{Server, Router, Response};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let app = Router::new()
+        .get("/", |_| async { 
+            Response::ok("Hello!") 
+        })
+        .post("/data", handle_data);
+
+    Server::bind("0.0.0.0:8080")
+        .serve(app)
+        .await
+}</code></pre>
+                </div>
+
+                <div class="api-item">
+                    <h4><code>Client::new()</code></h4>
+                    <p>Creates a new HTTP client with connection pooling.</p>
+                    <pre><code class="language-rust">use avx_http::Client;
+
+let client = Client::new();
+let response = client
+    .get("https://api.example.com/data")
+    .header("Authorization", "Bearer token")
+    .send()
+    .await?;
+
+let body = response.text().await?;</code></pre>
+                </div>
+            </section>
+
+            <section id="database">
+                <h2>Database APIs</h2>
+
+                <h3>avxdb</h3>
+                <p>High-performance database engine.</p>
+
+                <div class="api-item">
+                    <h4><code>Database::open(path: &Path)</code></h4>
+                    <p>Opens or creates a database at the specified path.</p>
+                    <pre><code class="language-rust">use avxdb::Database;
+
+let db = Database::open("./data.db").await?;
+
+// Insert data
+db.insert("users", &user).await?;
+
+// Query data
+let users: Vec<User> = db
+    .query("SELECT * FROM users WHERE age > ?")
+    .bind(18)
+    .fetch_all()
+    .await?;</code></pre>
+                </div>
+            </section>
+
+            <section id="ai">
+                <h2>AI & Machine Learning APIs</h2>
+
+                <h3>avx-tensor</h3>
+                <p>N-dimensional array operations with GPU support.</p>
+
+                <div class="api-item">
+                    <h4><code>Tensor::new(shape: &[usize])</code></h4>
+                    <p>Creates a new tensor with the specified shape.</p>
+                    <pre><code class="language-rust">use avx_tensor::Tensor;
+
+// Create 2D tensor (matrix)
+let a = Tensor::from_slice(&[1.0, 2.0, 3.0, 4.0], &[2, 2]);
+let b = Tensor::from_slice(&[5.0, 6.0, 7.0, 8.0], &[2, 2]);
+
+// Matrix multiplication
+let c = a.matmul(&b);
+
+// GPU acceleration
+#[cfg(feature = "gpu")]
+let gpu_tensor = a.to_gpu()?;</code></pre>
+                </div>
+            </section>
+
+            <section id="conventions">
+                <h2>API Conventions</h2>
+
+                <h3>Naming</h3>
+                <ul>
+                    <li><strong>Types</strong>: PascalCase (e.g., <code>HttpServer</code>)</li>
+                    <li><strong>Functions</strong>: snake_case (e.g., <code>connect_to_server</code>)</li>
+                    <li><strong>Constants</strong>: SCREAMING_SNAKE_CASE (e.g., <code>MAX_SIZE</code>)</li>
+                    <li><strong>Modules</strong>: snake_case (e.g., <code>network_utils</code>)</li>
+                </ul>
+
+                <h3>Error Handling</h3>
+                <p>All fallible operations return <code>Result&lt;T, Error&gt;</code>:</p>
+                <pre><code class="language-rust">// Good
+fn process() -> Result&lt;Data&gt; { /* ... */ }
+
+// Avoid
+fn process() -> Option&lt;Data&gt; { /* ... */ }</code></pre>
+
+                <h3>Async/Await</h3>
+                <p>Async functions are marked with the <code>async</code> keyword:</p>
+                <pre><code class="language-rust">async fn fetch_data() -> Result&lt;Vec&lt;u8&gt;&gt; {
+    let response = client.get(url).send().await?;
+    response.bytes().await
+}</code></pre>
+
+                <h3>Builder Pattern</h3>
+                <p>Complex types use the builder pattern:</p>
+                <pre><code class="language-rust">let server = Server::builder()
+    .bind("0.0.0.0:8080")
+    .workers(4)
+    .timeout(Duration::from_secs(30))
+    .build()?;</code></pre>
+            </section>
+
+            <section id="versioning">
+                <h2>Versioning</h2>
+
+                <p>Arxis Core follows <a href="https://semver.org/" target="_blank">Semantic Versioning</a>:</p>
+
+                <ul>
+                    <li><strong>MAJOR</strong>: Breaking changes</li>
+                    <li><strong>MINOR</strong>: New features (backwards compatible)</li>
+                    <li><strong>PATCH</strong>: Bug fixes</li>
+                </ul>
+
+                <h3>Current Versions</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Package</th>
+                            <th>Version</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>avx-core</td>
+                            <td>0.1.0</td>
+                            <td><span class="badge-status badge-dev">Development</span></td>
+                        </tr>
+                        <tr>
+                            <td>avx-crypto</td>
+                            <td>0.1.0</td>
+                            <td><span class="badge-status badge-dev">Development</span></td>
+                        </tr>
+                        <tr>
+                            <td>avx-http</td>
+                            <td>0.1.0</td>
+                            <td><span class="badge-status badge-dev">Development</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box">
+                    <p><strong>⚠️ Development Status:</strong> Arxis Core is currently in active development. APIs may change before reaching 1.0.0.</p>
+                </div>
+            </section>
+
+            <div class="next-steps">
+                <h2>Next Steps</h2>
+                <div class="cards-grid">
+                    <a href="getting-started.html" class="card">
+                        <h3>🚀 Getting Started</h3>
+                        <p>Start building with Arxis Core</p>
+                    </a>
+                    <a href="examples.html" class="card">
+                        <h3>💡 Examples</h3>
+                        <p>See practical code examples</p>
+                    </a>
+                    <a href="packages/index.html" class="card">
+                        <h3>📦 All Packages</h3>
+                        <p>Browse all available packages</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arxis Core</h3>
+                    <p>Complete Rust development ecosystem</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <a href="https://github.com/avilaops/docs">GitHub</a>
+                    <a href="getting-started.html">Getting Started</a>
+                    <a href="packages/index.html">Packages</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <a href="examples.html">Examples</a>
+                    <a href="architecture.html">Architecture</a>
+                    <a href="api-reference.html">API Reference</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Avx. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/search.js"></script>
+</body>
+</html>

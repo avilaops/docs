@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contributing guide for Arxis Core - Learn how to contribute to the project">
+    <title>Contributing - Arxis Core Documentation</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="assets/css/search.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-avx">Avx</span>
+                <span class="logo-text">Docs</span>
+            </a>
+            <div class="nav-links">
+                <a href="getting-started.html">Getting Started</a>
+                <a href="packages/index.html">Packages</a>
+                <a href="examples.html">Examples</a>
+                <a href="contributing.html" class="active">Contributing</a>
+                <a href="https://github.com/avilaops/docs" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav>
+                <h3>Contributing</h3>
+                <ul>
+                    <li><a href="#introduction">Introduction</a></li>
+                    <li><a href="#code-of-conduct">Code of Conduct</a></li>
+                    <li><a href="#getting-started">Getting Started</a></li>
+                    <li><a href="#pull-requests">Pull Requests</a></li>
+                    <li><a href="#coding-standards">Coding Standards</a></li>
+                    <li><a href="#testing">Testing</a></li>
+                    <li><a href="#documentation">Documentation</a></li>
+                    <li><a href="#community">Community</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1>🤝 Contributing to Arxis Core</h1>
+            <p class="lead">Thank you for your interest in contributing to Arxis Core! This guide will help you get started.</p>
+
+            <section id="introduction">
+                <h2>Introduction</h2>
+                <p>Arxis Core is an open-source Rust ecosystem, and we welcome contributions from developers of all skill levels. Whether you're fixing bugs, adding features, improving documentation, or helping with community support, your contributions are valuable.</p>
+
+                <h3>Ways to Contribute</h3>
+                <ul>
+                    <li>🐛 Report bugs and issues</li>
+                    <li>💡 Suggest new features</li>
+                    <li>📝 Improve documentation</li>
+                    <li>🔧 Fix bugs and implement features</li>
+                    <li>✅ Write tests</li>
+                    <li>🎨 Improve design and UX</li>
+                    <li>💬 Help others in discussions</li>
+                    <li>📚 Create tutorials and examples</li>
+                </ul>
+            </section>
+
+            <section id="code-of-conduct">
+                <h2>📜 Code of Conduct</h2>
+                
+                <h3>Our Pledge</h3>
+                <p>We are committed to providing a welcoming and inclusive environment for everyone, regardless of age, body size, disability, ethnicity, gender identity, level of experience, nationality, personal appearance, race, religion, or sexual orientation.</p>
+
+                <h3>Our Standards</h3>
+                <p><strong>Positive behavior includes:</strong></p>
+                <ul>
+                    <li>Using welcoming and inclusive language</li>
+                    <li>Being respectful of differing viewpoints</li>
+                    <li>Gracefully accepting constructive criticism</li>
+                    <li>Focusing on what's best for the community</li>
+                    <li>Showing empathy towards others</li>
+                </ul>
+
+                <p><strong>Unacceptable behavior includes:</strong></p>
+                <ul>
+                    <li>Harassment, trolling, or derogatory comments</li>
+                    <li>Personal or political attacks</li>
+                    <li>Publishing others' private information</li>
+                    <li>Any conduct inappropriate in a professional setting</li>
+                </ul>
+
+                <div class="info-box">
+                    <p><strong>💡 Note:</strong> Violations can be reported to <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+                </div>
+            </section>
+
+            <section id="getting-started">
+                <h2>🚀 Getting Started</h2>
+
+                <h3>1. Fork and Clone</h3>
+                <pre><code class="language-bash"># Fork the repository on GitHub first
+
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/arxis-core.git
+cd arxis-core
+
+# Add upstream remote
+git remote add upstream https://github.com/avilaops/arxis-core.git</code></pre>
+
+                <h3>2. Set Up Development Environment</h3>
+                <pre><code class="language-bash"># Install Rust (if not already installed)
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# Install development tools
+rustup component add rustfmt clippy rust-analyzer
+cargo install cargo-nextest cargo-audit
+
+# Build the project
+cargo build</code></pre>
+
+                <h3>3. Create a Branch</h3>
+                <pre><code class="language-bash"># Update your fork
+git fetch upstream
+git checkout main
+git merge upstream/main
+
+# Create feature branch
+git checkout -b feature/your-feature-name</code></pre>
+            </section>
+
+            <section id="pull-requests">
+                <h2>📬 Pull Request Process</h2>
+
+                <h3>1. Make Your Changes</h3>
+                <ul>
+                    <li>Write clean, idiomatic Rust code</li>
+                    <li>Follow existing code style</li>
+                    <li>Add tests for new functionality</li>
+                    <li>Update documentation as needed</li>
+                </ul>
+
+                <h3>2. Test Your Changes</h3>
+                <pre><code class="language-bash"># Run tests
+cargo nextest run
+
+# Run clippy (linter)
+cargo clippy --all-targets --all-features -- -D warnings
+
+# Format code
+cargo fmt
+
+# Check for security issues
+cargo audit</code></pre>
+
+                <h3>3. Commit Your Changes</h3>
+                <p>Follow conventional commit format:</p>
+                <pre><code class="language-bash"># Format: type(scope): description
+
+git commit -m "feat(crypto): add AES-256-GCM encryption"
+git commit -m "fix(http): resolve connection pool leak"
+git commit -m "docs(readme): update installation instructions"
+git commit -m "test(tensor): add GPU computation tests"</code></pre>
+
+                <p><strong>Commit types:</strong></p>
+                <ul>
+                    <li><code>feat</code>: New feature</li>
+                    <li><code>fix</code>: Bug fix</li>
+                    <li><code>docs</code>: Documentation changes</li>
+                    <li><code>style</code>: Code formatting (no logic changes)</li>
+                    <li><code>refactor</code>: Code refactoring</li>
+                    <li><code>test</code>: Adding or updating tests</li>
+                    <li><code>perf</code>: Performance improvements</li>
+                    <li><code>chore</code>: Maintenance tasks</li>
+                </ul>
+
+                <h3>4. Push and Create PR</h3>
+                <pre><code class="language-bash"># Push to your fork
+git push origin feature/your-feature-name
+
+# Then create a Pull Request on GitHub</code></pre>
+
+                <h3>5. PR Guidelines</h3>
+                <ul>
+                    <li>✅ Use a clear, descriptive title</li>
+                    <li>✅ Provide detailed description of changes</li>
+                    <li>✅ Reference related issues (e.g., "Fixes #123")</li>
+                    <li>✅ Include screenshots for UI changes</li>
+                    <li>✅ Ensure all CI checks pass</li>
+                    <li>✅ Request review from maintainers</li>
+                    <li>✅ Be responsive to feedback</li>
+                </ul>
+            </section>
+
+            <section id="coding-standards">
+                <h2>💻 Coding Standards</h2>
+
+                <h3>Rust Style Guide</h3>
+                <p>Follow the official <a href="https://doc.rust-lang.org/1.0.0/style/" target="_blank">Rust Style Guide</a></p>
+
+                <h3>Naming Conventions</h3>
+                <pre><code class="language-rust">// Types: PascalCase
+struct HttpServer { }
+enum ErrorKind { }
+
+// Functions/methods: snake_case
+fn process_request() { }
+fn get_user_by_id() { }
+
+// Constants: SCREAMING_SNAKE_CASE
+const MAX_CONNECTIONS: usize = 1000;
+const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
+
+// Modules: snake_case
+mod network_utils;
+mod crypto_primitives;</code></pre>
+
+                <h3>Error Handling</h3>
+                <pre><code class="language-rust">// Use Result for fallible operations
+pub fn connect_to_database(url: &str) -> Result<Database> {
+    // Implementation
+}
+
+// Provide context in errors
+Err(Error::ConnectionFailed { 
+    url: url.to_string(),
+    reason: "timeout".to_string()
+})</code></pre>
+
+                <h3>Documentation</h3>
+                <pre><code class="language-rust">/// Computes the SHA-256 hash of the input data.
+///
+/// # Arguments
+///
+/// * `data` - The input data to hash
+///
+/// # Returns
+///
+/// A 32-byte array containing the hash
+///
+/// # Examples
+///
+/// ```
+/// use avx_crypto::hash;
+///
+/// let data = b"Hello, World!";
+/// let hash = hash::sha256(data);
+/// assert_eq!(hash.len(), 32);
+/// ```
+pub fn sha256(data: &[u8]) -> [u8; 32] {
+    // Implementation
+}</code></pre>
+
+                <h3>Performance</h3>
+                <ul>
+                    <li>Avoid unnecessary allocations</li>
+                    <li>Use <code>&str</code> instead of <code>String</code> for parameters</li>
+                    <li>Use <code>const</code> for compile-time constants</li>
+                    <li>Prefer iterators over explicit loops</li>
+                    <li>Use <code>#[inline]</code> for hot paths</li>
+                </ul>
+            </section>
+
+            <section id="testing">
+                <h2>✅ Testing</h2>
+
+                <h3>Unit Tests</h3>
+                <pre><code class="language-rust">#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_encryption() {
+        let key = generate_key();
+        let plaintext = b"secret data";
+        
+        let ciphertext = encrypt(&key, plaintext).unwrap();
+        let decrypted = decrypt(&key, &ciphertext).unwrap();
+        
+        assert_eq!(plaintext, decrypted.as_slice());
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_invalid_key() {
+        let key = [0u8; 16]; // Invalid key size
+        encrypt(&key, b"data").unwrap();
+    }
+}</code></pre>
+
+                <h3>Integration Tests</h3>
+                <pre><code class="language-rust">// tests/integration_test.rs
+use avx_http::{Server, Client};
+
+#[tokio::test]
+async fn test_http_server() {
+    let server = Server::bind("127.0.0.1:0").await.unwrap();
+    let addr = server.local_addr();
+    
+    tokio::spawn(async move {
+        server.serve(app).await
+    });
+
+    let client = Client::new();
+    let response = client
+        .get(&format!("http://{}/health", addr))
+        .send()
+        .await
+        .unwrap();
+
+    assert_eq!(response.status(), 200);
+}</code></pre>
+
+                <h3>Benchmarks</h3>
+                <pre><code class="language-rust">// benches/crypto_bench.rs
+use criterion::{black_box, criterion_group, criterion_main, Criterion};
+
+fn benchmark_sha256(c: &mut Criterion) {
+    let data = vec![0u8; 1024];
+    
+    c.bench_function("sha256_1kb", |b| {
+        b.iter(|| {
+            avx_crypto::hash::sha256(black_box(&data))
+        });
+    });
+}
+
+criterion_group!(benches, benchmark_sha256);
+criterion_main!(benches);</code></pre>
+            </section>
+
+            <section id="documentation">
+                <h2>📝 Documentation</h2>
+
+                <h3>Code Documentation</h3>
+                <ul>
+                    <li>Document all public APIs</li>
+                    <li>Include examples in doc comments</li>
+                    <li>Explain complex algorithms</li>
+                    <li>Document safety requirements for <code>unsafe</code> code</li>
+                </ul>
+
+                <h3>README Files</h3>
+                <p>Each package should have a README with:</p>
+                <ul>
+                    <li>Overview and purpose</li>
+                    <li>Installation instructions</li>
+                    <li>Basic usage examples</li>
+                    <li>Feature flags</li>
+                    <li>Links to full documentation</li>
+                </ul>
+
+                <h3>User Documentation</h3>
+                <p>Contribute to the docs site:</p>
+                <ul>
+                    <li>Tutorials and guides</li>
+                    <li>Code examples</li>
+                    <li>Best practices</li>
+                    <li>Common pitfalls</li>
+                </ul>
+            </section>
+
+            <section id="community">
+                <h2>🌍 Community</h2>
+
+                <h3>Get Help</h3>
+                <ul>
+                    <li>📖 <a href="https://docs.avila.inc">Documentation</a></li>
+                    <li>💬 <a href="https://github.com/avilaops/arxis-core/discussions">GitHub Discussions</a></li>
+                    <li>🐛 <a href="https://github.com/avilaops/arxis-core/issues">GitHub Issues</a></li>
+                    <li>📧 <a href="mailto:nicolas@avila.inc">Email Support</a></li>
+                </ul>
+
+                <h3>Stay Updated</h3>
+                <ul>
+                    <li>⭐ Star the repository</li>
+                    <li>👀 Watch for updates</li>
+                    <li>📰 Read the <a href="changelog.html">Changelog</a></li>
+                </ul>
+
+                <h3>Recognition</h3>
+                <p>Contributors are recognized in:</p>
+                <ul>
+                    <li>Release notes</li>
+                    <li>CONTRIBUTORS.md file</li>
+                    <li>Repository statistics</li>
+                </ul>
+            </section>
+
+            <div class="next-steps">
+                <h2>Ready to Contribute?</h2>
+                <div class="cards-grid">
+                    <a href="https://github.com/avilaops/arxis-core/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22" class="card" target="_blank">
+                        <h3>🎯 Good First Issues</h3>
+                        <p>Find beginner-friendly tasks</p>
+                    </a>
+                    <a href="https://github.com/avilaops/arxis-core" class="card" target="_blank">
+                        <h3>💻 View on GitHub</h3>
+                        <p>Explore the source code</p>
+                    </a>
+                    <a href="getting-started.html" class="card">
+                        <h3>📚 Getting Started</h3>
+                        <p>Learn how to use Arxis Core</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arxis Core</h3>
+                    <p>Complete Rust development ecosystem</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <a href="https://github.com/avilaops/docs">GitHub</a>
+                    <a href="getting-started.html">Getting Started</a>
+                    <a href="packages/index.html">Packages</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <a href="examples.html">Examples</a>
+                    <a href="contributing.html">Contributing</a>
+                    <a href="changelog.html">Changelog</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Avx. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/search.js"></script>
+</body>
+</html>

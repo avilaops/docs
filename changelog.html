@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Changelog and release notes for Arxis Core">
+    <title>Changelog - Arxis Core Documentation</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/docs.css">
+    <link rel="stylesheet" href="assets/css/search.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-avx">Avx</span>
+                <span class="logo-text">Docs</span>
+            </a>
+            <div class="nav-links">
+                <a href="getting-started.html">Getting Started</a>
+                <a href="packages/index.html">Packages</a>
+                <a href="examples.html">Examples</a>
+                <a href="changelog.html" class="active">Changelog</a>
+                <a href="https://github.com/avilaops/docs" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav>
+                <h3>Releases</h3>
+                <ul>
+                    <li><a href="#v0-1-0">v0.1.0</a></li>
+                    <li><a href="#roadmap">Roadmap</a></li>
+                    <li><a href="#contributing">Contributing</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1>📋 Changelog</h1>
+            <p class="lead">Track all changes, improvements, and new features across Arxis Core releases</p>
+
+            <section id="v0-1-0">
+                <div class="release-header">
+                    <h2>v0.1.0 - Initial Development Release</h2>
+                    <div class="release-meta">
+                        <span class="release-date">January 2, 2026</span>
+                        <span class="release-badge badge-dev">Development</span>
+                    </div>
+                </div>
+
+                <h3>✨ New Features</h3>
+                <ul>
+                    <li><strong>Documentation Site:</strong> Launched comprehensive documentation at docs.avila.inc</li>
+                    <li><strong>Core Packages:</strong> Released 120+ foundational packages across 18 categories</li>
+                    <li><strong>Search Functionality:</strong> Added global search with Ctrl+K shortcut</li>
+                    <li><strong>API Reference:</strong> Published complete API documentation</li>
+                    <li><strong>Examples:</strong> Added practical code examples for all major categories</li>
+                </ul>
+
+                <h3>🔐 Cryptography & Security</h3>
+                <ul>
+                    <li>✅ AES-256-GCM authenticated encryption</li>
+                    <li>✅ ChaCha20-Poly1305 cipher</li>
+                    <li>✅ Ed25519, ECDSA, RSA signatures</li>
+                    <li>✅ SHA-256, SHA-3, BLAKE3 hashing</li>
+                    <li>✅ Argon2, PBKDF2 key derivation</li>
+                    <li>✅ Zero-Knowledge Proofs (Bulletproofs, Groth16)</li>
+                    <li>✅ Post-Quantum cryptography (Kyber, Dilithium)</li>
+                </ul>
+
+                <h3>🌐 Network & Communication</h3>
+                <ul>
+                    <li>✅ HTTP/2 and HTTP/3 client/server</li>
+                    <li>✅ gRPC framework</li>
+                    <li>✅ QUIC protocol implementation</li>
+                    <li>✅ WebSocket support</li>
+                    <li>✅ TLS 1.3</li>
+                    <li>✅ mTLS (mutual TLS)</li>
+                </ul>
+
+                <h3>🔄 Distributed Systems</h3>
+                <ul>
+                    <li>✅ Raft consensus algorithm</li>
+                    <li>✅ Gossip protocol</li>
+                    <li>✅ Leader election</li>
+                    <li>✅ CRDT data types</li>
+                    <li>✅ Event sourcing</li>
+                    <li>✅ Saga patterns</li>
+                </ul>
+
+                <h3>💾 Database & Storage</h3>
+                <ul>
+                    <li>✅ AvxDB engine with SQL support</li>
+                    <li>✅ B-Tree and LSM-Tree storage</li>
+                    <li>✅ Query optimizer</li>
+                    <li>✅ Transactions (ACID)</li>
+                    <li>✅ Replication</li>
+                    <li>✅ Caching layer</li>
+                </ul>
+
+                <h3>🤖 AI & Machine Learning</h3>
+                <ul>
+                    <li>✅ Tensor operations with GPU support</li>
+                    <li>✅ Neural network primitives</li>
+                    <li>✅ Training framework</li>
+                    <li>✅ LLM inference optimization</li>
+                    <li>✅ Computer vision utilities</li>
+                    <li>✅ Vector database (AvxDB)</li>
+                </ul>
+
+                <h3>🎮 GPU Computing</h3>
+                <ul>
+                    <li>✅ CUDA support</li>
+                    <li>✅ OpenCL support</li>
+                    <li>✅ ROCm support</li>
+                    <li>✅ Kernel compilation</li>
+                    <li>✅ Memory management</li>
+                    <li>✅ Multi-GPU orchestration</li>
+                </ul>
+
+                <h3>📊 Observability</h3>
+                <ul>
+                    <li>✅ Metrics collection (Prometheus compatible)</li>
+                    <li>✅ Distributed tracing (OpenTelemetry)</li>
+                    <li>✅ Structured logging</li>
+                    <li>✅ Health checks</li>
+                    <li>✅ Performance profiling</li>
+                </ul>
+
+                <h3>🛠️ Developer Experience</h3>
+                <ul>
+                    <li>✅ Comprehensive documentation</li>
+                    <li>✅ Interactive examples</li>
+                    <li>✅ CLI tools</li>
+                    <li>✅ VS Code integration</li>
+                    <li>✅ Rust analyzer support</li>
+                </ul>
+
+                <h3>📝 Documentation</h3>
+                <ul>
+                    <li>✅ Getting Started guide</li>
+                    <li>✅ Installation instructions</li>
+                    <li>✅ Architecture overview</li>
+                    <li>✅ API reference</li>
+                    <li>✅ 50+ code examples</li>
+                    <li>✅ Category-specific guides</li>
+                </ul>
+
+                <h3>🐛 Known Issues</h3>
+                <ul>
+                    <li>⚠️ Some GPU features require CUDA 11.8+</li>
+                    <li>⚠️ WebAssembly support is experimental</li>
+                    <li>⚠️ ARM architecture support is in progress</li>
+                </ul>
+            </section>
+
+            <section id="roadmap">
+                <h2>🗺️ Roadmap</h2>
+
+                <h3>v0.2.0 (Q1 2026)</h3>
+                <ul>
+                    <li>🔄 Stabilize core APIs</li>
+                    <li>🔄 WebAssembly full support</li>
+                    <li>🔄 ARM/Apple Silicon optimization</li>
+                    <li>🔄 Improved error messages</li>
+                    <li>🔄 Performance benchmarks</li>
+                    <li>🔄 Security audit</li>
+                </ul>
+
+                <h3>v0.3.0 (Q2 2026)</h3>
+                <ul>
+                    <li>📅 Plugin system</li>
+                    <li>📅 Dynamic linking support</li>
+                    <li>📅 FFI bindings (Python, Node.js, Go)</li>
+                    <li>📅 Cloud deployment templates</li>
+                    <li>📅 Kubernetes operators</li>
+                </ul>
+
+                <h3>v1.0.0 (Q3 2026)</h3>
+                <ul>
+                    <li>🎯 Stable APIs</li>
+                    <li>🎯 Production-ready</li>
+                    <li>🎯 Long-term support (LTS)</li>
+                    <li>🎯 Commercial licenses available</li>
+                    <li>🎯 Enterprise support</li>
+                </ul>
+            </section>
+
+            <section id="contributing">
+                <h2>🤝 Contributing</h2>
+                <p>We welcome contributions to Arxis Core! Here's how you can help:</p>
+
+                <h3>Report Issues</h3>
+                <p>Found a bug? Report it on <a href="https://github.com/avilaops/arxis-core/issues" target="_blank">GitHub Issues</a></p>
+
+                <h3>Suggest Features</h3>
+                <p>Have an idea? Open a <a href="https://github.com/avilaops/arxis-core/discussions" target="_blank">GitHub Discussion</a></p>
+
+                <h3>Submit Pull Requests</h3>
+                <ol>
+                    <li>Fork the repository</li>
+                    <li>Create a feature branch</li>
+                    <li>Make your changes</li>
+                    <li>Add tests</li>
+                    <li>Submit a PR</li>
+                </ol>
+
+                <h3>Improve Documentation</h3>
+                <p>Documentation improvements are always welcome! Submit PRs to the <a href="https://github.com/avilaops/docs" target="_blank">docs repository</a>.</p>
+            </section>
+
+            <div class="next-steps">
+                <h2>Next Steps</h2>
+                <div class="cards-grid">
+                    <a href="getting-started.html" class="card">
+                        <h3>🚀 Getting Started</h3>
+                        <p>Start building with Arxis Core</p>
+                    </a>
+                    <a href="https://github.com/avilaops/arxis-core" class="card" target="_blank">
+                        <h3>💻 GitHub</h3>
+                        <p>View source code and contribute</p>
+                    </a>
+                    <a href="api-reference.html" class="card">
+                        <h3>📚 API Reference</h3>
+                        <p>Explore the complete API</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arxis Core</h3>
+                    <p>Complete Rust development ecosystem</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <a href="https://github.com/avilaops/docs">GitHub</a>
+                    <a href="getting-started.html">Getting Started</a>
+                    <a href="packages/index.html">Packages</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <a href="examples.html">Examples</a>
+                    <a href="architecture.html">Architecture</a>
+                    <a href="changelog.html">Changelog</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Avx. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .release-header {
+            background: linear-gradient(135deg, rgba(255, 140, 0, 0.1), rgba(255, 215, 0, 0.05));
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+            margin-bottom: 2rem;
+        }
+
+        .release-header h2 {
+            margin-top: 0;
+        }
+
+        .release-meta {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        .release-date {
+            color: var(--text-muted);
+        }
+
+        .release-badge {
+            background: var(--primary);
+            color: #000;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        .badge-dev {
+            background: linear-gradient(135deg, #ffa500, #ffd700);
+        }
+
+        .badge-status {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        table th,
+        table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        table th {
+            background: rgba(255, 140, 0, 0.1);
+            font-weight: 600;
+        }
+    </style>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/search.js"></script>
+</body>
+</html>
