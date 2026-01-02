@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-serialize - Binary Serialization | Avx Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="avx-cache.html">avx-cache</a></li>
+            <li><a href="avx-codec.html">avx-codec</a></li>
+            <li><a href="avx-compress.html">avx-compress</a></li>
+            <li><a href="avx-db.html">avx-db</a></li>
+            <li><a href="avx-pool.html">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html" class="active">avx-serialize</a></li>
+            <li><a href="avx-storage.html">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>⚙️ avx-serialize</h1>
+            <p>Serialização binária zero-copy de alta performance</p>
+        </section>
+
+        <section>
+            <h2>🚀 Características</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Zero-Copy</h3>
+                    <ul>
+                        <li>Sem alocações de memória</li>
+                        <li>Serialização direta</li>
+                        <li>Performance máxima</li>
+                        <li>Latência previsível</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Binária</h3>
+                    <ul>
+                        <li>Formato compacto</li>
+                        <li>Tamanho conhecido</li>
+                        <li>Type-safe</li>
+                        <li>Eficiente</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Performance</h3>
+                    <ul>
+                        <li>1-5 ns por tipo primitivo</li>
+                        <li>Zero overhead</li>
+                        <li>no_std compatible</li>
+                        <li>Embedded-ready</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Instalação</h2>
+            <pre><code>[dependencies]
+avx-serialize = "0.1.0"</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Exemplos</h2>
+
+            <h3>Serialização Básica</h3>
+            <pre><code>use avx_serialize::{Serialize, Deserialize};
+
+let value: u32 = 42;
+
+// Serializar
+let mut buffer = [0u8; 4];
+let size = value.serialize(&mut buffer)?;
+assert_eq!(size, 4);
+
+// Desserializar
+let restored = u32::deserialize(&buffer)?;
+assert_eq!(restored, 42);</code></pre>
+
+            <h3>Estruturas Customizadas</h3>
+            <pre><code>use avx_serialize::{Serialize, Deserialize};
+
+struct Point {
+    x: f32,
+    y: f32,
+}
+
+impl Serialize for Point {
+    fn serialize(&self, buf: &mut [u8]) -> Result<usize> {
+        let mut offset = 0;
+        offset += self.x.serialize(&mut buf[offset..])?;
+        offset += self.y.serialize(&mut buf[offset..])?;
+        Ok(offset)
+    }
+
+    fn size(&self) -> usize {
+        self.x.size() + self.y.size()
+    }
+}
+
+impl Deserialize for Point {
+    fn deserialize(buf: &[u8]) -> Result<Self> {
+        let x = f32::deserialize(&buf[0..4])?;
+        let y = f32::deserialize(&buf[4..8])?;
+        Ok(Point { x, y })
+    }
+}</code></pre>
+
+            <h3>Protocolo de Rede</h3>
+            <pre><code>struct PacketHeader {
+    version: u8,
+    flags: u8,
+    length: u16,
+    sequence: u32,
+}
+
+impl Serialize for PacketHeader {
+    fn serialize(&self, buf: &mut [u8]) -> Result<usize> {
+        buf[0] = self.version;
+        buf[1] = self.flags;
+        self.length.serialize(&mut buf[2..4])?;
+        self.sequence.serialize(&mut buf[4..8])?;
+        Ok(8)
+    }
+
+    fn size(&self) -> usize { 8 }
+}
+
+async fn send_packet(socket: &mut TcpStream, data: &[u8]) -> Result<()> {
+    let header = PacketHeader {
+        version: 1,
+        flags: 0,
+        length: data.len() as u16,
+        sequence: get_next_sequence(),
+    };
+
+    let mut buf = [0u8; 8];
+    header.serialize(&mut buf)?;
+
+    socket.write_all(&buf).await?;
+    socket.write_all(data).await?;
+    Ok(())
+}</code></pre>
+        </section>
+
+        <section>
+            <h2>📊 Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Serialize</th>
+                        <th>Deserialize</th>
+                        <th>Tamanho</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>u8</td>
+                        <td>1 ns</td>
+                        <td>1 ns</td>
+                        <td>1 byte</td>
+                    </tr>
+                    <tr>
+                        <td>u32</td>
+                        <td>2 ns</td>
+                        <td>2 ns</td>
+                        <td>4 bytes</td>
+                    </tr>
+                    <tr>
+                        <td>u64</td>
+                        <td>3 ns</td>
+                        <td>3 ns</td>
+                        <td>8 bytes</td>
+                    </tr>
+                    <tr>
+                        <td>f64</td>
+                        <td>3 ns</td>
+                        <td>3 ns</td>
+                        <td>8 bytes</td>
+                    </tr>
+                    <tr>
+                        <td>Point (2x f32)</td>
+                        <td>4 ns</td>
+                        <td>4 ns</td>
+                        <td>8 bytes</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><em>Zero allocations em todos os casos</em></p>
+        </section>
+
+        <section class="use-cases">
+            <h2>🎯 Casos de Uso</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Protocolos de Rede</h3>
+                    <p>Headers e pacotes binários</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">💾</div>
+                    <h3>Persistência</h3>
+                    <p>Saves de jogos, estado</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🔄</div>
+                    <h3>IPC</h3>
+                    <p>Inter-process communication</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📦</div>
+                    <h3>Cache Binário</h3>
+                    <p>Cache de baixa latência</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📡</div>
+                    <h3>IoT</h3>
+                    <p>Telemetria de sensores</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🎮</div>
+                    <h3>Gaming</h3>
+                    <p>Network state sync</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

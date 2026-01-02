@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-replication - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">📋</span>
+                <h1 class="section-title">avx-replication</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Estratégias avançadas de replicação de dados para alta disponibilidade e durabilidade.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-replication</strong> implementa múltiplas estratégias de replicação:</p>
+                <ul>
+                    <li>📋 <strong>Master-Slave</strong> - Replicação assíncrona tradicional</li>
+                    <li>⚖️ <strong>Multi-Master</strong> - Escritas em múltiplos nós</li>
+                    <li>🔄 <strong>Chain Replication</strong> - Replicação em cadeia</li>
+                    <li>⭐ <strong>Quorum-Based</strong> - Replicação com quórum (R+W > N)</li>
+                    <li>📊 <strong>Replication Factor</strong> - Fator de replicação configurável</li>
+                    <li>🔍 <strong>Consistency Levels</strong> - ONE, QUORUM, ALL</li>
+                    <li>💾 <strong>Write-Ahead Log</strong> - WAL para durabilidade</li>
+                    <li>⚡ <strong>Async & Sync</strong> - Replicação síncrona e assíncrona</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ReplicationManager</code></td>
+                        <td>Gerenciador de replicação</td>
+                        <td>Coordenação de réplicas</td>
+                    </tr>
+                    <tr>
+                        <td><code>ReplicationStrategy</code></td>
+                        <td>Estratégia de replicação</td>
+                        <td>Master-Slave, Multi-Master, etc</td>
+                    </tr>
+                    <tr>
+                        <td><code>Replica</code></td>
+                        <td>Nó réplica</td>
+                        <td>Cópia de dados</td>
+                    </tr>
+                    <tr>
+                        <td><code>ConsistencyLevel</code></td>
+                        <td>Nível de consistência</td>
+                        <td>ONE, QUORUM, ALL</td>
+                    </tr>
+                    <tr>
+                        <td><code>WriteAheadLog</code></td>
+                        <td>Log de escritas</td>
+                        <td>Durabilidade e recovery</td>
+                    </tr>
+                    <tr>
+                        <td><code>ReplicationConfig</code></td>
+                        <td>Configuração de replicação</td>
+                        <td>Fator, timeout, etc</td>
+                    </tr>
+                    <tr>
+                        <td><code>ReplicationMetrics</code></td>
+                        <td>Métricas de replicação</td>
+                        <td>Lag, throughput</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Master-Slave Replication</h3>
+            <div class="code-block">
+                <pre><code>use avx_replication::{ReplicationManager, ReplicationStrategy};
+
+let config = ReplicationConfig {
+    replication_factor: 3,
+    strategy: ReplicationStrategy::MasterSlave,
+    async_replication: true,
+};
+
+let mut manager = ReplicationManager::with_config(config);
+
+// Adicionar réplicas
+manager.add_replica("replica1", "10.0.1.1:9000")?;
+manager.add_replica("replica2", "10.0.1.2:9000")?;
+manager.add_replica("replica3", "10.0.1.3:9000")?;
+
+// Escrever no master (replica para slaves automaticamente)
+manager.write("key123", b"data".to_vec()).await?;</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Quorum-Based Replication</h3>
+            <div class="code-block">
+                <pre><code>use avx_replication::{ReplicationManager, ConsistencyLevel};
+
+let mut manager = ReplicationManager::new();
+
+// Configurar 5 réplicas
+for i in 0..5 {
+    manager.add_replica(&format!("replica{}", i), &format!("10.0.1.{}:9000", i))?;
+}
+
+// Escrever com QUORUM (3 de 5 réplicas)
+manager.write_with_consistency(
+    "key",
+    b"value".to_vec(),
+    ConsistencyLevel::Quorum
+).await?;
+
+// Ler com QUORUM
+let value = manager.read_with_consistency(
+    "key",
+    ConsistencyLevel::Quorum
+).await?;</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Chain Replication</h3>
+            <div class="code-block">
+                <pre><code>use avx_replication::{ChainReplication, Replica};
+
+let mut chain = ChainReplication::new();
+
+// Configurar cadeia: Head -> Middle -> Tail
+chain.set_head(Replica::new("head", "10.0.1.1:9000"));
+chain.add_middle(Replica::new("middle1", "10.0.1.2:9000"));
+chain.add_middle(Replica::new("middle2", "10.0.1.3:9000"));
+chain.set_tail(Replica::new("tail", "10.0.1.4:9000"));
+
+// Escrever no head (propaga sequencialmente)
+chain.write("key", b"value".to_vec()).await?;
+
+// Ler do tail (sempre tem dados mais recentes commitados)
+let value = chain.read("key").await?;</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Write-Ahead Log</h3>
+            <div class="code-block">
+                <pre><code>use avx_replication::{WriteAheadLog, LogEntry};
+
+let mut wal = WriteAheadLog::new("/var/lib/wal");
+
+// Escrever no WAL antes de replicar
+let entry = LogEntry::new(
+    1,  // sequence number
+    "SET",
+    b"key=value".to_vec()
+);
+
+wal.append(entry).await?;
+wal.flush().await?;
+
+// Replicar
+manager.replicate(&entry).await?;
+
+// Recovery em caso de falha
+let entries = wal.read_from(last_sequence)?;
+for entry in entries {
+    manager.replay(entry)?;
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Monitorar Replication Lag</h3>
+            <div class="code-block">
+                <pre><code>use avx_replication::ReplicationMetrics;
+
+let metrics = manager.get_metrics();
+
+for replica in manager.replicas() {
+    let lag = metrics.get_lag(replica.id());
+    
+    if lag > Duration::from_secs(10) {
+        println!("AVISO: Réplica {} está {} atrás", 
+            replica.id(), 
+            lag.as_secs()
+        );
+    }
+}
+
+// Throughput de replicação
+println!("Throughput: {} ops/s", metrics.replication_rate());</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">ReplicationManager</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new()</code></td>
+                        <td>Cria manager padrão</td>
+                        <td><code>ReplicationManager</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>add_replica(id, addr)</code></td>
+                        <td>Adiciona réplica</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>remove_replica(id)</code></td>
+                        <td>Remove réplica</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>write(key, value)</code></td>
+                        <td>Escreve com replicação</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>write_with_consistency(k, v, cl)</code></td>
+                        <td>Escreve com nível consistência</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>read_with_consistency(k, cl)</code></td>
+                        <td>Lê com nível consistência</td>
+                        <td><code>Result&lt;Vec&lt;u8&gt;&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_metrics()</code></td>
+                        <td>Obtém métricas</td>
+                        <td><code>ReplicationMetrics</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    📋 Replicação de Alta Velocidade
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Async Replication (3 nodes)</td>
+                                <td>~1ms</td>
+                                <td>1000 writes/s</td>
+                            </tr>
+                            <tr>
+                                <td>Sync Replication (3 nodes)</td>
+                                <td>~5ms</td>
+                                <td>200 writes/s</td>
+                            </tr>
+                            <tr>
+                                <td>Quorum Write (5 nodes)</td>
+                                <td>~3ms</td>
+                                <td>333 writes/s</td>
+                            </tr>
+                            <tr>
+                                <td>WAL Append</td>
+                                <td>~100μs</td>
+                                <td>10K ops/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Pipelined replication</li>
+                        <li>✅ Batched WAL writes</li>
+                        <li>✅ Parallel replica updates</li>
+                        <li>✅ Zero-copy data transfer</li>
+                        <li>✅ Compression for network</li>
+                    </ul>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Garantias</h3>
+                    <ul>
+                        <li>✅ Durabilidade (WAL)</li>
+                        <li>✅ Eventual consistency (async)</li>
+                        <li>✅ Strong consistency (sync/quorum)</li>
+                        <li>✅ No data loss com quórum</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">💾 Banco de Dados Replicado</h3>
+                <p>Replique dados entre múltiplos servidores para alta disponibilidade.</p>
+                <div class="code-block">
+                    <pre><code>// Configurar 3 réplicas
+let manager = ReplicationManager::with_factor(3);
+
+// Master-Slave com async replication
+manager.set_strategy(ReplicationStrategy::MasterSlave);
+
+// Escritas replicam automaticamente
+manager.write("user:123", user_data).await?;
+
+// Leituras podem vir de qualquer réplica
+let data = manager.read_from_replica("replica2", "user:123").await?;</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">📊 Sistema de Métricas</h3>
+                <p>Replique métricas para múltiplos data centers para análise local.</p>
+                <div class="code-block">
+                    <pre><code>// Réplicas em múltiplos DCs
+manager.add_replica("dc1", "us-east.example.com:9000")?;
+manager.add_replica("dc2", "us-west.example.com:9000")?;
+manager.add_replica("dc3", "eu-west.example.com:9000")?;
+
+// Async replication para baixa latência
+manager.write_async("metrics", metric_data).await?;</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔐 Sistema Crítico</h3>
+                <p>Use replicação síncrona com quórum para dados críticos.</p>
+                <div class="code-block">
+                    <pre><code>// Replicação síncrona com quórum
+manager.write_with_consistency(
+    "financial:transaction",
+    transaction_data,
+    ConsistencyLevel::Quorum
+).await?;
+
+// Garante que maioria das réplicas tem os dados
+// antes de confirmar a escrita</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-replication - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

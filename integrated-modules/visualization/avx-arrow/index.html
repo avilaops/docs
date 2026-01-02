@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx-Arrow - Formato Colunar de Alta Performance</title>
+    <meta name="description" content="Documentação completa do Avx-Arrow - Formato colunar nativo otimizado para computação científica">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">🔶</div>
+                <div class="logo-text">
+                    <h1>Avx-Arrow</h1>
+                    <p>Columnar Data Format</p>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Início</a></li>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#types">Tipos</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#api">API</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+
+                <div class="controls">
+                    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                    <select class="lang-select" onchange="changeLanguage(this.value)">
+                        <option value="pt-BR">🇧🇷 PT-BR</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <h1>🔶 Avx-Arrow</h1>
+            <p>Formato Colunar Nativo de Alta Performance</p>
+            <div class="hero-buttons">
+                <a href="#examples" class="btn btn-primary">Ver Exemplos</a>
+                <a href="#api" class="btn btn-secondary">Referência da API</a>
+            </div>
+        </div>
+
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>Visão Geral do Módulo</h2>
+
+            <p style="font-size: 1.125rem; line-height: 1.8; color: var(--text-secondary);">
+                Avx-Arrow é um formato de dados colunar desenvolvido do zero para performance máxima em
+                cargas de trabalho científicas e analíticas. Com tipos científicos nativos e otimizações
+                SIMD avançadas, oferece 3-5x mais velocidade que implementações tradicionais.
+            </p>
+
+            <div class="cards-grid" style="margin-top: 2rem;">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3>Zero-Copy</h3>
+                    <p>Operações sem cópia de dados para máxima eficiência de memória e cache.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔬</div>
+                    <h3>Tipos Científicos</h3>
+                    <p>Quaternions, Tensors, Complex e Spinors nativos para computação científica.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🗜️</div>
+                    <h3>Compressão</h3>
+                    <p>LZ4, Zstd, Delta, RLE e Dictionary para reduzir uso de memória.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔗</div>
+                    <h3>Integração</h3>
+                    <p>Bindings para Python/NumPy/Pandas e WebAssembly nativos.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Types Section -->
+        <section id="types">
+            <h2>Todos os Tipos Disponíveis</h2>
+
+            <h3>Tipos Primitivos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Tamanho</th>
+                        <th>Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Int8/UInt8</code></td>
+                        <td>Inteiros de 8 bits</td>
+                        <td>1 byte</td>
+                        <td>Flags, pequenos contadores</td>
+                    </tr>
+                    <tr>
+                        <td><code>Int16/UInt16</code></td>
+                        <td>Inteiros de 16 bits</td>
+                        <td>2 bytes</td>
+                        <td>IDs pequenos, portas</td>
+                    </tr>
+                    <tr>
+                        <td><code>Int32/UInt32</code></td>
+                        <td>Inteiros de 32 bits</td>
+                        <td>4 bytes</td>
+                        <td>IDs, timestamps</td>
+                    </tr>
+                    <tr>
+                        <td><code>Int64/UInt64</code></td>
+                        <td>Inteiros de 64 bits</td>
+                        <td>8 bytes</td>
+                        <td>IDs grandes, timestamps precisos</td>
+                    </tr>
+                    <tr>
+                        <td><code>Float16</code></td>
+                        <td>Float de meia precisão</td>
+                        <td>2 bytes</td>
+                        <td>ML inference, GPU</td>
+                    </tr>
+                    <tr>
+                        <td><code>Float32</code></td>
+                        <td>Float de precisão simples</td>
+                        <td>4 bytes</td>
+                        <td>Gráficos, física</td>
+                    </tr>
+                    <tr>
+                        <td><code>Float64</code></td>
+                        <td>Float de dupla precisão</td>
+                        <td>8 bytes</td>
+                        <td>Ciência, engenharia</td>
+                    </tr>
+                    <tr>
+                        <td><code>Boolean</code></td>
+                        <td>Valor booleano</td>
+                        <td>1 bit</td>
+                        <td>Flags, máscaras</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Tipos Científicos (Exclusivos)</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>🔄 Quaternion</h3>
+                    <p><strong>Uso:</strong> Rotações 3D, orientação espacial, gráficos</p>
+                    <div class="code-block">
+                        <pre><code>let q = Quaternion::new(1.0, 0.0, 0.0, 0.0);
+let from_euler = Quaternion::from_euler(0.0, 90.0, 0.0);
+let rotated = q * from_euler;</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📊 Tensor</h3>
+                    <p><strong>Uso:</strong> Machine learning, arrays multidimensionais</p>
+                    <div class="code-block">
+                        <pre><code>let tensor = TensorArray::from_shape_vec(
+    vec![2, 3, 3],
+    vec![1.0, 2.0, 3.0, ...]
+)?;</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🔢 Complex</h3>
+                    <p><strong>Uso:</strong> Processamento de sinais, FFT, física quântica</p>
+                    <div class="code-block">
+                        <pre><code>let c = Complex::new(1.0, 2.0);
+let magnitude = c.magnitude();
+let phase = c.phase();</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>⚛️ Spinor</h3>
+                    <p><strong>Uso:</strong> Física quântica, teoria da relatividade</p>
+                    <div class="code-block">
+                        <pre><code>let spinor = Spinor::new([1.0, 0.0], [0.0, 1.0]);
+let evolved = spinor.evolve(hamiltonian, time);</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Exemplos de Uso</h2>
+
+            <h3>Exemplo 1: Arrays Básicos</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_arrow::array::*;
+use avx_arrow::{Schema, Field, DataType, RecordBatch};
+
+// Criar arrays
+let ids = Int64Array::from(vec![1, 2, 3, 4, 5]);
+let names = StringArray::from(vec!["Alice", "Bob", "Carol", "Dave", "Eve"]);
+let scores = Float64Array::from(vec![95.5, 87.3, 92.1, 88.9, 91.0]);
+
+// Schema
+let schema = Schema::new(vec![
+    Field::new("id", DataType::Int64),
+    Field::new("name", DataType::Utf8),
+    Field::new("score", DataType::Float64),
+]);
+
+// RecordBatch
+let batch = RecordBatch::try_new(
+    schema,
+    vec![Box::new(ids), Box::new(names), Box::new(scores)]
+)?;
+
+println!("Batch: {} linhas, {} colunas",
+    batch.num_rows(), batch.num_columns());</code></pre>
+            </div>
+
+            <h3>Exemplo 2: Operações de Computação</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_arrow::compute::*;
+
+let a = Int32Array::from(vec![1, 2, 3, 4, 5]);
+let b = Int32Array::from(vec![10, 20, 30, 40, 50]);
+
+// Aritmética
+let sum = add(&a, &b)?;
+let product = multiply(&a, &b)?;
+
+// Agregações
+let total = sum_i32(&a)?;
+let average = mean_f64(&a)?;
+
+// Filtros
+let mask = BooleanArray::from(vec![true, false, true, false, true]);
+let filtered = filter(&a, &mask)?;</code></pre>
+            </div>
+
+            <h3>Exemplo 3: Compressão</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_arrow::compression::*;
+
+// LZ4 (rápido)
+let data = Int32Array::from(vec![1, 2, 3, 4, 5]);
+let compressed = lz4_compress(&data)?;
+
+// Zstd (máxima compressão)
+let zstd = zstd_compress(&data, 3)?;
+
+// Delta (séries temporais)
+let timestamps = Int64Array::from(vec![1000, 1001, 1002]);
+let delta = delta_encode(&timestamps)?;</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section id="api">
+            <h2>Referência da API</h2>
+
+            <h3>Core Types</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Métodos Principais</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Schema</code></td>
+                        <td>Define estrutura de dados</td>
+                        <td><code>new()</code>, <code>fields()</code>, <code>field()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>Field</code></td>
+                        <td>Campo individual</td>
+                        <td><code>new()</code>, <code>name()</code>, <code>data_type()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>RecordBatch</code></td>
+                        <td>Coleção de arrays</td>
+                        <td><code>try_new()</code>, <code>num_rows()</code>, <code>columns()</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Operações de Computação</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Aritméticos</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>add(a, b)</code> - Adição</li>
+                        <li><code>sub(a, b)</code> - Subtração</li>
+                        <li><code>mul(a, b)</code> - Multiplicação</li>
+                        <li><code>div(a, b)</code> - Divisão</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Agregações</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>sum(array)</code> - Soma</li>
+                        <li><code>mean(array)</code> - Média</li>
+                        <li><code>min(array)</code> - Mínimo</li>
+                        <li><code>max(array)</code> - Máximo</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Filtros</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>filter(array, mask)</code></li>
+                        <li><code>take(array, indices)</code></li>
+                        <li><code>slice(array, offset, len)</code></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Joins</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>inner_join(left, right)</code></li>
+                        <li><code>left_join(left, right)</code></li>
+                        <li><code>outer_join(left, right)</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance">
+            <h2>Performance</h2>
+
+            <h3>Benchmarks Detalhados (1M elementos)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Avx-Arrow</th>
+                        <th>Taxa</th>
+                        <th>Otimização</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>add_i32</td>
+                        <td>1.2 ms</td>
+                        <td>833k ops/ms</td>
+                        <td>SIMD AVX2</td>
+                    </tr>
+                    <tr>
+                        <td>multiply_f64</td>
+                        <td>1.5 ms</td>
+                        <td>666k ops/ms</td>
+                        <td>SIMD AVX2</td>
+                    </tr>
+                    <tr>
+                        <td>filter</td>
+                        <td>0.8 ms</td>
+                        <td>1.25M ops/ms</td>
+                        <td>Bitmap SIMD</td>
+                    </tr>
+                    <tr>
+                        <td>sort</td>
+                        <td>12.5 ms</td>
+                        <td>80k ops/ms</td>
+                        <td>Radix + SIMD</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Compressão (100MB dados)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Algoritmo</th>
+                        <th>Tempo</th>
+                        <th>Taxa</th>
+                        <th>Ratio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>LZ4</td>
+                        <td>45 ms</td>
+                        <td>2.2 GB/s</td>
+                        <td>2.5x</td>
+                    </tr>
+                    <tr>
+                        <td>Zstd (level 3)</td>
+                        <td>180 ms</td>
+                        <td>555 MB/s</td>
+                        <td>4.2x</td>
+                    </tr>
+                    <tr>
+                        <td>Delta</td>
+                        <td>12 ms</td>
+                        <td>8.3 GB/s</td>
+                        <td>8.0x</td>
+                    </tr>
+                    <tr>
+                        <td>Dictionary</td>
+                        <td>25 ms</td>
+                        <td>4.0 GB/s</td>
+                        <td>10.0x</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Use Cases -->
+        <section id="use-cases">
+            <h2>Casos de Uso com Animações</h2>
+
+            <div class="cards-grid">
+                <div class="card pulse">
+                    <h3>📊 Analytics em Tempo Real</h3>
+                    <p>Processe milhões de registros por segundo com agregações, joins e window functions.</p>
+                    <div class="code-block">
+                        <pre><code>let grouped = group_by(&data, &["sensor_id"])?;
+let avg = aggregate(&grouped, "temp", AggregateFunc::Mean)?;</code></pre>
+                    </div>
+                </div>
+
+                <div class="card pulse">
+                    <h3>📈 Time Series</h3>
+                    <p>Análise de séries temporais com compressão Delta otimizada.</p>
+                    <div class="code-block">
+                        <pre><code>let ma_7d = rolling_mean(&prices, 7)?;
+let cumulative = cumsum(&prices)?;</code></pre>
+                    </div>
+                </div>
+
+                <div class="card pulse">
+                    <h3>🤖 Machine Learning</h3>
+                    <p>Features e tensors para pipelines de ML.</p>
+                    <div class="code-block">
+                        <pre><code>let features = TensorArray::from_shape_vec(
+    vec![10000, 128], data
+)?;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section id="license">
+            <h2>Licença</h2>
+
+            <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 2rem;">
+                <h3 style="color: white;">⚖️ Propriedade Exclusiva</h3>
+                <p style="color: rgba(255,255,255,0.95);">
+                    Este software é <strong>propriedade exclusiva de Nícolas Ávila</strong>.
+                    Todos os direitos reservados.
+                </p>
+                <p style="color: rgba(255,255,255,0.95); margin-top: 1rem;">
+                    Para licenciamento comercial, entre em contato:
+                </p>
+                <ul style="color: rgba(255,255,255,0.95); margin-top: 1rem;">
+                    <li>📧 nicolas@avila.inc</li>
+                    <li>🌐 https://avila.inc</li>
+                </ul>
+                <a href="../../LICENSE-PROPRIETARY.md" class="btn" style="background: white; color: var(--primary); margin-top: 1.5rem; display: inline-block;">Ver Licença Completa</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Avx-Arrow</h3>
+                <p>Formato colunar de alta performance</p>
+                <p style="margin-top: 1rem;">
+                    <strong>Copyright © 2025 Nícolas Ávila</strong>
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Documentação</h3>
+                <ul>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#types">Tipos</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#api">API</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Suporte</h3>
+                <ul>
+                    <li><a href="mailto:nicolas@avila.inc">📧 Email</a></li>
+                    <li><a href="https://avila.inc">🌐 Website</a></li>
+                    <li><a href="https://docs.avila.inc">📖 Docs</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Desenvolvido com 🧡 por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

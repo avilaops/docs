@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX QUIC - Protocolo QUIC de próxima geração">
+    <title>AVX QUIC - Documentação</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="../index.html" style="text-decoration:none;color:inherit;">AVX Network</a></div>
+                <div class="controls">
+                    <button id="theme-toggle" class="theme-toggle">🌙</button>
+                    <select id="lang-select" class="lang-select">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#types">Tipos Disponíveis</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#usecases">Casos de Uso</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>🚀 AVX QUIC</h1>
+                <p>Protocolo QUIC de próxima geração para transporte multiplexado de baixa latência</p>
+            </div>
+
+            <section id="overview" class="section fade-in">
+                <h2>📋 Visão Geral</h2>
+                <p>AVX QUIC implementa o protocolo QUIC (RFC 9000) otimizado para comunicação moderna na Internet. Com suporte a HTTP/3, multiplexing sem head-of-line blocking, 0-RTT connection establishment, e connection migration, QUIC representa o futuro do transporte na web.</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card">
+                        <h3>⚡ 0-RTT</h3>
+                        <p>Estabelecimento de conexão com zero round-trips</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🔀 Multiplexing</h3>
+                        <p>Múltiplos streams sem head-of-line blocking</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🔒 Built-in TLS 1.3</h3>
+                        <p>Criptografia integrada ao protocolo</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>📱 Connection Migration</h3>
+                        <p>Mudança de rede sem reconexão</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="types" class="section fade-in">
+                <h2>📦 Tipos Disponíveis</h2>
+
+                <h3>Core</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>QuicEndpoint</code></td>
+                            <td>Endpoint QUIC cliente/servidor</td>
+                        </tr>
+                        <tr>
+                            <td><code>QuicConnection</code></td>
+                            <td>Conexão QUIC estabelecida</td>
+                        </tr>
+                        <tr>
+                            <td><code>QuicStream</code></td>
+                            <td>Stream bidirecional ou unidirecional</td>
+                        </tr>
+                        <tr>
+                            <td><code>QuicConfig</code></td>
+                            <td>Configuração de endpoint QUIC</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Stream Types</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>BiStream</code></td>
+                            <td>Stream bidirecional (send + recv)</td>
+                        </tr>
+                        <tr>
+                            <td><code>SendStream</code></td>
+                            <td>Stream unidirecional (send only)</td>
+                        </tr>
+                        <tr>
+                            <td><code>RecvStream</code></td>
+                            <td>Stream unidirecional (recv only)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Congestion Control</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Algoritmo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Cubic</code></td>
+                            <td>Algoritmo CUBIC (padrão)</td>
+                        </tr>
+                        <tr>
+                            <td><code>BBR</code></td>
+                            <td>Bottleneck Bandwidth and RTT</td>
+                        </tr>
+                        <tr>
+                            <td><code>NewReno</code></td>
+                            <td>Algoritmo New Reno clássico</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Configuration Options</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Opção</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>max_idle_timeout</code></td>
+                            <td>Timeout máximo de inatividade</td>
+                        </tr>
+                        <tr>
+                            <td><code>initial_rtt</code></td>
+                            <td>RTT inicial estimado</td>
+                        </tr>
+                        <tr>
+                            <td><code>max_udp_payload_size</code></td>
+                            <td>Tamanho máximo de payload UDP</td>
+                        </tr>
+                        <tr>
+                            <td><code>max_concurrent_streams</code></td>
+                            <td>Número máximo de streams simultâneos</td>
+                        </tr>
+                        <tr>
+                            <td><code>enable_0rtt</code></td>
+                            <td>Habilita conexões 0-RTT</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="examples" class="section fade-in">
+                <h2>💡 Exemplos de Uso</h2>
+
+                <h3>Servidor QUIC Básico</h3>
+                <pre><code>use avx_quic::{QuicEndpoint, QuicConfig};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let cert = std::fs::read("server.crt")?;
+    let key = std::fs::read("server.key")?;
+
+    let config = QuicConfig::new()
+        .with_certificate(&cert, &key)?
+        .with_alpn_protocols(&["h3"])
+        .build();
+
+    let endpoint = QuicEndpoint::server("0.0.0.0:4433", config).await?;
+
+    println!("QUIC server listening on :4433");
+
+    while let Some(connecting) = endpoint.accept().await {
+        tokio::spawn(async move {
+            match connecting.await {
+                Ok(connection) => {
+                    println!("New QUIC connection");
+                    handle_connection(connection).await;
+                }
+                Err(e) => eprintln!("Connection error: {}", e),
+            }
+        });
+    }
+
+    Ok(())
+}
+
+async fn handle_connection(conn: QuicConnection) {
+    while let Ok((send, recv)) = conn.accept_bi().await {
+        tokio::spawn(async move {
+            handle_stream(send, recv).await;
+        });
+    }
+}</code></pre>
+
+                <h3>Cliente QUIC</h3>
+                <pre><code>use avx_quic::{QuicEndpoint, QuicConfig};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let config = QuicConfig::new()
+        .with_alpn_protocols(&["h3"])
+        .build();
+
+    let endpoint = QuicEndpoint::client("0.0.0.0:0", config).await?;
+
+    let connection = endpoint
+        .connect("example.com:4433", "example.com")
+        .await?;
+
+    println!("Connected to server");
+
+    // Abrir stream bidirecional
+    let (mut send, mut recv) = connection.open_bi().await?;
+
+    send.write_all(b"Hello, Server!").await?;
+    send.finish().await?;
+
+    let response = recv.read_to_end(1024).await?;
+    println!("Response: {}", String::from_utf8_lossy(&response));
+
+    Ok(())
+}</code></pre>
+
+                <h3>HTTP/3 Request</h3>
+                <pre><code>use avx_quic::{QuicEndpoint, QuicConfig};
+
+async fn http3_request(url: &str) -> Result<String> {
+    let config = QuicConfig::new()
+        .with_alpn_protocols(&["h3"])
+        .build();
+
+    let endpoint = QuicEndpoint::client("0.0.0.0:0", config).await?;
+    let connection = endpoint.connect(url, "example.com").await?;
+
+    let (mut send, mut recv) = connection.open_bi().await?;
+
+    // Enviar requisição HTTP/3
+    let request = format!(
+        "GET / HTTP/3\r\nHost: example.com\r\n\r\n"
+    );
+
+    send.write_all(request.as_bytes()).await?;
+    send.finish().await?;
+
+    // Receber resposta
+    let response = recv.read_to_end(65536).await?;
+    Ok(String::from_utf8_lossy(&response).to_string())
+}</code></pre>
+
+                <h3>0-RTT Connection</h3>
+                <pre><code>use avx_quic::QuicEndpoint;
+
+// Primeira conexão - armazena session data
+let connection = endpoint.connect("example.com:4433", "example.com").await?;
+let session_data = connection.export_session_data();
+
+// Segunda conexão com 0-RTT
+let config = QuicConfig::new()
+    .with_0rtt_enabled()
+    .with_session_data(session_data)
+    .build();
+
+let endpoint = QuicEndpoint::client("0.0.0.0:0", config).await?;
+
+// Enviar dados early (0-RTT)
+let mut connection = endpoint.connect("example.com:4433", "example.com").await?;
+let early_data = b"Early application data";
+connection.send_early_data(early_data).await?;</code></pre>
+
+                <h3>Connection Migration</h3>
+                <pre><code>use avx_quic::QuicConnection;
+
+// Conexão original
+let connection = endpoint.connect("example.com:4433", "example.com").await?;
+
+// Detectar mudança de rede (ex: WiFi -> 4G)
+let new_local_addr = "192.168.2.100:0";
+
+// Migrar conexão para novo endereço
+connection.migrate_to(new_local_addr).await?;
+
+println!("Connection migrated to new network");</code></pre>
+
+                <h3>Múltiplos Streams</h3>
+                <pre><code>use avx_quic::QuicConnection;
+
+async fn concurrent_streams(conn: QuicConnection) -> Result<()> {
+    let mut handles = vec![];
+
+    // Abrir 10 streams simultâneos
+    for i in 0..10 {
+        let conn = conn.clone();
+        let handle = tokio::spawn(async move {
+            let (mut send, mut recv) = conn.open_bi().await?;
+
+            send.write_all(format!("Stream {}", i).as_bytes()).await?;
+            send.finish().await?;
+
+            let response = recv.read_to_end(1024).await?;
+            println!("Stream {} response: {:?}", i, response);
+
+            Ok::<_, Box<dyn std::error::Error>>(())
+        });
+
+        handles.push(handle);
+    }
+
+    // Aguardar conclusão de todos os streams
+    for handle in handles {
+        handle.await??;
+    }
+
+    Ok(())
+}</code></pre>
+
+                <h3>Unidirectional Streams</h3>
+                <pre><code>use avx_quic::QuicConnection;
+
+// Servidor - aceitar streams unidirecionais
+async fn accept_uni_streams(conn: QuicConnection) {
+    while let Ok(mut recv) = conn.accept_uni().await {
+        tokio::spawn(async move {
+            let data = recv.read_to_end(65536).await?;
+            println!("Received: {:?}", data);
+            Ok::<_, Box<dyn std::error::Error>>(())
+        });
+    }
+}
+
+// Cliente - abrir stream unidirecional
+let mut send = connection.open_uni().await?;
+send.write_all(b"Unidirectional data").await?;
+send.finish().await?;</code></pre>
+
+                <h3>Datagrams (Unreliable)</h3>
+                <pre><code>use avx_quic::QuicConnection;
+
+// Habilitar datagrams
+let config = QuicConfig::new()
+    .with_datagrams_enabled()
+    .build();
+
+// Enviar datagram
+connection.send_datagram(b"Unreliable message")?;
+
+// Receber datagram
+while let Some(data) = connection.recv_datagram().await {
+    println!("Received datagram: {:?}", data);
+}</code></pre>
+
+                <h3>Custom Congestion Control</h3>
+                <pre><code>use avx_quic::{QuicConfig, CongestionControl};
+
+let config = QuicConfig::new()
+    .with_congestion_control(CongestionControl::BBR)
+    .with_initial_rtt(Duration::from_millis(50))
+    .build();</code></pre>
+
+                <h3>Connection Stats</h3>
+                <pre><code>use avx_quic::QuicConnection;
+
+let stats = connection.stats();
+
+println!("RTT: {:?}", stats.rtt);
+println!("Congestion window: {}", stats.cwnd);
+println!("Packets sent: {}", stats.packets_sent);
+println!("Packets lost: {}", stats.packets_lost);
+println!("Bytes sent: {}", stats.bytes_sent);
+println!("Bytes received: {}", stats.bytes_received);</code></pre>
+
+                <h3>Graceful Shutdown</h3>
+                <pre><code>use avx_quic::QuicConnection;
+
+// Close com error code e reason
+connection.close(0u32.into(), b"Normal shutdown");
+
+// Aguardar confirmação de fechamento
+connection.wait_idle().await;</code></pre>
+
+                <h3>Server with Multiple ALPNs</h3>
+                <pre><code>use avx_quic::{QuicEndpoint, QuicConfig};
+
+let config = QuicConfig::new()
+    .with_certificate(&cert, &key)?
+    .with_alpn_protocols(&["h3", "h3-29", "http/0.9"])
+    .build();
+
+let endpoint = QuicEndpoint::server("0.0.0.0:4433", config).await?;
+
+while let Some(connecting) = endpoint.accept().await {
+    tokio::spawn(async move {
+        let connection = connecting.await?;
+
+        // Verificar protocolo negociado
+        match connection.negotiated_alpn() {
+            Some(b"h3") => handle_http3(connection).await,
+            Some(b"http/0.9") => handle_http09(connection).await,
+            _ => println!("Unknown protocol"),
+        }
+
+        Ok::<_, Box<dyn std::error::Error>>(())
+    });
+}</code></pre>
+
+                <h3>QUIC Proxy</h3>
+                <pre><code>use avx_quic::{QuicEndpoint, QuicConnection};
+
+async fn proxy_connection(client_conn: QuicConnection) -> Result<()> {
+    // Conectar ao backend via QUIC
+    let backend_conn = backend_endpoint
+        .connect("backend.example.com:4433", "backend")
+        .await?;
+
+    // Proxy bidirectional
+    loop {
+        tokio::select! {
+            Ok((mut c_send, mut c_recv)) = client_conn.accept_bi() => {
+                let (mut b_send, mut b_recv) = backend_conn.open_bi().await?;
+
+                tokio::spawn(async move {
+                    tokio::io::copy(&mut c_recv, &mut b_send).await?;
+                    tokio::io::copy(&mut b_recv, &mut c_send).await?;
+                    Ok::<_, Box<dyn std::error::Error>>(())
+                });
+            }
+            else => break,
+        }
+    }
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="api" class="section fade-in">
+                <h2>📚 Referências da API</h2>
+
+                <h3>QuicEndpoint</h3>
+                <div class="module-card">
+                    <h4><code>QuicEndpoint::server(addr: &str, config: QuicConfig) -> Result&lt;Self&gt;</code></h4>
+                    <p>Cria endpoint QUIC servidor bound ao endereço especificado.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>QuicEndpoint::client(addr: &str, config: QuicConfig) -> Result&lt;Self&gt;</code></h4>
+                    <p>Cria endpoint QUIC cliente para estabelecer conexões.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>QuicEndpoint::connect(addr: &str, server_name: &str) -> Result&lt;QuicConnection&gt;</code></h4>
+                    <p>Estabelece conexão QUIC com servidor remoto.</p>
+                </div>
+
+                <h3 class="mt-3">QuicConnection</h3>
+                <div class="module-card">
+                    <h4><code>QuicConnection::open_bi() -> Result&lt;(SendStream, RecvStream)&gt;</code></h4>
+                    <p>Abre novo stream bidirecional.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>QuicConnection::accept_bi() -> Result&lt;(SendStream, RecvStream)&gt;</code></h4>
+                    <p>Aceita stream bidirecional iniciado pelo peer.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>QuicConnection::open_uni() -> Result&lt;SendStream&gt;</code></h4>
+                    <p>Abre novo stream unidirecional (send only).</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>QuicConnection::accept_uni() -> Result&lt;RecvStream&gt;</code></h4>
+                    <p>Aceita stream unidirecional iniciado pelo peer.</p>
+                </div>
+
+                <h3 class="mt-3">SendStream / RecvStream</h3>
+                <div class="module-card">
+                    <h4><code>SendStream::write_all(data: &[u8]) -> Result&lt;()&gt;</code></h4>
+                    <p>Escreve todos os dados no stream.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>SendStream::finish() -> Result&lt;()&gt;</code></h4>
+                    <p>Finaliza stream (FIN flag).</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>RecvStream::read_to_end(max_size: usize) -> Result&lt;Vec&lt;u8&gt;&gt;</code></h4>
+                    <p>Lê todos os dados do stream até FIN.</p>
+                </div>
+            </section>
+
+            <section id="performance" class="section fade-in">
+                <h2>⚡ Performance</h2>
+
+                <div class="performance-chart">
+                    <h3>Benchmarks - Connection Establishment</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">1-RTT Handshake</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="85" style="width: 0;">2.1 ms</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">0-RTT Handshake</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="100" style="width: 0;">0 RTT</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Connection Migration</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="95" style="width: 0;">150 μs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Throughput</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">Single Stream</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="92" style="width: 0;">8.5 Gbps</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Multiple Streams (10)</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="98" style="width: 0;">9.2 Gbps</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Datagrams</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="88" style="width: 0;">950k pps</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Comparação vs TCP+TLS</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Métrica</th>
+                                <th>AVX QUIC</th>
+                                <th>TCP+TLS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Handshake (0-RTT)</td>
+                                <td>0 ms</td>
+                                <td>~50 ms (3 RTTs)</td>
+                            </tr>
+                            <tr>
+                                <td>Head-of-line blocking</td>
+                                <td>❌ Não existe</td>
+                                <td>✅ Presente</td>
+                            </tr>
+                            <tr>
+                                <td>Connection Migration</td>
+                                <td>✅ Sim (150μs)</td>
+                                <td>❌ Não</td>
+                            </tr>
+                            <tr>
+                                <td>Throughput (10 streams)</td>
+                                <td>9.2 Gbps</td>
+                                <td>7.8 Gbps</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-3">Características de Performance</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>✅ Zero Round-Trip Time</h4>
+                        <p>Conexões 0-RTT para clientes conhecidos</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ No Head-of-Line Blocking</h4>
+                        <p>Streams independentes sem bloqueio mútuo</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Connection Migration</h4>
+                        <p>Mudança transparente de rede</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Built-in TLS 1.3</h4>
+                        <p>Criptografia integrada de alta performance</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usecases" class="section fade-in">
+                <h2>🎬 Casos de Uso</h2>
+
+                <div class="module-card">
+                    <h3>🌐 HTTP/3</h3>
+                    <p>Próxima geração de HTTP sobre QUIC para web de alta performance.</p>
+                    <pre><code>let connection = endpoint.connect("example.com:443", "example.com").await?;
+let (send, recv) = connection.open_bi().await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>📱 Mobile Apps</h3>
+                    <p>Apps mobile com connection migration automática (WiFi ↔ 4G/5G).</p>
+                    <pre><code>connection.migrate_to(new_network_addr).await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🎮 Gaming</h3>
+                    <p>Gaming multiplayer com baixa latência e múltiplos streams.</p>
+                    <pre><code>connection.send_datagram(&game_state)?; // Unreliable
+let (send, recv) = connection.open_bi().await?; // Reliable</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>📹 Streaming</h3>
+                    <p>Streaming de vídeo com adaptação dinâmica de bitrate.</p>
+                    <pre><code>for chunk in video_chunks {
+    let mut stream = connection.open_uni().await?;
+    stream.write_all(&chunk).await?;
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="license" class="section fade-in">
+                <h2>📄 Licença</h2>
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Software Proprietário - Veja <a href="../../LICENSE-PROPRIETARY.md">LICENSE-PROPRIETARY.md</a></p>
+                <p class="mt-2">Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <div class="footer-links">
+                    <a href="https://avila.inc">Contato</a>
+                    <a href="https://docs.avila.inc">Documentação</a>
+                    <a href="../../LICENSE-PROPRIETARY.md">Licença</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

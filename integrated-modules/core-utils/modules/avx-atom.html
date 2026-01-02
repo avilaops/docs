@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-atom - Avila Core Utils</title>
+    <link rel="stylesheet" href="../assets/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">⚛️</div>
+                <div class="logo-text">
+                    <h1>avx-atom</h1>
+                    <p>Estruturas de Dados Atômicas de Alto Desempenho</p>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <button id="theme-toggle" class="theme-toggle">🌓 Tema</button>
+                <select id="lang-selector" class="lang-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+                <a href="../index.html" style="color: white; text-decoration: none; padding: 0.5rem 1rem;">← Voltar</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Visão Geral -->
+        <section class="section fade-in">
+            <h2 class="section-title">📋 Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-atom</strong> é uma biblioteca de estruturas de dados fundamentais construída do zero com foco em performance e compatibilidade no_std.</p>
+                <ul style="margin-top: 1rem; padding-left: 2rem;">
+                    <li><strong>Zero-cost abstractions</strong> - Sem overhead de runtime</li>
+                    <li><strong>Lock-free structures</strong> - Operações atômicas sem locks</li>
+                    <li><strong>SIMD optimization</strong> - Aceleração vetorial quando disponível</li>
+                    <li><strong>no_std compatible</strong> - Funciona em sistemas embarcados</li>
+                    <li><strong>Cache-friendly</strong> - Otimizado para localidade de memória</li>
+                </ul>
+
+                <div style="margin-top: 1.5rem;">
+                    <span class="module-version">v0.1.0</span>
+                    <span style="margin-left: 1rem; opacity: 0.8;">📦 Cargo: <code>avx-atom = "0.1.0"</code></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tipos Disponíveis -->
+        <section class="section fade-in">
+            <h2 class="section-title">📚 Tipos Disponíveis</h2>
+
+            <div class="api-table" style="overflow-x: auto;">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Complexidade</th>
+                            <th>Memória</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>DynamicArray&lt;T&gt;</code></td>
+                            <td>Array dinâmico contíguo</td>
+                            <td>O(1) acesso, O(1) push amortizado</td>
+                            <td>24 bytes + elementos</td>
+                        </tr>
+                        <tr>
+                            <td><code>AssociativeArray&lt;K,V&gt;</code></td>
+                            <td>Mapa chave-valor (HashMap/BTree)</td>
+                            <td>O(1) avg / O(log n) no_std</td>
+                            <td>Variável</td>
+                        </tr>
+                        <tr>
+                            <td><code>StringBuffer</code></td>
+                            <td>String UTF-8 crescível</td>
+                            <td>O(1) append amortizado</td>
+                            <td>24 bytes + chars</td>
+                        </tr>
+                        <tr>
+                            <td><code>SkipList&lt;K,V&gt;</code></td>
+                            <td>Lista encadeada probabilística</td>
+                            <td>O(log n) esperado</td>
+                            <td>Variável com ponteiros</td>
+                        </tr>
+                        <tr>
+                            <td><code>Trie&lt;V&gt;</code></td>
+                            <td>Árvore de prefixos</td>
+                            <td>O(m) onde m = tamanho chave</td>
+                            <td>Alto (muitos nós)</td>
+                        </tr>
+                        <tr>
+                            <td><code>BloomFilter</code></td>
+                            <td>Filtro probabilístico de pertencimento</td>
+                            <td>O(k) onde k = funções hash</td>
+                            <td>Bitarray compacto</td>
+                        </tr>
+                        <tr>
+                            <td><code>LRUCache&lt;K,V&gt;</code></td>
+                            <td>Cache com política LRU</td>
+                            <td>O(1) get/put</td>
+                            <td>HashMap + LinkedList</td>
+                        </tr>
+                        <tr>
+                            <td><code>DisjointSet</code></td>
+                            <td>Union-Find com path compression</td>
+                            <td>O(α(n)) quase constante</td>
+                            <td>Array de parent + rank</td>
+                        </tr>
+                        <tr>
+                            <td><code>FenwickTree&lt;T&gt;</code></td>
+                            <td>Árvore binária indexada</td>
+                            <td>O(log n) update/query</td>
+                            <td>Array de somas</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Exemplos de Uso -->
+        <section class="section fade-in">
+            <h2 class="section-title">💡 Exemplos de Uso</h2>
+
+            <h3 style="color: var(--primary-color); margin-top: 2rem;">DynamicArray - Array Dinâmico</h3>
+            <div class="code-block">
+                <pre>use avx_atom::DynamicArray;
+
+fn main() {
+    // Criar array vazio
+    let mut numbers: DynamicArray&lt;i32&gt; = DynamicArray::new();
+
+    // Adicionar elementos - O(1) amortizado
+    numbers.push(10);
+    numbers.push(20);
+    numbers.push(30);
+
+    // Acesso por índice - O(1)
+    println!("Primeiro: {}", numbers[0]); // 10
+
+    // Iterar
+    for &num in &numbers {
+        println!("{}", num);
+    }
+
+    // Capacidade e tamanho
+    println!("Tamanho: {}, Capacidade: {}",
+             numbers.len(), numbers.capacity());
+}</pre>
+            </div>
+
+            <h3 style="color: var(--primary-color); margin-top: 2rem;">SkipList - Lista Encadeada Probabilística</h3>
+            <div class="code-block">
+                <pre>use avx_atom::skiplist::SkipList;
+
+fn main() {
+    // Criar SkipList
+    let mut list = SkipList::new();
+
+    // Inserir elementos - O(log n) esperado
+    list.insert(5, "cinco");
+    list.insert(1, "um");
+    list.insert(10, "dez");
+    list.insert(3, "três");
+
+    // Buscar - O(log n)
+    if let Some(value) = list.get(&5) {
+        println!("Encontrado: {}", value); // "cinco"
+    }
+
+    // Remover - O(log n)
+    list.remove(&3);
+
+    // Iterar em ordem
+    for (key, value) in list.iter() {
+        println!("{}: {}", key, value);
+    }
+    // Output: 1: um, 5: cinco, 10: dez
+}</pre>
+            </div>
+
+            <h3 style="color: var(--primary-color); margin-top: 2rem;">BloomFilter - Teste de Pertencimento</h3>
+            <div class="code-block">
+                <pre>use avx_atom::bloom::BloomFilter;
+
+fn main() {
+    // Criar filtro: 1000 elementos, 1% false positive
+    let mut filter = BloomFilter::new(1000, 0.01);
+
+    // Adicionar elementos
+    filter.insert("user@avila.inc");
+    filter.insert("admin@avila.inc");
+
+    // Testar pertencimento
+    println!("{}", filter.contains("user@avila.inc"));  // true
+    println!("{}", filter.contains("guest@avila.inc")); // false (provavelmente)
+
+    // Pode ter false positives, mas NUNCA false negatives
+    // Se retorna false, elemento definitivamente não está no set
+    // Se retorna true, elemento provavelmente está no set
+}</pre>
+            </div>
+
+            <h3 style="color: var(--primary-color); margin-top: 2rem;">LRUCache - Cache com Eviction</h3>
+            <div class="code-block">
+                <pre>use avx_atom::cache::LRUCache;
+
+fn main() {
+    // Cache com capacidade de 3 elementos
+    let mut cache = LRUCache::new(3);
+
+    // Inserir valores - O(1)
+    cache.put(1, "A");
+    cache.put(2, "B");
+    cache.put(3, "C");
+
+    // Acessar - O(1), move para frente
+    println!("{:?}", cache.get(&1)); // Some("A")
+
+    // Adicionar 4º elemento remove o menos usado (2)
+    cache.put(4, "D");
+
+    println!("{:?}", cache.get(&2)); // None (foi evicted)
+    println!("{:?}", cache.get(&1)); // Some("A")
+    println!("{:?}", cache.get(&3)); // Some("C")
+    println!("{:?}", cache.get(&4)); // Some("D")
+}</pre>
+            </div>
+        </section>
+
+        <!-- Referência da API -->
+        <section class="section fade-in">
+            <h2 class="section-title">📖 Referência da API</h2>
+
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">DynamicArray&lt;T&gt;</h3>
+            <div class="api-table" style="overflow-x: auto;">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                            <th>Complexidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>new() -> Self</code></td>
+                            <td>Cria array vazio</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>with_capacity(cap) -> Self</code></td>
+                            <td>Cria com capacidade pré-alocada</td>
+                            <td>O(n)</td>
+                        </tr>
+                        <tr>
+                            <td><code>push(&mut self, value: T)</code></td>
+                            <td>Adiciona elemento no final</td>
+                            <td>O(1) amort.</td>
+                        </tr>
+                        <tr>
+                            <td><code>pop(&mut self) -> Option&lt;T&gt;</code></td>
+                            <td>Remove e retorna último elemento</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>get(&self, index) -> Option&lt;&T&gt;</code></td>
+                            <td>Acessa elemento por índice</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>len(&self) -> usize</code></td>
+                            <td>Retorna número de elementos</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>capacity(&self) -> usize</code></td>
+                            <td>Retorna capacidade alocada</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>clear(&mut self)</code></td>
+                            <td>Remove todos os elementos</td>
+                            <td>O(n)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: var(--primary-color); margin: 2rem 0 1rem;">SkipList&lt;K, V&gt;</h3>
+            <div class="api-table" style="overflow-x: auto;">
+                <table style="width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                            <th>Complexidade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>new() -> Self</code></td>
+                            <td>Cria skiplist vazia</td>
+                            <td>O(1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>insert(&mut self, K, V)</code></td>
+                            <td>Insere par chave-valor</td>
+                            <td>O(log n)</td>
+                        </tr>
+                        <tr>
+                            <td><code>get(&self, &K) -> Option&lt;&V&gt;</code></td>
+                            <td>Busca valor por chave</td>
+                            <td>O(log n)</td>
+                        </tr>
+                        <tr>
+                            <td><code>remove(&mut self, &K) -> Option&lt;V&gt;</code></td>
+                            <td>Remove e retorna valor</td>
+                            <td>O(log n)</td>
+                        </tr>
+                        <tr>
+                            <td><code>contains_key(&self, &K) -> bool</code></td>
+                            <td>Verifica existência de chave</td>
+                            <td>O(log n)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Performance -->
+        <section class="section fade-in">
+            <h2 class="section-title">⚡ Performance</h2>
+
+            <div class="perf-chart">
+                <h3 style="margin-bottom: 1.5rem;">Benchmarks (ops/sec)</h3>
+
+                <div class="perf-bar">
+                    <div class="perf-label">DynamicArray::push</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="98" style="width: 0%;">980M ops/s</div>
+                    </div>
+                </div>
+
+                <div class="perf-bar">
+                    <div class="perf-label">SkipList::insert</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="85" style="width: 0%;">12M ops/s</div>
+                    </div>
+                </div>
+
+                <div class="perf-bar">
+                    <div class="perf-label">BloomFilter::contains</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="95" style="width: 0%;">450M ops/s</div>
+                    </div>
+                </div>
+
+                <div class="perf-bar">
+                    <div class="perf-label">LRUCache::get</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="90" style="width: 0%;">180M ops/s</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-block" style="margin-top: 2rem;">
+                <h3>Características de Performance</h3>
+                <ul style="margin-top: 1rem; padding-left: 2rem;">
+                    <li><strong>Zero allocations</strong> no hot path sempre que possível</li>
+                    <li><strong>Cache-line optimization</strong> - estruturas alinhadas para CPU cache</li>
+                    <li><strong>SIMD quando disponível</strong> - vetorização automática</li>
+                    <li><strong>Inline agressivo</strong> - funções pequenas sempre inlined</li>
+                    <li><strong>Monomorphization</strong> - código especializado por tipo</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Casos de Uso -->
+        <section class="section fade-in">
+            <h2 class="section-title">🎯 Casos de Uso</h2>
+
+            <div class="use-cases">
+                <div class="use-case-card">
+                    <div class="use-case-icon">💾</div>
+                    <h3>Sistemas de Cache</h3>
+                    <p>LRUCache para caching de queries de banco de dados com eviction automático</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔍</div>
+                    <h3>Busca e Indexação</h3>
+                    <p>Trie para autocomplete e busca de prefixos em tempo real</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Análise de Dados</h3>
+                    <p>FenwickTree para cálculos de somas de range em séries temporais</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Grafos e Redes</h3>
+                    <p>DisjointSet para algoritmos de conectividade e detecção de ciclos</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>Deduplicação</h3>
+                    <p>BloomFilter para filtrar URLs duplicadas em crawlers web</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚡</div>
+                    <h3>Real-time Systems</h3>
+                    <p>SkipList para índices ordenados com inserção rápida</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Licença -->
+        <section class="section fade-in">
+            <h2 class="section-title">📜 Licença</h2>
+            <div class="code-block">
+                <p><strong>Licença Proprietária</strong></p>
+                <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <p style="margin-top: 1rem;">
+                    Este módulo faz parte do ecossistema Avila Core Utils e está sob licença proprietária.
+                    Para uso comercial ou mais informações, entre em contato:
+                </p>
+                <ul style="margin-top: 1rem; padding-left: 2rem;">
+                    <li>📧 Email: <a href="mailto:nicolas@avila.inc" style="color: var(--primary-color);">nicolas@avila.inc</a></li>
+                    <li>🌐 Website: <a href="https://avila.inc" style="color: var(--primary-color);">https://avila.inc</a></li>
+                    <li>📚 Docs: <a href="https://docs.avila.inc" style="color: var(--primary-color);">https://docs.avila.inc</a></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">AVILA INC.</div>
+            <div class="footer-links">
+                <a href="https://avila.inc">Website</a>
+                <a href="mailto:nicolas@avila.inc">Contato</a>
+                <a href="https://github.com/avilaops">GitHub</a>
+                <a href="../index.html">Voltar</a>
+            </div>
+            <div>
+                <p style="font-size: 0.9rem; opacity: 0.8;">
+                    © 2025 Nícolas Ávila. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/app.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const bars = document.querySelectorAll('.perf-bar-fill');
+                bars.forEach(bar => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width + '%';
+                });
+            }, 300);
+        });
+    </script>
+</body>
+</html>

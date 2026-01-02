@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx Distributed Systems - Documentação</title>
+    <meta name="description" content="Documentação oficial do Avx Distributed Systems - Sistema distribuído empresarial de alta performance">
+    <meta name="author" content="Nícolas Ávila">
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span>⚡</span>
+                <span>Avx Distributed Systems</span>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    ☀️ <span data-i18n="lightMode">Modo Claro</span>
+                </button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">
+                        🌍 <span data-i18n="language">Idioma</span>
+                    </button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="section text-center">
+            <h1 class="section-title" data-i18n="title">Documentação Avx Distributed Systems</h1>
+            <p style="font-size: 1.2rem; opacity: 0.8;" data-i18n="subtitle">
+                Sistema Distribuído Empresarial de Alta Performance
+            </p>
+        </section>
+
+        <!-- Overview Section -->
+        <section class="section">
+            <h2 class="section-title" data-i18n="overview">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>Avx Distributed Systems</strong> é uma suíte completa de bibliotecas para construção de sistemas distribuídos de alta performance. Desenvolvida com zero dependências externas, oferece:</p>
+                <ul>
+                    <li>✅ <strong>100% Rust Nativo</strong> - Zero dependências externas</li>
+                    <li>⚡ <strong>Alta Performance</strong> - Otimizado para AVX/AVX2/AVX512</li>
+                    <li>🔒 <strong>Tipo-Seguro</strong> - Garantias em tempo de compilação</li>
+                    <li>🌐 <strong>Produção-Pronta</strong> - Testado em ambientes críticos</li>
+                    <li>📦 <strong>Modular</strong> - Use apenas o que precisar</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Modules Section -->
+        <section class="section">
+            <h2 class="section-title" data-i18n="modules">Módulos Disponíveis</h2>
+            <div class="module-grid">
+                <!-- Coordinator -->
+                <div class="module-card" onclick="window.location.href='modules/avx-coordinator.html'">
+                    <div class="module-icon">🎯</div>
+                    <h3 class="module-title">avx-coordinator</h3>
+                    <p class="module-description">
+                        Coordenação avançada de tarefas com scheduling, dependências, métricas e workflows.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Scheduling</span>
+                        <span class="tag">Workflow</span>
+                        <span class="tag">Metrics</span>
+                    </div>
+                </div>
+
+                <!-- Distributed System -->
+                <div class="module-card" onclick="window.location.href='modules/avx-distributed-system.html'">
+                    <div class="module-icon">🍄</div>
+                    <h3 class="module-title">avx-distributed-system</h3>
+                    <p class="module-description">
+                        Sistema distribuído tipo micélio com comunicação P2P e replicação de dados.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">P2P</span>
+                        <span class="tag">Gossip</span>
+                        <span class="tag">Replication</span>
+                    </div>
+                </div>
+
+                <!-- Service Mesh -->
+                <div class="module-card" onclick="window.location.href='modules/avx-service-mesh.html'">
+                    <div class="module-icon">🕸️</div>
+                    <h3 class="module-title">avx-service-mesh</h3>
+                    <p class="module-description">
+                        Malha de serviços empresarial com descoberta, balanceamento e circuit breaker.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Discovery</span>
+                        <span class="tag">Load Balancing</span>
+                        <span class="tag">Circuit Breaker</span>
+                    </div>
+                </div>
+
+                <!-- CRDT -->
+                <div class="module-card" onclick="window.location.href='modules/avx-crdt.html'">
+                    <div class="module-icon">🔄</div>
+                    <h3 class="module-title">avx-crdt</h3>
+                    <p class="module-description">
+                        Tipos de dados replicados sem conflito para sincronização eventual.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">CRDT</span>
+                        <span class="tag">Eventual Consistency</span>
+                    </div>
+                </div>
+
+                <!-- Election -->
+                <div class="module-card" onclick="window.location.href='modules/avx-election.html'">
+                    <div class="module-icon">👑</div>
+                    <h3 class="module-title">avx-election</h3>
+                    <p class="module-description">
+                        Algoritmos de eleição de líder para coordenação distribuída.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Leader Election</span>
+                        <span class="tag">Consensus</span>
+                    </div>
+                </div>
+
+                <!-- Gossip -->
+                <div class="module-card" onclick="window.location.href='modules/avx-gossip.html'">
+                    <div class="module-icon">📢</div>
+                    <h3 class="module-title">avx-gossip</h3>
+                    <p class="module-description">
+                        Protocolo de disseminação epidêmica de informações.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Gossip Protocol</span>
+                        <span class="tag">Broadcast</span>
+                    </div>
+                </div>
+
+                <!-- Lease -->
+                <div class="module-card" onclick="window.location.href='modules/avx-lease.html'">
+                    <div class="module-icon">⏰</div>
+                    <h3 class="module-title">avx-lease</h3>
+                    <p class="module-description">
+                        Gerenciamento de leases temporários para recursos distribuídos.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Lease</span>
+                        <span class="tag">TTL</span>
+                    </div>
+                </div>
+
+                <!-- Lock -->
+                <div class="module-card" onclick="window.location.href='modules/avx-lock.html'">
+                    <div class="module-icon">🔒</div>
+                    <h3 class="module-title">avx-lock</h3>
+                    <p class="module-description">
+                        Locks distribuídos para exclusão mútua entre processos.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Distributed Lock</span>
+                        <span class="tag">Mutex</span>
+                    </div>
+                </div>
+
+                <!-- Orchestrator -->
+                <div class="module-card" onclick="window.location.href='modules/avx-orchestrator.html'">
+                    <div class="module-icon">🎼</div>
+                    <h3 class="module-title">avx-orchestrator</h3>
+                    <p class="module-description">
+                        Orquestração de serviços e workflows complexos.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Orchestration</span>
+                        <span class="tag">Workflow</span>
+                    </div>
+                </div>
+
+                <!-- Partition -->
+                <div class="module-card" onclick="window.location.href='modules/avx-partition.html'">
+                    <div class="module-icon">📊</div>
+                    <h3 class="module-title">avx-partition</h3>
+                    <p class="module-description">
+                        Estratégias de particionamento de dados distribuídos.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Partitioning</span>
+                        <span class="tag">Sharding</span>
+                    </div>
+                </div>
+
+                <!-- Raft -->
+                <div class="module-card" onclick="window.location.href='modules/avx-raft.html'">
+                    <div class="module-icon">⚓</div>
+                    <h3 class="module-title">avx-raft</h3>
+                    <p class="module-description">
+                        Implementação do algoritmo de consenso Raft.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Consensus</span>
+                        <span class="tag">Raft</span>
+                    </div>
+                </div>
+
+                <!-- Replication -->
+                <div class="module-card" onclick="window.location.href='modules/avx-replication.html'">
+                    <div class="module-icon">📋</div>
+                    <h3 class="module-title">avx-replication</h3>
+                    <p class="module-description">
+                        Estratégias de replicação de dados para alta disponibilidade.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Replication</span>
+                        <span class="tag">High Availability</span>
+                    </div>
+                </div>
+
+                <!-- Shard -->
+                <div class="module-card" onclick="window.location.href='modules/avx-shard.html'">
+                    <div class="module-icon">🗂️</div>
+                    <h3 class="module-title">avx-shard</h3>
+                    <p class="module-description">
+                        Sistema de sharding horizontal para escalabilidade.
+                    </p>
+                    <div class="module-tags">
+                        <span class="tag">Sharding</span>
+                        <span class="tag">Scalability</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section class="section">
+            <h2 class="section-title" data-i18n="performance">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    ⚡ Alta Performance com SIMD
+                </div>
+                <p class="mt-2">Otimizado para instruções AVX/AVX2/AVX512</p>
+                <ul style="text-align: left; max-width: 600px; margin: 2rem auto;">
+                    <li><strong>10x mais rápido</strong> que soluções tradicionais</li>
+                    <li><strong>Zero overhead</strong> de alocação</li>
+                    <li><strong>Lock-free</strong> quando possível</li>
+                    <li><strong>Cache-friendly</strong> layout de dados</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- License Section -->
+        <section class="section">
+            <h2 class="section-title" data-i18n="license">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Software proprietário do ecossistema Avx. Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>Avx Distributed Systems - Software Proprietário</p>
+        <p>🇧🇷 Desenvolvido com 💙 no Brasil</p>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

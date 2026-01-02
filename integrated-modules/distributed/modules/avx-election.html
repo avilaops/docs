@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-election - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">👑</span>
+                <h1 class="section-title">avx-election</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Algoritmos de eleição de líder distribuído para coordenação e consenso.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-election</strong> implementa algoritmos clássicos de eleição de líder:</p>
+                <ul>
+                    <li>👑 <strong>Bully Algorithm</strong> - Eleição baseada em IDs (maior vence)</li>
+                    <li>💍 <strong>Ring Algorithm</strong> - Eleição em topologia de anel</li>
+                    <li>🎯 <strong>Paxos-based</strong> - Eleição com consenso Paxos</li>
+                    <li>🔄 <strong>Auto-Recovery</strong> - Re-eleição automática em falhas</li>
+                    <li>⏱️ <strong>Timeout Detection</strong> - Detecção de líder inativo</li>
+                    <li>📊 <strong>Métricas de Eleição</strong> - Rastreamento de mudanças de líder</li>
+                    <li>🔒 <strong>Split-Brain Prevention</strong> - Prevenção de múltiplos líderes</li>
+                    <li>⚡ <strong>Fast Election</strong> - Eleição em milissegundos</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ElectionCoordinator</code></td>
+                        <td>Coordenador de eleições</td>
+                        <td>Gerenciamento de eleições</td>
+                    </tr>
+                    <tr>
+                        <td><code>BullyAlgorithm</code></td>
+                        <td>Algoritmo Bully</td>
+                        <td>Eleição por prioridade</td>
+                    </tr>
+                    <tr>
+                        <td><code>RingAlgorithm</code></td>
+                        <td>Algoritmo de Anel</td>
+                        <td>Topologia circular</td>
+                    </tr>
+                    <tr>
+                        <td><code>NodeId</code></td>
+                        <td>Identificador de nó</td>
+                        <td>Identificação única</td>
+                    </tr>
+                    <tr>
+                        <td><code>ElectionState</code></td>
+                        <td>Estado da eleição</td>
+                        <td>Tracking de progresso</td>
+                    </tr>
+                    <tr>
+                        <td><code>LeaderInfo</code></td>
+                        <td>Informação do líder</td>
+                        <td>Dados do líder atual</td>
+                    </tr>
+                    <tr>
+                        <td><code>ElectionMetrics</code></td>
+                        <td>Métricas de eleições</td>
+                        <td>Análise e auditoria</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Bully Algorithm - Básico</h3>
+            <div class="code-block">
+                <pre><code>use avx_election::{ElectionCoordinator, BullyAlgorithm, NodeId};
+
+let nodes = vec![
+    NodeId::new(1),
+    NodeId::new(2),
+    NodeId::new(3),
+];
+
+let mut coordinator = ElectionCoordinator::new(
+    NodeId::new(2),
+    BullyAlgorithm::new()
+);
+
+// Iniciar eleição
+coordinator.start_election(&nodes)?;
+
+// Nó 3 será eleito (maior ID)
+let leader = coordinator.get_leader()?;
+assert_eq!(leader.id(), NodeId::new(3));</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Detecção de Falha e Re-eleição</h3>
+            <div class="code-block">
+                <pre><code>use avx_election::{ElectionCoordinator, NodeId};
+use std::time::Duration;
+
+let mut coordinator = ElectionCoordinator::new(
+    NodeId::new(1),
+    BullyAlgorithm::new()
+);
+
+// Configurar timeout de heartbeat
+coordinator.set_heartbeat_timeout(Duration::from_secs(5));
+
+// Líder atual
+let leader = coordinator.get_leader()?;
+
+// Simular falha do líder (sem heartbeat)
+std::thread::sleep(Duration::from_secs(6));
+
+// Re-eleição automática é disparada
+coordinator.check_leader_health()?;
+
+// Novo líder foi eleito
+let new_leader = coordinator.get_leader()?;
+assert_ne!(leader, new_leader);</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Ring Algorithm</h3>
+            <div class="code-block">
+                <pre><code>use avx_election::{RingAlgorithm, NodeId};
+
+let nodes = vec![
+    NodeId::new(5),
+    NodeId::new(3),
+    NodeId::new(7),
+    NodeId::new(1),
+];
+
+let mut ring = RingAlgorithm::new(NodeId::new(3));
+
+// Organizar nós em anel
+ring.setup_ring(&nodes)?;
+
+// Iniciar eleição
+ring.start_election()?;
+
+// Mensagem viaja pelo anel
+// Nó com maior ID (7) será eleito
+let leader = ring.get_elected_leader()?;
+assert_eq!(leader, NodeId::new(7));</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Callbacks de Eleição</h3>
+            <div class="code-block">
+                <pre><code>use avx_election::{ElectionCoordinator, ElectionEvent};
+
+let mut coordinator = ElectionCoordinator::new(
+    NodeId::new(1),
+    BullyAlgorithm::new()
+);
+
+// Registrar callback para eventos
+coordinator.on_election_event(|event| {
+    match event {
+        ElectionEvent::ElectionStarted => {
+            println!("Eleição iniciada!");
+        }
+        ElectionEvent::NewLeaderElected(leader_id) => {
+            println!("Novo líder: {:?}", leader_id);
+        }
+        ElectionEvent::LeaderFailed(old_leader) => {
+            println!("Líder falhou: {:?}", old_leader);
+        }
+    }
+});</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Métricas de Eleição</h3>
+            <div class="code-block">
+                <pre><code>use avx_election::ElectionMetrics;
+
+let metrics = coordinator.get_metrics();
+
+println!("Total de eleições: {}", metrics.total_elections);
+println!("Tempo médio: {:?}", metrics.average_election_time);
+println!("Mudanças de líder: {}", metrics.leader_changes);
+println!("Falhas detectadas: {}", metrics.leader_failures);
+
+// Análise de estabilidade
+if metrics.leader_changes > 10 {
+    println!("AVISO: Muitas mudanças de líder!");
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">ElectionCoordinator</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new(node_id, algorithm)</code></td>
+                        <td>Cria coordenador de eleição</td>
+                        <td><code>ElectionCoordinator</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>start_election(nodes)</code></td>
+                        <td>Inicia processo de eleição</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_leader()</code></td>
+                        <td>Obtém líder atual</td>
+                        <td><code>Result&lt;LeaderInfo&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>is_leader()</code></td>
+                        <td>Verifica se é o líder</td>
+                        <td><code>bool</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>check_leader_health()</code></td>
+                        <td>Verifica saúde do líder</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>set_heartbeat_timeout(d)</code></td>
+                        <td>Define timeout de heartbeat</td>
+                        <td><code>()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_metrics()</code></td>
+                        <td>Obtém métricas</td>
+                        <td><code>ElectionMetrics</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    👑 Eleição Ultra-Rápida
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Bully Election (5 nós)</td>
+                                <td>~2ms</td>
+                                <td>500 eleições/s</td>
+                            </tr>
+                            <tr>
+                                <td>Ring Election (10 nós)</td>
+                                <td>~5ms</td>
+                                <td>200 eleições/s</td>
+                            </tr>
+                            <tr>
+                                <td>Leader Check</td>
+                                <td>~100μs</td>
+                                <td>10K checks/s</td>
+                            </tr>
+                            <tr>
+                                <td>Failure Detection</td>
+                                <td>~5ms</td>
+                                <td>200 detecções/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Mensagens paralelas no Bully</li>
+                        <li>✅ Cache de topologia no Ring</li>
+                        <li>✅ Heartbeat batching</li>
+                        <li>✅ Lock-free leader tracking</li>
+                        <li>✅ Fast-path para líder estável</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">🗄️ Cluster de Banco de Dados</h3>
+                <p>Eleja um nó master para coordenar escritas em um cluster de banco de dados.</p>
+                <div class="code-block">
+                    <pre><code>let mut coordinator = ElectionCoordinator::new(
+    db_node_id,
+    BullyAlgorithm::new()
+);
+
+coordinator.start_election(&cluster_nodes)?;
+
+if coordinator.is_leader() {
+    // Este nó é o master
+    start_accepting_writes();
+} else {
+    // Nó replica
+    start_replication_from_master();
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">⚙️ Coordenação de Workers</h3>
+                <p>Um líder distribui tarefas para workers no cluster.</p>
+                <div class="code-block">
+                    <pre><code>coordinator.on_election_event(|event| {
+    if let ElectionEvent::NewLeaderElected(leader) = event {
+        if coordinator.is_leader() {
+            // Assumir papel de coordenador
+            start_task_distribution();
+        } else {
+            // Aguardar tarefas do líder
+            connect_to_leader(leader);
+        }
+    }
+});</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔄 Alta Disponibilidade</h3>
+                <p>Failover automático quando o líder cai.</p>
+                <div class="code-block">
+                    <pre><code>// Monitoramento contínuo
+loop {
+    coordinator.check_leader_health()?;
+    
+    if !coordinator.has_leader() {
+        // Líder caiu - iniciar eleição
+        coordinator.start_election(&nodes)?;
+    }
+    
+    tokio::time::sleep(Duration::from_secs(1)).await;
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-election - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

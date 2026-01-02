@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Crypto - Biblioteca criptográfica soberana com algoritmos aprovados">
+    <title>AVX Crypto - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="crypto.hero.title">AVX Crypto</h1>
+            <p class="hero-subtitle" data-i18n="crypto.hero.subtitle">
+                Biblioteca criptográfica soberana com algoritmos aprovados apenas
+            </p>
+            <div class="hero-badges">
+                <span class="badge">Pure Rust</span>
+                <span class="badge">No External Dependencies</span>
+                <span class="badge">no_std Compatible</span>
+                <span class="badge">Sovereign Crypto</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="crypto.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="crypto.overview.card1.title">🔐 Criptografia Soberana</h3>
+                    <p data-i18n="crypto.overview.card1.desc">
+                        Implementação pura em Rust sem dependências externas. Controle total sobre algoritmos criptográficos.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="crypto.overview.card2.title">⚡ Alto Desempenho</h3>
+                    <p data-i18n="crypto.overview.card2.desc">
+                        Otimizado para AVX2/AVX-512 com suporte para aceleração de hardware.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="crypto.overview.card3.title">🛡️ Segurança Garantida</h3>
+                    <p data-i18n="crypto.overview.card3.desc">
+                        Apenas algoritmos aprovados e auditados. Implementações certificadas.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="crypto.overview.card4.title">🔧 Modular</h3>
+                    <p data-i18n="crypto.overview.card4.desc">
+                        Features opcionais para curvas elípticas, assinaturas, cifras e MACs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Types Section -->
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="crypto.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="crypto.types.table.type">Tipo</th>
+                            <th data-i18n="crypto.types.table.description">Descrição</th>
+                            <th data-i18n="crypto.types.table.feature">Feature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>CryptoRuntime</code></td>
+                            <td data-i18n="crypto.types.runtime">Runtime criptográfico principal</td>
+                            <td><code>crypto-runtime</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Secp256k1</code></td>
+                            <td data-i18n="crypto.types.secp256k1">Curva elíptica secp256k1</td>
+                            <td><code>curves</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>Ed25519</code></td>
+                            <td data-i18n="crypto.types.ed25519">Curva Edwards25519 para assinaturas</td>
+                            <td><code>signatures</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>ECDSA</code></td>
+                            <td data-i18n="crypto.types.ecdsa">Assinaturas digitais ECDSA</td>
+                            <td><code>signatures</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>AES</code></td>
+                            <td data-i18n="crypto.types.aes">Cifra de bloco AES-128/192/256</td>
+                            <td><code>cipher</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>ChaCha20</code></td>
+                            <td data-i18n="crypto.types.chacha">Cifra de fluxo ChaCha20</td>
+                            <td><code>cipher</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>HMAC</code></td>
+                            <td data-i18n="crypto.types.hmac">Código de autenticação de mensagem</td>
+                            <td><code>mac</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>BigInt</code></td>
+                            <td data-i18n="crypto.types.bigint">Aritmética de inteiros grandes</td>
+                            <td><code>default</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Examples Section -->
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="crypto.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="crypto.examples.basic.title">Exemplo Básico - Assinatura ECDSA</h3>
+            <pre><code class="language-rust">use avx_crypto::signatures::ecdsa::Ecdsa;
+use avx_crypto::curves::secp256k1::Secp256k1;
+
+fn main() {
+    // Gerar par de chaves
+    let mut rng = avx_crypto::rand::thread_rng();
+    let private_key = Secp256k1::generate_private_key(&mut rng);
+    let public_key = Secp256k1::derive_public_key(&private_key);
+
+    // Assinar mensagem
+    let message = b"AVX Crypto Security";
+    let signature = Ecdsa::sign(&private_key, message, &mut rng)
+        .expect("Falha ao assinar");
+
+    // Verificar assinatura
+    let is_valid = Ecdsa::verify(&public_key, message, &signature);
+    assert!(is_valid);
+
+    println!("✅ Assinatura verificada com sucesso!");
+}</code></pre>
+
+            <h3 data-i18n="crypto.examples.ed25519.title">Exemplo - Assinatura Ed25519</h3>
+            <pre><code class="language-rust">use avx_crypto::signatures::ed25519::Ed25519;
+
+fn main() {
+    // Gerar par de chaves Ed25519
+    let keypair = Ed25519::generate_keypair();
+
+    // Assinar mensagem
+    let message = b"Mensagem confidencial";
+    let signature = Ed25519::sign(&keypair.secret, message);
+
+    // Verificar assinatura
+    let is_valid = Ed25519::verify(&keypair.public, message, &signature);
+    assert!(is_valid);
+
+    println!("✅ Ed25519 verificado!");
+}</code></pre>
+
+            <h3 data-i18n="crypto.examples.bigint.title">Exemplo - Aritmética BigInt</h3>
+            <pre><code class="language-rust">use avx_crypto::bigint::BigInt;
+
+fn main() {
+    // Criar inteiros grandes
+    let a = BigInt::from_hex("FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    let b = BigInt::from_hex("1234567890ABCDEF");
+
+    // Operações aritméticas
+    let sum = a.add(&b);
+    let product = a.mul(&b);
+    let modulus = BigInt::from_hex("FFFFFFFFFFFFFFFFFFFFFFFFFFFF");
+    let result = product.mod_exp(&b, &modulus);
+
+    println!("Resultado: {}", result.to_hex());
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- API Reference Section -->
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="crypto.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>CryptoRuntime</h3>
+                <div class="api-method">
+                    <code>pub fn new() -> Self</code>
+                    <p data-i18n="crypto.api.runtime.new">Cria uma nova instância do runtime criptográfico.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn initialize(&mut self) -> Result&lt;(), CryptoError&gt;</code>
+                    <p data-i18n="crypto.api.runtime.init">Inicializa o runtime com gerador de números aleatórios seguro.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Secp256k1</h3>
+                <div class="api-method">
+                    <code>pub fn generate_private_key&lt;R: RngCore&gt;(rng: &mut R) -> PrivateKey</code>
+                    <p data-i18n="crypto.api.secp256k1.genkey">Gera uma chave privada aleatória para a curva secp256k1.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn derive_public_key(private_key: &PrivateKey) -> PublicKey</code>
+                    <p data-i18n="crypto.api.secp256k1.derive">Deriva a chave pública correspondente de uma chave privada.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>ECDSA</h3>
+                <div class="api-method">
+                    <code>pub fn sign&lt;R: RngCore&gt;(key: &PrivateKey, msg: &[u8], rng: &mut R) -> Result&lt;Signature, CryptoError&gt;</code>
+                    <p data-i18n="crypto.api.ecdsa.sign">Assina uma mensagem usando ECDSA.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify(key: &PublicKey, msg: &[u8], sig: &Signature) -> bool</code>
+                    <p data-i18n="crypto.api.ecdsa.verify">Verifica uma assinatura ECDSA.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Ed25519</h3>
+                <div class="api-method">
+                    <code>pub fn generate_keypair() -> Keypair</code>
+                    <p data-i18n="crypto.api.ed25519.genkey">Gera um par de chaves Ed25519.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn sign(secret: &SecretKey, message: &[u8]) -> Signature</code>
+                    <p data-i18n="crypto.api.ed25519.sign">Assina uma mensagem usando Ed25519.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify(public: &PublicKey, message: &[u8], signature: &Signature) -> bool</code>
+                    <p data-i18n="crypto.api.ed25519.verify">Verifica uma assinatura Ed25519.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="crypto.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">50,000+</div>
+                    <div class="metric-label" data-i18n="crypto.performance.signsec">Assinaturas/segundo</div>
+                    <div class="metric-detail">ECDSA secp256k1</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">100,000+</div>
+                    <div class="metric-label" data-i18n="crypto.performance.verifysec">Verificações/segundo</div>
+                    <div class="metric-detail">Ed25519</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">5 GB/s</div>
+                    <div class="metric-label" data-i18n="crypto.performance.throughput">Throughput</div>
+                    <div class="metric-detail">ChaCha20 com AVX2</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">&lt; 1μs</div>
+                    <div class="metric-label" data-i18n="crypto.performance.latency">Latência</div>
+                    <div class="metric-detail">Operações BigInt</div>
+                </div>
+            </div>
+
+            <div class="performance-chart">
+                <h3 data-i18n="crypto.performance.chart.title">Comparação de Performance</h3>
+                <div class="chart-bars">
+                    <div class="chart-bar">
+                        <div class="bar-label">ECDSA Sign</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 85%;" data-value="50,000 ops/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">Ed25519 Sign</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 100%;" data-value="100,000 ops/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">AES-256 Encrypt</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 90%;" data-value="3.5 GB/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">ChaCha20 Encrypt</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 95%;" data-value="5 GB/s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="crypto.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="crypto.usecases.blockchain.title">Blockchain & Web3</h3>
+                    <p data-i18n="crypto.usecases.blockchain.desc">
+                        Assinaturas digitais, carteiras criptográficas, contratos inteligentes e validação de transações.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏦</div>
+                    <h3 data-i18n="crypto.usecases.fintech.title">Fintech & Pagamentos</h3>
+                    <p data-i18n="crypto.usecases.fintech.desc">
+                        Autenticação forte, assinaturas de transações e proteção de dados financeiros sensíveis.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🛡️</div>
+                    <h3 data-i18n="crypto.usecases.security.title">Segurança Corporativa</h3>
+                    <p data-i18n="crypto.usecases.security.desc">
+                        PKI corporativa, certificados digitais, HSM e gerenciamento de chaves criptográficas.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">☁️</div>
+                    <h3 data-i18n="crypto.usecases.cloud.title">Cloud & Edge Computing</h3>
+                    <p data-i18n="crypto.usecases.cloud.desc">
+                        Criptografia end-to-end, autenticação de dispositivos IoT e comunicação segura.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- License Section -->
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="crypto.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="crypto.license.desc">
+                    AVX Crypto é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="crypto.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

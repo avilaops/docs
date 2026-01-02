@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Network - Biblioteca de rede de alta performance, 100% nativa">
+    <meta name="keywords" content="AVX, Network, Rust, High Performance, Networking Library">
+    <meta name="author" content="Nícolas Ávila">
+    <title data-i18n="title">Documentação AVX Network</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">AVX Network</div>
+                <div class="controls">
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">🌙</button>
+                    <select id="lang-select" class="lang-select" aria-label="Select language">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview" data-i18n="overview">Visão Geral</a></li>
+                <li><a href="#modules" data-i18n="modules">Módulos</a></li>
+                <li><a href="#performance" data-i18n="performance">Performance</a></li>
+                <li><a href="#examples" data-i18n="examples">Exemplos</a></li>
+                <li><a href="#license" data-i18n="license">Licença</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1 data-i18n="title">Documentação AVX Network</h1>
+                <p data-i18n="subtitle">Biblioteca de rede de alta performance - 100% nativa</p>
+                <div style="margin-top: 2rem;">
+                    <a href="#modules" class="btn" data-i18n="getStarted">Começar</a>
+                    <a href="https://docs.avila.inc" class="btn btn-secondary" data-i18n="documentation">Documentação Completa</a>
+                </div>
+            </div>
+
+            <section id="overview" class="section">
+                <h2 data-i18n="overview">Visão Geral</h2>
+                <p>AVX Network é um ecossistema completo de bibliotecas de rede de alta performance, desenvolvido 100% nativamente sem dependências externas. Cada módulo é otimizado para máxima eficiência e mínima latência.</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card pulse">
+                        <h3>🚀 Zero Dependências</h3>
+                        <p>Implementação 100% nativa, sem dependências de terceiros. Total controle sobre performance e segurança.</p>
+                    </div>
+                    <div class="module-card pulse">
+                        <h3>⚡ Alta Performance</h3>
+                        <p>Otimizado para throughput máximo e latência mínima. Benchmarks superiores às alternativas do mercado.</p>
+                    </div>
+                    <div class="module-card pulse">
+                        <h3>🔒 Seguro por Design</h3>
+                        <p>Implementações type-safe e memory-safe. Proteção contra vulnerabilidades comuns.</p>
+                    </div>
+                    <div class="module-card pulse">
+                        <h3>🎯 API Ergonômica</h3>
+                        <p>APIs intuitivas e modernas, com builders fluentes e documentação completa.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="modules" class="section">
+                <h2 data-i18n="modules">Módulos</h2>
+                <p>Explore nossa coleção completa de módulos de rede de alta performance:</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card" onclick="window.location.href='modules/avx-dns.html'">
+                        <h3>🌐 AVX DNS</h3>
+                        <p>Resolvedor DNS nativo com suporte a múltiplos tipos de registro e cache otimizado.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-gateway.html'">
+                        <h3>🚪 AVX Gateway</h3>
+                        <p>API Gateway completo com autenticação, rate limiting, load balancing e observabilidade.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-http.html'">
+                        <h3>🌍 AVX HTTP</h3>
+                        <p>Cliente e servidor HTTP/1.1 e HTTP/2 de alta performance com suporte completo.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-loadbalancer.html'">
+                        <h3>⚖️ AVX Load Balancer</h3>
+                        <p>Balanceador L7 com múltiplos algoritmos, health checks e servidor STUN/TURN integrado.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-grpc.html'">
+                        <h3>🔌 AVX gRPC</h3>
+                        <p>Framework gRPC nativo com streaming bidirecional e alta performance.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-proxy.html'">
+                        <h3>🔄 AVX Proxy</h3>
+                        <p>Servidor proxy HTTP/HTTPS com forward e reverse proxy, cache e rate limiting.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-websocket.html'">
+                        <h3>🔌 AVX WebSocket</h3>
+                        <p>Implementação WebSocket completa com suporte total ao protocolo RFC 6455.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-tcp.html'">
+                        <h3>📡 AVX TCP</h3>
+                        <p>Abstrações TCP de baixo nível para comunicação de alta performance.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-udp.html'">
+                        <h3>📡 AVX UDP</h3>
+                        <p>Primitivas UDP otimizadas para comunicação sem conexão de alta velocidade.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-tls.html'">
+                        <h3>🔐 AVX TLS</h3>
+                        <p>Implementação TLS 1.2/1.3 completa para comunicação segura e criptografada.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-quic.html'">
+                        <h3>🚀 AVX QUIC</h3>
+                        <p>Protocolo QUIC para transporte multiplexado de baixíssima latência.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+
+                    <div class="module-card" onclick="window.location.href='modules/avx-molecule.html'">
+                        <h3>🧬 AVX Molecule</h3>
+                        <p>Abstrações de alto nível para desenvolvimento rápido de aplicações de rede.</p>
+                        <span class="module-badge">v1.0.0</span>
+                    </div>
+                </div>
+            </section>
+
+            <section id="performance" class="section">
+                <h2 data-i18n="performance">Performance</h2>
+                <p>Benchmarks comparativos demonstrando a superioridade do AVX Network:</p>
+
+                <div class="performance-chart">
+                    <h3>Throughput (req/s)</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">AVX HTTP</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="95" style="width: 0;">250k</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">AVX Gateway</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="85" style="width: 0;">100k</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">AVX LoadBalancer</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="90" style="width: 0;">150k</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">AVX WebSocket</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="92" style="width: 0;">200k</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Latência p99 (ms)</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">AVX HTTP</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="15" style="width: 0; background: linear-gradient(90deg, #27AE60, #2ECC71);">< 5ms</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">AVX gRPC</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="20" style="width: 0; background: linear-gradient(90deg, #27AE60, #2ECC71);">< 2ms</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">AVX QUIC</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="12" style="width: 0; background: linear-gradient(90deg, #27AE60, #2ECC71);">< 1ms</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="examples" class="section">
+                <h2 data-i18n="examples">Exemplos de Uso</h2>
+
+                <h3>Servidor HTTP Simples</h3>
+                <pre><code>use avx_http::Server;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    Server::builder()
+        .route("/", |req| async {
+            Response::ok().body(b"Hello, AVX!")
+        })
+        .bind("0.0.0.0:8080")
+        .serve()
+        .await
+}</code></pre>
+
+                <h3>Gateway com Load Balancing</h3>
+                <pre><code>use avx_gateway::{Gateway, LoadBalancer, Algorithm};
+
+let lb = LoadBalancer::new(Algorithm::RoundRobin)
+    .add_backend("http://backend1:8000")
+    .add_backend("http://backend2:8000");
+
+Gateway::builder()
+    .route_with_lb("/api", lb)
+    .with_jwt_auth("secret")
+    .build()
+    .await?;</code></pre>
+
+                <h3>Cliente HTTP com Async/Await</h3>
+                <pre><code>use avx_http::Client;
+
+let client = Client::new();
+let response = client
+    .post("https://api.example.com/data")
+    .json(&data)
+    .send()
+    .await?;
+
+println!("Status: {}", response.status());</code></pre>
+            </section>
+
+            <section id="license" class="section">
+                <h2 data-i18n="license">Licença</h2>
+                <p data-i18n="copyright">© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <p data-i18n="allRightsReserved">Software Proprietário</p>
+                <p class="mt-2">Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p data-i18n="copyright">© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <div class="footer-links">
+                    <a href="https://avila.inc" data-i18n="contact">Contato</a>
+                    <a href="https://docs.avila.inc" data-i18n="documentation">Documentação</a>
+                    <a href="../LICENSE-PROPRIETARY.md" data-i18n="license">Licença</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

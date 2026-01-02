@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Proxy - Servidor proxy HTTP/HTTPS de alta performance">
+    <title>AVX Proxy - Documentação</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="../index.html" style="text-decoration:none;color:inherit;">AVX Network</a></div>
+                <div class="controls">
+                    <button id="theme-toggle" class="theme-toggle">🌙</button>
+                    <select id="lang-select" class="lang-select">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#types">Tipos Disponíveis</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#usecases">Casos de Uso</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>🔀 AVX Proxy</h1>
+                <p>Servidor proxy HTTP/HTTPS de alta performance com forward e reverse proxy</p>
+            </div>
+
+            <section id="overview" class="section fade-in">
+                <h2>📋 Visão Geral</h2>
+                <p>AVX Proxy é um servidor proxy completo com suporte a forward e reverse proxy, terminação SSL/TLS, filtragem de requisições, rate limiting, cache de alto desempenho e integração com balanceamento de carga. Oferece performance excepcional com 120k+ requisições por segundo.</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card">
+                        <h3>⚡ Ultra Performance</h3>
+                        <p>120k+ req/s com latência p99 < 4ms e zero-copy forwarding</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🔒 Seguro</h3>
+                        <p>SSL/TLS termination, filtragem de conteúdo e rate limiting</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🎯 Versátil</h3>
+                        <p>Forward proxy, reverse proxy e transparent proxy</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🚀 Completo</h3>
+                        <p>Cache, compression, filtering e connection pooling</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="types" class="section fade-in">
+                <h2>📦 Tipos Disponíveis</h2>
+
+                <h3>Core</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Proxy</code></td>
+                            <td>Servidor proxy principal</td>
+                        </tr>
+                        <tr>
+                            <td><code>ProxyConfig</code></td>
+                            <td>Configuração do proxy (forward/reverse)</td>
+                        </tr>
+                        <tr>
+                            <td><code>ProxyMode</code></td>
+                            <td>Modo de operação (Forward, Reverse, Transparent)</td>
+                        </tr>
+                        <tr>
+                            <td><code>ForwardProxy</code></td>
+                            <td>Implementação de forward proxy</td>
+                        </tr>
+                        <tr>
+                            <td><code>ReverseProxy</code></td>
+                            <td>Implementação de reverse proxy</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Request/Response</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Request</code></td>
+                            <td>Requisição HTTP proxied</td>
+                        </tr>
+                        <tr>
+                            <td><code>Response</code></td>
+                            <td>Resposta HTTP proxied</td>
+                        </tr>
+                        <tr>
+                            <td><code>Method</code></td>
+                            <td>Métodos HTTP (GET, POST, etc)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Headers</code></td>
+                            <td>Headers HTTP da requisição/resposta</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Features</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Filter</code></td>
+                            <td>Filtragem de requisições/respostas</td>
+                        </tr>
+                        <tr>
+                            <td><code>Cache</code></td>
+                            <td>Cache de respostas com TTL</td>
+                        </tr>
+                        <tr>
+                            <td><code>RateLimiter</code></td>
+                            <td>Limitação de taxa por IP/rota</td>
+                        </tr>
+                        <tr>
+                            <td><code>Compression</code></td>
+                            <td>Compressão gzip/brotli</td>
+                        </tr>
+                        <tr>
+                            <td><code>TlsTermination</code></td>
+                            <td>Terminação SSL/TLS</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Middleware</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Middleware</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>LoggingMiddleware</code></td>
+                            <td>Logging de requisições/respostas</td>
+                        </tr>
+                        <tr>
+                            <td><code>AuthMiddleware</code></td>
+                            <td>Autenticação de requisições</td>
+                        </tr>
+                        <tr>
+                            <td><code>CorsMiddleware</code></td>
+                            <td>Configuração CORS</td>
+                        </tr>
+                        <tr>
+                            <td><code>MetricsMiddleware</code></td>
+                            <td>Coleta de métricas</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="examples" class="section fade-in">
+                <h2>💡 Exemplos de Uso</h2>
+
+                <h3>Forward Proxy Básico</h3>
+                <pre><code>use avx_proxy::Proxy;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Forward proxy simples na porta 8080
+    let proxy = Proxy::new(8080);
+    proxy.listen().await?;
+
+    Ok(())
+}</code></pre>
+
+                <h3>Reverse Proxy</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, ProxyMode};
+
+let config = ProxyConfig {
+    mode: ProxyMode::Reverse,
+    listen_port: 8080,
+    target_host: Some("backend.internal".to_string()),
+    target_port: Some(8000),
+    ..Default::default()
+};
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Reverse Proxy com Múltiplos Backends</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, Backend};
+
+let backends = vec![
+    Backend::new("http://backend-1:8000"),
+    Backend::new("http://backend-2:8000"),
+    Backend::new("http://backend-3:8000"),
+];
+
+let config = ProxyConfig::builder()
+    .mode(ProxyMode::Reverse)
+    .backends(backends)
+    .strategy(LoadBalanceStrategy::RoundRobin)
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy com SSL/TLS Termination</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, TlsConfig};
+
+let tls = TlsConfig::builder()
+    .cert_path("cert.pem")
+    .key_path("key.pem")
+    .build();
+
+let config = ProxyConfig::builder()
+    .enable_ssl(true)
+    .tls_config(tls)
+    .listen_port(443)
+    .target_host("backend.internal")
+    .target_port(8000)
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy com Cache</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, CacheConfig};
+use std::time::Duration;
+
+let cache = CacheConfig::builder()
+    .enabled(true)
+    .ttl(Duration::from_secs(300))
+    .max_size(1000)
+    .cache_methods(vec!["GET", "HEAD"])
+    .build();
+
+let config = ProxyConfig::builder()
+    .cache(cache)
+    .target_host("api.backend.com")
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy com Rate Limiting</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, RateLimitConfig};
+use std::time::Duration;
+
+let rate_limit = RateLimitConfig::builder()
+    .enabled(true)
+    .max_requests(100)
+    .window(Duration::from_secs(60))
+    .by_ip(true)
+    .build();
+
+let config = ProxyConfig::builder()
+    .rate_limiting(rate_limit)
+    .target_host("api.backend.com")
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy com Filtragem de Requisições</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, Filter, FilterRule};
+
+let filter = Filter::builder()
+    .rule(FilterRule::BlockPath("/admin/*"))
+    .rule(FilterRule::BlockUserAgent("BadBot*"))
+    .rule(FilterRule::AllowIP("192.168.1.0/24"))
+    .rule(FilterRule::BlockCountry("CN"))
+    .build();
+
+let config = ProxyConfig::builder()
+    .filter(filter)
+    .target_host("backend.internal")
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy com Compressão</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, Compression};
+
+let compression = Compression::builder()
+    .algorithm(CompressionAlgorithm::Brotli)
+    .level(6)
+    .min_size(1024) // Só comprimir > 1KB
+    .content_types(vec!["text/html", "application/json"])
+    .build();
+
+let config = ProxyConfig::builder()
+    .compression(compression)
+    .target_host("backend.internal")
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy com Headers Customizados</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig};
+
+let config = ProxyConfig::builder()
+    .add_request_header("X-Forwarded-For", "${client_ip}")
+    .add_request_header("X-Real-IP", "${client_ip}")
+    .add_request_header("X-Forwarded-Proto", "https")
+    .remove_response_header("Server")
+    .add_response_header("X-Proxy", "AVX-Proxy/1.0")
+    .target_host("backend.internal")
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy com Autenticação</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, Auth};
+
+let auth = Auth::builder()
+    .basic("username", "password")
+    .realm("Restricted Area")
+    .build();
+
+let config = ProxyConfig::builder()
+    .auth(auth)
+    .target_host("backend.internal")
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Transparent Proxy</h3>
+                <pre><code>use avx_proxy::{Proxy, ProxyConfig, ProxyMode};
+
+let config = ProxyConfig::builder()
+    .mode(ProxyMode::Transparent)
+    .listen_port(3128)
+    .redirect_port(80)
+    .build();
+
+let proxy = Proxy::with_config(config);
+proxy.listen().await?;</code></pre>
+
+                <h3>Proxy Completo (Produção)</h3>
+                <pre><code>use avx_proxy::*;
+use std::time::Duration;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Backends
+    let backends = vec![
+        Backend::new("http://backend-1:8000"),
+        Backend::new("http://backend-2:8000"),
+        Backend::new("http://backend-3:8000"),
+    ];
+
+    // TLS
+    let tls = TlsConfig::builder()
+        .cert_path("cert.pem")
+        .key_path("key.pem")
+        .min_version(TlsVersion::TLS13)
+        .build();
+
+    // Cache
+    let cache = CacheConfig::builder()
+        .enabled(true)
+        .ttl(Duration::from_secs(300))
+        .max_size(10000)
+        .build();
+
+    // Rate limiting
+    let rate_limit = RateLimitConfig::builder()
+        .max_requests(1000)
+        .window(Duration::from_secs(60))
+        .by_ip(true)
+        .build();
+
+    // Filter
+    let filter = Filter::builder()
+        .rule(FilterRule::BlockPath("/admin/*"))
+        .rule(FilterRule::AllowIP("192.168.0.0/16"))
+        .build();
+
+    // Compression
+    let compression = Compression::builder()
+        .algorithm(CompressionAlgorithm::Brotli)
+        .level(6)
+        .build();
+
+    // Configuração completa
+    let config = ProxyConfig::builder()
+        .mode(ProxyMode::Reverse)
+        .listen_port(443)
+        .backends(backends)
+        .strategy(LoadBalanceStrategy::LeastConnections)
+        .tls_config(tls)
+        .cache(cache)
+        .rate_limiting(rate_limit)
+        .filter(filter)
+        .compression(compression)
+        .max_connections(100000)
+        .timeout(Duration::from_secs(30))
+        .keepalive(true)
+        .health_check(true)
+        .metrics(true)
+        .build();
+
+    let proxy = Proxy::with_config(config);
+    proxy.listen().await?;
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="api" class="section fade-in">
+                <h2>📚 Referências da API</h2>
+
+                <h3>Proxy</h3>
+                <div class="module-card">
+                    <h4><code>Proxy::new(port: u16) -> Self</code></h4>
+                    <p>Cria forward proxy padrão na porta especificada.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Proxy::with_config(config: ProxyConfig) -> Self</code></h4>
+                    <p>Cria proxy com configuração customizada.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Proxy::listen() -> Result&lt;()&gt;</code></h4>
+                    <p>Inicia servidor proxy e processa requisições.</p>
+                </div>
+
+                <h3 class="mt-3">ProxyConfig</h3>
+                <div class="module-card">
+                    <h4><code>ProxyConfig::builder() -> ProxyConfigBuilder</code></h4>
+                    <p>Cria construtor de configuração de proxy.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>ProxyConfigBuilder::mode(mode: ProxyMode) -> Self</code></h4>
+                    <p>Define modo de operação (Forward, Reverse, Transparent).</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>ProxyConfigBuilder::target_host(host: &str) -> Self</code></h4>
+                    <p>Define host de destino para reverse proxy.</p>
+                </div>
+
+                <h3 class="mt-3">Cache</h3>
+                <div class="module-card">
+                    <h4><code>CacheConfig::builder() -> CacheConfigBuilder</code></h4>
+                    <p>Cria construtor de configuração de cache.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>CacheConfigBuilder::ttl(duration: Duration) -> Self</code></h4>
+                    <p>Define tempo de vida (TTL) das entradas em cache.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>CacheConfigBuilder::max_size(size: usize) -> Self</code></h4>
+                    <p>Define tamanho máximo do cache.</p>
+                </div>
+            </section>
+
+            <section id="performance" class="section fade-in">
+                <h2>⚡ Performance</h2>
+
+                <div class="performance-chart">
+                    <h3>Benchmarks - Throughput</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">Forward Proxy</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="95" style="width: 0;">120k req/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Reverse Proxy</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="92" style="width: 0;">115k req/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Com Cache Hit</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="100" style="width: 0;">350k req/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Com SSL/TLS</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="88" style="width: 0;">95k req/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Latência (p99)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>AVX Proxy</th>
+                                <th>Melhoria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Forward Proxy</td>
+                                <td>3.8 ms</td>
+                                <td>3.2x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Reverse Proxy</td>
+                                <td>4.1 ms</td>
+                                <td>2.9x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Cache Hit</td>
+                                <td>850 μs</td>
+                                <td>8.5x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>SSL Termination</td>
+                                <td>5.2 ms</td>
+                                <td>2.4x mais rápido</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-3">Características de Performance</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>✅ Zero-Copy Forwarding</h4>
+                        <p>Forwarding otimizado sem cópias de dados</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Connection Pooling</h4>
+                        <p>Pool de conexões eficiente para backends</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Smart Caching</h4>
+                        <p>Cache inteligente com invalidação eficiente</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Async I/O</h4>
+                        <p>I/O assíncrono de alta performance</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usecases" class="section fade-in">
+                <h2>🎬 Casos de Uso</h2>
+
+                <div class="module-card">
+                    <h3>🏢 Forward Proxy Corporativo</h3>
+                    <p>Implemente proxy forward para controle de acesso à internet em ambientes corporativos.</p>
+                    <pre><code>let proxy = Proxy::builder()
+    .mode(ProxyMode::Forward)
+    .filter(content_filter)
+    .auth(corporate_auth)
+    .serve().await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🚀 Reverse Proxy para Backend</h3>
+                    <p>Proteja e acelere backends com cache, rate limiting e SSL termination.</p>
+                    <pre><code>let proxy = Proxy::builder()
+    .mode(ProxyMode::Reverse)
+    .backends(backend_servers)
+    .cache(cache_config)
+    .tls(tls_config)
+    .serve().await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🔒 SSL Termination</h3>
+                    <p>Termine conexões SSL/TLS na borda para simplificar backends internos.</p>
+                    <pre><code>let proxy = Proxy::builder()
+    .tls_termination(tls_config)
+    .target_host("http://internal-backend")
+    .serve().await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🛡️ Content Filtering</h3>
+                    <p>Filtre requisições e respostas baseado em regras customizadas de segurança.</p>
+                    <pre><code>let proxy = Proxy::builder()
+    .filter(security_filter)
+    .rate_limiting(rate_limit)
+    .serve().await?;</code></pre>
+                </div>
+            </section>
+
+            <section id="license" class="section fade-in">
+                <h2>📄 Licença</h2>
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Software Proprietário - Veja <a href="../../LICENSE-PROPRIETARY.md">LICENSE-PROPRIETARY.md</a></p>
+                <p class="mt-2">Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <div class="footer-links">
+                    <a href="https://avila.inc">Contato</a>
+                    <a href="https://docs.avila.inc">Documentação</a>
+                    <a href="../../LICENSE-PROPRIETARY.md">Licença</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

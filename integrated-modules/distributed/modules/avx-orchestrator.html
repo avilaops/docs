@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-orchestrator - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">🎼</span>
+                <h1 class="section-title">avx-orchestrator</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Orquestração avançada de serviços, workflows e processos distribuídos.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-orchestrator</strong> orquestra execução distribuída complexa:</p>
+                <ul>
+                    <li>🎼 <strong>Workflow Orchestration</strong> - Coordenação de workflows complexos</li>
+                    <li>🔄 <strong>State Machines</strong> - Máquinas de estado distribuídas</li>
+                    <li>📊 <strong>DAG Execution</strong> - Execução de grafos acíclicos dirigidos</li>
+                    <li>🎯 <strong>Service Choreography</strong> - Coordenação de microserviços</li>
+                    <li>⏱️ <strong>Scheduling</strong> - Agendamento de tarefas distribuídas</li>
+                    <li>🔁 <strong>Retry & Rollback</strong> - Políticas de retry e compensação</li>
+                    <li>📈 <strong>Observabilidade</strong> - Rastreamento completo de execução</li>
+                    <li>⚡ <strong>Parallel Execution</strong> - Execução paralela otimizada</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Orchestrator</code></td>
+                        <td>Orquestrador principal</td>
+                        <td>Coordenação de workflows</td>
+                    </tr>
+                    <tr>
+                        <td><code>Workflow</code></td>
+                        <td>Definição de workflow</td>
+                        <td>Sequência de steps</td>
+                    </tr>
+                    <tr>
+                        <td><code>WorkflowStep</code></td>
+                        <td>Passo individual do workflow</td>
+                        <td>Unidade de execução</td>
+                    </tr>
+                    <tr>
+                        <td><code>StateMachine</code></td>
+                        <td>Máquina de estados</td>
+                        <td>Fluxo com estados</td>
+                    </tr>
+                    <tr>
+                        <td><code>ExecutionContext</code></td>
+                        <td>Contexto de execução</td>
+                        <td>Dados compartilhados</td>
+                    </tr>
+                    <tr>
+                        <td><code>CompensationHandler</code></td>
+                        <td>Handler de compensação</td>
+                        <td>Rollback de operações</td>
+                    </tr>
+                    <tr>
+                        <td><code>OrchestrationMetrics</code></td>
+                        <td>Métricas de orquestração</td>
+                        <td>Observabilidade</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Workflow Básico</h3>
+            <div class="code-block">
+                <pre><code>use avx_orchestrator::{Orchestrator, Workflow, WorkflowStep};
+
+let mut orchestrator = Orchestrator::new();
+
+// Definir workflow
+let workflow = Workflow::builder()
+    .step(WorkflowStep::new("validate", validate_order))
+    .step(WorkflowStep::new("reserve", reserve_inventory))
+    .step(WorkflowStep::new("charge", charge_payment))
+    .step(WorkflowStep::new("ship", ship_order))
+    .build();
+
+// Executar workflow
+let result = orchestrator.execute(workflow).await?;
+println!("Workflow concluído: {:?}", result);</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Workflow com Compensação</h3>
+            <div class="code-block">
+                <pre><code>use avx_orchestrator::{Workflow, CompensationHandler};
+
+let workflow = Workflow::builder()
+    .step(
+        WorkflowStep::new("reserve", reserve_inventory)
+            .with_compensation(release_inventory)
+    )
+    .step(
+        WorkflowStep::new("charge", charge_payment)
+            .with_compensation(refund_payment)
+    )
+    .step(WorkflowStep::new("ship", ship_order))
+    .build();
+
+// Se "ship" falhar, compensações são executadas em ordem reversa:
+// 1. refund_payment
+// 2. release_inventory</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">State Machine</h3>
+            <div class="code-block">
+                <pre><code>use avx_orchestrator::{StateMachine, State, Transition};
+
+let mut sm = StateMachine::new("order-state");
+
+// Definir estados
+sm.add_state(State::new("pending"));
+sm.add_state(State::new("processing"));
+sm.add_state(State::new("completed"));
+sm.add_state(State::new("failed"));
+
+// Definir transições
+sm.add_transition(Transition::new("pending", "processing", |ctx| {
+    validate_order(ctx)
+}));
+
+sm.add_transition(Transition::new("processing", "completed", |ctx| {
+    process_order(ctx)
+}));
+
+// Executar state machine
+sm.start("pending").await?;
+sm.trigger("process").await?;</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Execução Paralela</h3>
+            <div class="code-block">
+                <pre><code>use avx_orchestrator::{Workflow, ParallelGroup};
+
+let workflow = Workflow::builder()
+    .step(WorkflowStep::new("init", initialize))
+    .parallel(vec![
+        WorkflowStep::new("task1", process_task_1),
+        WorkflowStep::new("task2", process_task_2),
+        WorkflowStep::new("task3", process_task_3),
+    ])
+    .step(WorkflowStep::new("finalize", finalize))
+    .build();
+
+// task1, task2 e task3 executam em paralelo
+orchestrator.execute(workflow).await?;</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Retry Policy</h3>
+            <div class="code-block">
+                <pre><code>use avx_orchestrator::{WorkflowStep, RetryPolicy};
+
+let step = WorkflowStep::new("external-api", call_external_api)
+    .with_retry(RetryPolicy::exponential()
+        .max_attempts(5)
+        .initial_delay(Duration::from_millis(100))
+        .max_delay(Duration::from_secs(10))
+    );
+
+// Falhas são automaticamente retentadas com backoff exponencial</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">Orchestrator</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new()</code></td>
+                        <td>Cria novo orquestrador</td>
+                        <td><code>Orchestrator</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>execute(workflow)</code></td>
+                        <td>Executa workflow</td>
+                        <td><code>Result&lt;ExecutionResult&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>pause(workflow_id)</code></td>
+                        <td>Pausa execução</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>resume(workflow_id)</code></td>
+                        <td>Retoma execução</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>cancel(workflow_id)</code></td>
+                        <td>Cancela workflow</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_status(workflow_id)</code></td>
+                        <td>Obtém status</td>
+                        <td><code>WorkflowStatus</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Workflow</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>builder()</code></td>
+                        <td>Cria workflow builder</td>
+                        <td><code>WorkflowBuilder</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>step(step)</code></td>
+                        <td>Adiciona step sequencial</td>
+                        <td><code>Self</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>parallel(steps)</code></td>
+                        <td>Adiciona steps paralelos</td>
+                        <td><code>Self</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>condition(pred, then, else)</code></td>
+                        <td>Adiciona condicional</td>
+                        <td><code>Self</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>build()</code></td>
+                        <td>Constrói workflow</td>
+                        <td><code>Workflow</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    🎼 Orquestração Massiva
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Workflow Start</td>
+                                <td>~100μs</td>
+                                <td>10K workflows/s</td>
+                            </tr>
+                            <tr>
+                                <td>Step Execution</td>
+                                <td>~50μs (overhead)</td>
+                                <td>20K steps/s</td>
+                            </tr>
+                            <tr>
+                                <td>State Transition</td>
+                                <td>~30μs</td>
+                                <td>33K transitions/s</td>
+                            </tr>
+                            <tr>
+                                <td>Parallel Dispatch</td>
+                                <td>~200μs</td>
+                                <td>5K dispatches/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Zero-copy context passing</li>
+                        <li>✅ Async execution com Tokio</li>
+                        <li>✅ Work stealing scheduler</li>
+                        <li>✅ Batched state persistence</li>
+                        <li>✅ Smart parallelization</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">🛒 Processamento de Pedidos</h3>
+                <p>Orquestre todo o fluxo de processamento de pedidos com rollback automático.</p>
+                <div class="code-block">
+                    <pre><code>let workflow = Workflow::builder()
+    .step(validate_order.with_compensation(log_validation_failure))
+    .step(reserve_items.with_compensation(release_items))
+    .step(charge_card.with_compensation(refund_card))
+    .step(notify_warehouse)
+    .step(send_confirmation)
+    .build();
+
+orchestrator.execute(workflow).await?;</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔄 ETL Pipelines</h3>
+                <p>Coordene pipelines complexos de extração, transformação e carga de dados.</p>
+                <div class="code-block">
+                    <pre><code>let workflow = Workflow::builder()
+    .step(extract_from_sources)
+    .parallel(vec![
+        transform_customer_data,
+        transform_order_data,
+        transform_product_data,
+    ])
+    .step(validate_transformed_data)
+    .step(load_to_warehouse)
+    .build();</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🚀 CI/CD Pipelines</h3>
+                <p>Automatize pipelines de deploy com stages e aprovações.</p>
+                <div class="code-block">
+                    <pre><code>let workflow = Workflow::builder()
+    .step(run_tests)
+    .step(build_artifacts)
+    .step(deploy_to_staging)
+    .step(run_integration_tests)
+    .condition(
+        requires_approval,
+        wait_for_approval,
+        auto_approve
+    )
+    .step(deploy_to_production)
+    .build();</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-orchestrator - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Quantum - Criptografia quântica">
+    <title>AVX Quantum - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo"><span class="avx-gradient">AVX</span> Crypto Security</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><select id="language-selector"><option value="pt-BR">🇧🇷 PT</option><option value="en">🇺🇸 EN</option></select></li>
+                <li><button id="theme-toggle">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient">AVX Quantum</h1>
+            <p class="hero-subtitle">Criptografia Resistente a Quantum</p>
+            <div class="hero-badges">
+                <span class="badge">Quantum-Resistant</span>
+                <span class="badge">QKD</span>
+                <span class="badge">Future-Proof</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2>Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🔮 Quantum-Safe Crypto</h3>
+                    <p>Algoritmos resistentes a ataques de computadores quânticos. Preparado para o futuro.</p>
+                </div>
+                <div class="card">
+                    <h3>🌟 QKD Simulation</h3>
+                    <p>Simulação de Quantum Key Distribution para pesquisa e desenvolvimento.</p>
+                </div>
+                <div class="card">
+                    <h3>🛡️ Hybrid Schemes</h3>
+                    <p>Combinação de algoritmos clássicos e quântico-resistentes.</p>
+                </div>
+                <div class="card">
+                    <h3>⚡ Performance</h3>
+                    <p>Implementações otimizadas de algoritmos pós-quânticos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2>Exemplos de Uso</h2>
+            <h3>Quantum-Resistant Encryption</h3>
+            <pre><code class="language-rust">use avx_quantum::QuantumResistant;
+
+fn main() {
+    let (pk, sk) = QuantumResistant::keypair();
+    let ciphertext = QuantumResistant::encrypt(&pk, b"Secret data");
+    let plaintext = QuantumResistant::decrypt(&sk, &ciphertext);
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>Proteção de Longo Prazo</h3>
+                    <p>Dados que precisam permanecer seguros por décadas contra futuras ameaças quânticas.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏛️</div>
+                    <h3>Segurança Nacional</h3>
+                    <p>Proteção de informações classificadas e infraestrutura crítica.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

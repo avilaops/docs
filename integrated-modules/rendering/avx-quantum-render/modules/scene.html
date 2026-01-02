@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scene - Avx Quantum Render</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="light-theme">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>🎬 Scene Module</h1>
+            </div>
+            <nav>
+                <a href="../../index.html">← Voltar</a>
+                <a href="#overview">Visão Geral</a>
+                <a href="#api">API</a>
+                <a href="#examples">Exemplos</a>
+            </nav>
+            <button id="theme-toggle" class="theme-btn"></button>
+        </div>
+    </header>
+
+    <main>
+        <section id="overview" class="section">
+            <h2>🎬 Scene - Sistema de Cena 3D</h2>
+            <div class="card">
+                <p>
+                    O módulo <code>Scene</code> gerencia todos os objetos, luzes e câmeras em uma cena 3D.
+                    Fornece estruturas de aceleração espacial (BVH) para interseção eficiente de raios.
+                </p>
+
+                <h3>🎯 Componentes</h3>
+                <ul>
+                    <li><strong>Superfícies:</strong> Planos, esferas, malhas triangulares</li>
+                    <li><strong>Luzes:</strong> Pontuais, direcionais, área, ambiente</li>
+                    <li><strong>Materiais:</strong> Lambertiano, especular, dielétrico, metal</li>
+                    <li><strong>Câmeras:</strong> Perspectiva, ortográfica, panorâmica</li>
+                    <li><strong>Aceleração:</strong> BVH (Bounding Volume Hierarchy)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="api" class="section">
+            <h2>📚 API Reference</h2>
+
+            <div class="api-item">
+                <h3><code>Scene</code></h3>
+                <div class="code-block">
+<pre>pub struct Scene {
+    surfaces: Vec&lt;Surface&gt;,
+    lights: Vec&lt;Light&gt;,
+    camera: Camera,
+    bvh: Option&lt;BVH&gt;,
+}</pre>
+                </div>
+
+                <h4>Construtores e Builders:</h4>
+                <div class="code-block">
+<pre>pub fn new() -> Self
+pub fn with_camera(mut self, camera: Camera) -> Self
+pub fn with_background(mut self, color: [f64; 3]) -> Self</pre>
+                </div>
+
+                <h4>Adicionar Objetos:</h4>
+                <div class="code-block">
+<pre>pub fn add_surface(&mut self, surface: Surface)
+pub fn add_light(&mut self, light: Light)
+pub fn add_mesh(&mut self, vertices: &[[f64; 3]], indices: &[[usize; 3]])</pre>
+                </div>
+
+                <h4>Consultas:</h4>
+                <div class="code-block">
+<pre>pub fn num_objects(&self) -> usize
+pub fn intersect(&self, ray: &Ray) -> Option&lt;Intersection&gt;
+pub fn is_occluded(&self, p1: [f64; 3], p2: [f64; 3]) -> bool</pre>
+                </div>
+
+                <h4>Otimização:</h4>
+                <div class="code-block">
+<pre>pub fn build_bvh(&mut self)
+pub fn optimize(&mut self)</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>Surface</code></h3>
+                <div class="code-block">
+<pre>pub struct Surface {
+    position: [f64; 3],
+    normal: [f64; 3],
+    material: Material,
+}</pre>
+                </div>
+
+                <h4>Construtores:</h4>
+                <div class="code-block">
+<pre>pub fn new(position: [f64; 3], normal: [f64; 3], material: Material) -> Self
+pub fn plane(position: [f64; 3], normal: [f64; 3], material: Material) -> Self
+pub fn sphere(center: [f64; 3], radius: f64, material: Material) -> Self</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>Material</code></h3>
+                <div class="code-block">
+<pre>pub enum Material {
+    Lambertian { albedo: f64 },
+    Specular { reflectance: f64 },
+    Dielectric { refractive_index: f64, transmittance: f64 },
+    Metal { reflectance: f64, roughness: f64 },
+    Emissive { emission: [f64; 3] },
+}</pre>
+                </div>
+
+                <h4>Construtores Convenientes:</h4>
+                <div class="code-block">
+<pre>impl Material {
+    pub fn lambertian(albedo: f64) -> Self
+    pub fn specular(reflectance: f64) -> Self
+    pub fn glass(ior: f64) -> Self
+    pub fn metal(reflectance: f64, roughness: f64) -> Self
+    pub fn emissive(emission: [f64; 3]) -> Self
+}</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>Light</code></h3>
+                <div class="code-block">
+<pre>pub enum Light {
+    Point { position: [f64; 3], intensity: f64 },
+    Directional { direction: [f64; 3], intensity: f64 },
+    Area { center: [f64; 3], normal: [f64; 3], size: [f64; 2], intensity: f64 },
+    Ambient { intensity: f64 },
+}</pre>
+                </div>
+
+                <h4>Construtores:</h4>
+                <div class="code-block">
+<pre>impl Light {
+    pub fn point(position: [f64; 3], intensity: f64) -> Self
+    pub fn directional(direction: [f64; 3], intensity: f64) -> Self
+    pub fn area(center: [f64; 3], normal: [f64; 3], size: [f64; 2], intensity: f64) -> Self
+    pub fn ambient(intensity: f64) -> Self
+}</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>Camera</code></h3>
+                <div class="code-block">
+<pre>pub struct Camera {
+    pub position: [f64; 3],
+    pub look_at: [f64; 3],
+    pub up: [f64; 3],
+    pub fov: f64,
+    pub aspect_ratio: f64,
+}</pre>
+                </div>
+
+                <h4>Construtores:</h4>
+                <div class="code-block">
+<pre>pub fn new(position: [f64; 3], look_at: [f64; 3], fov: f64, aspect: f64) -> Self
+pub fn default() -> Self</pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="section">
+            <h2>💡 Exemplos de Uso</h2>
+
+            <div class="example-box">
+                <h3>1. Cornell Box Clássica</h3>
+                <div class="code-block">
+<pre>let mut scene = Scene::new();
+
+// Câmera
+let camera = Camera::new(
+    [0.0, 0.0, 10.0],  // posição
+    [0.0, 0.0, 0.0],   // olhando para
+    70.0,              // FOV
+    16.0 / 9.0         // aspect ratio
+);
+scene = scene.with_camera(camera);
+
+// Luz pontual no topo
+scene.add_light(Light::point([0.0, 4.9, 0.0], 50.0));
+
+// Chão
+scene.add_surface(Surface::plane(
+    [0.0, -5.0, 0.0],
+    [0.0, 1.0, 0.0],
+    Material::lambertian(0.8)
+));
+
+// Paredes coloridas
+scene.add_surface(Surface::plane(
+    [-5.0, 0.0, 0.0],  // esquerda (vermelha)
+    [1.0, 0.0, 0.0],
+    Material::lambertian(0.7)
+));
+
+scene.add_surface(Surface::plane(
+    [5.0, 0.0, 0.0],   // direita (verde)
+    [-1.0, 0.0, 0.0],
+    Material::lambertian(0.7)
+));</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>2. Esferas com Materiais Diversos</h3>
+                <div class="code-block">
+<pre>let mut scene = Scene::new();
+
+// Esfera difusa
+scene.add_surface(Surface::sphere(
+    [-2.0, 0.0, 0.0],
+    1.0,
+    Material::lambertian(0.8)
+));
+
+// Esfera metálica
+scene.add_surface(Surface::sphere(
+    [0.0, 0.0, 0.0],
+    1.0,
+    Material::metal(0.95, 0.05)
+));
+
+// Esfera de vidro
+scene.add_surface(Surface::sphere(
+    [2.0, 0.0, 0.0],
+    1.0,
+    Material::glass(1.5)
+));
+
+// Luz ambiente suave
+scene.add_light(Light::ambient(0.1));</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>3. Luz de Área Suave</h3>
+                <div class="code-block">
+<pre>let mut scene = Scene::new();
+
+// Luz de área grande no teto
+scene.add_light(Light::area(
+    [0.0, 5.0, 0.0],    // centro
+    [0.0, -1.0, 0.0],   // direção
+    [2.0, 2.0],         // tamanho (2m x 2m)
+    30.0                // intensidade
+));
+
+// Luz direcional (sol)
+scene.add_light(Light::directional(
+    [1.0, -1.0, -1.0],
+    5.0
+));</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>4. Carregar Malha OBJ</h3>
+                <div class="code-block">
+<pre>use avx_quantum_render::loaders::*;
+
+let mut scene = Scene::new();
+
+// Carregar modelo 3D
+let (vertices, indices) = load_obj("model.obj")?;
+
+scene.add_mesh(&vertices, &indices);
+
+// Construir BVH para aceleração
+scene.build_bvh();
+
+println!("Malha carregada: {} triângulos", indices.len());</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>5. Material Emissor (Emissive)</h3>
+                <div class="code-block">
+<pre>let mut scene = Scene::new();
+
+// Superfície que emite luz
+scene.add_surface(Surface::plane(
+    [0.0, 5.0, 0.0],
+    [0.0, -1.0, 0.0],
+    Material::emissive([1.0, 1.0, 0.8])  // luz branca quente
+));
+
+// Não é necessário adicionar Light separadamente
+// A superfície emissora contribui diretamente</pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>⚡ Performance Tips</h2>
+            <div class="card">
+                <ul>
+                    <li><strong>BVH:</strong> Sempre chamar <code>build_bvh()</code> para cenas com &gt;100 objetos</li>
+                    <li><strong>Materiais:</strong> Especular/Dielectric são mais caros que Lambertian</li>
+                    <li><strong>Luzes de Área:</strong> Considere usar geometria emissiva para performance</li>
+                    <li><strong>Malhas:</strong> Simplificar modelos 3D antes de carregar reduz custo de interseção</li>
+                    <li><strong>Otimização:</strong> Chamar <code>optimize()</code> após construir a cena</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025-2026 Avx. Documentação do Módulo Scene.</p>
+    </footer>
+
+    <script src="../theme.js"></script>
+</body>
+</html>

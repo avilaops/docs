@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Package - Arxis Core Documentation</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/docs.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="../index.html" class="logo">
+                <span class="logo-avx">Avx</span>
+                <span class="logo-text">Docs</span>
+            </a>
+            <div class="nav-links">
+                <a href="../getting-started.html">Getting Started</a>
+                <a href="index.html" class="active">Packages</a>
+                <a href="../examples.html">Examples</a>
+                <a href="../architecture.html">Architecture</a>
+                <a href="https://github.com/avilaops/docs" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav>
+                <h3>Crypto Packages</h3>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#avx-crypto">avx-crypto</a></li>
+                    <li><a href="#avx-hash">avx-hash</a></li>
+                    <li><a href="#avx-cipher">avx-cipher</a></li>
+                    <li><a href="#avx-signature">avx-signature</a></li>
+                    <li><a href="#avx-jwt">avx-jwt</a></li>
+                    <li><a href="#avx-tls">avx-tls</a></li>
+                    <li><a href="#avx-oauth">avx-oauth</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1>🔐 Criptografia</h1>
+            <p class="lead">Suite completa de criptografia, segurança e autenticação para aplicações Rust.</p>
+
+            <section id="overview">
+                <h2>Overview</h2>
+                <p>O módulo de criptografia do Arxis Core oferece implementações de última geração para:</p>
+                <ul>
+                    <li>Funções hash criptográficas (SHA-2, SHA-3, BLAKE3)</li>
+                    <li>Criptografia simétrica (AES, ChaCha20)</li>
+                    <li>Criptografia assimétrica (RSA, Ed25519, X25519)</li>
+                    <li>Assinaturas digitais</li>
+                    <li>TLS/SSL</li>
+                    <li>JWT e OAuth</li>
+                    <li>Geração de números aleatórios criptograficamente seguros</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>🛡️ Auditado e Seguro:</strong> Todos os pacotes de criptografia passam por auditoria de segurança regular e seguem as melhores práticas da indústria.
+                </div>
+            </section>
+
+            <section id="avx-crypto">
+                <h2>avx-crypto</h2>
+                <p>Pacote principal de criptografia com APIs de alto nível.</p>
+
+                <h3>Instalação</h3>
+                <pre><code class="language-toml">[dependencies]
+avx-crypto = "0.1.0"</code></pre>
+
+                <h3>Features</h3>
+                <ul>
+                    <li><strong>hash</strong> - Funções de hash criptográfico</li>
+                    <li><strong>cipher</strong> - Algoritmos de criptografia simétrica e assimétrica</li>
+                    <li><strong>signature</strong> - Assinaturas digitais</li>
+                    <li><strong>random</strong> - Gerador de números aleatórios seguros</li>
+                    <li><strong>password</strong> - Hashing de senhas (Argon2, bcrypt)</li>
+                </ul>
+
+                <h3>Exemplo Básico</h3>
+                <pre><code class="language-rust">use avx_crypto::{hash, cipher, signature};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Hash
+    let data = b"Hello, Arxis!";
+    let hash = hash::sha256(data);
+
+    // Criptografia simétrica
+    let key = cipher::generate_key();
+    let encrypted = cipher::encrypt(&key, data)?;
+    let decrypted = cipher::decrypt(&key, &encrypted)?;
+
+    // Assinatura digital
+    let (private_key, public_key) = signature::generate_keypair();
+    let signature = signature::sign(&private_key, data);
+    signature::verify(&public_key, data, &signature)?;
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="avx-hash">
+                <h2>avx-hash</h2>
+                <p>Implementações de funções hash criptográficas.</p>
+
+                <h3>Algoritmos Suportados</h3>
+                <ul>
+                    <li><strong>SHA-256, SHA-384, SHA-512</strong> - SHA-2 family</li>
+                    <li><strong>SHA3-256, SHA3-512</strong> - SHA-3 family</li>
+                    <li><strong>BLAKE3</strong> - Hash moderno de alta performance</li>
+                    <li><strong>HMAC</strong> - Message authentication codes</li>
+                </ul>
+
+                <pre><code class="language-rust">use avx_hash::{Sha256, Sha3_256, Blake3, Hmac};
+
+// SHA-256
+let hash = Sha256::digest(b"data");
+
+// SHA3-256
+let hash3 = Sha3_256::digest(b"data");
+
+// BLAKE3
+let blake = Blake3::digest(b"data");
+
+// HMAC-SHA256
+let key = b"secret_key";
+let hmac = Hmac::<Sha256>::new(key).finalize(b"message");</code></pre>
+            </section>
+
+            <section id="avx-cipher">
+                <h2>avx-cipher</h2>
+                <p>Algoritmos de criptografia simétrica e assimétrica.</p>
+
+                <h3>Criptografia Simétrica</h3>
+                <ul>
+                    <li><strong>AES-128-GCM, AES-256-GCM</strong> - Advanced Encryption Standard</li>
+                    <li><strong>ChaCha20-Poly1305</strong> - Stream cipher moderno</li>
+                    <li><strong>XChaCha20-Poly1305</strong> - ChaCha20 com nonces estendidos</li>
+                </ul>
+
+                <pre><code class="language-rust">use avx_cipher::{Aes256Gcm, ChaCha20Poly1305, Cipher};
+
+// AES-256-GCM
+let key = Aes256Gcm::generate_key();
+let cipher = Aes256Gcm::new(&key);
+let ciphertext = cipher.encrypt(b"plaintext")?;
+let plaintext = cipher.decrypt(&ciphertext)?;
+
+// ChaCha20-Poly1305
+let cipher = ChaCha20Poly1305::new(&key);
+let encrypted = cipher.encrypt(b"secret data")?;</code></pre>
+
+                <h3>Criptografia Assimétrica</h3>
+                <ul>
+                    <li><strong>RSA</strong> - 2048, 3072, 4096 bits</li>
+                    <li><strong>X25519</strong> - Key exchange</li>
+                    <li><strong>Ed25519</strong> - Digital signatures</li>
+                </ul>
+
+                <pre><code class="language-rust">use avx_cipher::{Rsa, X25519};
+
+// RSA
+let (private_key, public_key) = Rsa::generate_keypair(2048)?;
+let encrypted = public_key.encrypt(b"message")?;
+let decrypted = private_key.decrypt(&encrypted)?;
+
+// X25519 Key Exchange
+let alice_secret = X25519::generate_secret();
+let bob_secret = X25519::generate_secret();
+let alice_public = alice_secret.public_key();
+let bob_public = bob_secret.public_key();
+let shared_secret = alice_secret.exchange(&bob_public);</code></pre>
+            </section>
+
+            <section id="avx-signature">
+                <h2>avx-signature</h2>
+                <p>Assinaturas digitais e verificação.</p>
+
+                <h3>Algoritmos</h3>
+                <ul>
+                    <li><strong>Ed25519</strong> - Assinatura de curva elíptica (recomendado)</li>
+                    <li><strong>ECDSA</strong> - P-256, P-384</li>
+                    <li><strong>RSA-PSS</strong> - RSA com PSS padding</li>
+                </ul>
+
+                <pre><code class="language-rust">use avx_signature::{Ed25519, Signer, Verifier};
+
+// Ed25519
+let (signing_key, verifying_key) = Ed25519::generate_keypair();
+let message = b"Important document";
+let signature = signing_key.sign(message);
+
+// Verificar
+verifying_key.verify(message, &signature)?;
+
+// ECDSA
+use avx_signature::Ecdsa;
+let (private_key, public_key) = Ecdsa::P256::generate_keypair();
+let sig = private_key.sign(message);
+public_key.verify(message, &sig)?;</code></pre>
+            </section>
+
+            <section id="avx-jwt">
+                <h2>avx-jwt</h2>
+                <p>JSON Web Tokens (JWT) para autenticação e autorização.</p>
+
+                <h3>Features</h3>
+                <ul>
+                    <li>Criar e validar JWTs</li>
+                    <li>Algoritmos HS256, HS384, HS512, RS256, ES256</li>
+                    <li>Claims customizados</li>
+                    <li>Validação de expiração</li>
+                </ul>
+
+                <pre><code class="language-rust">use avx_jwt::{Jwt, Algorithm, Claims};
+use std::time::{SystemTime, Duration};
+
+// Criar JWT
+let secret = b"my_secret_key";
+let mut claims = Claims::new();
+claims.subject = Some("user123".to_string());
+claims.expiration = Some(
+    SystemTime::now() + Duration::from_secs(3600)
+);
+claims.custom.insert("role".to_string(), "admin".into());
+
+let token = Jwt::encode(&claims, secret, Algorithm::HS256)?;
+
+// Validar JWT
+let decoded = Jwt::decode(&token, secret, Algorithm::HS256)?;
+println!("User: {:?}", decoded.subject);</code></pre>
+            </section>
+
+            <section id="avx-tls">
+                <h2>avx-tls</h2>
+                <p>TLS/SSL para comunicações seguras.</p>
+
+                <pre><code class="language-rust">use avx_tls::{TlsConnector, TlsAcceptor};
+use tokio::net::TcpStream;
+
+// Cliente TLS
+let connector = TlsConnector::new()
+    .with_root_certificates(&cert_store)?;
+let stream = TcpStream::connect("example.com:443").await?;
+let tls_stream = connector.connect("example.com", stream).await?;
+
+// Servidor TLS
+let acceptor = TlsAcceptor::new()
+    .with_certificate(&cert)?
+    .with_private_key(&key)?;
+let listener = TcpListener::bind("0.0.0.0:443").await?;
+let (stream, _) = listener.accept().await?;
+let tls_stream = acceptor.accept(stream).await?;</code></pre>
+            </section>
+
+            <section id="avx-oauth">
+                <h2>avx-oauth</h2>
+                <p>OAuth 2.0 e OpenID Connect.</p>
+
+                <pre><code class="language-rust">use avx_oauth::{OAuthClient, TokenResponse};
+
+let client = OAuthClient::new(
+    "client_id",
+    "client_secret",
+    "https://oauth.provider.com"
+);
+
+// Authorization Code Flow
+let auth_url = client.authorization_url(
+    "https://myapp.com/callback",
+    &["read", "write"]
+);
+
+// Trocar código por token
+let token: TokenResponse = client
+    .exchange_code("authorization_code")
+    .await?;
+
+println!("Access token: {}", token.access_token);</code></pre>
+            </section>
+
+            <section id="examples">
+                <h2>Exemplos Avançados</h2>
+
+                <h3>Sistema de Autenticação Completo</h3>
+                <pre><code class="language-rust">use avx_crypto::{hash, signature};
+use avx_jwt::{Jwt, Claims};
+
+struct AuthSystem {
+    signing_key: signature::Ed25519PrivateKey,
+    verifying_key: signature::Ed25519PublicKey,
+}
+
+impl AuthSystem {
+    fn new() -> Self {
+        let (signing_key, verifying_key) =
+            signature::Ed25519::generate_keypair();
+        Self { signing_key, verifying_key }
+    }
+
+    fn hash_password(&self, password: &str) -> String {
+        hash::argon2(password.as_bytes())
+    }
+
+    fn verify_password(&self, password: &str, hash: &str) -> bool {
+        hash::verify_argon2(password.as_bytes(), hash)
+    }
+
+    fn create_token(&self, user_id: &str) -> Result<String, Error> {
+        let mut claims = Claims::new();
+        claims.subject = Some(user_id.to_string());
+        claims.expiration = Some(
+            SystemTime::now() + Duration::from_secs(86400)
+        );
+
+        Jwt::encode_with_key(&claims, &self.signing_key)
+    }
+
+    fn verify_token(&self, token: &str) -> Result<Claims, Error> {
+        Jwt::decode_with_key(token, &self.verifying_key)
+    }
+}</code></pre>
+
+                <h3>Criptografia End-to-End</h3>
+                <pre><code class="language-rust">use avx_cipher::{X25519, ChaCha20Poly1305};
+
+struct SecureChannel {
+    private_key: X25519Secret,
+    public_key: X25519Public,
+}
+
+impl SecureChannel {
+    fn new() -> Self {
+        let private_key = X25519::generate_secret();
+        let public_key = private_key.public_key();
+        Self { private_key, public_key }
+    }
+
+    fn encrypt_message(
+        &self,
+        recipient_public: &X25519Public,
+        message: &[u8]
+    ) -> Result<Vec<u8>, Error> {
+        let shared_secret = self.private_key.exchange(recipient_public);
+        let cipher = ChaCha20Poly1305::new(&shared_secret);
+        cipher.encrypt(message)
+    }
+
+    fn decrypt_message(
+        &self,
+        sender_public: &X25519Public,
+        ciphertext: &[u8]
+    ) -> Result<Vec<u8>, Error> {
+        let shared_secret = self.private_key.exchange(sender_public);
+        let cipher = ChaCha20Poly1305::new(&shared_secret);
+        cipher.decrypt(ciphertext)
+    }
+}</code></pre>
+            </section>
+
+            <div class="next-steps">
+                <h2>Próximos Passos</h2>
+                <div class="cards-grid">
+                    <a href="../examples.html#crypto" class="card">
+                        <h3>💡 Mais Exemplos</h3>
+                        <p>Veja exemplos práticos de criptografia</p>
+                    </a>
+                    <a href="index.html" class="card">
+                        <h3>📦 Outros Pacotes</h3>
+                        <p>Explore outros pacotes do Arxis Core</p>
+                    </a>
+                    <a href="../getting-started.html" class="card">
+                        <h3>🚀 Getting Started</h3>
+                        <p>Comece a usar agora</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arxis Core</h3>
+                    <p>Ecossistema completo de desenvolvimento em Rust</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <a href="https://github.com/avilaops/docs">GitHub</a>
+                    <a href="../getting-started.html">Getting Started</a>
+                    <a href="index.html">Packages</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <a href="../examples.html">Examples</a>
+                    <a href="../architecture.html">Architecture</a>
+                    <a href="../license.html">License</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Avx. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

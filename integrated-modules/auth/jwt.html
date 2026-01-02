@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx JWT - JSON Web Tokens | Avila Inc</title>
+    <meta name="description" content="Implementação completa e segura de JSON Web Tokens (JWT) com suporte a múltiplos algoritmos">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        :root {
+            --primary-orange: #FF6B35;
+            --primary-yellow: #FFD23F;
+            --bg-light: #FFFFFF;
+            --text-light: #1A1A1A;
+            --card-light: #F5F5F5;
+            --bg-dark: #0A0A0A;
+            --text-dark: #E0E0E0;
+            --card-dark: #1A1A1A;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+        body.light-mode { background: var(--bg-light); color: var(--text-light); }
+        body.dark-mode { background: var(--bg-dark); color: var(--text-dark); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        header {
+            border-bottom: 3px solid var(--primary-orange);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+        body.light-mode header { background: rgba(255, 255, 255, 0.95); }
+        body.dark-mode header { background: rgba(10, 10, 10, 0.95); }
+        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .controls { display: flex; gap: 15px; align-items: center; }
+        .btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-orange);
+            background: transparent;
+            color: var(--primary-orange);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn:hover { background: var(--primary-orange); color: white; transform: translateY(-2px); }
+        .lang-selector {
+            padding: 8px 12px;
+            border: 2px solid var(--primary-yellow);
+            border-radius: 6px;
+            background: transparent;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .hero { padding: 80px 0; text-align: center; }
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section { padding: 60px 0; }
+        .section-title { font-size: 36px; margin-bottom: 40px; text-align: center; color: var(--primary-orange); }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .feature-card {
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid var(--primary-orange);
+            transition: all 0.3s ease;
+        }
+        body.light-mode .feature-card { background: var(--card-light); }
+        body.dark-mode .feature-card { background: var(--card-dark); }
+        .feature-card:hover { transform: translateY(-5px); box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3); }
+        .code-example {
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--primary-yellow);
+            background: #282c34;
+        }
+        .code-example code { color: #abb2bf; font-family: 'Consolas', monospace; font-size: 14px; }
+        footer { padding: 40px 0; text-align: center; border-top: 3px solid var(--primary-orange); margin-top: 80px; }
+    </style>
+</head>
+<body class="light-mode">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><span>🎫</span><span data-i18n="title">Avx JWT</span></div>
+                <div class="controls">
+                    <select class="lang-selector" id="langSelector">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="en">🇺🇸 English</option>
+                    </select>
+                    <button class="btn" id="themeToggle" data-i18n="toggleTheme">🌙 Modo Escuro</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 data-i18n="heroTitle">JSON Web Tokens</h1>
+                <p data-i18n="heroSubtitle">Implementação completa e segura com suporte a múltiplos algoritmos de assinatura</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="features">Características</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3 data-i18n="feat1">✅ Múltiplos Algoritmos</h3>
+                        <p data-i18n="feat1desc">RS256, RS384, RS512 (RSA), ES256, ES384, ES512 (ECDSA), HS256, HS384, HS512 (HMAC)</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 data-i18n="feat2">✅ Validação Completa</h3>
+                        <p data-i18n="feat2desc">Verificação de assinatura, expiração, emissor, audiência e todas as claims JWT</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3 data-i18n="feat3">✅ Rotação de Chaves</h3>
+                        <p data-i18n="feat3desc">Suporte automático para rotação de chaves de assinatura e múltiplas chaves públicas</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="examples">Exemplos de Uso</h2>
+                <div class="code-example">
+                    <pre><code>use avx_jwt::{encode, decode, Algorithm, Header, Claims};
+
+// Criar e assinar JWT
+fn criar_token() -> Result&lt;String&gt; {
+    let header = Header::new(Algorithm::RS256);
+    let claims = Claims {
+        sub: "user_123".to_string(),
+        exp: 1735689600,
+        iat: 1735603200,
+        ..Default::default()
+    };
+    
+    let chave_privada = "sua_chave_privada";
+    let token = encode(&header, &claims, chave_privada.as_bytes())?;
+    Ok(token)
+}
+
+// Verificar e decodificar JWT
+fn verificar_token(token: &str) -> Result&lt;Claims&gt; {
+    let chave_publica = "sua_chave_publica";
+    let mut validation = Validation::new(Algorithm::RS256);
+    validation.validate_exp = true;
+    
+    let token_data = decode::&lt;Claims&gt;(
+        token,
+        chave_publica.as_bytes(),
+        &validation
+    )?;
+    
+    Ok(token_data.claims)
+}</code></pre>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p data-i18n="copyright">Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+            <p data-i18n="license">Licença Proprietária - Avila Inc</p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            'pt-BR': {
+                title: 'Avx JWT',
+                toggleTheme: '🌙 Modo Escuro',
+                toggleThemeLight: '☀️ Modo Claro',
+                heroTitle: 'JSON Web Tokens',
+                heroSubtitle: 'Implementação completa e segura com suporte a múltiplos algoritmos de assinatura',
+                features: 'Características',
+                feat1: '✅ Múltiplos Algoritmos',
+                feat1desc: 'RS256, RS384, RS512 (RSA), ES256, ES384, ES512 (ECDSA), HS256, HS384, HS512 (HMAC)',
+                feat2: '✅ Validação Completa',
+                feat2desc: 'Verificação de assinatura, expiração, emissor, audiência e todas as claims JWT',
+                feat3: '✅ Rotação de Chaves',
+                feat3desc: 'Suporte automático para rotação de chaves de assinatura e múltiplas chaves públicas',
+                examples: 'Exemplos de Uso',
+                copyright: 'Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados',
+                license: 'Licença Proprietária - Avila Inc'
+            },
+            'es': {
+                title: 'Avx JWT',
+                toggleTheme: '🌙 Modo Oscuro',
+                toggleThemeLight: '☀️ Modo Claro',
+                heroTitle: 'JSON Web Tokens',
+                heroSubtitle: 'Implementación completa y segura con soporte para múltiples algoritmos de firma',
+                features: 'Características',
+                feat1: '✅ Múltiples Algoritmos',
+                feat1desc: 'RS256, RS384, RS512 (RSA), ES256, ES384, ES512 (ECDSA), HS256, HS384, HS512 (HMAC)',
+                feat2: '✅ Validación Completa',
+                feat2desc: 'Verificación de firma, expiración, emisor, audiencia y todas las claims JWT',
+                feat3: '✅ Rotación de Claves',
+                feat3desc: 'Soporte automático para rotación de claves de firma y múltiples claves públicas',
+                examples: 'Ejemplos de Uso',
+                copyright: 'Copyright © 2025 Nícolas Ávila - Todos los Derechos Reservados',
+                license: 'Licencia Propietaria - Avila Inc'
+            }
+        };
+
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = false;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            body.className = isDark ? 'dark-mode' : 'light-mode';
+            const lang = document.getElementById('langSelector').value;
+            const key = isDark ? 'toggleThemeLight' : 'toggleTheme';
+            themeToggle.textContent = translations[lang][key];
+        });
+
+        document.getElementById('langSelector').addEventListener('change', (e) => {
+            const lang = e.target.value;
+            const t = translations[lang] || translations['pt-BR'];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+        });
+    </script>
+</body>
+</html>

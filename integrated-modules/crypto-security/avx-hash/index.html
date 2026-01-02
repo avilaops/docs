@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Hash - Algoritmos de hash rápidos e seguros">
+    <title>AVX Hash - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="hash.hero.title">AVX Hash</h1>
+            <p class="hero-subtitle" data-i18n="hash.hero.subtitle">
+                Algoritmos de hash rápidos e seguros - BLAKE3, SHA-256, xxHash
+            </p>
+            <div class="hero-badges">
+                <span class="badge">BLAKE3</span>
+                <span class="badge">SHA-256</span>
+                <span class="badge">xxHash</span>
+                <span class="badge">High Performance</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="hash.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="hash.overview.card1.title">⚡ BLAKE3</h3>
+                    <p data-i18n="hash.overview.card1.desc">
+                        Função de hash criptográfica moderna, extremamente rápida e segura. Baseada em BLAKE2 com melhorias significativas.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="hash.overview.card2.title">🔒 SHA-256</h3>
+                    <p data-i18n="hash.overview.card2.desc">
+                        Padrão NIST amplamente utilizado. Implementação otimizada com aceleração de hardware quando disponível.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="hash.overview.card3.title">🚀 xxHash</h3>
+                    <p data-i18n="hash.overview.card3.desc">
+                        Hash não-criptográfico extremamente rápido para checksums e tabelas hash. Ideal para performance crítica.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="hash.overview.card4.title">⚙️ Otimizações AVX</h3>
+                    <p data-i18n="hash.overview.card4.desc">
+                        Aproveitamento de instruções SIMD (AVX2/AVX-512) para máxima performance em processadores modernos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Types Section -->
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="hash.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="hash.types.table.type">Tipo</th>
+                            <th data-i18n="hash.types.table.description">Descrição</th>
+                            <th data-i18n="hash.types.table.output">Tamanho Saída</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Blake3</code></td>
+                            <td data-i18n="hash.types.blake3">Hash criptográfico BLAKE3</td>
+                            <td>256 bits (variável)</td>
+                        </tr>
+                        <tr>
+                            <td><code>Sha256</code></td>
+                            <td data-i18n="hash.types.sha256">SHA-256 padrão NIST</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>Sha512</code></td>
+                            <td data-i18n="hash.types.sha512">SHA-512 para maior segurança</td>
+                            <td>512 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>XxHash64</code></td>
+                            <td data-i18n="hash.types.xxhash64">xxHash 64 bits</td>
+                            <td>64 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>XxHash128</code></td>
+                            <td data-i18n="hash.types.xxhash128">xxHash 128 bits</td>
+                            <td>128 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>Hasher</code></td>
+                            <td data-i18n="hash.types.hasher">Trait genérico para hashers</td>
+                            <td>Variável</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Examples Section -->
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="hash.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="hash.examples.blake3.title">Exemplo Básico - BLAKE3</h3>
+            <pre><code class="language-rust">use avx_hash::Blake3;
+
+fn main() {
+    // Criar hasher BLAKE3
+    let mut hasher = Blake3::new();
+
+    // Adicionar dados
+    hasher.update(b"AVX Crypto Security");
+    hasher.update(b" - Fast & Secure");
+
+    // Finalizar e obter hash
+    let hash = hasher.finalize();
+    println!("BLAKE3: {}", hex::encode(hash));
+
+    // Hash direto (one-shot)
+    let hash = Blake3::hash(b"Mensagem completa");
+    println!("Hash: {}", hex::encode(hash));
+}</code></pre>
+
+            <h3 data-i18n="hash.examples.sha256.title">Exemplo - SHA-256</h3>
+            <pre><code class="language-rust">use avx_hash::Sha256;
+
+fn main() {
+    // SHA-256 hasher
+    let mut hasher = Sha256::new();
+    hasher.update(b"Dados importantes");
+
+    let digest = hasher.finalize();
+    println!("SHA-256: {}", hex::encode(digest));
+
+    // Verificar integridade
+    let expected = "abc123...";
+    let computed = Sha256::hash(data);
+    assert_eq!(hex::encode(computed), expected);
+
+    println!("✅ Integridade verificada!");
+}</code></pre>
+
+            <h3 data-i18n="hash.examples.xxhash.title">Exemplo - xxHash (Performance)</h3>
+            <pre><code class="language-rust">use avx_hash::XxHash64;
+
+fn main() {
+    // xxHash para checksums rápidos
+    let data = vec![0u8; 1_000_000]; // 1 MB
+
+    let start = std::time::Instant::now();
+    let hash = XxHash64::hash(&data);
+    let duration = start.elapsed();
+
+    println!("Hash: 0x{:016x}", hash);
+    println!("Tempo: {:?}", duration);
+    println!("Throughput: {:.2} GB/s",
+        1.0 / duration.as_secs_f64());
+}</code></pre>
+
+            <h3 data-i18n="hash.examples.streaming.title">Exemplo - Hash Streaming</h3>
+            <pre><code class="language-rust">use avx_hash::Blake3;
+use std::fs::File;
+use std::io::Read;
+
+fn hash_file(path: &str) -> Result<[u8; 32], std::io::Error> {
+    let mut file = File::open(path)?;
+    let mut hasher = Blake3::new();
+    let mut buffer = [0u8; 8192];
+
+    loop {
+        let n = file.read(&mut buffer)?;
+        if n == 0 { break; }
+        hasher.update(&buffer[..n]);
+    }
+
+    Ok(hasher.finalize())
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- API Reference Section -->
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="hash.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>Blake3</h3>
+                <div class="api-method">
+                    <code>pub fn new() -> Self</code>
+                    <p data-i18n="hash.api.blake3.new">Cria um novo hasher BLAKE3.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn update(&mut self, data: &[u8])</code>
+                    <p data-i18n="hash.api.blake3.update">Adiciona dados ao hash.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn finalize(&self) -> [u8; 32]</code>
+                    <p data-i18n="hash.api.blake3.finalize">Finaliza e retorna o hash.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn hash(data: &[u8]) -> [u8; 32]</code>
+                    <p data-i18n="hash.api.blake3.hash">Calcula hash em uma única chamada.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Sha256</h3>
+                <div class="api-method">
+                    <code>pub fn new() -> Self</code>
+                    <p data-i18n="hash.api.sha256.new">Cria hasher SHA-256.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn update(&mut self, data: &[u8])</code>
+                    <p data-i18n="hash.api.sha256.update">Processa dados.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn finalize(&self) -> [u8; 32]</code>
+                    <p data-i18n="hash.api.sha256.finalize">Retorna digest SHA-256.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>XxHash64</h3>
+                <div class="api-method">
+                    <code>pub fn new(seed: u64) -> Self</code>
+                    <p data-i18n="hash.api.xxhash.new">Cria hasher com seed.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn hash(data: &[u8]) -> u64</code>
+                    <p data-i18n="hash.api.xxhash.hash">Calcula hash xxHash64.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="hash.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">10 GB/s</div>
+                    <div class="metric-label" data-i18n="hash.performance.blake3">BLAKE3</div>
+                    <div class="metric-detail">AVX2 otimizado</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">2.5 GB/s</div>
+                    <div class="metric-label" data-i18n="hash.performance.sha256">SHA-256</div>
+                    <div class="metric-detail">Com SHA-NI</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">30 GB/s</div>
+                    <div class="metric-label" data-i18n="hash.performance.xxhash">xxHash</div>
+                    <div class="metric-detail">Não-criptográfico</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">< 50ns</div>
+                    <div class="metric-label" data-i18n="hash.performance.latency">Latência</div>
+                    <div class="metric-detail">Pequenos blocos</div>
+                </div>
+            </div>
+
+            <div class="performance-chart">
+                <h3 data-i18n="hash.performance.chart.title">Throughput Comparativo (GB/s)</h3>
+                <div class="chart-bars">
+                    <div class="chart-bar">
+                        <div class="bar-label">BLAKE3</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 33%;" data-value="10 GB/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">SHA-256</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 8%;" data-value="2.5 GB/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">SHA-512</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 10%;" data-value="3.0 GB/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">xxHash64</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 100%;" data-value="30 GB/s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="hash.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="hash.usecases.integrity.title">Verificação de Integridade</h3>
+                    <p data-i18n="hash.usecases.integrity.desc">
+                        Checksums de arquivos, verificação de downloads e detecção de alterações em dados.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔑</div>
+                    <h3 data-i18n="hash.usecases.passwords.title">Hash de Senhas</h3>
+                    <p data-i18n="hash.usecases.passwords.desc">
+                        Base para KDFs (PBKDF2, Argon2) e armazenamento seguro de credenciais.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">⛓️</div>
+                    <h3 data-i18n="hash.usecases.blockchain.title">Blockchain & Merkle Trees</h3>
+                    <p data-i18n="hash.usecases.blockchain.desc">
+                        Proof-of-work, árvores de Merkle e estruturas de dados criptográficas.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📊</div>
+                    <h3 data-i18n="hash.usecases.dedup.title">Deduplicação de Dados</h3>
+                    <p data-i18n="hash.usecases.dedup.desc">
+                        Identificação de conteúdo duplicado em sistemas de armazenamento e cache.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- License Section -->
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="hash.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="hash.license.desc">
+                    AVX Hash é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="hash.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

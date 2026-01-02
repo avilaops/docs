@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-raft - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">⚓</span>
+                <h1 class="section-title">avx-raft</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Implementação completa do algoritmo de consenso Raft para sistemas distribuídos tolerantes a falhas.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-raft</strong> implementa o algoritmo de consenso Raft:</p>
+                <ul>
+                    <li>👑 <strong>Leader Election</strong> - Eleição determinística de líder</li>
+                    <li>📝 <strong>Log Replication</strong> - Replicação confiável de log</li>
+                    <li>✅ <strong>Strong Consistency</strong> - Garantias de linearizability</li>
+                    <li>🔄 <strong>State Machine Replication</strong> - Replicação de estado</li>
+                    <li>💾 <strong>Snapshots</strong> - Compactação de log com snapshots</li>
+                    <li>🔍 <strong>Membership Changes</strong> - Mudanças dinâmicas de cluster</li>
+                    <li>⚡ <strong>Fast Recovery</strong> - Recuperação rápida de falhas</li>
+                    <li>📊 <strong>Observability</strong> - Métricas detalhadas de consenso</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>RaftNode</code></td>
+                        <td>Nó do cluster Raft</td>
+                        <td>Participante do consenso</td>
+                    </tr>
+                    <tr>
+                        <td><code>RaftState</code></td>
+                        <td>Estado: Follower, Candidate, Leader</td>
+                        <td>Papel no cluster</td>
+                    </tr>
+                    <tr>
+                        <td><code>LogEntry</code></td>
+                        <td>Entrada do log replicado</td>
+                        <td>Comando + term</td>
+                    </tr>
+                    <tr>
+                        <td><code>RaftConfig</code></td>
+                        <td>Configuração do Raft</td>
+                        <td>Parâmetros de timeouts</td>
+                    </tr>
+                    <tr>
+                        <td><code>Snapshot</code></td>
+                        <td>Snapshot do estado</td>
+                        <td>Compactação de log</td>
+                    </tr>
+                    <tr>
+                        <td><code>AppendEntriesRPC</code></td>
+                        <td>RPC de replicação</td>
+                        <td>Replicar log entries</td>
+                    </tr>
+                    <tr>
+                        <td><code>RequestVoteRPC</code></td>
+                        <td>RPC de votação</td>
+                        <td>Eleição de líder</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Criar Cluster Raft</h3>
+            <div class="code-block">
+                <pre><code>use avx_raft::{RaftNode, RaftConfig};
+
+let config = RaftConfig {
+    election_timeout_min: 150,
+    election_timeout_max: 300,
+    heartbeat_interval: 50,
+};
+
+// Criar nós do cluster
+let node1 = RaftNode::new("node1", vec!["node2", "node3"], config);
+let node2 = RaftNode::new("node2", vec!["node1", "node3"], config);
+let node3 = RaftNode::new("node3", vec!["node1", "node2"], config);
+
+// Iniciar nós
+node1.start().await?;
+node2.start().await?;
+node3.start().await?;
+
+// Eleição acontece automaticamente</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Propor Mudança de Estado</h3>
+            <div class="code-block">
+                <pre><code>use avx_raft::{RaftNode, Command};
+
+// Apenas o líder pode propor comandos
+if node1.is_leader() {
+    let command = Command::Set {
+        key: "user:123".to_string(),
+        value: b"Alice".to_vec(),
+    };
+    
+    // Propor comando
+    let index = node1.propose(command).await?;
+    
+    // Aguardar commit
+    node1.wait_for_commit(index).await?;
+    
+    println!("Comando commitado no índice {}", index);
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">State Machine Replication</h3>
+            <div class="code-block">
+                <pre><code>use avx_raft::{RaftNode, StateMachine};
+
+struct KVStore {
+    data: HashMap<String, Vec<u8>>,
+}
+
+impl StateMachine for KVStore {
+    fn apply(&mut self, command: Command) -> Result<Vec<u8>> {
+        match command {
+            Command::Set { key, value } => {
+                self.data.insert(key, value.clone());
+                Ok(value)
+            }
+            Command::Get { key } => {
+                Ok(self.data.get(&key).cloned().unwrap_or_default())
+            }
+            Command::Delete { key } => {
+                self.data.remove(&key);
+                Ok(vec![])
+            }
+        }
+    }
+}
+
+let mut node = RaftNode::with_state_machine(
+    "node1",
+    peers,
+    config,
+    KVStore::new()
+);</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Snapshots</h3>
+            <div class="code-block">
+                <pre><code>use avx_raft::{RaftNode, Snapshot};
+
+// Configurar snapshot automático
+node.set_snapshot_threshold(10000); // A cada 10k entries
+
+// Criar snapshot manualmente
+let snapshot = node.create_snapshot().await?;
+
+println!("Snapshot criado:");
+println!("  Last included index: {}", snapshot.last_index);
+println!("  Last included term: {}", snapshot.last_term);
+println!("  Size: {} bytes", snapshot.data.len());
+
+// Log entries anteriores são descartados</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Membership Changes</h3>
+            <div class="code-block">
+                <pre><code>use avx_raft::RaftNode;
+
+// Adicionar novo nó ao cluster
+if node1.is_leader() {
+    node1.add_peer("node4").await?;
+    
+    println!("Novo nó adicionado ao cluster");
+}
+
+// Remover nó do cluster
+if node1.is_leader() {
+    node1.remove_peer("node3").await?;
+    
+    println!("Nó removido do cluster");
+}
+
+// Mudanças são replicadas via log Raft</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">RaftNode</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new(id, peers, config)</code></td>
+                        <td>Cria novo nó Raft</td>
+                        <td><code>RaftNode</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>start()</code></td>
+                        <td>Inicia nó</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>propose(command)</code></td>
+                        <td>Propõe comando (líder)</td>
+                        <td><code>Result&lt;u64&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>is_leader()</code></td>
+                        <td>Verifica se é líder</td>
+                        <td><code>bool</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_leader()</code></td>
+                        <td>Obtém ID do líder</td>
+                        <td><code>Option&lt;String&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>wait_for_commit(index)</code></td>
+                        <td>Aguarda commit</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>create_snapshot()</code></td>
+                        <td>Cria snapshot</td>
+                        <td><code>Result&lt;Snapshot&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>add_peer(id)</code></td>
+                        <td>Adiciona peer</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>remove_peer(id)</code></td>
+                        <td>Remove peer</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    ⚓ Consenso de Alta Performance
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Write (3 nodes)</td>
+                                <td>~2ms</td>
+                                <td>500 writes/s</td>
+                            </tr>
+                            <tr>
+                                <td>Read (local)</td>
+                                <td>~50μs</td>
+                                <td>20K reads/s</td>
+                            </tr>
+                            <tr>
+                                <td>Leader Election</td>
+                                <td>~150-300ms</td>
+                                <td>-</td>
+                            </tr>
+                            <tr>
+                                <td>Snapshot Creation</td>
+                                <td>~100ms</td>
+                                <td>10 snapshots/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Pipelined log replication</li>
+                        <li>✅ Batched AppendEntries</li>
+                        <li>✅ Parallel snapshot transfers</li>
+                        <li>✅ Zero-copy log appends</li>
+                        <li>✅ Optimistic reads (lease-based)</li>
+                    </ul>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Garantias</h3>
+                    <ul>
+                        <li>✅ Linearizability</li>
+                        <li>✅ Safety: no split-brain</li>
+                        <li>✅ Liveness: progresso garantido</li>
+                        <li>✅ Tolerância a (N-1)/2 falhas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">🗄️ Banco de Dados Consistente</h3>
+                <p>Implemente banco de dados distribuído com strong consistency.</p>
+                <div class="code-block">
+                    <pre><code>// Cluster de 5 nós
+let nodes = vec!["db1", "db2", "db3", "db4", "db5"];
+let raft = RaftNode::new("db1", nodes, config);
+
+// Todas as escritas passam pelo consenso
+if raft.is_leader() {
+    raft.propose(Command::Set {
+        key: "user:123",
+        value: user_data,
+    }).await?;
+}
+
+// Leituras linearizáveis garantidas</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔧 Configuration Service</h3>
+                <p>Serviço de configuração distribuído com consenso.</p>
+                <div class="code-block">
+                    <pre><code>// Atualizar configuração
+if raft.is_leader() {
+    let config_change = Command::Set {
+        key: "feature_flags",
+        value: serde_json::to_vec(&flags)?,
+    };
+    
+    raft.propose(config_change).await?;
+}
+
+// Todas as réplicas têm mesma configuração</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔐 Distributed Lock Manager</h3>
+                <p>Gerenciador de locks com garantias fortes.</p>
+                <div class="code-block">
+                    <pre><code>// Adquirir lock via Raft
+let acquire = Command::AcquireLock {
+    resource: "critical_section",
+    holder: node_id,
+};
+
+if raft.is_leader() {
+    let index = raft.propose(acquire).await?;
+    raft.wait_for_commit(index).await?;
+    
+    // Lock adquirido com consenso
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-raft - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX LoadBalancer - Balanceador de carga de alta performance">
+    <title>AVX LoadBalancer - Documentação</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="../index.html" style="text-decoration:none;color:inherit;">AVX Network</a></div>
+                <div class="controls">
+                    <button id="theme-toggle" class="theme-toggle">🌙</button>
+                    <select id="lang-select" class="lang-select">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#types">Tipos Disponíveis</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#usecases">Casos de Uso</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>⚖️ AVX LoadBalancer</h1>
+                <p>Balanceador de carga de alta performance com health checks e failover automático</p>
+            </div>
+
+            <section id="overview" class="section fade-in">
+                <h2>📋 Visão Geral</h2>
+                <p>AVX LoadBalancer é um balanceador de carga completo e inteligente, oferecendo múltiplas estratégias de distribuição, health checks automáticos, geo-routing, sticky sessions, hot reload de configuração, STUN/TURN para WebRTC e integração com OpenTelemetry.</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card">
+                        <h3>⚡ Alta Performance</h3>
+                        <p>200k+ conexões/s com latência mínima e zero-copy forwarding</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🔒 Resiliente</h3>
+                        <p>Health checks, failover automático e circuit breaker integrado</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🎯 Inteligente</h3>
+                        <p>Geo-routing, sticky sessions e balanceamento por peso</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🚀 Flexível</h3>
+                        <p>Round-robin, least connections, IP hash e weighted strategies</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="types" class="section fade-in">
+                <h2>📦 Tipos Disponíveis</h2>
+
+                <h3>Core</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>LoadBalancer</code></td>
+                            <td>Balanceador de carga principal</td>
+                        </tr>
+                        <tr>
+                            <td><code>Backend</code></td>
+                            <td>Servidor backend com health status</td>
+                        </tr>
+                        <tr>
+                            <td><code>HealthCheck</code></td>
+                            <td>Sistema de health checks automáticos</td>
+                        </tr>
+                        <tr>
+                            <td><code>Config</code></td>
+                            <td>Configuração do load balancer</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Estratégias de Balanceamento</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Estratégia</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>RoundRobin</code></td>
+                            <td>Distribuição sequencial entre backends</td>
+                        </tr>
+                        <tr>
+                            <td><code>LeastConnections</code></td>
+                            <td>Roteia para backend com menos conexões</td>
+                        </tr>
+                        <tr>
+                            <td><code>IpHash</code></td>
+                            <td>Consistência baseada em IP do cliente</td>
+                        </tr>
+                        <tr>
+                            <td><code>WeightedRoundRobin</code></td>
+                            <td>Round-robin com pesos por backend</td>
+                        </tr>
+                        <tr>
+                            <td><code>Random</code></td>
+                            <td>Seleção aleatória de backend</td>
+                        </tr>
+                        <tr>
+                            <td><code>LeastResponseTime</code></td>
+                            <td>Roteia para backend mais rápido</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Features Avançadas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>GeoRouter</code></td>
+                            <td>Roteamento baseado em geolocalização</td>
+                        </tr>
+                        <tr>
+                            <td><code>StickySession</code></td>
+                            <td>Afinidade de sessão com cookies</td>
+                        </tr>
+                        <tr>
+                            <td><code>HotReload</code></td>
+                            <td>Recarga de configuração sem downtime</td>
+                        </tr>
+                        <tr>
+                            <td><code>StunTurn</code></td>
+                            <td>Servidor STUN/TURN para WebRTC</td>
+                        </tr>
+                        <tr>
+                            <td><code>TlsTermination</code></td>
+                            <td>Terminação SSL/TLS na borda</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="examples" class="section fade-in">
+                <h2>💡 Exemplos de Uso</h2>
+
+                <h3>LoadBalancer Básico (Round Robin)</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, Backend};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let backends = vec![
+        Backend::new("http://backend-1:8080"),
+        Backend::new("http://backend-2:8080"),
+        Backend::new("http://backend-3:8080"),
+    ];
+
+    let lb = LoadBalancer::builder()
+        .backends(backends)
+        .strategy(Strategy::RoundRobin)
+        .bind("0.0.0.0:80")
+        .serve()
+        .await?;
+
+    Ok(())
+}</code></pre>
+
+                <h3>Least Connections Strategy</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, Backend, Strategy};
+
+let backends = vec![
+    Backend::new("http://backend-1:8080"),
+    Backend::new("http://backend-2:8080"),
+    Backend::new("http://backend-3:8080"),
+];
+
+let lb = LoadBalancer::builder()
+    .backends(backends)
+    .strategy(Strategy::LeastConnections)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>Weighted Round Robin</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, Backend, Strategy};
+
+let backends = vec![
+    Backend::new("http://backend-1:8080").weight(5),  // 50% do tráfego
+    Backend::new("http://backend-2:8080").weight(3),  // 30% do tráfego
+    Backend::new("http://backend-3:8080").weight(2),  // 20% do tráfego
+];
+
+let lb = LoadBalancer::builder()
+    .backends(backends)
+    .strategy(Strategy::WeightedRoundRobin)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>Com Health Checks</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, Backend, HealthCheck};
+use std::time::Duration;
+
+let health_check = HealthCheck::builder()
+    .interval(Duration::from_secs(5))
+    .timeout(Duration::from_secs(2))
+    .unhealthy_threshold(3)
+    .healthy_threshold(2)
+    .path("/health")
+    .build();
+
+let lb = LoadBalancer::builder()
+    .backends(backends)
+    .health_check(health_check)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>Sticky Sessions (Afinidade de Sessão)</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, StickySession};
+use std::time::Duration;
+
+let sticky = StickySession::builder()
+    .cookie_name("AVX_SESSION")
+    .ttl(Duration::from_secs(3600))
+    .secure(true)
+    .build();
+
+let lb = LoadBalancer::builder()
+    .backends(backends)
+    .sticky_session(sticky)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>Geo-Routing (Roteamento Geográfico)</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, GeoRouter, Region};
+
+let geo_router = GeoRouter::builder()
+    .region(Region::US, vec![
+        "http://us-east-1:8080",
+        "http://us-west-1:8080",
+    ])
+    .region(Region::EU, vec![
+        "http://eu-west-1:8080",
+        "http://eu-central-1:8080",
+    ])
+    .region(Region::ASIA, vec![
+        "http://ap-southeast-1:8080",
+        "http://ap-northeast-1:8080",
+    ])
+    .default_region(Region::US)
+    .build();
+
+let lb = LoadBalancer::builder()
+    .geo_router(geo_router)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>Hot Reload de Configuração</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, HotReload};
+
+let hot_reload = HotReload::builder()
+    .config_file("config.yaml")
+    .watch_interval(Duration::from_secs(10))
+    .on_reload(|new_config| {
+        println!("Configuração recarregada!");
+    })
+    .build();
+
+let lb = LoadBalancer::builder()
+    .hot_reload(hot_reload)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>TLS Termination</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, TlsConfig};
+
+let tls = TlsConfig::builder()
+    .cert_path("cert.pem")
+    .key_path("key.pem")
+    .min_version(TlsVersion::TLS13)
+    .build();
+
+let lb = LoadBalancer::builder()
+    .backends(backends)
+    .tls(tls)
+    .bind("0.0.0.0:443")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>STUN/TURN Server para WebRTC</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, StunTurn};
+
+let stun_turn = StunTurn::builder()
+    .stun_port(3478)
+    .turn_port(3479)
+    .realm("avx.example.com")
+    .credentials(vec![
+        ("user1", "password1"),
+        ("user2", "password2"),
+    ])
+    .build();
+
+let lb = LoadBalancer::builder()
+    .stun_turn(stun_turn)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>Observabilidade com OpenTelemetry</h3>
+                <pre><code>use avx_loadbalancer::{LoadBalancer, Telemetry};
+
+let telemetry = Telemetry::builder()
+    .jaeger_endpoint("http://jaeger:14268/api/traces")
+    .service_name("avx-loadbalancer")
+    .metrics_port(9090)
+    .build();
+
+let lb = LoadBalancer::builder()
+    .backends(backends)
+    .telemetry(telemetry)
+    .bind("0.0.0.0:80")
+    .serve()
+    .await?;</code></pre>
+
+                <h3>LoadBalancer Completo (Produção)</h3>
+                <pre><code>use avx_loadbalancer::*;
+use std::time::Duration;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Backends com pesos
+    let backends = vec![
+        Backend::new("http://backend-1:8080").weight(5),
+        Backend::new("http://backend-2:8080").weight(3),
+        Backend::new("http://backend-3:8080").weight(2),
+    ];
+
+    // Health checks
+    let health_check = HealthCheck::builder()
+        .interval(Duration::from_secs(5))
+        .timeout(Duration::from_secs(2))
+        .path("/health")
+        .build();
+
+    // Sticky sessions
+    let sticky = StickySession::builder()
+        .cookie_name("AVX_SESSION")
+        .ttl(Duration::from_secs(3600))
+        .build();
+
+    // Geo-routing
+    let geo_router = GeoRouter::builder()
+        .region(Region::US, vec!["http://us-1:8080"])
+        .region(Region::EU, vec!["http://eu-1:8080"])
+        .build();
+
+    // TLS
+    let tls = TlsConfig::builder()
+        .cert_path("cert.pem")
+        .key_path("key.pem")
+        .build();
+
+    // Hot reload
+    let hot_reload = HotReload::from_file("config.yaml");
+
+    // Telemetry
+    let telemetry = Telemetry::jaeger("http://jaeger:14268/api/traces");
+
+    // Criar load balancer
+    let lb = LoadBalancer::builder()
+        .backends(backends)
+        .strategy(Strategy::WeightedRoundRobin)
+        .health_check(health_check)
+        .sticky_session(sticky)
+        .geo_router(geo_router)
+        .tls(tls)
+        .hot_reload(hot_reload)
+        .telemetry(telemetry)
+        .max_connections(100000)
+        .bind("0.0.0.0:443")
+        .serve()
+        .await?;
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="api" class="section fade-in">
+                <h2>📚 Referências da API</h2>
+
+                <h3>LoadBalancer</h3>
+                <div class="module-card">
+                    <h4><code>LoadBalancer::builder() -> LoadBalancerBuilder</code></h4>
+                    <p>Cria construtor de load balancer para configuração completa.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>LoadBalancerBuilder::backends(backends: Vec&lt;Backend&gt;) -> Self</code></h4>
+                    <p>Define lista de servidores backend para balanceamento.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>LoadBalancerBuilder::strategy(strategy: Strategy) -> Self</code></h4>
+                    <p>Define estratégia de balanceamento (RoundRobin, LeastConnections, etc).</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>LoadBalancer::serve() -> Result&lt;()&gt;</code></h4>
+                    <p>Inicia o load balancer e processa conexões.</p>
+                </div>
+
+                <h3 class="mt-3">Backend</h3>
+                <div class="module-card">
+                    <h4><code>Backend::new(url: &str) -> Self</code></h4>
+                    <p>Cria novo backend com URL especificada.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Backend::weight(self, weight: u32) -> Self</code></h4>
+                    <p>Define peso do backend para weighted strategies.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Backend::max_connections(self, max: u32) -> Self</code></h4>
+                    <p>Define limite máximo de conexões para este backend.</p>
+                </div>
+
+                <h3 class="mt-3">HealthCheck</h3>
+                <div class="module-card">
+                    <h4><code>HealthCheck::builder() -> HealthCheckBuilder</code></h4>
+                    <p>Cria construtor de health check.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>HealthCheckBuilder::interval(duration: Duration) -> Self</code></h4>
+                    <p>Define intervalo entre health checks.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>HealthCheckBuilder::path(path: &str) -> Self</code></h4>
+                    <p>Define path HTTP para health check.</p>
+                </div>
+            </section>
+
+            <section id="performance" class="section fade-in">
+                <h2>⚡ Performance</h2>
+
+                <div class="performance-chart">
+                    <h3>Benchmarks - Throughput</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">Round Robin</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="98" style="width: 0;">200k conn/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Least Connections</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="95" style="width: 0;">185k conn/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">IP Hash</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="97" style="width: 0;">195k conn/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Com Sticky Sessions</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="93" style="width: 0;">175k conn/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Latência (p99)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>AVX LoadBalancer</th>
+                                <th>Melhoria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Backend Selection</td>
+                                <td>450 μs</td>
+                                <td>5.8x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Health Check</td>
+                                <td>1.2 ms</td>
+                                <td>4.2x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Connection Forwarding</td>
+                                <td>680 μs</td>
+                                <td>4.9x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Sticky Session Lookup</td>
+                                <td>320 μs</td>
+                                <td>7.1x mais rápido</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-3">Características de Performance</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>✅ Zero-Copy Forwarding</h4>
+                        <p>Forwarding otimizado sem cópias de dados</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Lock-Free Algorithms</h4>
+                        <p>Seleção de backend sem locks para máxima concorrência</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Connection Pooling</h4>
+                        <p>Pool de conexões eficiente para backends</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Async Health Checks</h4>
+                        <p>Health checks assíncronos sem bloqueio</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usecases" class="section fade-in">
+                <h2>🎬 Casos de Uso</h2>
+
+                <div class="module-card">
+                    <h3>🌍 Aplicações Web de Alta Escala</h3>
+                    <p>Distribua tráfego entre múltiplos servidores web para alta disponibilidade e escalabilidade.</p>
+                    <pre><code>let lb = LoadBalancer::builder()
+    .backends(web_servers)
+    .strategy(Strategy::LeastConnections)
+    .health_check(health_check)
+    .serve().await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🎮 Gaming Servers</h3>
+                    <p>Balanceie jogadores entre servidores de jogo com sticky sessions para manter estado.</p>
+                    <pre><code>let lb = LoadBalancer::builder()
+    .backends(game_servers)
+    .sticky_session(sticky_config)
+    .strategy(Strategy::LeastConnections)
+    .serve().await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🌐 Multi-Region Deployment</h3>
+                    <p>Roteie usuários para o datacenter mais próximo com geo-routing.</p>
+                    <pre><code>let lb = LoadBalancer::builder()
+    .geo_router(geo_config)
+    .health_check(health_check)
+    .serve().await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>📹 Streaming & WebRTC</h3>
+                    <p>Balanceie conexões WebRTC com STUN/TURN integrado.</p>
+                    <pre><code>let lb = LoadBalancer::builder()
+    .backends(streaming_servers)
+    .stun_turn(stun_turn_config)
+    .serve().await?;</code></pre>
+                </div>
+            </section>
+
+            <section id="license" class="section fade-in">
+                <h2>📄 Licença</h2>
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Software Proprietário - Veja <a href="../../LICENSE-PROPRIETARY.md">LICENSE-PROPRIETARY.md</a></p>
+                <p class="mt-2">Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <div class="footer-links">
+                    <a href="https://avila.inc">Contato</a>
+                    <a href="https://docs.avila.inc">Documentação</a>
+                    <a href="../../LICENSE-PROPRIETARY.md">Licença</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

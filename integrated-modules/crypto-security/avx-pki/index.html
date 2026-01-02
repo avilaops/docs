@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX PKI - Public Key Infrastructure">
+    <title>AVX PKI - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient">AVX PKI</h1>
+            <p class="hero-subtitle">Public Key Infrastructure - Certificados digitais e CA</p>
+            <div class="hero-badges">
+                <span class="badge">X.509</span>
+                <span class="badge">Certificate Authority</span>
+                <span class="badge">TLS/SSL</span>
+                <span class="badge">PKI</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2>Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>📜 Certificados X.509</h3>
+                    <p>Geração, validação e gerenciamento de certificados digitais padrão X.509.</p>
+                </div>
+                <div class="card">
+                    <h3>🏛️ Certificate Authority</h3>
+                    <p>Infraestrutura completa de CA com hierarquia root, intermediária e end-entity.</p>
+                </div>
+                <div class="card">
+                    <h3>🔐 Certificate Chains</h3>
+                    <p>Validação de cadeias de certificados, verificação de revogação (CRL/OCSP).</p>
+                </div>
+                <div class="card">
+                    <h3>🔑 Key Management</h3>
+                    <p>Gerenciamento seguro de chaves privadas com HSM e proteção por senha.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2>Exemplos de Uso</h2>
+
+            <h3>Criar Certificado</h3>
+            <pre><code class="language-rust">use avx_pki::{Certificate, CertificateBuilder};
+
+fn main() {
+    let (pk, sk) = generate_keypair();
+
+    let cert = CertificateBuilder::new()
+        .subject("CN=example.com")
+        .issuer("CN=AVX CA")
+        .public_key(&pk)
+        .sign(&ca_key)
+        .build()
+        .unwrap();
+
+    println!("Certificado criado!");
+}</code></pre>
+
+            <h3>Validar Certificado</h3>
+            <pre><code class="language-rust">use avx_pki::{Certificate, CertificateValidator};
+
+fn main() {
+    let cert = Certificate::from_pem(&cert_pem)?;
+    let ca_cert = Certificate::from_pem(&ca_pem)?;
+
+    let validator = CertificateValidator::new();
+    let is_valid = validator.validate(&cert, &ca_cert);
+
+    assert!(is_valid);
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>TLS/SSL</h3>
+                    <p>Certificados para HTTPS, proteção de websites e APIs REST.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏢</div>
+                    <h3>PKI Corporativa</h3>
+                    <p>Infraestrutura de chaves para autenticação de funcionários e dispositivos.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📧</div>
+                    <h3>Email Seguro</h3>
+                    <p>S/MIME para criptografia e assinatura de emails corporativos.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📱</div>
+                    <h3>Device Identity</h3>
+                    <p>Certificados para IoT, dispositivos móveis e autenticação M2M.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2>Licença</h2>
+            <div class="card">
+                <p>AVX PKI é software proprietário desenvolvido pela Ávila Inc.</p>
+                <p>Contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

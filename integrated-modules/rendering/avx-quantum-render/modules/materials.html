@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materials - Avx Quantum Render</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="light-theme">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>💎 Materials Module</h1>
+            </div>
+            <nav>
+                <a href="../../index.html">← Voltar</a>
+                <a href="#overview">Visão Geral</a>
+                <a href="#api">API</a>
+                <a href="#examples">Exemplos</a>
+            </nav>
+            <button id="theme-toggle" class="theme-btn"></button>
+        </div>
+    </header>
+
+    <main>
+        <section id="overview" class="section">
+            <h2>💎 Materials - Materiais PBR Avançados</h2>
+            <div class="card">
+                <p>
+                    O módulo <code>Materials</code> implementa BSDF (Bidirectional Scattering Distribution Function)
+                    fisicamente corretos para renderização fotorrealística. Todos os materiais seguem princípios
+                    de conservação de energia e reciprocidade.
+                </p>
+
+                <h3>🎯 Características</h3>
+                <ul>
+                    <li><strong>Physically Based:</strong> Todos os materiais são baseados em física real</li>
+                    <li><strong>Conservação de Energia:</strong> Nunca reflete/transmite mais luz do que recebe</li>
+                    <li><strong>Fresnel Correto:</strong> Reflexões dependentes de ângulo precisas</li>
+                    <li><strong>Microfacet Models:</strong> GGX/Beckmann para superfícies rugosas</li>
+                    <li><strong>Subsurface Scattering:</strong> Para materiais translúcidos (pele, cera, jade)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="api" class="section">
+            <h2>📚 API Reference</h2>
+
+            <div class="api-item">
+                <h3><code>MaterialProperties</code></h3>
+                <div class="code-block">
+<pre>pub struct MaterialProperties {
+    pub metallic: f64,       // [0, 1] - 0=dielectric, 1=metal
+    pub roughness: f64,      // [0, 1] - 0=smooth, 1=rough
+    pub specular: f64,       // [0, 1] - specular intensity
+    pub ior: f64,           // Index of Refraction (1.0-3.0)
+    pub subsurface: f64,    // [0, 1] - subsurface scattering
+    pub clearcoat: f64,     // [0, 1] - clearcoat layer
+}</pre>
+                </div>
+
+                <h4>Presets de Materiais:</h4>
+                <div class="code-block">
+<pre>impl MaterialProperties {
+    pub fn dielectric(ior: f64, roughness: f64) -> Self
+    pub fn metal(roughness: f64) -> Self
+    pub fn cloth(roughness: f64) -> Self
+    pub fn skin() -> Self
+}</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>Fresnel</code></h3>
+                <div class="code-block">
+<pre>pub struct Fresnel;
+
+impl Fresnel {
+    // Aproximação de Schlick (rápida)
+    pub fn schlick(cos_theta: f64, ior: f64) -> f64
+
+    // Fresnel exato para dielétricos
+    pub fn dielectric(cos_theta_i: f64, ior1: f64, ior2: f64) -> f64
+
+    // Fresnel para condutores (metais)
+    pub fn conductor(cos_theta: f64, eta: f64, k: f64) -> f64
+}</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>Microfacet</code></h3>
+                <div class="code-block">
+<pre>pub struct Microfacet;
+
+impl Microfacet {
+    // GGX/Trowbridge-Reitz NDF
+    pub fn ggx_ndf(n_dot_h: f64, roughness: f64) -> f64
+
+    // Smith masking-shadowing
+    pub fn smith_g1(n_dot_v: f64, roughness: f64) -> f64
+    pub fn smith_g2(n_dot_v: f64, n_dot_l: f64, roughness: f64) -> f64
+
+    // Importance sampling GGX
+    pub fn sample_ggx(u: [f64; 2], roughness: f64) -> [f64; 3]
+}</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>BSDF</code></h3>
+                <div class="code-block">
+<pre>pub trait BSDF {
+    // Avaliar BSDF para direções dadas
+    fn eval(&self, wi: [f64; 3], wo: [f64; 3], normal: [f64; 3]) -> [f64; 3];
+
+    // Amostrar direção de saída dada entrada
+    fn sample(&self, wi: [f64; 3], normal: [f64; 3], u: [f64; 2]) -> BSDFSample;
+
+    // PDF da amostragem
+    fn pdf(&self, wi: [f64; 3], wo: [f64; 3], normal: [f64; 3]) -> f64;
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="section">
+            <h2>💡 Exemplos de Uso</h2>
+
+            <div class="example-box">
+                <h3>1. Materiais Metálicos</h3>
+                <div class="code-block">
+<pre>use avx_quantum_render::materials::*;
+
+// Ouro polido (baixa rugosidade)
+let gold = MaterialProperties::metal(0.05);
+
+// Alumínio escovado (rugosidade média)
+let brushed_aluminum = MaterialProperties::metal(0.4);
+
+// Ferro enferrujado (alta rugosidade)
+let rusted_iron = MaterialProperties::metal(0.9);</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>2. Dielétricos (Vidro, Plástico)</h3>
+                <div class="code-block">
+<pre>// Vidro (IOR = 1.5)
+let glass = MaterialProperties::dielectric(1.5, 0.0);
+
+// Vidro fosco
+let frosted_glass = MaterialProperties::dielectric(1.5, 0.3);
+
+// Diamante (IOR = 2.42)
+let diamond = MaterialProperties::dielectric(2.42, 0.0);
+
+// Água (IOR = 1.33)
+let water = MaterialProperties::dielectric(1.33, 0.0);</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>3. Materiais Orgânicos</h3>
+                <div class="code-block">
+<pre>// Pele humana (com subsurface scattering)
+let skin = MaterialProperties::skin();
+
+// Tecido de algodão
+let cotton = MaterialProperties::cloth(0.8);
+
+// Veludo (altamente rugoso)
+let velvet = MaterialProperties::cloth(0.95);</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>4. Cálculo de Fresnel</h3>
+                <div class="code-block">
+<pre>use avx_quantum_render::materials::Fresnel;
+
+let cos_theta = 0.7;  // ângulo entre normal e visão
+let ior = 1.5;        // índice de refração
+
+// Aproximação de Schlick (rápida)
+let f_schlick = Fresnel::schlick(cos_theta, ior);
+
+// Fresnel exato
+let f_exact = Fresnel::dielectric(cos_theta, 1.0, ior);
+
+println!("Schlick: {:.4}, Exato: {:.4}", f_schlick, f_exact);</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>5. Microfacet BRDF Completo</h3>
+                <div class="code-block">
+<pre>use avx_quantum_render::materials::Microfacet;
+
+let roughness = 0.3;
+let n_dot_h = 0.9;
+let n_dot_v = 0.8;
+let n_dot_l = 0.85;
+
+// Normal Distribution Function (GGX)
+let d = Microfacet::ggx_ndf(n_dot_h, roughness);
+
+// Masking-Shadowing (Smith G2)
+let g = Microfacet::smith_g2(n_dot_v, n_dot_l, roughness);
+
+// Fresnel
+let f = Fresnel::schlick(n_dot_h, 1.5);
+
+// BRDF completo: D * G * F / (4 * n_dot_v * n_dot_l)
+let brdf = (d * g * f) / (4.0 * n_dot_v * n_dot_l);
+
+println!("BRDF value: {:.6}", brdf);</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>6. Importance Sampling</h3>
+                <div class="code-block">
+<pre>use avx_quantum_render::materials::Microfacet;
+use avx_quantum_render::utils::Random;
+
+// Amostrar direção usando GGX importance sampling
+let u = [Random::uniform(), Random::uniform()];
+let roughness = 0.5;
+
+// Direção do meio-vetor (half-vector)
+let h = Microfacet::sample_ggx(u, roughness);
+
+// Refletir direção de entrada em torno de h
+let wo = reflect(wi, h);
+
+// PDF da amostragem
+let pdf = Microfacet::ggx_ndf(n_dot_h, roughness) * n_dot_h / (4.0 * h_dot_wo);</pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📊 Comparação de Materiais</h2>
+            <div class="card">
+                <table class="material-table">
+                    <thead>
+                        <tr>
+                            <th>Material</th>
+                            <th>IOR</th>
+                            <th>Metallic</th>
+                            <th>Roughness</th>
+                            <th>Subsurface</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Vidro</td>
+                            <td>1.5</td>
+                            <td>0.0</td>
+                            <td>0.0-0.2</td>
+                            <td>0.0</td>
+                        </tr>
+                        <tr>
+                            <td>Água</td>
+                            <td>1.33</td>
+                            <td>0.0</td>
+                            <td>0.0</td>
+                            <td>0.0</td>
+                        </tr>
+                        <tr>
+                            <td>Diamante</td>
+                            <td>2.42</td>
+                            <td>0.0</td>
+                            <td>0.0</td>
+                            <td>0.0</td>
+                        </tr>
+                        <tr>
+                            <td>Ouro</td>
+                            <td>-</td>
+                            <td>1.0</td>
+                            <td>0.05</td>
+                            <td>0.0</td>
+                        </tr>
+                        <tr>
+                            <td>Alumínio</td>
+                            <td>-</td>
+                            <td>1.0</td>
+                            <td>0.3</td>
+                            <td>0.0</td>
+                        </tr>
+                        <tr>
+                            <td>Pele</td>
+                            <td>1.4</td>
+                            <td>0.0</td>
+                            <td>0.4</td>
+                            <td>0.5</td>
+                        </tr>
+                        <tr>
+                            <td>Tecido</td>
+                            <td>1.5</td>
+                            <td>0.0</td>
+                            <td>0.8</td>
+                            <td>0.0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>⚡ Performance Tips</h2>
+            <div class="card">
+                <ul>
+                    <li><strong>Schlick vs Exato:</strong> Use Schlick para preview, exato para produção</li>
+                    <li><strong>Importance Sampling:</strong> Sempre amostrar usando GGX para convergência rápida</li>
+                    <li><strong>Roughness:</strong> Valores &lt; 0.01 podem causar fireflies (use clamping)</li>
+                    <li><strong>Subsurface:</strong> Computacionalmente caro, use apenas quando necessário</li>
+                    <li><strong>Clearcoat:</strong> Adiciona apenas ~10% de overhead, vale a pena para carros/madeira</li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025-2026 Avx. Documentação do Módulo Materials.</p>
+    </footer>
+
+    <script src="../theme.js"></script>
+    <style>
+        .material-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .material-table th {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .material-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .material-table tbody tr:hover {
+            background: var(--card-bg);
+        }
+    </style>
+</body>
+</html>

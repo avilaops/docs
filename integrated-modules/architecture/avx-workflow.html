@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVX Workflow - Motor de Workflows</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">AVX</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                </ul>
+            </nav>
+            <div class="controls">
+                <button id="theme-toggle" class="theme-toggle">🌙 Dark</button>
+                <select id="lang-selector" class="lang-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇨🇭 Français</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AVX Workflow</h1>
+            <p>Motor de Workflows Distribuídos com DAG e Retry Automático</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="overview" class="content-section">
+            <h2>📖 Visão Geral</h2>
+            <p>AVX Workflow é um motor de execução de workflows distribuídos, permitindo orquestração de tarefas complexas com suporte a paralelização, retry automático, e observabilidade completa.</p>
+
+            <h3>Características</h3>
+            <ul style="line-height: 2; font-size: 1.1rem;">
+                <li>✅ <strong>Execução Distribuída</strong>: Workflows em múltiplos nodes</li>
+                <li>✅ <strong>DAG-Based</strong>: Grafos acíclicos para dependências</li>
+                <li>✅ <strong>Retry Automático</strong>: Políticas configuráveis</li>
+                <li>✅ <strong>Observabilidade</strong>: Métricas e tracing integrados</li>
+            </ul>
+        </section>
+
+        <section id="examples" class="content-section">
+            <h2>💻 Exemplos</h2>
+
+            <h3>Workflow Simples</h3>
+            <pre><code>use avx_workflow::{Workflow, Task};
+
+let workflow = Workflow::builder()
+    .name("data_pipeline")
+    .add_task(Task::new("fetch", fetch_handler))
+    .add_task(Task::new("process", process_handler))
+    .add_task(Task::new("save", save_handler))
+    .add_dependency("process", "fetch")
+    .add_dependency("save", "process")
+    .build()?;
+
+let executor = WorkflowExecutor::new();
+executor.execute("data_pipeline", input)?;</code></pre>
+
+            <h3>Paralelização</h3>
+            <pre><code>let workflow = Workflow::builder()
+    .name("parallel")
+    .add_task(Task::new("api1", api1_handler))
+    .add_task(Task::new("api2", api2_handler))
+    .add_task(Task::new("api3", api3_handler))
+    .add_task(Task::new("merge", merge_handler))
+    .add_dependency("merge", "api1")
+    .add_dependency("merge", "api2")
+    .add_dependency("merge", "api3")
+    .build()?;</code></pre>
+        </section>
+
+        <section class="content-section">
+            <h2>🎬 Casos de Uso</h2>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>ETL Pipelines</h3>
+                    <p>Extração, transformação e carga de dados de múltiplas fontes.</p>
+                </div>
+                <div class="module-card">
+                    <h3>ML Training</h3>
+                    <p>Orquestrar pré-processamento e treinamento de modelos.</p>
+                </div>
+                <div class="module-card">
+                    <h3>CI/CD</h3>
+                    <p>Automação de build, test e deploy.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><strong>Copyright © 2025 Nícolas Ávila</strong></p>
+            <div class="footer-links">
+                <a href="mailto:nicolas@avila.inc">📧 Contato</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplos de Código - Arxis Core Documentation</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/docs.css">
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <a href="index.html" class="logo">
+                <span class="logo-avx">Avx</span>
+                <span class="logo-text">Docs</span>
+            </a>
+            <div class="nav-links">
+                <a href="getting-started.html">Getting Started</a>
+                <a href="packages/index.html">Packages</a>
+                <a href="examples.html" class="active">Examples</a>
+                <a href="architecture.html">Architecture</a>
+                <a href="https://github.com/avilaops/docs" target="_blank">GitHub</a>
+            </div>
+        </nav>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <nav>
+                <h3>Exemplos</h3>
+                <ul>
+                    <li><a href="#crypto">Criptografia</a></li>
+                    <li><a href="#http">HTTP Server</a></li>
+                    <li><a href="#database">Database</a></li>
+                    <li><a href="#tensors">Tensors & AI</a></li>
+                    <li><a href="#distributed">Sistemas Distribuídos</a></li>
+                    <li><a href="#websockets">WebSockets</a></li>
+                    <li><a href="#gis">Geoespacial</a></li>
+                    <li><a href="#gpu">GPU Computing</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1>Exemplos de Código</h1>
+            <p class="lead">Exemplos práticos de uso dos pacotes Arxis Core em cenários reais.</p>
+
+            <section id="crypto" class="example-section">
+                <h2>Criptografia</h2>
+                <p>Exemplos de operações criptográficas usando <code>avx-crypto</code>:</p>
+
+                <h3>Hash SHA-256</h3>
+                <pre><code class="language-rust">use avx_crypto::hash::{Sha256, Hash};
+
+fn main() {
+    let data = b"Hello, Arxis!";
+    let hash = Sha256::hash(data);
+
+    println!("SHA-256: {}", hash.to_hex());
+}</code></pre>
+
+                <h3>Criptografia Simétrica (AES-256-GCM)</h3>
+                <pre><code class="language-rust">use avx_crypto::cipher::{Aes256Gcm, Cipher};
+use avx_crypto::key::Key;
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let key = Key::generate();
+    let cipher = Aes256Gcm::new(&key);
+
+    let plaintext = b"Sensitive data";
+    let ciphertext = cipher.encrypt(plaintext)?;
+    let decrypted = cipher.decrypt(&ciphertext)?;
+
+    assert_eq!(plaintext, &decrypted[..]);
+    Ok(())
+}</code></pre>
+
+                <h3>Assinatura Digital (Ed25519)</h3>
+                <pre><code class="language-rust">use avx_crypto::signature::{Ed25519, Signer, Verifier};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let (private_key, public_key) = Ed25519::generate_keypair();
+
+    let message = b"Sign this message";
+    let signature = private_key.sign(message);
+
+    // Verificar assinatura
+    public_key.verify(message, &signature)?;
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="http" class="example-section">
+                <h2>HTTP Server</h2>
+                <p>Criar um servidor HTTP com rotas usando <code>avx-http</code>:</p>
+
+                <pre><code class="language-rust">use avx_http::{Server, Router, Request, Response, StatusCode};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mut router = Router::new();
+
+    // Rota GET
+    router.get("/", |_req: Request| async {
+        Response::new(StatusCode::OK)
+            .with_body("Welcome to Arxis Core!")
+    });
+
+    // Rota com parâmetros
+    router.get("/users/:id", |req: Request| async {
+        let id = req.param("id").unwrap();
+        Response::json(&serde_json::json!({
+            "user_id": id,
+            "name": "Example User"
+        }))
+    });
+
+    // Rota POST
+    router.post("/api/data", |req: Request| async {
+        let body = req.json::<serde_json::Value>().await?;
+        Response::json(&serde_json::json!({
+            "received": body,
+            "status": "success"
+        }))
+    });
+
+    let server = Server::bind("127.0.0.1:8080")
+        .router(router)
+        .build();
+
+    println!("Server running on http://127.0.0.1:8080");
+    server.serve().await
+}</code></pre>
+            </section>
+
+            <section id="database" class="example-section">
+                <h2>Database</h2>
+                <p>Operações de banco de dados com <code>avxdb-core</code>:</p>
+
+                <h3>Criar e Consultar Tabela</h3>
+                <pre><code class="language-rust">use avxdb_core::{Database, Table, Query};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let db = Database::open("./data/mydb").await?;
+
+    // Criar tabela
+    db.execute(
+        "CREATE TABLE users (
+            id INTEGER PRIMARY KEY,
+            name TEXT NOT NULL,
+            email TEXT UNIQUE
+        )"
+    ).await?;
+
+    // Inserir dados
+    db.execute(
+        "INSERT INTO users (name, email) VALUES (?, ?)",
+        &["Alice", "alice@example.com"]
+    ).await?;
+
+    // Consultar
+    let results = db.query(
+        "SELECT * FROM users WHERE name = ?",
+        &["Alice"]
+    ).await?;
+
+    for row in results {
+        println!("{:?}", row);
+    }
+
+    Ok(())
+}</code></pre>
+
+                <h3>Transações</h3>
+                <pre><code class="language-rust">use avxdb_core::Transaction;
+
+async fn transfer_funds(db: &Database, from: i64, to: i64, amount: f64)
+    -> Result<(), Box<dyn std::error::Error>> {
+    let mut tx = db.begin_transaction().await?;
+
+    tx.execute(
+        "UPDATE accounts SET balance = balance - ? WHERE id = ?",
+        &[amount, from]
+    ).await?;
+
+    tx.execute(
+        "UPDATE accounts SET balance = balance + ? WHERE id = ?",
+        &[amount, to]
+    ).await?;
+
+    tx.commit().await?;
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="tensors" class="example-section">
+                <h2>Tensors & AI</h2>
+                <p>Operações com tensores usando <code>avx-tensor</code>:</p>
+
+                <h3>Operações Básicas</h3>
+                <pre><code class="language-rust">use avx_tensor::{Tensor, Device};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let device = Device::cuda_if_available();
+
+    // Criar tensores
+    let a = Tensor::new(&[2, 3], device)?
+        .fill(1.0);
+    let b = Tensor::new(&[2, 3], device)?
+        .fill(2.0);
+
+    // Operações
+    let c = a + b;              // Adição
+    let d = a * b;              // Multiplicação elemento-wise
+    let e = a.matmul(&b.t())?;  // Multiplicação matricial
+
+    println!("Result: {:?}", c.to_vec());
+    Ok(())
+}</code></pre>
+
+                <h3>Rede Neural Simples</h3>
+                <pre><code class="language-rust">use avx_tensor::{nn, Tensor, Device};
+
+struct SimpleNet {
+    fc1: nn::Linear,
+    fc2: nn::Linear,
+}
+
+impl SimpleNet {
+    fn new(device: Device) -> Self {
+        Self {
+            fc1: nn::Linear::new(784, 128, device),
+            fc2: nn::Linear::new(128, 10, device),
+        }
+    }
+
+    fn forward(&self, x: &Tensor) -> Result<Tensor, Box<dyn std::error::Error>> {
+        let x = self.fc1.forward(x)?;
+        let x = x.relu();
+        let x = self.fc2.forward(&x)?;
+        Ok(x.softmax(1))
+    }
+}</code></pre>
+            </section>
+
+            <section id="distributed" class="example-section">
+                <h2>Sistemas Distribuídos</h2>
+                <p>Criar sistema distribuído com <code>avx-distributed</code>:</p>
+
+                <pre><code class="language-rust">use avx_distributed::{Node, Cluster, Message};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let node = Node::builder()
+        .address("127.0.0.1:7001")
+        .cluster_name("arxis-cluster")
+        .build()
+        .await?;
+
+    // Juntar-se ao cluster
+    node.join(&["127.0.0.1:7000"]).await?;
+
+    // Enviar mensagem
+    node.broadcast(Message::new("hello", b"Hello, cluster!")).await?;
+
+    // Receber mensagens
+    while let Some(msg) = node.receive().await {
+        println!("Received: {:?}", msg);
+    }
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="websockets" class="example-section">
+                <h2>WebSockets</h2>
+                <p>Servidor WebSocket em tempo real com <code>avx-websocket</code>:</p>
+
+                <pre><code class="language-rust">use avx_websocket::{WebSocketServer, Message};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let server = WebSocketServer::bind("127.0.0.1:9001").await?;
+
+    println!("WebSocket server listening on ws://127.0.0.1:9001");
+
+    while let Some(mut connection) = server.accept().await {
+        tokio::spawn(async move {
+            while let Some(message) = connection.receive().await {
+                match message {
+                    Message::Text(text) => {
+                        println!("Received: {}", text);
+                        connection.send(Message::Text(
+                            format!("Echo: {}", text)
+                        )).await.ok();
+                    }
+                    Message::Binary(data) => {
+                        connection.send(Message::Binary(data)).await.ok();
+                    }
+                    Message::Close => break,
+                    _ => {}
+                }
+            }
+        });
+    }
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="gis" class="example-section">
+                <h2>Geoespacial</h2>
+                <p>Operações GIS com <code>avx-gis</code>:</p>
+
+                <pre><code class="language-rust">use avx_gis::{Point, Polygon, Distance};
+
+fn main() {
+    // Criar pontos
+    let p1 = Point::new(-23.5505, -46.6333); // São Paulo
+    let p2 = Point::new(-22.9068, -43.1729); // Rio de Janeiro
+
+    // Calcular distância
+    let distance = p1.distance_to(&p2);
+    println!("Distance: {:.2} km", distance / 1000.0);
+
+    // Criar polígono
+    let polygon = Polygon::new(vec![
+        Point::new(0.0, 0.0),
+        Point::new(1.0, 0.0),
+        Point::new(1.0, 1.0),
+        Point::new(0.0, 1.0),
+    ]);
+
+    // Verificar se ponto está dentro
+    let test_point = Point::new(0.5, 0.5);
+    println!("Contains: {}", polygon.contains(&test_point));
+}</code></pre>
+            </section>
+
+            <section id="gpu" class="example-section">
+                <h2>GPU Computing</h2>
+                <p>Computação paralela em GPU com <code>avx-gpu</code>:</p>
+
+                <pre><code class="language-rust">use avx_gpu::{Device, Kernel, Buffer};
+
+fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let device = Device::default();
+
+    // Kernel CUDA/ROCm
+    let kernel = Kernel::from_source(r#"
+        __global__ void vector_add(float* a, float* b, float* c, int n) {
+            int i = blockIdx.x * blockDim.x + threadIdx.x;
+            if (i < n) {
+                c[i] = a[i] + b[i];
+            }
+        }
+    "#)?;
+
+    let n = 1024;
+    let a: Vec<f32> = (0..n).map(|i| i as f32).collect();
+    let b: Vec<f32> = (0..n).map(|i| i as f32 * 2.0).collect();
+
+    let buf_a = Buffer::from_slice(&device, &a)?;
+    let buf_b = Buffer::from_slice(&device, &b)?;
+    let buf_c = Buffer::<f32>::new(&device, n)?;
+
+    kernel.launch(
+        (n / 256, 1, 1),  // grid
+        (256, 1, 1),      // block
+        &[&buf_a, &buf_b, &buf_c, &n]
+    )?;
+
+    let result = buf_c.to_vec()?;
+    println!("Result: {:?}", &result[..10]);
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <div class="next-steps">
+                <h2>Próximos Passos</h2>
+                <div class="cards-grid">
+                    <a href="packages/index.html" class="card">
+                        <h3>📦 Explorar Pacotes</h3>
+                        <p>Veja todos os pacotes disponíveis</p>
+                    </a>
+                    <a href="architecture.html" class="card">
+                        <h3>🏗️ Arquitetura</h3>
+                        <p>Entenda a arquitetura do Arxis Core</p>
+                    </a>
+                    <a href="getting-started.html" class="card">
+                        <h3>🚀 Getting Started</h3>
+                        <p>Guia rápido de início</p>
+                    </a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Arxis Core</h3>
+                    <p>Ecossistema completo de desenvolvimento em Rust</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Links</h3>
+                    <a href="https://github.com/avilaops/docs">GitHub</a>
+                    <a href="getting-started.html">Getting Started</a>
+                    <a href="packages/index.html">Packages</a>
+                </div>
+                <div class="footer-section">
+                    <h3>Recursos</h3>
+                    <a href="examples.html">Examples</a>
+                    <a href="architecture.html">Architecture</a>
+                    <a href="license.html">License</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Avx. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

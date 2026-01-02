@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx Cell Core - Documentação Oficial</title>
+    <meta name="description" content="Documentação completa do avx-cell-core - Tipos e traits fundamentais do ecossistema Avx">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body class="light-theme">
+    <header>
+        <a href="../index.html" class="logo">
+            <div class="logo-icon">A</div>
+            <span>Avx Docs</span>
+        </a>
+        <nav>
+            <a href="#overview" data-i18n="overview">Visão Geral</a>
+            <a href="#types" data-i18n="types">Tipos Disponíveis</a>
+            <a href="#examples" data-i18n="usage">Exemplos de Uso</a>
+            <a href="#api" data-i18n="apiReference">Referência da API</a>
+            <a href="#performance" data-i18n="performance">Performance</a>
+            <a href="#use-cases" data-i18n="useCases">Casos de Uso</a>
+            <a href="#license" data-i18n="license">Licença</a>
+        </nav>
+        <div class="controls">
+            <button id="theme-toggle" class="theme-toggle" data-i18n="themeToggle">🌓 Tema</button>
+            <select id="language-select" class="language-select">
+                <option value="pt-BR">🇧🇷 PT-BR</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="zh-TW">🇹🇼 繁體中文</option>
+                <option value="ur">🇵🇰 اردو</option>
+                <option value="ar">🇸🇦 العربية</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="fr">🇨🇭 Français</option>
+                <option value="lv">🇱🇻 Latviešu</option>
+                <option value="uz">🇺🇿 O'zbek</option>
+                <option value="es">🇪🇸 Español</option>
+            </select>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h1>Avx Cell Core</h1>
+            <p>Tipos e Traits Fundamentais do Ecossistema Avx</p>
+            <div class="metric">v0.1.0</div>
+            <div class="metric">100% Rust Nativo</div>
+            <div class="metric">Zero Dependências Externas</div>
+        </div>
+
+        <section id="overview">
+            <h2 data-i18n="overview">Visão Geral do Módulo</h2>
+            <p>
+                O <strong>avx-cell-core</strong> é a fundação do ecossistema de células digitais Avx.
+                Fornece abstrações fundamentais para identidade, ciclo de vida, troca de mensagens e
+                gerenciamento de estado de células.
+            </p>
+
+            <div class="card">
+                <h3>🎯 Propósito</h3>
+                <p>
+                    Células são as primeiras formas de vida digital - entidades autônomas capazes de
+                    comunicação, processamento e persistência. O Cell Core define os contratos e tipos
+                    básicos que todas as células devem implementar.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>✨ Características Principais</h3>
+                <ul>
+                    <li><strong>Identidade Única:</strong> Sistema de identificação baseado em IDs únicos</li>
+                    <li><strong>Ciclo de Vida:</strong> Gerenciamento completo de nascimento, vida e morte de células</li>
+                    <li><strong>Troca de Mensagens:</strong> Protocolo de comunicação assíncrona entre células</li>
+                    <li><strong>Estado Imutável:</strong> Gerenciamento de estado thread-safe</li>
+                    <li><strong>Composição:</strong> Padrões para combinar células em organismos complexos</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>📦 Dependências</h3>
+                <ul>
+                    <li><code>avx-std</code> - Biblioteca padrão Avx</li>
+                    <li><code>avx-error</code> - Sistema de tratamento de erros</li>
+                    <li><code>avx-id</code> - Geração de identificadores únicos</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="types">
+            <h2 data-i18n="types">Tipos Disponíveis</h2>
+
+            <h3>Core Types</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Cell</code></td>
+                        <td>Estrutura base de uma célula digital</td>
+                        <td>Encapsular comportamento e estado</td>
+                    </tr>
+                    <tr>
+                        <td><code>Message</code></td>
+                        <td>Mensagem trocada entre células</td>
+                        <td>Comunicação assíncrona</td>
+                    </tr>
+                    <tr>
+                        <td><code>State</code></td>
+                        <td>Estado interno de uma célula</td>
+                        <td>Gerenciamento de estado</td>
+                    </tr>
+                    <tr>
+                        <td><code>Lifecycle</code></td>
+                        <td>Gerenciador de ciclo de vida</td>
+                        <td>Controlar criação/destruição</td>
+                    </tr>
+                    <tr>
+                        <td><code>Id</code></td>
+                        <td>Identificador único global</td>
+                        <td>Identificação de células</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Traits Fundamentais</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Trait</th>
+                        <th>Métodos Principais</th>
+                        <th>Propósito</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>CellTrait</code></td>
+                        <td><code>id()</code>, <code>send()</code>, <code>receive()</code></td>
+                        <td>Comportamento básico de células</td>
+                    </tr>
+                    <tr>
+                        <td><code>MessageTrait</code></td>
+                        <td><code>from()</code>, <code>to()</code>, <code>payload()</code></td>
+                        <td>Interface de mensagens</td>
+                    </tr>
+                    <tr>
+                        <td><code>StateTrait</code></td>
+                        <td><code>get()</code>, <code>set()</code>, <code>update()</code></td>
+                        <td>Gerenciamento de estado</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Enums e Constantes</h3>
+            <pre><code>pub enum LifecycleStage {
+    Created,      // Célula recém-criada
+    Initialized,  // Inicialização completa
+    Running,      // Em execução normal
+    Paused,       // Pausada temporariamente
+    Stopped,      // Parada permanentemente
+    Dead,         // Destruída
+}
+
+pub enum ErrorKind {
+    InvalidState,
+    CommunicationFailure,
+    ResourceExhausted,
+    InvalidMessage,
+}</code></pre>
+        </section>
+
+        <section id="examples">
+            <h2 data-i18n="usage">Exemplos de Uso</h2>
+
+            <h3>Criando uma Célula Simples</h3>
+            <pre><code>use avx_cell_core::prelude::*;
+
+// Definir estrutura da célula
+struct MyCell {
+    id: Id,
+    state: State,
+}
+
+impl CellTrait for MyCell {
+    fn id(&self) -> &Id {
+        &self.id
+    }
+
+    fn send(&self, message: Message) -> Result<()> {
+        // Lógica de envio
+        Ok(())
+    }
+
+    fn receive(&mut self, message: Message) -> Result<()> {
+        // Processar mensagem recebida
+        self.state.update(|s| {
+            // Atualizar estado baseado na mensagem
+        });
+        Ok(())
+    }
+}
+
+// Criar e usar a célula
+fn main() -> Result<()> {
+    let cell = MyCell {
+        id: Id::new(),
+        state: State::default(),
+    };
+
+    println!("Célula criada: {}", cell.id());
+    Ok(())
+}</code></pre>
+
+            <h3>Troca de Mensagens entre Células</h3>
+            <pre><code>use avx_cell_core::prelude::*;
+
+fn communicate_between_cells() -> Result<()> {
+    let sender = create_cell("sender");
+    let receiver = create_cell("receiver");
+
+    // Criar mensagem
+    let message = Message::new()
+        .from(sender.id())
+        .to(receiver.id())
+        .payload("Hello, World!");
+
+    // Enviar mensagem
+    sender.send(message.clone())?;
+
+    // Receber mensagem
+    receiver.receive(message)?;
+
+    Ok(())
+}</code></pre>
+
+            <h3>Gerenciamento de Ciclo de Vida</h3>
+            <pre><code>use avx_cell_core::prelude::*;
+
+fn lifecycle_management() -> Result<()> {
+    let mut lifecycle = Lifecycle::new();
+
+    // Criar célula
+    lifecycle.transition_to(LifecycleStage::Created)?;
+
+    // Inicializar
+    lifecycle.transition_to(LifecycleStage::Initialized)?;
+
+    // Executar
+    lifecycle.transition_to(LifecycleStage::Running)?;
+
+    // Pausar temporariamente
+    lifecycle.transition_to(LifecycleStage::Paused)?;
+
+    // Retomar
+    lifecycle.transition_to(LifecycleStage::Running)?;
+
+    // Parar
+    lifecycle.transition_to(LifecycleStage::Stopped)?;
+
+    // Destruir
+    lifecycle.transition_to(LifecycleStage::Dead)?;
+
+    Ok(())
+}</code></pre>
+
+            <h3>Estado Thread-Safe</h3>
+            <pre><code>use avx_cell_core::prelude::*;
+use std::sync::Arc;
+
+fn shared_state_example() -> Result<()> {
+    let state = Arc::new(State::new(42));
+
+    // Clone para thread diferente
+    let state_clone = Arc::clone(&state);
+
+    // Atualizar estado de forma segura
+    state.update(|value| {
+        *value += 1;
+    })?;
+
+    // Ler estado
+    let current = state.get()?;
+    println!("Estado atual: {}", current);
+
+    Ok(())
+}</code></pre>
+        </section>
+
+        <section id="api">
+            <h2 data-i18n="apiReference">Referência da API</h2>
+
+            <h3>Módulo <code>cell</code></h3>
+            <div class="card">
+                <h4><code>Cell</code></h4>
+                <p>Estrutura base para células digitais.</p>
+                <pre><code>pub struct Cell {
+    id: Id,
+    state: State,
+    lifecycle: Lifecycle,
+}
+
+impl Cell {
+    pub fn new() -> Self { /* ... */ }
+    pub fn with_id(id: Id) -> Self { /* ... */ }
+    pub fn id(&self) -> &Id { /* ... */ }
+    pub fn state(&self) -> &State { /* ... */ }
+    pub fn lifecycle(&self) -> &Lifecycle { /* ... */ }
+}</code></pre>
+            </div>
+
+            <h3>Módulo <code>message</code></h3>
+            <div class="card">
+                <h4><code>Message</code></h4>
+                <p>Representa uma mensagem entre células.</p>
+                <pre><code>pub struct Message {
+    from: Id,
+    to: Id,
+    payload: Vec&lt;u8&gt;,
+    timestamp: u64,
+}
+
+impl Message {
+    pub fn new() -> MessageBuilder { /* ... */ }
+    pub fn from(&self) -> &Id { /* ... */ }
+    pub fn to(&self) -> &Id { /* ... */ }
+    pub fn payload(&self) -> &[u8] { /* ... */ }
+}</code></pre>
+            </div>
+
+            <h3>Módulo <code>state</code></h3>
+            <div class="card">
+                <h4><code>State&lt;T&gt;</code></h4>
+                <p>Gerenciador de estado thread-safe.</p>
+                <pre><code>pub struct State&lt;T&gt; {
+    inner: Arc&lt;RwLock&lt;T&gt;&gt;,
+}
+
+impl&lt;T&gt; State&lt;T&gt; {
+    pub fn new(value: T) -> Self { /* ... */ }
+    pub fn get(&self) -> Result&lt;T&gt; { /* ... */ }
+    pub fn set(&self, value: T) -> Result&lt;()&gt; { /* ... */ }
+    pub fn update&lt;F&gt;(&self, f: F) -> Result&lt;()&gt;
+    where F: FnOnce(&mut T) { /* ... */ }
+}</code></pre>
+            </div>
+
+            <h3>Módulo <code>lifecycle</code></h3>
+            <div class="card">
+                <h4><code>Lifecycle</code></h4>
+                <p>Gerencia o ciclo de vida de uma célula.</p>
+                <pre><code>pub struct Lifecycle {
+    stage: LifecycleStage,
+    created_at: u64,
+}
+
+impl Lifecycle {
+    pub fn new() -> Self { /* ... */ }
+    pub fn stage(&self) -> LifecycleStage { /* ... */ }
+    pub fn transition_to(&mut self, stage: LifecycleStage) -> Result&lt;()&gt; { /* ... */ }
+    pub fn is_alive(&self) -> bool { /* ... */ }
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="performance">
+            <h2 data-i18n="performance">Performance</h2>
+
+            <div class="card">
+                <h3>📊 Métricas de Performance</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operação</th>
+                            <th>Tempo Médio</th>
+                            <th>Throughput</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Criação de célula</td>
+                            <td>~50ns</td>
+                            <td>20M ops/s</td>
+                        </tr>
+                        <tr>
+                            <td>Envio de mensagem</td>
+                            <td>~100ns</td>
+                            <td>10M msgs/s</td>
+                        </tr>
+                        <tr>
+                            <td>Atualização de estado</td>
+                            <td>~30ns</td>
+                            <td>33M ops/s</td>
+                        </tr>
+                        <tr>
+                            <td>Transição de ciclo de vida</td>
+                            <td>~20ns</td>
+                            <td>50M ops/s</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <h3>💾 Uso de Memória</h3>
+                <ul>
+                    <li><code>Cell</code>: ~128 bytes</li>
+                    <li><code>Message</code>: ~96 bytes + payload</li>
+                    <li><code>State&lt;T&gt;</code>: ~64 bytes + sizeof(T)</li>
+                    <li><code>Lifecycle</code>: ~24 bytes</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🚀 Otimizações</h3>
+                <ul>
+                    <li>Zero-copy message passing quando possível</li>
+                    <li>Lock-free state updates com atomic operations</li>
+                    <li>Memory pooling para cells frequentemente criadas</li>
+                    <li>SIMD para operações em lote</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="use-cases">
+            <h2 data-i18n="useCases">Casos de Uso</h2>
+
+            <div class="use-case">
+                <h3>🔄 Sistema de Email Distribuído</h3>
+                <p>
+                    Cada componente do sistema de email (SMTP, IMAP, POP3) é implementado como uma célula.
+                    As células se comunicam de forma assíncrona para processar emails de forma eficiente.
+                </p>
+                <pre><code>// Célula SMTP recebe email
+let smtp_cell = SmtpCell::new();
+smtp_cell.receive(email_message)?;
+
+// Roteia para célula de armazenamento
+let storage_cell = StorageCell::new();
+smtp_cell.send(Message::to(storage_cell.id())
+    .payload(email_data))?;
+
+// Indexação paralela
+let index_cell = IndexCell::new();
+storage_cell.send(Message::to(index_cell.id())
+    .payload(email_metadata))?;</code></pre>
+            </div>
+
+            <div class="use-case">
+                <h3>⚡ Processamento de Eventos em Tempo Real</h3>
+                <p>
+                    Células podem processar milhões de eventos por segundo, mantendo estado consistente
+                    e comunicação eficiente entre componentes.
+                </p>
+                <pre><code>// Pipeline de processamento
+let ingestion = IngestionCell::new();
+let processing = ProcessingCell::new();
+let analytics = AnalyticsCell::new();
+
+// Fluxo de dados
+ingestion.connect(processing)?;
+processing.connect(analytics)?;
+
+// Processar em paralelo
+ingestion.send_batch(events)?;</code></pre>
+            </div>
+
+            <div class="use-case">
+                <h3>🌐 Microserviços Escaláveis</h3>
+                <p>
+                    Construa microsserviços resilientes onde cada serviço é uma célula que pode ser
+                    replicada, balanceada e orquestrada automaticamente.
+                </p>
+                <pre><code>// Definir serviço como célula
+struct ApiCell {
+    cell: Cell,
+    routes: Routes,
+}
+
+// Auto-scaling baseado em carga
+if load > threshold {
+    spawn_replica(ApiCell::new())?;
+}
+
+// Health checking automático
+lifecycle.check_health()?;</code></pre>
+            </div>
+        </section>
+
+        <section id="license">
+            <h2 data-i18n="licenseTitle">Licença</h2>
+            <div class="card">
+                <h3>🔒 Licença Proprietária</h3>
+                <p>
+                    <strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong>
+                </p>
+                <p>
+                    Este software é propriedade exclusiva de <strong>Avila Inc.</strong>
+                    O uso comercial requer licença específica.
+                </p>
+                <ul>
+                    <li>✅ Uso pessoal e educacional permitido</li>
+                    <li>❌ Uso comercial sem licença proibido</li>
+                    <li>❌ Redistribuição não autorizada</li>
+                    <li>❌ Engenharia reversa proibida</li>
+                </ul>
+                <p>
+                    Para licenciamento comercial: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+                <p>
+                    Website: <a href="https://avila.inc" target="_blank">https://avila.inc</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p data-i18n="footer">© 2025 Avila Inc. Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <a href="https://avila.inc" target="_blank" data-i18n="documentation">Documentação</a>
+                <a href="mailto:nicolas@avila.inc" data-i18n="support">Suporte</a>
+                <a href="mailto:nicolas@avila.inc" data-i18n="contact">Contato</a>
+            </div>
+            <p>🇧🇷 Desenvolvido com 💛 no Brasil</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

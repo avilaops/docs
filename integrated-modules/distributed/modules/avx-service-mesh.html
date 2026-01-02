@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-service-mesh - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">🕸️</span>
+                <h1 class="section-title">avx-service-mesh</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Malha de serviços empresarial com descoberta, load balancing, circuit breaker e observabilidade completa.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-service-mesh</strong> fornece infraestrutura completa para microserviços:</p>
+                <ul>
+                    <li>🔍 <strong>Service Discovery</strong> - Registro e descoberta automática de serviços</li>
+                    <li>⚖️ <strong>Load Balancing</strong> - Round Robin, Least Connections, Weighted, Random</li>
+                    <li>🔌 <strong>Circuit Breaker</strong> - Proteção contra falhas em cascata</li>
+                    <li>💚 <strong>Health Checks</strong> - Monitoramento contínuo de saúde</li>
+                    <li>🔐 <strong>mTLS & Security</strong> - Comunicação segura entre serviços</li>
+                    <li>📊 <strong>Distributed Tracing</strong> - Rastreamento de requests distribuídos</li>
+                    <li>🚦 <strong>Traffic Management</strong> - Roteamento avançado e canary deployments</li>
+                    <li>📈 <strong>Métricas</strong> - Observabilidade completa de serviços</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>ServiceMesh</code></td>
+                        <td>Orquestrador principal da mesh</td>
+                        <td>Gerenciamento centralizado</td>
+                    </tr>
+                    <tr>
+                        <td><code>ServiceRegistry</code></td>
+                        <td>Registro de serviços</td>
+                        <td>Discovery e catálogo</td>
+                    </tr>
+                    <tr>
+                        <td><code>ServiceEndpoint</code></td>
+                        <td>Informação de endpoint</td>
+                        <td>Host, porta, protocolo</td>
+                    </tr>
+                    <tr>
+                        <td><code>LoadBalancer</code></td>
+                        <td>Balanceador de carga</td>
+                        <td>Distribuição de tráfego</td>
+                    </tr>
+                    <tr>
+                        <td><code>CircuitBreaker</code></td>
+                        <td>Disjuntor de circuito</td>
+                        <td>Proteção contra falhas</td>
+                    </tr>
+                    <tr>
+                        <td><code>HealthMonitor</code></td>
+                        <td>Monitor de saúde</td>
+                        <td>Health checks contínuos</td>
+                    </tr>
+                    <tr>
+                        <td><code>TraceCollector</code></td>
+                        <td>Coletor de traces</td>
+                        <td>Rastreamento distribuído</td>
+                    </tr>
+                    <tr>
+                        <td><code>SecurityManager</code></td>
+                        <td>Gerenciador de segurança</td>
+                        <td>mTLS e autenticação</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Configuração Básica</h3>
+            <div class="code-block">
+                <pre><code>use avx_service_mesh::{ServiceMesh, MeshConfig};
+
+let config = MeshConfig {
+    discovery_enabled: true,
+    circuit_breaker_enabled: true,
+    health_check_interval_ms: 5000,
+    load_balancer_strategy: Strategy::RoundRobin,
+    security_enabled: true,
+    tracing_enabled: true,
+};
+
+let mesh = ServiceMesh::with_config(config);</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Registrar Serviços</h3>
+            <div class="code-block">
+                <pre><code>use avx_service_mesh::{ServiceEndpoint, Protocol};
+
+let endpoint = ServiceEndpoint {
+    id: "user-service-1".to_string(),
+    host: "10.0.1.100".to_string(),
+    port: 8080,
+    protocol: Protocol::Http,
+    metadata: BTreeMap::new(),
+    weight: 100,
+};
+
+mesh.register_service(endpoint)?;
+
+// Registrar múltiplas instâncias
+for i in 0..5 {
+    let endpoint = ServiceEndpoint {
+        id: format!("api-service-{}", i),
+        host: format!("10.0.2.{}", 100 + i),
+        port: 8080,
+        protocol: Protocol::Https,
+        metadata: BTreeMap::new(),
+        weight: 100,
+    };
+    mesh.register_service(endpoint)?;
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Load Balancing</h3>
+            <div class="code-block">
+                <pre><code>use avx_service_mesh::{LoadBalancer, Strategy};
+
+// Criar load balancer com estratégia
+let mut lb = LoadBalancer::new(Strategy::LeastConnections);
+
+// Adicionar endpoints
+lb.add_endpoint(endpoint1);
+lb.add_endpoint(endpoint2);
+lb.add_endpoint(endpoint3);
+
+// Selecionar próximo endpoint (automaticamente escolhe o melhor)
+let selected = lb.select_endpoint()?;
+
+println!("Roteando para: {}:{}", selected.host, selected.port);</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Circuit Breaker</h3>
+            <div class="code-block">
+                <pre><code>use avx_service_mesh::CircuitBreaker;
+
+let mut breaker = CircuitBreaker::new(
+    5,      // threshold: 5 falhas consecutivas
+    30000,  // timeout: 30 segundos
+);
+
+// Executar operação protegida
+match breaker.call(|| {
+    // Chamada ao serviço
+    call_remote_service()
+}) {
+    Ok(result) => println!("Sucesso: {:?}", result),
+    Err(e) => {
+        if breaker.is_open() {
+            println!("Circuit aberto - falha rápida");
+        }
+    }
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Health Monitoring</h3>
+            <div class="code-block">
+                <pre><code>use avx_service_mesh::{HealthMonitor, HealthStatus};
+
+let mut monitor = HealthMonitor::new();
+
+// Registrar endpoints para monitoramento
+monitor.register_endpoint("api-service-1", "10.0.1.100:8080");
+monitor.register_endpoint("api-service-2", "10.0.1.101:8080");
+
+// Iniciar health checks periódicos
+monitor.start_monitoring(5000)?; // Checar a cada 5 segundos
+
+// Verificar status
+let status = monitor.get_status("api-service-1")?;
+if status == HealthStatus::Healthy {
+    println!("Serviço saudável");
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">ServiceMesh</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new()</code></td>
+                        <td>Cria mesh com config padrão</td>
+                        <td><code>ServiceMesh</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>with_config(config)</code></td>
+                        <td>Cria mesh com config customizada</td>
+                        <td><code>ServiceMesh</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>register_service(endpoint)</code></td>
+                        <td>Registra novo serviço</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>discover_service(id)</code></td>
+                        <td>Descobre serviço por ID</td>
+                        <td><code>Option&lt;ServiceEndpoint&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>route_request(service_id)</code></td>
+                        <td>Roteia request com LB</td>
+                        <td><code>Result&lt;ServiceEndpoint&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_health_status(id)</code></td>
+                        <td>Obtém status de saúde</td>
+                        <td><code>HealthStatus</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">LoadBalancer</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new(strategy)</code></td>
+                        <td>Cria LB com estratégia</td>
+                        <td><code>LoadBalancer</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>add_endpoint(endpoint)</code></td>
+                        <td>Adiciona endpoint ao pool</td>
+                        <td><code>()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>select_endpoint()</code></td>
+                        <td>Seleciona próximo endpoint</td>
+                        <td><code>Option&lt;ServiceEndpoint&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>remove_endpoint(id)</code></td>
+                        <td>Remove endpoint do pool</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    🕸️ Mesh de Alta Performance
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Service Discovery</td>
+                                <td>~100ns</td>
+                                <td>10M lookups/s</td>
+                            </tr>
+                            <tr>
+                                <td>Load Balancer Select</td>
+                                <td>~50ns</td>
+                                <td>20M selections/s</td>
+                            </tr>
+                            <tr>
+                                <td>Circuit Breaker Check</td>
+                                <td>~30ns</td>
+                                <td>33M checks/s</td>
+                            </tr>
+                            <tr>
+                                <td>Health Check</td>
+                                <td>~1ms</td>
+                                <td>1000 checks/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Lock-free service registry</li>
+                        <li>✅ Zero-allocation load balancing</li>
+                        <li>✅ Async health checks com Tokio</li>
+                        <li>✅ Connection pooling automático</li>
+                        <li>✅ Cache de rotas com TTL</li>
+                        <li>✅ Batching de métricas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">🏢 Arquitetura de Microserviços</h3>
+                <p>Implemente comunicação robusta entre dezenas ou centenas de microserviços.</p>
+                <div class="code-block">
+                    <pre><code>let mesh = ServiceMesh::new();
+
+// Registrar todos os serviços
+mesh.register_service(user_service)?;
+mesh.register_service(order_service)?;
+mesh.register_service(payment_service)?;
+mesh.register_service(notification_service)?;
+
+// Mesh gerencia automaticamente:
+// - Descoberta
+// - Load balancing
+// - Health checks
+// - Circuit breaking</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔄 Canary Deployments</h3>
+                <p>Implemente deploys graduais com roteamento de tráfego controlado.</p>
+                <div class="code-block">
+                    <pre><code>// Versão antiga (90% do tráfego)
+mesh.register_service(ServiceEndpoint {
+    id: "api-v1".to_string(),
+    weight: 90,
+    ..
+});
+
+// Versão nova (10% do tráfego)
+mesh.register_service(ServiceEndpoint {
+    id: "api-v2-canary".to_string(),
+    weight: 10,
+    ..
+});
+
+// Load balancer respeita os pesos automaticamente</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🛡️ Proteção contra Falhas</h3>
+                <p>Circuit breakers protegem a arquitetura contra falhas em cascata.</p>
+                <div class="code-block">
+                    <pre><code>// Configurar circuit breaker por serviço
+let breaker = CircuitBreaker::new(5, 30000);
+
+// Se o serviço falhar 5 vezes:
+// - Circuit abre automaticamente
+// - Requests falham rapidamente (fail-fast)
+// - Após 30s, tenta novamente (half-open)
+// - Se sucesso, volta ao normal (closed)</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-service-mesh - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

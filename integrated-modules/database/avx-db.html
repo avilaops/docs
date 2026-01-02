@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-db (avxDB) - NoSQL Database | Avx Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="avx-cache.html">avx-cache</a></li>
+            <li><a href="avx-codec.html">avx-codec</a></li>
+            <li><a href="avx-compress.html">avx-compress</a></li>
+            <li><a href="avx-db.html" class="active">avx-db</a></li>
+            <li><a href="avx-pool.html">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html">avx-serialize</a></li>
+            <li><a href="avx-storage.html">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>💾 avx-db (avxDB)</h1>
+            <p>Banco de dados NoSQL distribuído otimizado para Brasil</p>
+        </section>
+
+        <section>
+            <h2>🚀 Características</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Documentos Grandes</h3>
+                    <ul>
+                        <li>4 MB por documento</li>
+                        <li>2x maior que DynamoDB</li>
+                        <li>JSON flexível</li>
+                        <li>Schema-less</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Busca Vetorial</h3>
+                    <ul>
+                        <li>Índice HNSW nativo</li>
+                        <li>Embeddings AI/ML</li>
+                        <li>Cosine similarity</li>
+                        <li>K-nearest neighbors</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Performance Brasil</h3>
+                    <ul>
+                        <li>5-10ms latência</li>
+                        <li>Multi-region writes</li>
+                        <li>1M gets/s (cached)</li>
+                        <li>Compressão automática</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Instalação</h2>
+            <pre><code>[dependencies]
+avx-db = "0.1.0"
+tokio = { version = "1", features = ["full"] }</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Exemplos</h2>
+
+            <h3>Conexão e Operações Básicas</h3>
+            <pre><code>use avxdb::{avxClient, Document};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Conectar
+    let client = avxClient::connect("https://br-south-1.avxdb.cloud").await?;
+    let db = client.database("ecommerce").await?;
+    let products = db.collection("products").await?;
+
+    // Inserir
+    let product = Document::new()
+        .set("sku", "LAPTOP-001")
+        .set("name", "High-Performance Laptop")
+        .set("price", 4999.99)
+        .set("stock", 50);
+
+    let result = products.insert(product).await?;
+    println!("ID: {}", result.id);
+
+    Ok(())
+}</code></pre>
+
+            <h3>Queries Avançadas</h3>
+            <pre><code>use avxdb::Query;
+
+// Query com filtros
+let expensive_laptops = products
+    .query(
+        Query::new()
+            .filter("category", "laptops")
+            .filter_range("price", 3000.0, 10000.0)
+            .order_by("price", "desc")
+            .limit(10)
+    )
+    .await?;</code></pre>
+
+            <h3>Busca Vetorial (AI/ML)</h3>
+            <pre><code>use avxdb::vector::{Vector, DistanceMetric};
+
+// Criar índice vetorial
+products.create_vector_index(
+    "embedding",
+    768,
+    DistanceMetric::Cosine
+).await?;
+
+// Buscar por similaridade
+let query_vector = vec![0.15, 0.25, 0.35, /* ... */];
+let similar = products
+    .search_vector("embedding", &query_vector, 10)
+    .await?;</code></pre>
+
+            <h3>Agregações</h3>
+            <pre><code>// Estatísticas por categoria
+let stats = products
+    .aggregate()
+    .group_by("category")
+    .count("total_products")
+    .sum("stock", "total_stock")
+    .avg("price", "avg_price")
+    .execute()
+    .await?;</code></pre>
+        </section>
+
+        <section>
+            <h2>📊 Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Região</th>
+                        <th>Read</th>
+                        <th>Write</th>
+                        <th>Query</th>
+                        <th>Vector Search</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BR-South (SP)</td>
+                        <td>5ms</td>
+                        <td>8ms</td>
+                        <td>12ms</td>
+                        <td>15ms</td>
+                    </tr>
+                    <tr>
+                        <td>BR-Southeast (RJ)</td>
+                        <td>7ms</td>
+                        <td>10ms</td>
+                        <td>15ms</td>
+                        <td>18ms</td>
+                    </tr>
+                    <tr>
+                        <td>LATAM (Buenos Aires)</td>
+                        <td>12ms</td>
+                        <td>15ms</td>
+                        <td>20ms</td>
+                        <td>25ms</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="use-cases">
+            <h2>🎯 Casos de Uso</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">🛒</div>
+                    <h3>E-Commerce</h3>
+                    <p>Catálogo + busca semântica</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🎮</div>
+                    <h3>Gaming</h3>
+                    <p>Perfis e leaderboards</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>IoT</h3>
+                    <p>Telemetria de sensores</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🤖</div>
+                    <h3>IA/ML - RAG</h3>
+                    <p>Knowledge base vetorial</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📝</div>
+                    <h3>Logs</h3>
+                    <p>Sistema de logs com TTL</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📱</div>
+                    <h3>Apps Mobile</h3>
+                    <p>Backend as a Service</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-distributed-system - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">🍄</span>
+                <h1 class="section-title">avx-distributed-system</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Sistema distribuído tipo micélio com comunicação P2P, gossip e replicação de dados descentralizada.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-distributed-system</strong> implementa um sistema distribuído inspirado na biologia dos fungos:</p>
+                <ul>
+                    <li>🍄 <strong>Arquitetura Micélio</strong> - Rede P2P descentralizada sem ponto único de falha</li>
+                    <li>🔗 <strong>Hifas (Conexões)</strong> - Links peer-to-peer entre nós</li>
+                    <li>📦 <strong>Esporos (Dados)</strong> - Pacotes replicáveis com TTL e broadcast</li>
+                    <li>📢 <strong>Gossip Protocol</strong> - Disseminação epidêmica de dados</li>
+                    <li>🔄 <strong>Auto-Replicação</strong> - Dados se propagam automaticamente pela rede</li>
+                    <li>💪 <strong>Resiliência</strong> - Tolerância a falhas de nós individuais</li>
+                    <li>⚡ <strong>Performance</strong> - Comunicação assíncrona de alta performance</li>
+                    <li>🌐 <strong>Descoberta Automática</strong> - Nós descobrem peers dinamicamente</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Mycelium</code></td>
+                        <td>Rede de comunicação P2P principal</td>
+                        <td>Nó do sistema distribuído</td>
+                    </tr>
+                    <tr>
+                        <td><code>Hypha</code></td>
+                        <td>Conexão individual entre dois nós</td>
+                        <td>Canal de comunicação P2P</td>
+                    </tr>
+                    <tr>
+                        <td><code>SporeData</code></td>
+                        <td>Pacote de dados replicável</td>
+                        <td>Unidade de informação distribuída</td>
+                    </tr>
+                    <tr>
+                        <td><code>GossipEngine</code></td>
+                        <td>Motor de disseminação epidêmica</td>
+                        <td>Propagação de dados</td>
+                    </tr>
+                    <tr>
+                        <td><code>GossipConfig</code></td>
+                        <td>Configuração do protocolo gossip</td>
+                        <td>Parâmetros de disseminação</td>
+                    </tr>
+                    <tr>
+                        <td><code>SporeHandler</code></td>
+                        <td>Trait para processar esporos</td>
+                        <td>Lógica de processamento</td>
+                    </tr>
+                    <tr>
+                        <td><code>SporeFilter</code></td>
+                        <td>Filtro para selecionar esporos</td>
+                        <td>Filtragem de dados</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Criar Nó do Micélio</h3>
+            <div class="code-block">
+                <pre><code>use avx_distributed_system::{Mycelium, SporeData};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    // Criar nó do micélio
+    let mycelium = Mycelium::new("node1", "0.0.0.0:7000").await?;
+    
+    println!("Nó iniciado em 0.0.0.0:7000");
+    
+    Ok(())
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Conectar a Peers</h3>
+            <div class="code-block">
+                <pre><code>use avx_distributed_system::Mycelium;
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mycelium = Mycelium::new("node1", "0.0.0.0:7000").await?;
+    
+    // Conectar a outros nós (formando a rede)
+    mycelium.connect_to_peer("192.168.1.100:7000").await?;
+    mycelium.connect_to_peer("192.168.1.101:7000").await?;
+    mycelium.connect_to_peer("192.168.1.102:7000").await?;
+    
+    println!("Conectado a {} peers", mycelium.peer_count());
+    
+    Ok(())
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Liberar Esporos (Broadcast)</h3>
+            <div class="code-block">
+                <pre><code>use avx_distributed_system::{Mycelium, SporeData};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mycelium = Mycelium::new("node1", "0.0.0.0:7000").await?;
+    mycelium.connect_to_peer("192.168.1.100:7000").await?;
+    
+    // Criar e liberar esporo (broadcast para toda a rede)
+    let spore = SporeData::new("email_received", b"email@example.com".to_vec(), 5);
+    mycelium.release_spore(spore).await?;
+    
+    println!("Esporo liberado e propagando pela rede");
+    
+    Ok(())
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Processar Esporos Recebidos</h3>
+            <div class="code-block">
+                <pre><code>use avx_distributed_system::{Mycelium, SporeHandler, SporeData};
+
+struct EmailHandler;
+
+impl SporeHandler for EmailHandler {
+    fn handle_spore(&self, spore: &SporeData) {
+        if spore.data_type == "email_received" {
+            println!("Email recebido: {:?}", spore.payload);
+        }
+    }
+}
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let mycelium = Mycelium::new("node1", "0.0.0.0:7000").await?;
+    
+    // Registrar handler
+    mycelium.register_handler(EmailHandler);
+    
+    // Os esporos recebidos serão automaticamente processados
+    
+    Ok(())
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Configuração Gossip Customizada</h3>
+            <div class="code-block">
+                <pre><code>use avx_distributed_system::{GossipEngine, GossipConfig};
+
+let config = GossipConfig {
+    fanout: 3,              // Propagar para 3 peers por round
+    interval_ms: 1000,      // Intervalo de 1 segundo
+    max_hops: 10,           // Máximo 10 hops
+};
+
+let gossip = GossipEngine::with_config(config);
+
+// O gossip garante disseminação eficiente e confiável</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">Mycelium</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new(id, addr)</code></td>
+                        <td>Cria novo nó do micélio</td>
+                        <td><code>Result&lt;Mycelium&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>connect_to_peer(addr)</code></td>
+                        <td>Conecta a outro nó</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>release_spore(spore)</code></td>
+                        <td>Libera esporo na rede</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>register_handler(handler)</code></td>
+                        <td>Registra processador de esporos</td>
+                        <td><code>()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>peer_count()</code></td>
+                        <td>Número de peers conectados</td>
+                        <td><code>usize</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>disconnect_peer(id)</code></td>
+                        <td>Desconecta de um peer</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">SporeData</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new(type, payload, ttl)</code></td>
+                        <td>Cria novo esporo</td>
+                        <td><code>SporeData</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>decrement_ttl()</code></td>
+                        <td>Decrementa TTL</td>
+                        <td><code>bool</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>is_expired()</code></td>
+                        <td>Verifica se expirou</td>
+                        <td><code>bool</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    🍄 Distribuição Massiva e Resiliente
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Release Spore</td>
+                                <td>~5μs</td>
+                                <td>200K ops/s</td>
+                            </tr>
+                            <tr>
+                                <td>P2P Message</td>
+                                <td>~100μs</td>
+                                <td>10K msgs/s por conexão</td>
+                            </tr>
+                            <tr>
+                                <td>Gossip Round</td>
+                                <td>~1ms</td>
+                                <td>1000 rounds/s</td>
+                            </tr>
+                            <tr>
+                                <td>Peer Discovery</td>
+                                <td>~50ms</td>
+                                <td>20 peers/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Comunicação assíncrona com Tokio</li>
+                        <li>✅ Zero-copy message passing</li>
+                        <li>✅ Connection pooling</li>
+                        <li>✅ Gossip probabilístico otimizado</li>
+                        <li>✅ Compressão de payloads grandes</li>
+                        <li>✅ Cache de roteamento distribuído</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">📧 Sistema de Email Distribuído</h3>
+                <p>Implemente um sistema de email completamente descentralizado onde cada nó pode enviar e receber emails.</p>
+                <div class="code-block">
+                    <pre><code>let mycelium = Mycelium::new("mail_node", "0.0.0.0:7000").await?;
+
+// Conectar a outros servidores de email
+mycelium.connect_to_peer("mail1.example.com:7000").await?;
+mycelium.connect_to_peer("mail2.example.com:7000").await?;
+
+// Enviar email (propaga automaticamente)
+let email_spore = SporeData::new(
+    "email",
+    serde_json::to_vec(&email_data)?,
+    10  // TTL: 10 hops
+);
+
+mycelium.release_spore(email_spore).await?;</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🎮 Sistema de Chat P2P</h3>
+                <p>Crie aplicações de chat sem servidor central, onde todos os participantes se comunicam diretamente.</p>
+                <div class="code-block">
+                    <pre><code>struct ChatHandler;
+
+impl SporeHandler for ChatHandler {
+    fn handle_spore(&self, spore: &SporeData) {
+        if spore.data_type == "chat_message" {
+            let msg: ChatMessage = serde_json::from_slice(&spore.payload)?;
+            println!("{}: {}", msg.user, msg.text);
+        }
+    }
+}
+
+let mycelium = Mycelium::new("chat_node", "0.0.0.0:7000").await?;
+mycelium.register_handler(ChatHandler);</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔄 Sincronização de Estado</h3>
+                <p>Sincronize estado entre múltiplos servidores automaticamente com garantias de eventual consistency.</p>
+                <div class="code-block">
+                    <pre><code>// Servidor A altera estado
+let state_spore = SporeData::new(
+    "state_update",
+    bincode::serialize(&new_state)?,
+    5
+);
+
+mycelium.release_spore(state_spore).await?;
+
+// Servidor B, C, D... recebem automaticamente
+// Handler processa e atualiza estado local</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-distributed-system - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

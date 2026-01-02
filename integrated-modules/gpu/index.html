@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx - Documentação Oficial</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="icon" href="assets/img/favicon.ico">
+</head>
+<body data-theme="light">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-text">AVX</span>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                        <li><a href="#modules" data-i18n="nav.modules">Módulos</a></li>
+                        <li><a href="#docs" data-i18n="nav.documentation">Documentação</a></li>
+                        <li><a href="#performance" data-i18n="nav.performance">Performance</a></li>
+                        <li><a href="#license" data-i18n="nav.license">Licença</a></li>
+                    </ul>
+                </nav>
+                <div class="controls">
+                    <select id="language-selector" class="language-selector">
+                        <option value="pt-BR">🇧🇷 PT-BR</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="de-CH">🇨🇭 Schweizerdeutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 Oʻzbekcha</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title" data-i18n="hero.title">Ecossistema Avx</h1>
+                <p class="hero-subtitle" data-i18n="hero.subtitle">Soluções de alto desempenho para computação paralela, GPU e processamento assíncrono</p>
+                <div class="hero-buttons">
+                    <a href="#modules" class="btn btn-primary" data-i18n="hero.explore">Explorar Módulos</a>
+                    <a href="https://github.com/avilaops" class="btn btn-secondary" data-i18n="hero.github">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section">
+        <div class="container">
+            <h2 class="section-title" data-i18n="overview.title">Visão Geral</h2>
+            <div class="overview-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3 data-i18n="overview.performance.title">Alto Desempenho</h3>
+                    <p data-i18n="overview.performance.desc">Otimização extrema com AVX2, AVX512 e instruções SIMD</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔧</div>
+                    <h3 data-i18n="overview.zero_deps.title">Zero Dependências</h3>
+                    <p data-i18n="overview.zero_deps.desc">Ecossistema 100% independente e autossuficiente</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3 data-i18n="overview.gpu.title">Aceleração GPU</h3>
+                    <p data-i18n="overview.gpu.desc">Suporte completo para CUDA, Vulkan, Metal e ROCm</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔐</div>
+                    <h3 data-i18n="overview.security.title">Segurança</h3>
+                    <p data-i18n="overview.security.desc">Criptografia de nível empresarial e blockchain integrado</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modules Section -->
+    <section id="modules" class="section section-alt">
+        <div class="container">
+            <h2 class="section-title" data-i18n="modules.title">Módulos Principais</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3><a href="avx-async.html">avx-async</a></h3>
+                    <p data-i18n="modules.async.desc">Runtime assíncrono revolucionário com IA, blockchain e computação quântica</p>
+                    <div class="module-tags">
+                        <span class="tag">Async</span>
+                        <span class="tag">IA</span>
+                        <span class="tag">Blockchain</span>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <h3><a href="avx-parallel.html">avx-parallel</a></h3>
+                    <p data-i18n="modules.parallel.desc">Biblioteca de paralelismo com work-stealing e operações lock-free</p>
+                    <div class="module-tags">
+                        <span class="tag">Paralelo</span>
+                        <span class="tag">SIMD</span>
+                        <span class="tag">Lock-free</span>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <h3><a href="avx-cuda.html">avx-cuda</a></h3>
+                    <p data-i18n="modules.cuda.desc">Substituição completa do ecossistema CUDA reimplementado do zero</p>
+                    <div class="module-tags">
+                        <span class="tag">GPU</span>
+                        <span class="tag">CUDA</span>
+                        <span class="tag">Kernels</span>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <h3><a href="avx-gpu.html">avx-gpu</a></h3>
+                    <p data-i18n="modules.gpu.desc">Framework GPU unificado com suporte multi-backend</p>
+                    <div class="module-tags">
+                        <span class="tag">GPU</span>
+                        <span class="tag">Multi-Backend</span>
+                        <span class="tag">Vulkan</span>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <h3><a href="avx-conv.html">avx-conv</a></h3>
+                    <p data-i18n="modules.conv.desc">Convoluções otimizadas 1D, 2D, 3D e 4D para processamento de sinais</p>
+                    <div class="module-tags">
+                        <span class="tag">DSP</span>
+                        <span class="tag">Convolução</span>
+                        <span class="tag">Filtros</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Avx</h4>
+                    <p data-i18n="footer.copyright">© 2025 Nícolas Ávila - Todos os direitos reservados</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.links">Links</h4>
+                    <ul>
+                        <li><a href="https://docs.avila.inc/" data-i18n="footer.documentation">Documentação</a></li>
+                        <li><a href="mailto:nicolas@avila.inc" data-i18n="footer.contact">Contato</a></li>
+                        <li><a href="#license" data-i18n="footer.license">Licença</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/i18n.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+</html>

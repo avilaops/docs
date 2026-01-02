@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-gossip - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">📢</span>
+                <h1 class="section-title">avx-gossip</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Protocolo de disseminação epidêmica para propagação eficiente de dados em redes distribuídas.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-gossip</strong> implementa protocolos de gossip inspirados na natureza:</p>
+                <ul>
+                    <li>🦠 <strong>Disseminação Epidêmica</strong> - Propagação como vírus em rede</li>
+                    <li>📊 <strong>Probabilistic Broadcast</strong> - Broadcast eficiente com garantias</li>
+                    <li>🔄 <strong>Anti-Entropy</strong> - Sincronização periódica de estado</li>
+                    <li>💪 <strong>Tolerância a Falhas</strong> - Funciona mesmo com 50%+ de nós falhando</li>
+                    <li>⚡ <strong>Baixa Latência</strong> - Propagação em O(log n) rounds</li>
+                    <li>📈 <strong>Escalabilidade</strong> - Funciona com milhares de nós</li>
+                    <li>🎯 <strong>Fanout Configurável</strong> - Controle de propagação</li>
+                    <li>🔍 <strong>Membership Protocol</strong> - Descoberta de peers dinâmica</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>GossipEngine</code></td>
+                        <td>Motor principal de gossip</td>
+                        <td>Disseminação de mensagens</td>
+                    </tr>
+                    <tr>
+                        <td><code>GossipMessage</code></td>
+                        <td>Mensagem a ser propagada</td>
+                        <td>Dados + metadados</td>
+                    </tr>
+                    <tr>
+                        <td><code>GossipConfig</code></td>
+                        <td>Configuração do protocolo</td>
+                        <td>Parâmetros de disseminação</td>
+                    </tr>
+                    <tr>
+                        <td><code>PeerList</code></td>
+                        <td>Lista de peers conhecidos</td>
+                        <td>Membership management</td>
+                    </tr>
+                    <tr>
+                        <td><code>AntiEntropyEngine</code></td>
+                        <td>Motor de anti-entropia</td>
+                        <td>Sincronização de estado</td>
+                    </tr>
+                    <tr>
+                        <td><code>MessageDigest</code></td>
+                        <td>Resumo de mensagens</td>
+                        <td>Detecção de divergências</td>
+                    </tr>
+                    <tr>
+                        <td><code>GossipMetrics</code></td>
+                        <td>Métricas de propagação</td>
+                        <td>Observabilidade</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Configuração Básica</h3>
+            <div class="code-block">
+                <pre><code>use avx_gossip::{GossipEngine, GossipConfig};
+
+let config = GossipConfig {
+    fanout: 3,              // Propagar para 3 peers por round
+    interval_ms: 1000,      // Gossip a cada 1 segundo
+    max_transmissions: 3,   // Retransmitir no máximo 3 vezes
+};
+
+let mut engine = GossipEngine::with_config(config);
+
+// Adicionar peers conhecidos
+engine.add_peer("192.168.1.100:8000")?;
+engine.add_peer("192.168.1.101:8000")?;
+engine.add_peer("192.168.1.102:8000")?;</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Broadcast de Mensagem</h3>
+            <div class="code-block">
+                <pre><code>use avx_gossip::{GossipMessage, MessageType};
+
+let message = GossipMessage::new(
+    MessageType::UserData,
+    b"Important update".to_vec()
+);
+
+// Iniciar disseminação
+engine.broadcast(message)?;
+
+// Mensagem será propagada para toda a rede
+// em O(log n) rounds com alta probabilidade</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Receber Mensagens</h3>
+            <div class="code-block">
+                <pre><code>use avx_gossip::MessageHandler;
+
+struct MyHandler;
+
+impl MessageHandler for MyHandler {
+    fn handle_message(&self, msg: &GossipMessage) {
+        match msg.message_type {
+            MessageType::UserData => {
+                println!("Dados recebidos: {:?}", msg.payload);
+            }
+            MessageType::ClusterUpdate => {
+                println!("Atualização de cluster");
+            }
+            _ => {}
+        }
+    }
+}
+
+// Registrar handler
+engine.register_handler(MyHandler);</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Anti-Entropy (Sincronização)</h3>
+            <div class="code-block">
+                <pre><code>use avx_gossip::AntiEntropyEngine;
+
+let mut anti_entropy = AntiEntropyEngine::new();
+
+// Configurar sincronização periódica
+anti_entropy.set_interval(Duration::from_secs(30));
+
+// Iniciar processo de anti-entropia
+anti_entropy.start()?;
+
+// Periodicamente:
+// 1. Escolhe peer aleatório
+// 2. Troca digests de mensagens
+// 3. Sincroniza diferenças</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Membership Management</h3>
+            <div class="code-block">
+                <pre><code>use avx_gossip::PeerList;
+
+let mut peers = PeerList::new();
+
+// Adicionar peers
+peers.add("192.168.1.100:8000")?;
+peers.add("192.168.1.101:8000")?;
+
+// Marcar peer como falho
+peers.mark_failed("192.168.1.100:8000")?;
+
+// Selecionar peers aleatórios para gossip
+let selected = peers.select_random(3)?;
+
+// Peers falhados são automaticamente excluídos</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">GossipEngine</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new()</code></td>
+                        <td>Cria engine com config padrão</td>
+                        <td><code>GossipEngine</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>with_config(config)</code></td>
+                        <td>Cria com config customizada</td>
+                        <td><code>GossipEngine</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>broadcast(message)</code></td>
+                        <td>Inicia disseminação</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>add_peer(addr)</code></td>
+                        <td>Adiciona peer conhecido</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>register_handler(h)</code></td>
+                        <td>Registra message handler</td>
+                        <td><code>()</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_metrics()</code></td>
+                        <td>Obtém métricas</td>
+                        <td><code>GossipMetrics</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">GossipMessage</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new(type, payload)</code></td>
+                        <td>Cria nova mensagem</td>
+                        <td><code>GossipMessage</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>with_ttl(ttl)</code></td>
+                        <td>Define TTL</td>
+                        <td><code>Self</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>is_expired()</code></td>
+                        <td>Verifica se expirou</td>
+                        <td><code>bool</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    📢 Disseminação Massiva
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Broadcast Initiation</td>
+                                <td>~10μs</td>
+                                <td>100K broadcasts/s</td>
+                            </tr>
+                            <tr>
+                                <td>Message Processing</td>
+                                <td>~50μs</td>
+                                <td>20K msgs/s</td>
+                            </tr>
+                            <tr>
+                                <td>Peer Selection</td>
+                                <td>~100ns</td>
+                                <td>10M selections/s</td>
+                            </tr>
+                            <tr>
+                                <td>Anti-Entropy Round</td>
+                                <td>~10ms</td>
+                                <td>100 rounds/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Zero-copy message forwarding</li>
+                        <li>✅ Bloom filters para deduplicação</li>
+                        <li>✅ Connection pooling</li>
+                        <li>✅ Batching de mensagens</li>
+                        <li>✅ Async I/O com Tokio</li>
+                    </ul>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Garantias</h3>
+                    <ul>
+                        <li>✅ Propagação em O(log n) rounds</li>
+                        <li>✅ 99.9% de cobertura com fanout=3</li>
+                        <li>✅ Tolerância a 50%+ de falhas</li>
+                        <li>✅ Eventual delivery garantido</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">📡 Cluster Membership</h3>
+                <p>Disseminar informações de membership em clusters dinâmicos.</p>
+                <div class="code-block">
+                    <pre><code>// Novo nó entra no cluster
+let join_msg = GossipMessage::new(
+    MessageType::NodeJoined,
+    bincode::serialize(&node_info)?
+);
+
+engine.broadcast(join_msg)?;
+
+// Todos os nós são notificados rapidamente
+// sem necessidade de broadcast tradicional</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔄 Sincronização de Configuração</h3>
+                <p>Propagar mudanças de configuração para todos os nós.</p>
+                <div class="code-block">
+                    <pre><code>// Atualização de configuração
+let config_msg = GossipMessage::new(
+    MessageType::ConfigUpdate,
+    serde_json::to_vec(&new_config)?
+);
+
+engine.broadcast(config_msg)?;
+
+// Configuração propaga para toda a rede
+// Nós aplicam mudança quando recebem</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🚨 Sistema de Alertas</h3>
+                <p>Disseminar alertas críticos rapidamente por toda a infraestrutura.</p>
+                <div class="code-block">
+                    <pre><code>// Alerta crítico detectado
+let alert = GossipMessage::new(
+    MessageType::Alert,
+    serde_json::to_vec(&Alert {
+        level: AlertLevel::Critical,
+        message: "High CPU usage".into(),
+    })?
+);
+
+engine.broadcast(alert)?;
+
+// Todos os nós notificados em segundos</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-gossip - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

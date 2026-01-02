@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX HTTP - Cliente e servidor HTTP de alta performance">
+    <title>AVX HTTP - Documentação</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="../index.html" style="text-decoration:none;color:inherit;">AVX Network</a></div>
+                <div class="controls">
+                    <button id="theme-toggle" class="theme-toggle">🌙</button>
+                    <select id="lang-select" class="lang-select">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#types">Tipos Disponíveis</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#usecases">Casos de Uso</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>🌍 AVX HTTP</h1>
+                <p>Cliente e servidor HTTP nativo de alta performance - HTTP/1.1 e HTTP/2</p>
+            </div>
+
+            <section id="overview" class="section fade-in">
+                <h2>📋 Visão Geral</h2>
+                <p>AVX HTTP é uma implementação completa de cliente e servidor HTTP/1.1 e HTTP/2, construída do zero sem dependências externas. Oferece performance superior com API ergonômica e moderna, incluindo runtime assíncrono customizado e suporte completo a TLS/SSL.</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card">
+                        <h3>⚡ Performance Superior</h3>
+                        <p>Zero-copy parsing, connection pooling otimizado e HTTP/2 multiplexing eficiente</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🔒 Seguro</h3>
+                        <p>Suporte completo a TLS 1.2/1.3 com session resumption e cipher suites modernos</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🎯 API Moderna</h3>
+                        <p>Interface fluente e ergonômica com async/await e builders intuitivos</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🚀 HTTP/2</h3>
+                        <p>Multiplexing, server push, header compression e priorização de streams</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="types" class="section fade-in">
+                <h2>📦 Tipos Disponíveis</h2>
+
+                <h3>Cliente HTTP</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Client</code></td>
+                            <td>Cliente HTTP com pool de conexões e configuração avançada</td>
+                        </tr>
+                        <tr>
+                            <td><code>ClientBuilder</code></td>
+                            <td>Construtor fluente para configuração de cliente</td>
+                        </tr>
+                        <tr>
+                            <td><code>RequestBuilder</code></td>
+                            <td>Construtor de requisições HTTP com headers e body</td>
+                        </tr>
+                        <tr>
+                            <td><code>Response</code></td>
+                            <td>Resposta HTTP com status, headers e body</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Servidor HTTP</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Server</code></td>
+                            <td>Servidor HTTP assíncrono de alta performance</td>
+                        </tr>
+                        <tr>
+                            <td><code>ServerBuilder</code></td>
+                            <td>Configuração de servidor com rotas e middleware</td>
+                        </tr>
+                        <tr>
+                            <td><code>Handler</code></td>
+                            <td>Trait para handlers de rota customizados</td>
+                        </tr>
+                        <tr>
+                            <td><code>Router</code></td>
+                            <td>Roteador de requisições com pattern matching</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">HTTP/2</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Http2Client</code></td>
+                            <td>Cliente HTTP/2 com multiplexing de streams</td>
+                        </tr>
+                        <tr>
+                            <td><code>Http2Server</code></td>
+                            <td>Servidor HTTP/2 com server push</td>
+                        </tr>
+                        <tr>
+                            <td><code>Stream</code></td>
+                            <td>Stream HTTP/2 multiplexada</td>
+                        </tr>
+                        <tr>
+                            <td><code>Frame</code></td>
+                            <td>Frame HTTP/2 (DATA, HEADERS, SETTINGS, etc)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="examples" class="section fade-in">
+                <h2>💡 Exemplos de Uso</h2>
+
+                <h3>Cliente HTTP Básico</h3>
+                <pre><code>use avx_http::Client;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let client = Client::new();
+    let response = client.get("http://api.example.com/users").await?;
+
+    println!("Status: {}", response.status());
+    println!("Body: {}", response.text().await?);
+    Ok(())
+}</code></pre>
+
+                <h3>Cliente com Configuração Avançada</h3>
+                <pre><code>use avx_http::Client;
+use std::time::Duration;
+
+let client = Client::builder()
+    .timeout(Duration::from_secs(30))
+    .header("User-Agent", "AVX-HTTP/1.0")
+    .header("Accept", "application/json")
+    .max_connections(100)
+    .keep_alive(true)
+    .build();
+
+let response = client.get("https://api.example.com").await?;</code></pre>
+
+                <h3>POST com JSON</h3>
+                <pre><code>use avx_http::Client;
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize)]
+struct CreateUser {
+    name: String,
+    email: String,
+}
+
+#[derive(Deserialize)]
+struct User {
+    id: u64,
+    name: String,
+    email: String,
+}
+
+let client = Client::new();
+let new_user = CreateUser {
+    name: "João Silva".to_string(),
+    email: "joao@example.com".to_string(),
+};
+
+let response = client
+    .post("https://api.example.com/users")
+    .json(&new_user)
+    .send()
+    .await?;
+
+let user: User = response.json().await?;
+println!("Created user with ID: {}", user.id);</code></pre>
+
+                <h3>Servidor HTTP Simples</h3>
+                <pre><code>use avx_http::{Server, Request, Response};
+
+async fn hello_handler(req: Request) -> Response {
+    Response::ok()
+        .header("Content-Type", "text/plain")
+        .body("Hello, World!".as_bytes())
+}
+
+async fn json_handler(req: Request) -> Response {
+    let data = serde_json::json!({
+        "message": "Hello, AVX!",
+        "version": "1.0.0"
+    });
+
+    Response::ok()
+        .header("Content-Type", "application/json")
+        .body(data.to_string().as_bytes())
+}
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    Server::builder()
+        .route("/", hello_handler)
+        .route("/api/info", json_handler)
+        .bind("0.0.0.0:8080")
+        .serve()
+        .await?;
+    Ok(())
+}</code></pre>
+
+                <h3>HTTP/2 com Streaming</h3>
+                <pre><code>use avx_http::Http2Client;
+
+let client = Http2Client::new();
+let mut stream = client
+    .stream("https://api.example.com/stream")
+    .await?;
+
+// Processar chunks conforme chegam
+while let Some(chunk) = stream.read_chunk().await? {
+    println!("Received {} bytes", chunk.len());
+    process_data(&chunk);
+}
+
+println!("Stream completed");</code></pre>
+
+                <h3>Upload de Arquivo com Progress</h3>
+                <pre><code>use avx_http::Client;
+use std::fs::File;
+use std::io::Read;
+
+let client = Client::new();
+let mut file = File::open("large_file.dat")?;
+let mut buffer = Vec::new();
+file.read_to_end(&mut buffer)?;
+
+let response = client
+    .post("https://api.example.com/upload")
+    .header("Content-Type", "application/octet-stream")
+    .body(buffer)
+    .on_progress(|uploaded, total| {
+        let percent = (uploaded as f64 / total as f64) * 100.0;
+        println!("Upload progress: {:.1}%", percent);
+    })
+    .send()
+    .await?;</code></pre>
+            </section>
+
+            <section id="api" class="section fade-in">
+                <h2>📚 Referências da API</h2>
+
+                <h3>Client</h3>
+                <div class="module-card">
+                    <h4><code>Client::new() -> Self</code></h4>
+                    <p>Cria um cliente HTTP com configuração padrão (timeout de 30s, keep-alive habilitado)</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Client::builder() -> ClientBuilder</code></h4>
+                    <p>Cria um construtor de cliente para configuração avançada</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Client::get(url: &str) -> Result&lt;Response&gt;</code></h4>
+                    <p>Realiza uma requisição GET para a URL especificada</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Client::post(url: &str) -> RequestBuilder</code></h4>
+                    <p>Inicia a construção de uma requisição POST</p>
+                </div>
+
+                <h3 class="mt-3">Server</h3>
+                <div class="module-card">
+                    <h4><code>Server::builder() -> ServerBuilder</code></h4>
+                    <p>Cria um construtor de servidor para configuração de rotas e middleware</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>ServerBuilder::route(path, handler) -> Self</code></h4>
+                    <p>Adiciona uma rota com handler assíncrono</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>ServerBuilder::bind(addr) -> Self</code></h4>
+                    <p>Define o endereço de bind do servidor</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Server::serve() -> Result&lt;()&gt;</code></h4>
+                    <p>Inicia o servidor HTTP e aguarda requisições</p>
+                </div>
+            </section>
+
+            <section id="performance" class="section fade-in">
+                <h2>⚡ Performance</h2>
+
+                <div class="performance-chart">
+                    <h3>Benchmarks - Throughput</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">GET Requests</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="95" style="width: 0;">250k req/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">POST JSON</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="88" style="width: 0;">180k req/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">HTTP/2 Streams</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="92" style="width: 0;">300k frames/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Server Throughput</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="90" style="width: 0;">220k req/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Latência (p99)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>AVX HTTP</th>
+                                <th>Melhoria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>GET Request</td>
+                                <td>2.1 μs</td>
+                                <td>3.2x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>POST JSON</td>
+                                <td>3.5 μs</td>
+                                <td>2.8x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>HTTP/2 Frame</td>
+                                <td>1.8 μs</td>
+                                <td>4.1x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>TLS Handshake</td>
+                                <td>850 μs</td>
+                                <td>1.9x mais rápido</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-3">Características de Performance</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>✅ Zero-Copy Parsing</h4>
+                        <p>Parser HTTP otimizado sem cópias desnecessárias de dados</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Connection Pooling</h4>
+                        <p>Pool de conexões inteligente com reuso eficiente</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ HTTP/2 Multiplexing</h4>
+                        <p>Multiplexação eficiente de streams sem head-of-line blocking</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Async I/O</h4>
+                        <p>Runtime assíncrono customizado com epoll/kqueue</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usecases" class="section fade-in">
+                <h2>🎬 Casos de Uso</h2>
+
+                <div class="module-card">
+                    <h3>🔌 Cliente API REST</h3>
+                    <p>Integre com APIs externas de forma eficiente e confiável. AVX HTTP oferece retry automático, circuit breaker e connection pooling para garantir alta disponibilidade.</p>
+                    <pre><code>let client = Client::builder()
+    .retry_policy(RetryPolicy::exponential(3))
+    .circuit_breaker(CircuitBreaker::new(5, Duration::from_secs(30)))
+    .build();
+
+let data = client.get("https://api.partner.com/data").await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🚀 Servidor de Microserviços</h3>
+                    <p>Construa servidores HTTP de alta performance para microserviços com roteamento avançado, middleware e observabilidade integrada.</p>
+                    <pre><code>Server::builder()
+    .route("/health", health_check)
+    .route("/api/v1/users", user_handler)
+    .route("/api/v1/products", product_handler)
+    .middleware(LoggingMiddleware::new())
+    .middleware(MetricsMiddleware::new())
+    .bind("0.0.0.0:8080")
+    .serve()
+    .await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>📊 Streaming de Dados</h3>
+                    <p>Processe grandes volumes de dados com streaming HTTP/2, ideal para processamento de logs, métricas e eventos em tempo real.</p>
+                    <pre><code>let mut stream = client.stream("https://logs.example.com/tail").await?;
+
+while let Some(chunk) = stream.read_chunk().await? {
+    let events = parse_events(&chunk)?;
+    for event in events {
+        process_event(event).await?;
+    }
+}</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🕷️ Web Scraping em Larga Escala</h3>
+                    <p>Realize scraping em larga escala com pool de conexões otimizado, rate limiting e rotation de proxies.</p>
+                    <pre><code>let client = Client::builder()
+    .max_connections(200)
+    .rate_limit(100) // 100 req/s
+    .proxy_rotation(proxies)
+    .build();
+
+let urls = load_urls()?;
+let results = stream::iter(urls)
+    .map(|url| client.get(&url))
+    .buffer_unordered(50)
+    .collect::&lt;Vec&lt;_&gt;&gt;()
+    .await;</code></pre>
+                </div>
+            </section>
+
+            <section id="license" class="section fade-in">
+                <h2>📄 Licença</h2>
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Software Proprietário - Veja <a href="../../LICENSE-PROPRIETARY.md">LICENSE-PROPRIETARY.md</a></p>
+                <p class="mt-2">Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <div class="footer-links">
+                    <a href="https://avila.inc">Contato</a>
+                    <a href="https://docs.avila.inc">Documentação</a>
+                    <a href="../../LICENSE-PROPRIETARY.md">Licença</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

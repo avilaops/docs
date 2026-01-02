@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-codec - Encoding/Decoding | Avx Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="avx-cache.html">avx-cache</a></li>
+            <li><a href="avx-codec.html" class="active">avx-codec</a></li>
+            <li><a href="avx-compress.html">avx-compress</a></li>
+            <li><a href="avx-db.html">avx-db</a></li>
+            <li><a href="avx-pool.html">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html">avx-serialize</a></li>
+            <li><a href="avx-storage.html">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>🔐 avx-codec</h1>
+            <p>Codificação/decodificação de alta performance</p>
+        </section>
+
+        <section>
+            <h2>🚀 Características</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Formatos Suportados</h3>
+                    <ul>
+                        <li>Hex Encoding</li>
+                        <li>Base64 (Standard/URL-safe)</li>
+                        <li>Base58 (Bitcoin-style)</li>
+                        <li>Base32 (RFC 4648)</li>
+                        <li>Base85 (ASCII85, Z85)</li>
+                        <li>URL Encoding</li>
+                        <li>Multibase (IPFS)</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Checksums</h3>
+                    <ul>
+                        <li>CRC32</li>
+                        <li>XXHash (25 GB/s)</li>
+                        <li>SHA-256</li>
+                        <li>VarInt encoding</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Performance</h3>
+                    <ul>
+                        <li>Base64: 4.5 GB/s</li>
+                        <li>Hex: 3.2 GB/s</li>
+                        <li>SIMD optimized</li>
+                        <li>Zero dependencies</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Instalação</h2>
+            <pre><code>[dependencies]
+avx-codec = "0.1.0"</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Exemplos</h2>
+
+            <h3>Hex Encoding</h3>
+            <pre><code>use avx_codec::hex;
+
+let data = b"Hello, World!";
+let encoded = hex::encode(data);
+assert_eq!(encoded, "48656c6c6f2c20576f726c6421");
+
+let decoded = hex::decode(&encoded).unwrap();
+assert_eq!(&decoded, data);</code></pre>
+
+            <h3>Base64</h3>
+            <pre><code>use avx_codec::base64;
+
+let data = b"Rust is awesome!";
+let encoded = base64::encode(data);
+assert_eq!(encoded, "UnVzdCBpcyBhd2Vzb21lIQ==");
+
+let decoded = base64::decode(&encoded).unwrap();</code></pre>
+
+            <h3>Checksums</h3>
+            <pre><code>use avx_codec::checksum::{crc, xxhash};
+
+let data = b"Check this data";
+
+// CRC32
+let crc32 = crc::crc32(data);
+
+// XXHash (muito mais rápido)
+let hash = xxhash::xxh64(data, 0);</code></pre>
+        </section>
+
+        <section>
+            <h2>📊 Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Throughput</th>
+                        <th>vs. Padrão</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hex Encode</td>
+                        <td>3.2 GB/s</td>
+                        <td>2.5x mais rápido</td>
+                    </tr>
+                    <tr>
+                        <td>Base64 Encode</td>
+                        <td>4.5 GB/s</td>
+                        <td>3.1x mais rápido</td>
+                    </tr>
+                    <tr>
+                        <td>XXHash64</td>
+                        <td>25 GB/s</td>
+                        <td>8x mais rápido</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

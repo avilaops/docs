@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx Alert - Documentação</title>
+    <style>
+        :root {
+            --primary: #FF8C00;
+            --secondary: #FFD700;
+            --background: #FFFFFF;
+            --surface: #F5F5F5;
+            --text: #1A1A1A;
+            --text-secondary: #666666;
+            --border: #E0E0E0;
+            --code-bg: #F8F8F8;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --error: #F44336;
+        }
+
+        [data-theme="dark"] {
+            --primary: #FF8C00;
+            --secondary: #FFD700;
+            --background: #0A0E27;
+            --surface: #1A1F3A;
+            --text: #E8E8E8;
+            --text-secondary: #A0A0A0;
+            --border: #2A2F4A;
+            --code-bg: #151933;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        /* Header identico ao index */
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            cursor: pointer;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .lang-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover, .lang-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 1.5rem;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .sidebar nav ul {
+            list-style: none;
+        }
+
+        .sidebar nav ul li {
+            margin: 0.5rem 0;
+        }
+
+        .sidebar nav ul li a {
+            color: var(--text);
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar nav ul li a:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        /* Main Content */
+        .content {
+            background: var(--surface);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .module-icon-large {
+            font-size: 4rem;
+        }
+
+        .module-info h1 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .module-info p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.5rem;
+        }
+
+        .badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-version {
+            background: var(--primary);
+            color: white;
+        }
+
+        .badge-license {
+            background: var(--secondary);
+            color: black;
+        }
+
+        .badge-status {
+            background: var(--success);
+            color: white;
+        }
+
+        /* Section */
+        .section {
+            margin: 3rem 0;
+        }
+
+        .section h2 {
+            color: var(--primary);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--text);
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem 0;
+        }
+
+        /* Code Blocks */
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-lang {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--background);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .feature-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* API Table */
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--background);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .api-table th {
+            background: var(--primary);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .api-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .api-table tr:hover {
+            background: var(--surface);
+        }
+
+        /* Performance Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0.5rem 0;
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Use Case Cards */
+        .usecase-card {
+            background: var(--background);
+            border-left: 4px solid var(--primary);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 4px;
+        }
+
+        .usecase-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Animation Demo */
+        .demo-container {
+            background: var(--code-bg);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .alert-demo {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .alert-trace { border-color: #9E9E9E; background: rgba(158, 158, 158, 0.1); }
+        .alert-debug { border-color: #2196F3; background: rgba(33, 150, 243, 0.1); }
+        .alert-info { border-color: #4CAF50; background: rgba(76, 175, 80, 0.1); }
+        .alert-warning { border-color: #FF9800; background: rgba(255, 152, 0, 0.1); }
+        .alert-error { border-color: #F44336; background: rgba(244, 67, 54, 0.1); }
+        .alert-critical { border-color: #9C27B0; background: rgba(156, 39, 176, 0.1); }
+
+        /* Footer */
+        footer {
+            background: var(--surface);
+            border-top: 2px solid var(--primary);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+            margin: 0.5rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo" onclick="window.location.href='index.html'">🔥 Avx Observability</div>
+            <div class="controls">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                </button>
+                <button class="lang-btn" onclick="alert('Sistema de idiomas em desenvolvimento')">
+                    <span>🇧🇷</span>
+                    <span>PT-BR</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <aside class="sidebar">
+            <h3>📚 Navegação</h3>
+            <nav>
+                <ul>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#installation">Instalação</a></li>
+                    <li><a href="#types">Tipos Disponíveis</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#api">Referência da API</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                    <li><a href="#usecases">Casos de Uso</a></li>
+                    <li><a href="#demo">Demo Interativa</a></li>
+                    <li><a href="#license">Licença</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main class="content">
+            <div class="module-header">
+                <div class="module-icon-large">🚨</div>
+                <div class="module-info">
+                    <h1>Avx Alert</h1>
+                    <p>Sistema Profissional de Alertas e Notificações em Tempo Real</p>
+                    <div class="badges">
+                        <span class="badge badge-version">v0.1.0</span>
+                        <span class="badge badge-license">Proprietary</span>
+                        <span class="badge badge-status">Production Ready</span>
+                    </div>
+                </div>
+            </div>
+
+            <section id="overview" class="section">
+                <h2>📖 Visão Geral do Módulo</h2>
+                <p>
+                    <strong>Avx Alert</strong> é um sistema de gerenciamento de alertas desenvolvido para aplicações
+                    que exigem máxima confiabilidade e desempenho. Construído com Rust puro, oferece zero dependências
+                    externas e suporte total para ambientes <code>no_std</code>.
+                </p>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4>✅ Múltiplos Níveis</h4>
+                        <p>Trace, Debug, Info, Warning, Error, Critical - hierarquia completa de severidade</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>✅ Formatação Flexível</h4>
+                        <p>Simple, Detailed, JSON, Compact - escolha o formato ideal para cada cenário</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>✅ Builder Pattern</h4>
+                        <p>API ergonômica para construção de alertas complexos com contexto rico</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>✅ Sistema de Handlers</h4>
+                        <p>Processamento customizável com suporte a múltiplos destinos simultâneos</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>✅ Thread-Safe</h4>
+                        <p>Gerenciamento seguro em ambientes altamente concorrentes</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>✅ Zero Dependências</h4>
+                        <p>Implementação 100% Rust puro sem deps externas</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="installation" class="section">
+                <h2>🚀 Instalação</h2>
+                <p>Adicione ao seu <code>Cargo.toml</code>:</p>
+                <div class="code-block">
+                    <span class="code-lang">TOML</span>
+                    <pre>[dependencies]
+avx-alert = "0.1.0"</pre>
+                </div>
+            </section>
+
+            <section id="types" class="section">
+                <h2>📊 Tipos Disponíveis</h2>
+
+                <h3>AlertLevel</h3>
+                <p>Enum que define os níveis de severidade dos alertas:</p>
+                <div class="code-block">
+                    <span class="code-lang">Rust</span>
+                    <pre>pub enum AlertLevel {
+    Trace,      // Nível mais baixo - Informações de rastreamento
+    Debug,      // Informações de depuração
+    Info,       // Informações gerais
+    Warning,    // Avisos não críticos
+    Error,      // Erros recuperáveis
+    Critical,   // Erros críticos que requerem ação imediata
+}</pre>
+                </div>
+
+                <h3>Alert</h3>
+                <p>Estrutura principal que representa um alerta:</p>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Campo</th>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>level</td>
+                            <td>AlertLevel</td>
+                            <td>Nível de severidade do alerta</td>
+                        </tr>
+                        <tr>
+                            <td>message</td>
+                            <td>String</td>
+                            <td>Mensagem descritiva do alerta</td>
+                        </tr>
+                        <tr>
+                            <td>timestamp</td>
+                            <td>Timestamp</td>
+                            <td>Marcação temporal da criação</td>
+                        </tr>
+                        <tr>
+                            <td>tags</td>
+                            <td>Vec&lt;String&gt;</td>
+                            <td>Tags para categorização</td>
+                        </tr>
+                        <tr>
+                            <td>context</td>
+                            <td>HashMap&lt;String, String&gt;</td>
+                            <td>Metadados adicionais</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>AlertManager</h3>
+                <p>Gerenciador central de alertas:</p>
+                <div class="code-block">
+                    <span class="code-lang">Rust</span>
+                    <pre>pub struct AlertManager;
+
+impl AlertManager {
+    pub fn new() -> Self;
+    pub fn add_handler(&self, handler: Box&lt;dyn AlertHandler&gt;);
+    pub fn dispatch(&self, alert: Alert);
+    pub fn remove_all_handlers(&self);
+}</pre>
+                </div>
+            </section>
+
+            <section id="examples" class="section">
+                <h2>💡 Exemplos de Uso</h2>
+
+                <h3>Exemplo Básico</h3>
+                <div class="code-block">
+                    <span class="code-lang">Rust</span>
+                    <pre>use avx_alert::{Alert, AlertLevel, AlertManager, ConsoleHandler, SimpleFormatter};
+
+fn main() {
+    // Criar gerenciador de alertas
+    let manager = AlertManager::new();
+
+    // Adicionar handler de console
+    manager.add_handler(Box::new(ConsoleHandler::new(SimpleFormatter)));
+
+    // Despachar alertas
+    manager.dispatch(Alert::info("Aplicação iniciada com sucesso"));
+    manager.dispatch(Alert::warning("Memória baixa detectada"));
+    manager.dispatch(Alert::error("Falha na conexão com banco de dados"));
+}</pre>
+                </div>
+
+                <h3>Usando Builder Pattern</h3>
+                <div class="code-block">
+                    <span class="code-lang">Rust</span>
+                    <pre>use avx_alert::{AlertBuilder, AlertLevel};
+
+let alert = AlertBuilder::new()
+    .level(AlertLevel::Warning)
+    .message("Autenticação falhou")
+    .tag("security")
+    .tag("auth")
+    .context("user", "admin")
+    .context("ip", "192.168.1.100")
+    .build()
+    .unwrap();
+
+manager.dispatch(alert);</pre>
+                </div>
+
+                <h3>Handler Customizado</h3>
+                <div class="code-block">
+                    <span class="code-lang">Rust</span>
+                    <pre>use avx_alert::{Alert, AlertHandler};
+
+struct EmailHandler {
+    recipients: Vec&lt;String&gt;,
+}
+
+impl AlertHandler for EmailHandler {
+    fn handle(&self, alert: &Alert) {
+        for recipient in &self.recipients {
+            send_email(recipient, alert);
+        }
+    }
+}
+
+let manager = AlertManager::new();
+manager.add_handler(Box::new(EmailHandler {
+    recipients: vec!["admin@avila.inc".to_string()],
+}));</pre>
+                </div>
+            </section>
+
+            <section id="api" class="section">
+                <h2>🔧 Referência da API</h2>
+
+                <h3>Métodos Construtores</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Retorno</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Alert::trace(msg)</td>
+                            <td>Alert</td>
+                            <td>Cria alerta de nível Trace</td>
+                        </tr>
+                        <tr>
+                            <td>Alert::debug(msg)</td>
+                            <td>Alert</td>
+                            <td>Cria alerta de nível Debug</td>
+                        </tr>
+                        <tr>
+                            <td>Alert::info(msg)</td>
+                            <td>Alert</td>
+                            <td>Cria alerta de nível Info</td>
+                        </tr>
+                        <tr>
+                            <td>Alert::warning(msg)</td>
+                            <td>Alert</td>
+                            <td>Cria alerta de nível Warning</td>
+                        </tr>
+                        <tr>
+                            <td>Alert::error(msg)</td>
+                            <td>Alert</td>
+                            <td>Cria alerta de nível Error</td>
+                        </tr>
+                        <tr>
+                            <td>Alert::critical(msg)</td>
+                            <td>Alert</td>
+                            <td>Cria alerta de nível Critical</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Handlers Disponíveis</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Handler</th>
+                            <th>Propósito</th>
+                            <th>Configuração</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ConsoleHandler</td>
+                            <td>Imprime alertas no console</td>
+                            <td>Aceita qualquer Formatter</td>
+                        </tr>
+                        <tr>
+                            <td>CallbackHandler</td>
+                            <td>Executa função customizada</td>
+                            <td>Closure Fn(&Alert)</td>
+                        </tr>
+                        <tr>
+                            <td>MultiHandler</td>
+                            <td>Distribui para múltiplos handlers</td>
+                            <td>Vec de handlers</td>
+                        </tr>
+                        <tr>
+                            <td>FilterHandler</td>
+                            <td>Filtra alertas por critério</td>
+                            <td>Predicate function</td>
+                        </tr>
+                        <tr>
+                            <td>BufferHandler</td>
+                            <td>Armazena alertas em memória</td>
+                            <td>Capacidade máxima</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="performance" class="section">
+                <h2>⚡ Performance</h2>
+                <p>O Avx Alert foi projetado para máxima performance em ambientes de produção:</p>
+
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-value">&lt; 1μs</div>
+                        <div class="metric-label">Latência de Dispatch</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">0</div>
+                        <div class="metric-label">Dependências Externas</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Thread-Safe</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value">~2KB</div>
+                        <div class="metric-label">Overhead de Memória</div>
+                    </div>
+                </div>
+
+                <h3>Benchmarks</h3>
+                <div class="code-block">
+                    <span class="code-lang">Benchmark Results</span>
+                    <pre>dispatch_simple_alert:      850 ns/iter (+/- 45)
+dispatch_complex_alert:     2.1 μs/iter (+/- 120)
+format_json:                1.3 μs/iter (+/- 80)
+buffer_100_alerts:          95 μs/iter (+/- 8)
+filter_1000_alerts:         180 μs/iter (+/- 15)</pre>
+                </div>
+            </section>
+
+            <section id="usecases" class="section">
+                <h2>🎯 Casos de Uso</h2>
+
+                <div class="usecase-card">
+                    <h4>1. Monitoramento de Aplicações Web</h4>
+                    <p>
+                        Monitore eventos críticos do sistema em tempo real, capturando métricas de uso de recursos,
+                        latência de requisições e erros de aplicação.
+                    </p>
+                    <div class="code-block">
+                        <span class="code-lang">Rust</span>
+                        <pre>manager.dispatch(Alert::critical("Disco cheio: 98%"));
+manager.dispatch(Alert::warning("Alta latência: 250ms"));</pre>
+                    </div>
+                </div>
+
+                <div class="usecase-card">
+                    <h4>2. Auditoria de Segurança</h4>
+                    <p>
+                        Registre tentativas de acesso, mudanças de configuração e eventos de segurança com contexto
+                        completo para análise forense.
+                    </p>
+                    <div class="code-block">
+                        <span class="code-lang">Rust</span>
+                        <pre>AlertBuilder::new()
+    .level(AlertLevel::Warning)
+    .message("Tentativa de acesso negada")
+    .tag("security")
+    .context("user", username)
+    .context("ip", client_ip)
+    .build()</pre>
+                    </div>
+                </div>
+
+                <div class="usecase-card">
+                    <h4>3. DevOps e Observabilidade</h4>
+                    <p>
+                        Integre com sistemas de monitoramento como Prometheus, Grafana e Elasticsearch para
+                        observabilidade completa.
+                    </p>
+                    <div class="code-block">
+                        <span class="code-lang">Rust</span>
+                        <pre>let handler = MultiHandler::new(vec![
+    Box::new(ConsoleHandler::new(JsonFormatter)),
+    Box::new(PrometheusHandler::new()),
+    Box::new(ElasticsearchHandler::new()),
+]);</pre>
+                    </div>
+                </div>
+            </section>
+
+            <section id="demo" class="section">
+                <h2>🎬 Demo Interativa</h2>
+                <p>Visualização dos diferentes níveis de alerta:</p>
+
+                <div class="demo-container">
+                    <div class="alert-demo alert-trace">
+                        <strong>[TRACE]</strong> Função process_data() chamada com 1024 bytes
+                    </div>
+                    <div class="alert-demo alert-debug">
+                        <strong>[DEBUG]</strong> Cache hit: user_profile_12345
+                    </div>
+                    <div class="alert-demo alert-info">
+                        <strong>[INFO]</strong> Aplicação iniciada com sucesso na porta 8080
+                    </div>
+                    <div class="alert-demo alert-warning">
+                        <strong>[WARNING]</strong> Uso de memória elevado: 85%
+                    </div>
+                    <div class="alert-demo alert-error">
+                        <strong>[ERROR]</strong> Falha na conexão com banco de dados
+                    </div>
+                    <div class="alert-demo alert-critical">
+                        <strong>[CRITICAL]</strong> Sistema de arquivos cheio - ação imediata necessária
+                    </div>
+                </div>
+            </section>
+
+            <section id="license" class="section">
+                <h2>📜 Licença</h2>
+                <div style="background: var(--code-bg); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary);">
+                    <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                    <p>
+                        Este software é propriedade da <strong>Avila Inc.</strong> e está protegido por direitos
+                        autorais internacionais. Para informações sobre licenciamento comercial:
+                    </p>
+                    <ul style="margin-top: 1rem;">
+                        <li>📧 Email: <a href="mailto:nicolas@avila.inc" style="color: var(--primary);">nicolas@avila.inc</a></li>
+                        <li>🌐 Website: <a href="https://avila.inc" style="color: var(--primary);">https://avila.inc</a></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>Avila Inc. - Soluções de Observabilidade de Classe Mundial</p>
+    </footer>
+
+    <script>
+        let currentTheme = 'light';
+
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            document.getElementById('theme-icon').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            localStorage.setItem('theme', currentTheme);
+        }
+
+        // Load saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                currentTheme = savedTheme;
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                document.getElementById('theme-icon').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            }
+
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

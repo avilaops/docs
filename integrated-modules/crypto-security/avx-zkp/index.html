@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX ZKP - Zero-Knowledge Proofs">
+    <title>AVX ZKP - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="zkp.hero.title">AVX ZKP</h1>
+            <p class="hero-subtitle" data-i18n="zkp.hero.subtitle">
+                Zero-Knowledge Proofs - Provas sem revelar informação
+            </p>
+            <div class="hero-badges">
+                <span class="badge">ZK-SNARKs</span>
+                <span class="badge">ZK-STARKs</span>
+                <span class="badge">Bulletproofs</span>
+                <span class="badge">Privacy</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="zkp.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="zkp.overview.card1.title">🕵️ Zero-Knowledge</h3>
+                    <p data-i18n="zkp.overview.card1.desc">
+                        Prove que você sabe algo sem revelar o que é. Privacidade máxima com verificação matemática.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="zkp.overview.card2.title">⚡ ZK-SNARKs</h3>
+                    <p data-i18n="zkp.overview.card2.desc">
+                        Provas sucintas e não-interativas. Verificação rápida de computações complexas.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="zkp.overview.card3.title">🛡️ ZK-STARKs</h3>
+                    <p data-i18n="zkp.overview.card3.desc">
+                        Transparentes e escaláveis. Sem trusted setup, resistentes a computadores quânticos.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="zkp.overview.card4.title">🎯 Bulletproofs</h3>
+                    <p data-i18n="zkp.overview.card4.desc">
+                        Provas de range compactas. Ideal para transações confidenciais e auditoria seletiva.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="zkp.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="zkp.types.table.type">Tipo</th>
+                            <th data-i18n="zkp.types.table.description">Descrição</th>
+                            <th data-i18n="zkp.types.table.property">Propriedade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ZkSnark</code></td>
+                            <td data-i18n="zkp.types.snark">Sistema ZK-SNARK (Groth16)</td>
+                            <td>Sucinto, Trusted Setup</td>
+                        </tr>
+                        <tr>
+                            <td><code>ZkStark</code></td>
+                            <td data-i18n="zkp.types.stark">Sistema ZK-STARK</td>
+                            <td>Transparent, Post-quantum</td>
+                        </tr>
+                        <tr>
+                            <td><code>Bulletproof</code></td>
+                            <td data-i18n="zkp.types.bulletproof">Provas de range compactas</td>
+                            <td>Sem trusted setup</td>
+                        </tr>
+                        <tr>
+                            <td><code>Plonk</code></td>
+                            <td data-i18n="zkp.types.plonk">Sistema PLONK</td>
+                            <td>Universal setup</td>
+                        </tr>
+                        <tr>
+                            <td><code>Proof</code></td>
+                            <td data-i18n="zkp.types.proof">Prova zero-knowledge</td>
+                            <td>Genérico</td>
+                        </tr>
+                        <tr>
+                            <td><code>VerifyingKey</code></td>
+                            <td data-i18n="zkp.types.vkey">Chave de verificação</td>
+                            <td>Pública</td>
+                        </tr>
+                        <tr>
+                            <td><code>ProvingKey</code></td>
+                            <td data-i18n="zkp.types.pkey">Chave de prova</td>
+                            <td>Privada/Testemunha</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="zkp.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="zkp.examples.range.title">Exemplo Básico - Range Proof</h3>
+            <pre><code class="language-rust">use avx_zkp::Bulletproof;
+
+fn main() {
+    // Provar que valor está em range [0, 2^32) sem revelar valor
+    let secret_value = 12345u64;
+    let bits = 32;
+
+    // Criar prova
+    let (proof, commitment) = Bulletproof::prove_range(
+        secret_value,
+        bits
+    ).expect("Falha ao criar prova");
+
+    println!("Prova criada: {} bytes", proof.len());
+
+    // Verificar (sem conhecer valor)
+    let is_valid = Bulletproof::verify_range(
+        &proof,
+        &commitment,
+        bits
+    );
+
+    assert!(is_valid);
+    println!("✅ Range proof verificado!");
+    println!("Valor permanece secreto: não revelado");
+}</code></pre>
+
+            <h3 data-i18n="zkp.examples.snark.title">Exemplo - ZK-SNARK</h3>
+            <pre><code class="language-rust">use avx_zkp::ZkSnark;
+
+fn main() {
+    // Circuito: provar conhecimento de x tal que x^3 + x + 5 == 35
+    let circuit = |x: u64| -> u64 {
+        x * x * x + x + 5
+    };
+
+    // Valor secreto (testemunha)
+    let x = 3u64; // 27 + 3 + 5 = 35
+
+    // Setup (uma vez por circuito)
+    let (proving_key, verifying_key) = ZkSnark::setup(&circuit)
+        .expect("Erro no setup");
+
+    // Criar prova
+    let proof = ZkSnark::prove(
+        &proving_key,
+        &circuit,
+        x,
+        35 // Output público
+    ).expect("Erro ao provar");
+
+    // Verificar
+    let is_valid = ZkSnark::verify(
+        &verifying_key,
+        &proof,
+        35
+    );
+
+    assert!(is_valid);
+    println!("✅ ZK-SNARK verificado!");
+}</code></pre>
+
+            <h3 data-i18n="zkp.examples.stark.title">Exemplo - ZK-STARK</h3>
+            <pre><code class="language-rust">use avx_zkp::ZkStark;
+
+fn main() {
+    // Provar execução correta de computação
+    // Exemplo: Fibonacci(100)
+    let computation = |n: usize| -> u64 {
+        let mut a = 0u64;
+        let mut b = 1u64;
+        for _ in 0..n {
+            let c = a + b;
+            a = b;
+            b = c;
+        }
+        b
+    };
+
+    let n = 100;
+    let result = computation(n);
+
+    // Criar prova STARK (sem trusted setup!)
+    let proof = ZkStark::prove(&computation, n, result)
+        .expect("Erro ao criar STARK");
+
+    // Verificar (muito rápido, ~10ms)
+    let is_valid = ZkStark::verify(&proof, result);
+
+    assert!(is_valid);
+    println!("✅ ZK-STARK verificado!");
+    println!("Resistente a quantum: sim");
+}</code></pre>
+
+            <h3 data-i18n="zkp.examples.membership.title">Exemplo - Membership Proof</h3>
+            <pre><code class="language-rust">use avx_zkp::{MerkleTree, MembershipProof};
+
+fn main() {
+    // Lista de elementos (ex: whitelist)
+    let elements = vec![
+        b"user1".to_vec(),
+        b"user2".to_vec(),
+        b"user3".to_vec(),
+        b"user4".to_vec(),
+    ];
+
+    // Criar Merkle tree
+    let tree = MerkleTree::new(&elements);
+    let root = tree.root();
+
+    // Provar que user2 está na lista SEM revelar qual
+    let element = b"user2";
+    let proof = tree.prove_membership(element)
+        .expect("Elemento não encontrado");
+
+    // Verificar
+    let is_valid = MerkleTree::verify_membership(
+        &root,
+        element,
+        &proof
+    );
+
+    assert!(is_valid);
+    println!("✅ Membership verificado!");
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="zkp.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>Bulletproof</h3>
+                <div class="api-method">
+                    <code>pub fn prove_range(value: u64, bits: usize) -> Result&lt;(Proof, Commitment), ZkpError&gt;</code>
+                    <p data-i18n="zkp.api.bullet.prove">Cria prova de range para valor.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify_range(proof: &Proof, commitment: &Commitment, bits: usize) -> bool</code>
+                    <p data-i18n="zkp.api.bullet.verify">Verifica prova de range.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>ZkSnark</h3>
+                <div class="api-method">
+                    <code>pub fn setup&lt;F&gt;(circuit: &F) -> Result&lt;(ProvingKey, VerifyingKey), ZkpError&gt;</code>
+                    <p data-i18n="zkp.api.snark.setup">Realiza trusted setup para circuito.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn prove&lt;F&gt;(pk: &ProvingKey, circuit: &F, witness: u64, public: u64) -> Result&lt;Proof, ZkpError&gt;</code>
+                    <p data-i18n="zkp.api.snark.prove">Gera prova ZK-SNARK.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify(vk: &VerifyingKey, proof: &Proof, public: u64) -> bool</code>
+                    <p data-i18n="zkp.api.snark.verify">Verifica prova ZK-SNARK.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>ZkStark</h3>
+                <div class="api-method">
+                    <code>pub fn prove&lt;F&gt;(computation: &F, input: usize, output: u64) -> Result&lt;Proof, ZkpError&gt;</code>
+                    <p data-i18n="zkp.api.stark.prove">Gera prova ZK-STARK (sem setup).</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify(proof: &Proof, output: u64) -> bool</code>
+                    <p data-i18n="zkp.api.stark.verify">Verifica prova ZK-STARK rapidamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="zkp.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">~10ms</div>
+                    <div class="metric-label" data-i18n="zkp.performance.verify">Verificação</div>
+                    <div class="metric-detail">ZK-SNARK</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~2s</div>
+                    <div class="metric-label" data-i18n="zkp.performance.prove">Geração de Prova</div>
+                    <div class="metric-detail">Circuito médio</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">< 1KB</div>
+                    <div class="metric-label" data-i18n="zkp.performance.size">Tamanho da Prova</div>
+                    <div class="metric-detail">Bulletproof</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">128 bits</div>
+                    <div class="metric-label" data-i18n="zkp.performance.security">Nível de Segurança</div>
+                    <div class="metric-detail">Padrão</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="zkp.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">💰</div>
+                    <h3 data-i18n="zkp.usecases.crypto.title">Criptomoedas Privadas</h3>
+                    <p data-i18n="zkp.usecases.crypto.desc">
+                        Transações confidenciais com valores ocultos. ZCash, Monero e outras privacy coins.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="zkp.usecases.identity.title">Identidade Digital</h3>
+                    <p data-i18n="zkp.usecases.identity.desc">
+                        Provar idade, nacionalidade ou qualificações sem revelar dados completos.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏦</div>
+                    <h3 data-i18n="zkp.usecases.compliance.title">Auditoria Seletiva</h3>
+                    <p data-i18n="zkp.usecases.compliance.desc">
+                        Compliance e regulação com preservação de privacidade. Provar conformidade sem expor dados.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">⚡</div>
+                    <h3 data-i18n="zkp.usecases.scaling.title">Layer 2 Scaling</h3>
+                    <p data-i18n="zkp.usecases.scaling.desc">
+                        ZK-Rollups para escalabilidade de blockchain. Milhares de transações em uma prova.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="zkp.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="zkp.license.desc">
+                    AVX ZKP é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="zkp.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Remote - Desktop remoto ultra-seguro">
+    <title>AVX Remote - Documentação</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">AVX</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#types">Tipos</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+            </nav>
+            <div class="controls">
+                <button id="theme-toggle" class="theme-toggle">🌙 Dark</button>
+                <select id="lang-selector" class="lang-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇨🇭 Français</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AVX Remote</h1>
+            <p>Desktop Remoto Ultra-Seguro com Criptografia Pós-Quântica</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="overview" class="content-section">
+            <h2>📖 Visão Geral</h2>
+            <p>AVX Remote é uma solução de desktop remoto ultra-segura e de alta performance, projetada para superar alternativas comerciais através de criptografia pós-quântica, arquitetura P2P descentralizada e streaming otimizado para 4K@60fps.</p>
+
+            <h3>Características Principais</h3>
+            <ul style="line-height: 2; font-size: 1.1rem;">
+                <li>✅ <strong>Segurança Militar</strong>: Criptografia pós-quântica (CRYSTALS-Kyber, Dilithium)</li>
+                <li>✅ <strong>Alta Performance</strong>: Streaming 4K@60fps com latência sub-50ms</li>
+                <li>✅ <strong>Zero-Knowledge</strong>: Autenticação sem servidores centrais</li>
+                <li>✅ <strong>P2P Puro</strong>: Comunicação direta entre peers</li>
+                <li>✅ <strong>Multi-Monitor</strong>: Suporte ilimitado de telas</li>
+                <li>✅ <strong>File Transfer</strong>: Transferência com resumo e verificação de integridade</li>
+            </ul>
+        </section>
+
+        <section id="types" class="content-section">
+            <h2>📦 Tipos Disponíveis</h2>
+
+            <h3>Session Management</h3>
+            <pre><code>pub struct SessionManager {
+    sessions: HashMap&lt;String, RemoteSession&gt;
+}
+
+pub struct RemoteSession {
+    pub id: String,
+    pub state: SessionState,
+    pub config: RemoteConfig,
+    pub connected_users: Vec&lt;String&gt;,
+    pub created_at: SystemTime,
+}
+
+pub enum SessionState {
+    Connecting,
+    Connected,
+    Disconnected,
+    Error(String),
+}</code></pre>
+
+            <h3>File Transfer</h3>
+            <pre><code>pub struct FileTransferManager {
+    active_transfers: HashMap&lt;String, Transfer&gt;,
+    chunk_size: usize,
+}
+
+pub struct TransferInfo {
+    pub id: String,
+    pub file_name: String,
+    pub total_size: u64,
+    pub transferred: u64,
+}</code></pre>
+        </section>
+
+        <section id="examples" class="content-section">
+            <h2>💻 Exemplos de Uso</h2>
+
+            <h3>Iniciar Servidor</h3>
+            <pre><code>use avx_remote::{Server, ServerConfig};
+
+fn main() -&gt; Result&lt;()&gt; {
+    let config = ServerConfig {
+        port: 9876,
+        password: "supersecret".to_string(),
+        security_level: SecurityLevel::PostQuantum,
+        max_connections: 5,
+    };
+
+    let server = Server::new(config)?;
+    server.start()?;
+    server.wait_for_shutdown()
+}</code></pre>
+
+            <h3>Conectar Cliente</h3>
+            <pre><code>use avx_remote::{Client, ClientConfig};
+
+let config = ClientConfig {
+    server_address: "192.168.1.100:9876".to_string(),
+    password: "supersecret".to_string(),
+    quality: Quality::High4K,
+};
+
+let mut client = Client::new(config)?;
+client.connect()?;
+client.start_session()</code></pre>
+
+            <h3>Transferência de Arquivos</h3>
+            <pre><code>let mut manager = FileTransferManager::new();
+
+let transfer_id = manager.send_file(
+    "documento.pdf",
+    "/caminho/local/documento.pdf",
+    "192.168.1.100:9876"
+)?;
+
+while let Some(progress) = manager.get_progress(&transfer_id) {
+    println!("Progresso: {:.1}%", progress * 100.0);
+}</code></pre>
+        </section>
+
+        <section id="performance" class="content-section">
+            <h2>⚡ Performance</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>AVX Remote</th>
+                        <th>Concorrente A</th>
+                        <th>Concorrente B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Latência (LAN)</td>
+                        <td>&lt;20ms</td>
+                        <td>~50ms</td>
+                        <td>~40ms</td>
+                    </tr>
+                    <tr>
+                        <td>Qualidade 4K@60fps</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>Criptografia Pós-Quântica</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td>P2P Direto</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>Parcial</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="animation-demo">
+                <h3>Streaming de Alta Performance</h3>
+                <div class="demo-box"></div>
+                <p><strong>4K@60fps</strong> • Sub-50ms latência • Criptografia pós-quântica</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>🎬 Casos de Uso</h2>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Suporte Técnico Remoto</h3>
+                    <p>Acesso seguro a computadores de clientes para diagnóstico e reparo com criptografia militar.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Trabalho Remoto</h3>
+                    <p>Acesso a estações de trabalho corporativas de qualquer lugar com latência mínima.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Colaboração em Tempo Real</h3>
+                    <p>Múltiplos usuários trabalhando na mesma máquina simultaneamente.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+            <div class="footer-links">
+                <a href="mailto:nicolas@avila.inc">📧 Contato</a>
+                <a href="https://avila.inc" target="_blank">🌐 Website</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

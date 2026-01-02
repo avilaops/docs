@@ -40,7 +40,7 @@
 
             <section class="doc-section">
                 <h2>Instalação</h2>
-                
+
                 <h3>Pré-requisitos</h3>
                 <ul>
                     <li><strong>Rust</strong> 1.70 ou superior</li>
@@ -61,7 +61,7 @@ avx-crypto = "0.1.0"</code></pre>
 
             <section class="doc-section">
                 <h2>Primeiro Programa</h2>
-                
+
                 <p>Crie um novo projeto:</p>
                 <pre><code>cargo new my-arxis-app
 cd my-arxis-app</code></pre>
@@ -88,7 +88,7 @@ fn main() {
     let data = b"Hello, Arxis!";
     let hash = Sha256::hash(data);
     println!("SHA-256: {:?}", hash);
-    
+
     // Gerar par de chaves
     let keypair = Ed25519::generate_keypair();
     println!("Chave pública: {:?}", keypair.public());
@@ -100,12 +100,12 @@ fn main() {
 #[tokio::main]
 async fn main() {
     let server = Server::new("127.0.0.1:8080");
-    
+
     server.route("/", |req: Request| async {
         Response::new(StatusCode::OK)
             .body("Hello from Arxis!")
     }).await;
-    
+
     println!("Servidor rodando em http://localhost:8080");
     server.serve().await.unwrap();
 }</code></pre>
@@ -117,11 +117,11 @@ fn main() {
     // Criar tensores
     let a = Tensor::from_slice(&[1.0, 2.0, 3.0], &[3]);
     let b = Tensor::from_slice(&[4.0, 5.0, 6.0], &[3]);
-    
+
     // Operações
     let c = &a + &b;
     let dot = a.dot(&b);
-    
+
     println!("Soma: {:?}", c);
     println!("Produto escalar: {}", dot);
 }</code></pre>
@@ -129,7 +129,7 @@ fn main() {
 
             <section class="doc-section">
                 <h2>Próximos Passos</h2>
-                
+
                 <div class="grid-2" style="margin-top: 2rem;">
                     <a href="./packages/index.html" class="card-link">
                         <h4>📦 Explorar Pacotes</h4>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ecossistema completo de segurança criptográfica de última geração. 15 módulos especializados, 100% Rust puro, documentação em 11 idiomas.">
+    <meta name="keywords" content="criptografia, segurança, rust, avx, aead, hash, zkp, post-quantum, threshold, mpc">
+    <meta name="author" content="Nícolas Ávila">
+    <meta name="copyright" content="© 2025 Avila Inc. Todos os direitos reservados.">
+    <meta name="theme-color" content="#FAFAFA">
+    <meta property="og:title" content="AVX Crypto Security - Documentação Oficial">
+    <meta property="og:description" content="Ecossistema completo de segurança criptográfica de última geração">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://docs.avila.inc/">
+    <meta property="og:image" content="https://docs.avila.inc/assets/images/avx-logo.svg">
+    <title>AVX Crypto Security - Documentação Oficial</title>
+    <link rel="icon" type="image/svg+xml" href="./assets/images/avx-logo.svg">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="brand">
+                <img src="./assets/images/avx-logo.svg" alt="AVX Logo" class="logo">
+                <span class="brand-name">AVX Crypto Security</span>
+            </div>
+            <div class="nav-controls">
+                <select id="language-selector" class="language-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="de-CH">🇨🇭 Schweizerdeutsch</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 Oʻzbekcha</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Alternar tema">
+                    <span class="theme-icon light-icon">☀️</span>
+                    <span class="theme-icon dark-icon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title fade-in" data-i18n="hero.title">
+                    Ecossistema Criptográfico Avançado
+                </h1>
+                <p class="hero-subtitle fade-in-delay" data-i18n="hero.subtitle">
+                    Suite completa de segurança criptográfica de última geração para aplicações críticas
+                </p>
+                <div class="hero-stats fade-in-delay-2">
+                    <div class="stat-card">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label" data-i18n="hero.stats.modules">Módulos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label" data-i18n="hero.stats.rust">Rust Puro</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">0</div>
+                        <div class="stat-label" data-i18n="hero.stats.deps">Dependências</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="modules-grid">
+            <div class="container">
+                <h2 class="section-title" data-i18n="modules.title">Módulos Disponíveis</h2>
+
+                <div class="grid">
+                    <a href="./avx-crypto/index.html" class="module-card slide-up" style="--delay: 0.1s">
+                        <div class="module-icon">🔐</div>
+                        <h3 class="module-title">avx-crypto</h3>
+                        <p class="module-description" data-i18n="modules.crypto.desc">
+                            Biblioteca criptográfica soberana com algoritmos aprovados
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Criptografia</span>
+                            <span class="tag">Core</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-aead/index.html" class="module-card slide-up" style="--delay: 0.2s">
+                        <div class="module-icon">🛡️</div>
+                        <h3 class="module-title">avx-aead</h3>
+                        <p class="module-description" data-i18n="modules.aead.desc">
+                            Cifras AEAD autenticadas (ChaCha20-Poly1305, AES-GCM)
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">AEAD</span>
+                            <span class="tag">Autenticação</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-hash/index.html" class="module-card slide-up" style="--delay: 0.3s">
+                        <div class="module-icon">🔨</div>
+                        <h3 class="module-title">avx-hash</h3>
+                        <p class="module-description" data-i18n="modules.hash.desc">
+                            Funções hash criptográficas (SHA-2, SHA-3, BLAKE3)
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Hash</span>
+                            <span class="tag">Integridade</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-signature/index.html" class="module-card slide-up" style="--delay: 0.4s">
+                        <div class="module-icon">✍️</div>
+                        <h3 class="module-title">avx-signature</h3>
+                        <p class="module-description" data-i18n="modules.signature.desc">
+                            Assinaturas digitais (ECDSA, Ed25519, RSA)
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Assinatura</span>
+                            <span class="tag">PKI</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-kdf/index.html" class="module-card slide-up" style="--delay: 0.5s">
+                        <div class="module-icon">🔑</div>
+                        <h3 class="module-title">avx-kdf</h3>
+                        <p class="module-description" data-i18n="modules.kdf.desc">
+                            Derivação de chaves (PBKDF2, Argon2, HKDF)
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">KDF</span>
+                            <span class="tag">Derivação</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-mac/index.html" class="module-card slide-up" style="--delay: 0.6s">
+                        <div class="module-icon">🔏</div>
+                        <h3 class="module-title">avx-mac</h3>
+                        <p class="module-description" data-i18n="modules.mac.desc">
+                            Códigos de autenticação de mensagens (HMAC, CMAC)
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">MAC</span>
+                            <span class="tag">Autenticação</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-post-quantum/index.html" class="module-card slide-up" style="--delay: 0.7s">
+                        <div class="module-icon">⚛️</div>
+                        <h3 class="module-title">avx-post-quantum</h3>
+                        <p class="module-description" data-i18n="modules.postquantum.desc">
+                            Criptografia resistente a computadores quânticos
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Quantum</span>
+                            <span class="tag">Futuro</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-zkp/index.html" class="module-card slide-up" style="--delay: 0.8s">
+                        <div class="module-icon">🎭</div>
+                        <h3 class="module-title">avx-zkp</h3>
+                        <p class="module-description" data-i18n="modules.zkp.desc">
+                            Provas de conhecimento zero para privacidade
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">ZKP</span>
+                            <span class="tag">Privacidade</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-threshold/index.html" class="module-card slide-up" style="--delay: 0.9s">
+                        <div class="module-icon">🔀</div>
+                        <h3 class="module-title">avx-threshold</h3>
+                        <p class="module-description" data-i18n="modules.threshold.desc">
+                            Criptografia de limiar e compartilhamento secreto
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Threshold</span>
+                            <span class="tag">Distribuído</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-mpc/index.html" class="module-card slide-up" style="--delay: 1.0s">
+                        <div class="module-icon">🤝</div>
+                        <h3 class="module-title">avx-mpc</h3>
+                        <p class="module-description" data-i18n="modules.mpc.desc">
+                            Computação multi-party segura
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">MPC</span>
+                            <span class="tag">Colaborativo</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-pki/index.html" class="module-card slide-up" style="--delay: 1.1s">
+                        <div class="module-icon">📜</div>
+                        <h3 class="module-title">avx-pki</h3>
+                        <p class="module-description" data-i18n="modules.pki.desc">
+                            Infraestrutura de chave pública (PKI)
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">PKI</span>
+                            <span class="tag">Certificados</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-secrets/index.html" class="module-card slide-up" style="--delay: 1.2s">
+                        <div class="module-icon">🔒</div>
+                        <h3 class="module-title">avx-secrets</h3>
+                        <p class="module-description" data-i18n="modules.secrets.desc">
+                            Gerenciamento seguro de segredos e credenciais
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Secrets</span>
+                            <span class="tag">Vault</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-stealth/index.html" class="module-card slide-up" style="--delay: 1.3s">
+                        <div class="module-icon">👤</div>
+                        <h3 class="module-title">avx-stealth</h3>
+                        <p class="module-description" data-i18n="modules.stealth.desc">
+                            Endereços stealth e privacidade avançada
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Stealth</span>
+                            <span class="tag">Anônimo</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-quantum/index.html" class="module-card slide-up" style="--delay: 1.4s">
+                        <div class="module-icon">🌌</div>
+                        <h3 class="module-title">avx-quantum</h3>
+                        <p class="module-description" data-i18n="modules.quantum.desc">
+                            Primitivas quânticas e simulação
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Quantum</span>
+                            <span class="tag">Simulação</span>
+                        </div>
+                    </a>
+
+                    <a href="./avx-onion-routing/index.html" class="module-card slide-up" style="--delay: 1.5s">
+                        <div class="module-icon">🧅</div>
+                        <h3 class="module-title">avx-onion-routing</h3>
+                        <p class="module-description" data-i18n="modules.onion.desc">
+                            Roteamento onion para comunicação anônima
+                        </p>
+                        <div class="module-tags">
+                            <span class="tag">Onion</span>
+                            <span class="tag">Anonimato</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="license-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="license.title">Licença</h2>
+                <div class="license-card">
+                    <p data-i18n="license.text">
+                        Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados<br>
+                        Software Proprietário - Consulte LICENSE-PROPRIETARY.md<br>
+                        Contato: nicolas@avila.inc
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p data-i18n="footer.copyright">
+                © 2025 Avila Inc. Todos os direitos reservados.
+            </p>
+            <p data-i18n="footer.poweredby">
+                Desenvolvido com tecnologia proprietária AVX
+            </p>
+        </div>
+    </footer>
+
+    <script src="./assets/js/i18n.js"></script>
+    <script src="./assets/js/theme.js"></script>
+    <script src="./assets/js/animations.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>

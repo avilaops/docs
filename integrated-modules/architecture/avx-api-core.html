@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX API Core - Servidor HTTP/REST nativo">
+    <title>AVX API Core - Documentação</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">AVX</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#types">Tipos</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#api">API</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+            </nav>
+            <div class="controls">
+                <button id="theme-toggle" class="theme-toggle">🌙 Dark</button>
+                <select id="lang-selector" class="lang-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇨🇭 Français</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AVX API Core</h1>
+            <p>Servidor HTTP/REST Nativo 100% Independente</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="overview" class="content-section">
+            <h2>📖 Visão Geral</h2>
+            <p>AVX API Core é uma implementação nativa de servidor HTTP/REST em Rust, projetada para máxima independência de dependências externas. Este módulo fornece uma stack completa de API sem depender de frameworks, oferecendo controle total sobre performance e comportamento.</p>
+
+            <h3>Características Principais</h3>
+            <ul style="line-height: 2; font-size: 1.1rem;">
+                <li>✅ <strong>HTTP Server Nativo</strong>: Parser HTTP/1.1 completo com suporte multi-método</li>
+                <li>✅ <strong>Serialização JSON</strong>: Implementação própria sem dependências externas</li>
+                <li>✅ <strong>Validação Robusta</strong>: Sistema de validação tipado com acumulação de erros</li>
+                <li>✅ <strong>Middleware Extensível</strong>: CORS, rate limiting, request IDs, security headers</li>
+                <li>✅ <strong>Error Handling</strong>: Sistema estruturado com mapeamento para HTTP status codes</li>
+                <li>✅ <strong>Zero Dependências Externas</strong>: Compilação 3x mais rápida, binários 3x menores</li>
+            </ul>
+        </section>
+
+        <section id="types" class="content-section">
+            <h2>📦 Tipos Disponíveis</h2>
+
+            <h3>Core Types</h3>
+            <pre><code>pub struct ApiResponse&lt;T&gt; {
+    pub success: bool,
+    pub data: Option&lt;T&gt;,
+    pub error: Option&lt;ApiError&gt;,
+    pub metadata: Metadata,
+}
+
+pub struct StatusInfo {
+    pub status: String,
+    pub version: String,
+    pub timestamp: i64,
+}
+
+pub struct Metadata {
+    pub request_id: String,
+    pub timestamp: i64,
+}</code></pre>
+
+            <h3>HTTP Types</h3>
+            <pre><code>pub enum Method {
+    GET, POST, PUT, DELETE, PATCH, HEAD, OPTIONS
+}
+
+pub struct Request {
+    pub method: Method,
+    pub path: String,
+    pub headers: Vec&lt;(String, String)&gt;,
+    pub body: Vec&lt;u8&gt;,
+}
+
+pub struct Response {
+    pub status: StatusCode,
+    pub headers: Vec&lt;(String, String)&gt;,
+    pub body: Vec&lt;u8&gt;,
+}</code></pre>
+
+            <h3>Validation Types</h3>
+            <pre><code>pub struct ValidationErrors {
+    errors: Vec&lt;(String, Vec&lt;String&gt;)&gt;
+}
+
+pub struct Validator;
+// Métodos: not_empty, length_between, in_range,
+// email, url, etc.</code></pre>
+        </section>
+
+        <section id="examples" class="content-section">
+            <h2>💻 Exemplos de Uso</h2>
+
+            <h3>Servidor HTTP Básico</h3>
+            <pre><code>use avx_api_core::{Router, Server, Response, StatusCode};
+
+fn main() -&gt; Result&lt;(), String&gt; {
+    let router = Router::new()
+        .get("/health", |_req| {
+            Response::new(StatusCode::OK)
+                .with_json(r#"{"status":"healthy"}"#)
+        })
+        .post("/api/data", |req| {
+            // Processar request
+            Response::new(StatusCode::CREATED)
+                .with_json(r#"{"id":"123"}"#)
+        });
+
+    let addr = "0.0.0.0:8080".parse().unwrap();
+    Server::bind(addr, router)?.serve()
+}</code></pre>
+
+            <h3>Validação de Dados</h3>
+            <pre><code>use avx_api_core::validation::{ValidationErrors, Validator};
+
+fn validate_user(name: &str, age: i32) -&gt; Result&lt;(), ValidationErrors&gt; {
+    let mut errors = ValidationErrors::new();
+
+    Validator::not_empty(name, "name", &mut errors);
+    Validator::length_between(name, 3, 50, "name", &mut errors);
+    Validator::in_range(age, 0, 150, "age", &mut errors);
+
+    errors.into_result()
+}</code></pre>
+
+            <h3>JSON Nativo</h3>
+            <pre><code>use avx_api_core::json::JsonValue;
+
+let user = JsonValue::object(vec![
+    ("id", JsonValue::Number(1.0)),
+    ("name", JsonValue::String("John".into())),
+    ("active", JsonValue::Bool(true)),
+]);
+
+println!("{}", user.to_string());
+// {"id":1,"name":"John","active":true}</code></pre>
+        </section>
+
+        <section id="api" class="content-section">
+            <h2>📚 Referência da API</h2>
+
+            <h3>Router</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Router::new()</code></td>
+                        <td>Criar novo router</td>
+                    </tr>
+                    <tr>
+                        <td><code>.get(path, handler)</code></td>
+                        <td>Registrar rota GET</td>
+                    </tr>
+                    <tr>
+                        <td><code>.post(path, handler)</code></td>
+                        <td>Registrar rota POST</td>
+                    </tr>
+                    <tr>
+                        <td><code>.put(path, handler)</code></td>
+                        <td>Registrar rota PUT</td>
+                    </tr>
+                    <tr>
+                        <td><code>.delete(path, handler)</code></td>
+                        <td>Registrar rota DELETE</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Server</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Server::bind(addr, router)</code></td>
+                        <td>Criar servidor</td>
+                    </tr>
+                    <tr>
+                        <td><code>.serve()</code></td>
+                        <td>Iniciar servidor (blocking)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Validators</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Validator::not_empty(value, field, errors)</code></td>
+                        <td>Validar não vazio</td>
+                    </tr>
+                    <tr>
+                        <td><code>Validator::email(value, field, errors)</code></td>
+                        <td>Validar email</td>
+                    </tr>
+                    <tr>
+                        <td><code>Validator::url(value, field, errors)</code></td>
+                        <td>Validar URL</td>
+                    </tr>
+                    <tr>
+                        <td><code>Validator::in_range(value, min, max, field, errors)</code></td>
+                        <td>Validar range</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section id="performance" class="content-section">
+            <h2>⚡ Performance</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Métrica</th>
+                        <th>AVX API Core</th>
+                        <th>Framework Tradicional</th>
+                        <th>Ganho</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tempo de compilação</td>
+                        <td>~30s</td>
+                        <td>~2min</td>
+                        <td>4x</td>
+                    </tr>
+                    <tr>
+                        <td>Tamanho do binário</td>
+                        <td>~5MB</td>
+                        <td>~15MB</td>
+                        <td>3x</td>
+                    </tr>
+                    <tr>
+                        <td>Dependências externas</td>
+                        <td>0</td>
+                        <td>~50</td>
+                        <td>∞</td>
+                    </tr>
+                    <tr>
+                        <td>Controle total</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="animation-demo">
+                <h3>Demonstração de Performance</h3>
+                <div class="demo-box"></div>
+                <p><strong>AVX API Core</strong>: Compilação ultra-rápida • Binários compactos • Zero overhead</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>🎬 Casos de Uso</h2>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>API REST Empresarial</h3>
+                    <p>Construa APIs REST completas com validação, middleware e error handling robusto para aplicações empresariais críticas.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Microserviços</h3>
+                    <p>Crie microserviços leves com tempo de inicialização ultra-rápido e footprint mínimo de memória.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Sistemas Embarcados</h3>
+                    <p>Deploy em ambientes com recursos limitados graças ao binário pequeno e baixo consumo de recursos.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+            <p>Software Proprietário - Licença Comercial Necessária para Uso Empresarial</p>
+            <div class="footer-links">
+                <a href="mailto:nicolas@avila.inc">📧 Contato</a>
+                <a href="https://avila.inc" target="_blank">🌐 Website</a>
+                <a href="../LICENSE-PROPRIETARY.md">📄 Licença</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

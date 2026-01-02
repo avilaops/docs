@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx Visualization - Documentação</title>
+    <meta name="description" content="Documentação oficial dos módulos Avx-Arrow e Avx-Image - Soluções de visualização de dados e processamento de imagens de alta performance">
+    <meta name="keywords" content="avx, arrow, image, visualização, dados, processamento, imagens, rust, performance">
+    <meta name="author" content="Nícolas Ávila">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🔶</div>
+                <div class="logo-text">
+                    <h1>Avx Visualization</h1>
+                    <p>High Performance Data Solutions</p>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="avx-arrow/index.html">Avx-Arrow</a></li>
+                    <li><a href="avx-image/index.html">Avx-Image</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+
+                <div class="controls">
+                    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                    <select class="lang-select" onchange="changeLanguage(this.value)">
+                        <option value="pt-BR">🇧🇷 PT-BR</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero Section -->
+        <div class="hero">
+            <h1 data-i18n="hero.title">Avx Visualization</h1>
+            <p data-i18n="hero.subtitle">Soluções de visualização de dados e processamento de imagens de alta performance</p>
+            <div class="hero-buttons">
+                <a href="#modules" class="btn btn-primary" data-i18n="hero.getStarted">Começar</a>
+                <a href="#docs" class="btn btn-secondary" data-i18n="hero.viewDocs">Ver Documentação</a>
+            </div>
+        </div>
+
+        <!-- Modules Section -->
+        <section id="modules">
+            <h2 data-i18n="modules.title">Módulos Disponíveis</h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">🔶</div>
+                    <h3 data-i18n="modules.arrow.title">Avx-Arrow</h3>
+                    <p data-i18n="modules.arrow.description">Formato colunar nativo otimizado para computação científica</p>
+                    <ul style="margin-top: 1rem; color: var(--text-secondary);">
+                        <li>✓ Tipos científicos nativos</li>
+                        <li>✓ Performance SIMD extrema</li>
+                        <li>✓ Compressão inteligente</li>
+                        <li>✓ Zero-copy operations</li>
+                    </ul>
+                    <a href="avx-arrow/index.html" class="btn btn-primary" style="margin-top: 1.5rem; display: inline-block;">Ver Documentação →</a>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3 data-i18n="modules.image.title">Avx-Image</h3>
+                    <p data-i18n="modules.image.description">Biblioteca avançada de visão computacional e IA generativa</p>
+                    <ul style="margin-top: 1rem; color: var(--text-secondary);">
+                        <li>✓ OCR e reconhecimento facial</li>
+                        <li>✓ Stable Diffusion nativo</li>
+                        <li>✓ Processamento médico</li>
+                        <li>✓ NeRF e 3D reconstruction</li>
+                    </ul>
+                    <a href="avx-image/index.html" class="btn btn-primary" style="margin-top: 1.5rem; display: inline-block;">Ver Documentação →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features">
+            <h2 data-i18n="features.title">Recursos Principais</h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <div class="card-icon">⚡</div>
+                    <h3 data-i18n="features.performance.title">Performance Extrema</h3>
+                    <p data-i18n="features.performance.description">Otimizado com SIMD e zero-copy para máxima velocidade</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔬</div>
+                    <h3 data-i18n="features.types.title">Tipos Científicos</h3>
+                    <p data-i18n="features.types.description">Suporte nativo para quaternions, tensors, complex e spinors</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🗜️</div>
+                    <h3 data-i18n="features.compression.title">Compressão Inteligente</h3>
+                    <p data-i18n="features.compression.description">LZ4, Zstd, Delta, RLE e Dictionary encoding</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3 data-i18n="features.ai.title">IA Generativa</h3>
+                    <p data-i18n="features.ai.description">Stable Diffusion, ControlNet e NeRF integrados</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Section -->
+        <section id="quickstart">
+            <h2>Início Rápido</h2>
+
+            <h3>Avx-Arrow</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_arrow::{Schema, Field, DataType, RecordBatch};
+use avx_arrow::array::Int64Array;
+
+let schema = Schema::new(vec![
+    Field::new("id", DataType::Int64),
+]);
+
+let ids = Int64Array::from(vec![1, 2, 3]);
+let batch = RecordBatch::try_new(schema, vec![Box::new(ids)])?;</code></pre>
+            </div>
+
+            <h3>Avx-Image</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_image::prelude::*;
+
+let img = NativeImageBuffer::from_file("input.jpg")?;
+let gray = img.to_grayscale();
+let edges = gray.canny_edge_detection(50.0, 150.0);
+edges.save("output.png")?;</code></pre>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance">
+            <h2>Performance</h2>
+
+            <h3>Benchmarks Comparativos</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Avx</th>
+                        <th>Alternativa</th>
+                        <th>Speedup</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Sum aggregation</td>
+                        <td>3.2ms</td>
+                        <td>9.5ms</td>
+                        <td><strong>3.0x</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Filter operation</td>
+                        <td>0.8ms</td>
+                        <td>2.4ms</td>
+                        <td><strong>3.0x</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Join (inner)</td>
+                        <td>45ms</td>
+                        <td>180ms</td>
+                        <td><strong>4.0x</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Image blur</td>
+                        <td>8.5ms</td>
+                        <td>28.3ms</td>
+                        <td><strong>3.3x</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Face detection</td>
+                        <td>23ms</td>
+                        <td>85ms</td>
+                        <td><strong>3.7x</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Use Cases Section -->
+        <section id="use-cases">
+            <h2>Casos de Uso</h2>
+
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>📊 Analytics em Tempo Real</h3>
+                    <p>Processe milhões de registros por segundo com agregações, joins e window functions otimizadas.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🔬 Computação Científica</h3>
+                    <p>Tipos nativos para quaternions, tensors e números complexos com operações SIMD.</p>
+                </div>
+
+                <div class="card">
+                    <h3>👁️ Visão Computacional</h3>
+                    <p>OCR, reconhecimento facial, detecção de objetos e análise de imagens em tempo real.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🎨 Geração de Conteúdo</h3>
+                    <p>Crie imagens e vídeos com IA usando Stable Diffusion, ControlNet e NeRF.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🏥 Imagem Médica</h3>
+                    <p>Processamento DICOM, segmentação de órgãos e renderização 3D de volumes.</p>
+                </div>
+
+                <div class="card">
+                    <h3>🔐 Análise Forense</h3>
+                    <p>Verificação de documentos, análise de impressões digitais e detecção de manipulação.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Avx Visualization</h3>
+                <p>Soluções de alta performance para visualização de dados e processamento de imagens.</p>
+                <p style="margin-top: 1rem;">
+                    <strong data-i18n="footer.copyright">Copyright © 2025 Nícolas Ávila</strong><br>
+                    Todos os Direitos Reservados
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3 data-i18n="footer.documentation">Documentação</h3>
+                <ul>
+                    <li><a href="avx-arrow/index.html">Avx-Arrow</a></li>
+                    <li><a href="avx-image/index.html">Avx-Image</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 data-i18n="footer.support">Suporte</h3>
+                <ul>
+                    <li><a href="mailto:nicolas@avila.inc">📧 nicolas@avila.inc</a></li>
+                    <li><a href="https://avila.inc">🌐 avila.inc</a></li>
+                    <li><a href="https://docs.avila.inc">📖 docs.avila.inc</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3 data-i18n="footer.legal">Legal</h3>
+                <ul>
+                    <li><a href="../LICENSE-PROPRIETARY.md">Licença</a></li>
+                    <li><a href="../COPYRIGHT.md">Copyright</a></li>
+                    <li><a href="../CONTRIBUTING.md">Contribuir</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Desenvolvido com 🧡 por Nícolas Ávila | v0.1.0</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

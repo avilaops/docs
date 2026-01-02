@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX MAC - Códigos de autenticação de mensagem">
+    <title>AVX MAC - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="mac.hero.title">AVX MAC</h1>
+            <p class="hero-subtitle" data-i18n="mac.hero.subtitle">
+                Códigos de autenticação de mensagem - HMAC, CMAC, Poly1305
+            </p>
+            <div class="hero-badges">
+                <span class="badge">HMAC</span>
+                <span class="badge">CMAC</span>
+                <span class="badge">Poly1305</span>
+                <span class="badge">Authentication</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mac.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="mac.overview.card1.title">🔐 HMAC</h3>
+                    <p data-i18n="mac.overview.card1.desc">
+                        Hash-based Message Authentication Code. Autenticação usando funções hash criptográficas (SHA-256, BLAKE3).
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="mac.overview.card2.title">🛡️ CMAC</h3>
+                    <p data-i18n="mac.overview.card2.desc">
+                        Cipher-based MAC usando AES. Aprovado pelo NIST para autenticação baseada em cifras de bloco.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="mac.overview.card3.title">⚡ Poly1305</h3>
+                    <p data-i18n="mac.overview.card3.desc">
+                        MAC de alta velocidade usado em ChaCha20-Poly1305. Excelente desempenho em software.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="mac.overview.card4.title">✅ Verificação</h3>
+                    <p data-i18n="mac.overview.card4.desc">
+                        Comparação em tempo constante para prevenir ataques de timing side-channel.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mac.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="mac.types.table.type">Tipo</th>
+                            <th data-i18n="mac.types.table.description">Descrição</th>
+                            <th data-i18n="mac.types.table.size">Tamanho Tag</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>HmacSha256</code></td>
+                            <td data-i18n="mac.types.hmacsha256">HMAC com SHA-256</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>HmacSha512</code></td>
+                            <td data-i18n="mac.types.hmacsha512">HMAC com SHA-512</td>
+                            <td>512 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>HmacBlake3</code></td>
+                            <td data-i18n="mac.types.hmacblake3">HMAC com BLAKE3</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>CmacAes128</code></td>
+                            <td data-i18n="mac.types.cmacaes128">CMAC com AES-128</td>
+                            <td>128 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>CmacAes256</code></td>
+                            <td data-i18n="mac.types.cmacaes256">CMAC com AES-256</td>
+                            <td>128 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>Poly1305</code></td>
+                            <td data-i18n="mac.types.poly1305">MAC Poly1305</td>
+                            <td>128 bits</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mac.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="mac.examples.hmac.title">Exemplo Básico - HMAC-SHA256</h3>
+            <pre><code class="language-rust">use avx_mac::HmacSha256;
+
+fn main() {
+    let key = b"chave_secreta_32_bytes_min!!!!!!";
+    let message = b"Mensagem a ser autenticada";
+
+    // Criar MAC
+    let mut mac = HmacSha256::new(key);
+    mac.update(message);
+    let tag = mac.finalize();
+
+    println!("HMAC-SHA256: {}", hex::encode(tag));
+
+    // Verificar MAC
+    let mut verifier = HmacSha256::new(key);
+    verifier.update(message);
+    assert!(verifier.verify(&tag));
+
+    println!("✅ MAC verificado!");
+}</code></pre>
+
+            <h3 data-i18n="mac.examples.cmac.title">Exemplo - CMAC-AES</h3>
+            <pre><code class="language-rust">use avx_mac::CmacAes256;
+
+fn main() {
+    let key = [0u8; 32]; // Chave AES-256
+    let message = b"Dados para autenticar";
+
+    let mut cmac = CmacAes256::new(&key);
+    cmac.update(message);
+    let tag = cmac.finalize();
+
+    println!("CMAC: {}", hex::encode(tag));
+}</code></pre>
+
+            <h3 data-i18n="mac.examples.poly1305.title">Exemplo - Poly1305</h3>
+            <pre><code class="language-rust">use avx_mac::Poly1305;
+
+fn main() {
+    let key = [0u8; 32]; // Chave única
+    let message = b"Mensagem rápida";
+
+    let tag = Poly1305::mac(&key, message);
+    println!("Poly1305: {}", hex::encode(tag));
+
+    // Verificar
+    assert!(Poly1305::verify(&key, message, &tag));
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mac.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>HmacSha256</h3>
+                <div class="api-method">
+                    <code>pub fn new(key: &[u8]) -> Self</code>
+                    <p data-i18n="mac.api.hmac.new">Cria novo HMAC com chave.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn update(&mut self, data: &[u8])</code>
+                    <p data-i18n="mac.api.hmac.update">Adiciona dados ao MAC.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn finalize(&self) -> [u8; 32]</code>
+                    <p data-i18n="mac.api.hmac.finalize">Retorna tag de autenticação.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify(&self, tag: &[u8]) -> bool</code>
+                    <p data-i18n="mac.api.hmac.verify">Verifica tag em tempo constante.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Poly1305</h3>
+                <div class="api-method">
+                    <code>pub fn mac(key: &[u8; 32], message: &[u8]) -> [u8; 16]</code>
+                    <p data-i18n="mac.api.poly.mac">Gera tag Poly1305.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify(key: &[u8; 32], message: &[u8], tag: &[u8; 16]) -> bool</code>
+                    <p data-i18n="mac.api.poly.verify">Verifica tag Poly1305.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mac.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">2.5 GB/s</div>
+                    <div class="metric-label" data-i18n="mac.performance.hmacsha256">HMAC-SHA256</div>
+                    <div class="metric-detail">Com SHA-NI</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">8 GB/s</div>
+                    <div class="metric-label" data-i18n="mac.performance.poly1305">Poly1305</div>
+                    <div class="metric-detail">AVX2 otimizado</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">5 GB/s</div>
+                    <div class="metric-label" data-i18n="mac.performance.cmac">CMAC-AES</div>
+                    <div class="metric-detail">Com AES-NI</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">< 100ns</div>
+                    <div class="metric-label" data-i18n="mac.performance.verify">Verificação</div>
+                    <div class="metric-detail">Tempo constante</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mac.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="mac.usecases.api.title">Autenticação de APIs</h3>
+                    <p data-i18n="mac.usecases.api.desc">
+                        HMAC para verificar integridade e autenticidade de requests/responses em APIs REST.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📡</div>
+                    <h3 data-i18n="mac.usecases.network.title">Protocolos de Rede</h3>
+                    <p data-i18n="mac.usecases.network.desc">
+                        Autenticação de pacotes em protocolos seguros como TLS, IPsec e VPNs.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">💾</div>
+                    <h3 data-i18n="mac.usecases.storage.title">Integridade de Dados</h3>
+                    <p data-i18n="mac.usecases.storage.desc">
+                        Verificação de integridade em armazenamento e transmissão de dados sensíveis.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔑</div>
+                    <h3 data-i18n="mac.usecases.tokens.title">Tokens & JWTs</h3>
+                    <p data-i18n="mac.usecases.tokens.desc">
+                        Assinatura de tokens de autenticação e JSON Web Tokens (JWT).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mac.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="mac.license.desc">
+                    AVX MAC é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="mac.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

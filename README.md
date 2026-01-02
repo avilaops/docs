@@ -109,7 +109,7 @@ O portal é atualizado continuamente pela equipe Avx com:
 
 **Software Proprietário** - Copyright © 2025 Nícolas Ávila
 
-Todo o conteúdo e código deste portal são propriedade exclusiva da Avx. 
+Todo o conteúdo e código deste portal são propriedade exclusiva da Avx.
 Consulte [LICENSE-PROPRIETARY.md](../LICENSE-PROPRIETARY.md) para detalhes.
 
 ## 📧 Suporte

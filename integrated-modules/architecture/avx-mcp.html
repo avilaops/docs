@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVX MCP - Model Context Protocol</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">AVX</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                </ul>
+            </nav>
+            <div class="controls">
+                <button id="theme-toggle" class="theme-toggle">🌙 Dark</button>
+                <select id="lang-selector" class="lang-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇨🇭 Français</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AVX MCP</h1>
+            <p>Integração com Assistentes de IA • 100% Local • Zero Telemetria</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="overview" class="content-section">
+            <h2>📖 Visão Geral</h2>
+            <p>AVX MCP é um servidor Model Context Protocol que permite integração de assistentes de IA com o ecossistema AVX, mantendo privacidade total com processamento 100% local.</p>
+
+            <h3>Características</h3>
+            <ul style="line-height: 2; font-size: 1.1rem;">
+                <li>✅ <strong>100% Local</strong>: Dados nunca saem da sua máquina</li>
+                <li>✅ <strong>Zero Telemetria</strong>: Sem rastreamento</li>
+                <li>✅ <strong>Privacy First</strong>: Chaves API ficam locais</li>
+                <li>✅ <strong>Multi-Assistente</strong>: Suporta qualquer cliente MCP</li>
+            </ul>
+        </section>
+
+        <section id="examples" class="content-section">
+            <h2>💻 Exemplos</h2>
+
+            <h3>Iniciar Servidor</h3>
+            <pre><code>avx-mcp serve</code></pre>
+
+            <h3>Configurar no Assistente</h3>
+            <pre><code>{
+  "mcpServers": {
+    "avx": {
+      "command": "avx-mcp",
+      "args": ["serve"]
+    }
+  }
+}</code></pre>
+
+            <h3>Usar no Assistente</h3>
+            <pre><code>Você: Liste todos os crates AVX
+
+Assistente: [Chama tool list_avx_crates]
+- avx-nucleus
+- avx-primitives
+- avx-alloc
+...</code></pre>
+        </section>
+
+        <section class="content-section">
+            <h2>🎬 Casos de Uso</h2>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Desenvolvimento com IA</h3>
+                    <p>Pergunte ao assistente sobre APIs AVX durante o desenvolvimento.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Exploração de Código</h3>
+                    <p>Descubra crates e funcionalidades do ecossistema.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Aprendizado</h3>
+                    <p>Aprenda AVX através de exemplos interativos.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><strong>Copyright © 2025 Nícolas Ávila</strong></p>
+            <div class="footer-links">
+                <a href="mailto:nicolas@avila.inc">📧 Contato</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

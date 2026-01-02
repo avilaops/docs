@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="avx-cache - Sistema de cache distribuído de alta performance com LRU, LFU, FIFO e TTL">
+    <title>avx-cache - Distributed Cache | Avx Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="avx-cache.html" class="active">avx-cache</a></li>
+            <li><a href="avx-codec.html">avx-codec</a></li>
+            <li><a href="avx-compress.html">avx-compress</a></li>
+            <li><a href="avx-db.html">avx-db</a></li>
+            <li><a href="avx-pool.html">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html">avx-serialize</a></li>
+            <li><a href="avx-storage.html">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>⚡ avx-cache</h1>
+            <p>Sistema de cache distribuído de alta performance</p>
+        </section>
+
+        <section>
+            <h2>🚀 Características</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Políticas de Evicção</h3>
+                    <ul>
+                        <li>LRU (Least Recently Used)</li>
+                        <li>LFU (Least Frequently Used)</li>
+                        <li>FIFO (First In First Out)</li>
+                        <li>TTL-LRU / TTL-LFU</li>
+                        <li>Adaptive Policy</li>
+                        <li>Random Policy</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Performance</h3>
+                    <ul>
+                        <li>15M inserts/s</li>
+                        <li>20M gets/s (hit)</li>
+                        <li>Latência de 50-66 ns</li>
+                        <li>Zero allocations</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Thread-safe com Arc</li>
+                        <li>Operações em batch</li>
+                        <li>Sharding distribuído</li>
+                        <li>Estatísticas detalhadas</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Instalação</h2>
+            <pre><code>[dependencies]
+avx-cache = "0.1.0"</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Exemplos de Uso</h2>
+
+            <h3>Cache Básico com LRU</h3>
+            <pre><code>use avx_cache::builder::CacheBuilder;
+
+// Criar cache LRU com capacidade de 100 entradas
+let mut cache = CacheBuilder::new()
+    .max_capacity(100)
+    .with_lru()
+    .unwrap();
+
+// Inserir dados
+cache.insert("user:123", "Alice");
+cache.insert("user:456", "Bob");
+
+// Recuperar dados
+assert_eq!(cache.get(&"user:123"), Some(&"Alice"));
+
+// Remover dados
+cache.remove(&"user:456");</code></pre>
+
+            <h3>Cache com TTL (Time-to-Live)</h3>
+            <pre><code>use avx_cache::builder::CacheBuilder;
+use std::time::Duration;
+
+let mut cache = CacheBuilder::new()
+    .max_capacity(1000)
+    .with_ttl_lru(Duration::from_secs(300)) // Expira em 5 minutos
+    .unwrap();
+
+cache.insert("session:abc", "user_data");
+
+// Após 5 minutos, a entrada será automaticamente removida</code></pre>
+
+            <h3>Cache Distribuído com Sharding</h3>
+            <pre><code>use avx_cache::sharding::ShardedCache;
+use avx_cache::builder::CacheBuilder;
+
+let shard_cache = CacheBuilder::new()
+    .max_capacity(100)
+    .with_lru()
+    .unwrap();
+
+let mut sharded = ShardedCache::new(4, shard_cache); // 4 shards
+
+sharded.insert("key1", "value1");
+sharded.insert("key2", "value2");
+
+assert_eq!(sharded.get(&"key1"), Some(&"value1"));</code></pre>
+
+            <h3>Operações em Batch</h3>
+            <pre><code>use avx_cache::builder::CacheBuilder;
+
+let mut cache = CacheBuilder::new()
+    .max_capacity(1000)
+    .with_lru()
+    .unwrap();
+
+// Inserir múltiplas entradas
+let items = vec![
+    ("product:1", "Laptop"),
+    ("product:2", "Mouse"),
+    ("product:3", "Keyboard"),
+];
+
+cache.batch_insert(items);
+
+// Recuperar múltiplas entradas
+let keys = vec!["product:1", "product:2"];
+let results = cache.batch_get(&keys);</code></pre>
+        </section>
+
+        <section>
+            <h2>📊 Performance Benchmarks</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Throughput</th>
+                        <th>Latência</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Insert</td>
+                        <td>15M ops/s</td>
+                        <td>66 ns</td>
+                    </tr>
+                    <tr>
+                        <td>Get (hit)</td>
+                        <td>20M ops/s</td>
+                        <td>50 ns</td>
+                    </tr>
+                    <tr>
+                        <td>Get (miss)</td>
+                        <td>25M ops/s</td>
+                        <td>40 ns</td>
+                    </tr>
+                    <tr>
+                        <td>Batch Insert (100)</td>
+                        <td>1.2M batches/s</td>
+                        <td>833 ns</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><em>Benchmarks rodados em AMD Ryzen 9 5950X, dados em cache L1</em></p>
+        </section>
+
+        <section class="use-cases">
+            <h2>🎯 Casos de Uso</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Cache de Sessões Web</h3>
+                    <p>Armazene sessões de usuários com TTL de 1 hora</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🔌</div>
+                    <h3>Cache de APIs</h3>
+                    <p>Cache de respostas de APIs externas</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">💾</div>
+                    <h3>Cache de Queries</h3>
+                    <p>Resultados de queries de banco de dados</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🔄</div>
+                    <h3>Microserviços</h3>
+                    <p>Cache distribuído entre serviços</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📖 API Reference</h2>
+
+            <h3>CacheBuilder</h3>
+            <ul>
+                <li><code>new()</code> - Cria novo builder</li>
+                <li><code>max_capacity(n)</code> - Define capacidade máxima</li>
+                <li><code>enable_stats()</code> - Habilita coleta de estatísticas</li>
+                <li><code>with_lru()</code> - Cache LRU</li>
+                <li><code>with_lfu()</code> - Cache LFU</li>
+                <li><code>with_fifo()</code> - Cache FIFO</li>
+                <li><code>with_ttl_lru(duration)</code> - Cache LRU com TTL</li>
+            </ul>
+
+            <h3>Cache Operations</h3>
+            <ul>
+                <li><code>insert(key, value)</code> - Insere ou atualiza entrada</li>
+                <li><code>get(key)</code> - Recupera valor</li>
+                <li><code>remove(key)</code> - Remove entrada</li>
+                <li><code>contains(key)</code> - Verifica existência</li>
+                <li><code>clear()</code> - Remove todas as entradas</li>
+                <li><code>len()</code> - Número de entradas</li>
+            </ul>
+        </section>
+
+        <section class="text-center">
+            <h2>🚀 Comece Agora</h2>
+            <a href="https://docs.avila.inc/" class="cta-button" style="font-size: 1.2rem; padding: 1rem 3rem;">Ver Documentação Completa</a>
+        </section>
+    </main>
+
+    <footer>
+        <p data-i18n="copyright">Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

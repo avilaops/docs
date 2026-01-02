@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Avx - Ecossistema Rust de alta performance com bibliotecas para cache, codificação, compressão, banco de dados, serialização e storage.">
+    <meta name="keywords" content="Rust, cache, codec, compression, database, NoSQL, serialization, object storage, high performance">
+    <meta name="author" content="Nícolas Ávila">
+    <title>Avx Documentation - High Performance Rust Ecosystem</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="avx-cache.html">avx-cache</a></li>
+            <li><a href="avx-codec.html">avx-codec</a></li>
+            <li><a href="avx-compress.html">avx-compress</a></li>
+            <li><a href="avx-db.html">avx-db</a></li>
+            <li><a href="avx-pool.html">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html">avx-serialize</a></li>
+            <li><a href="avx-storage.html">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>Avx</h1>
+            <p data-i18n="tagline">Ecossistema Rust de Alta Performance</p>
+        </section>
+
+        <section class="modules-grid">
+            <div class="module-card" onclick="window.location='avx-cache.html'">
+                <h3>⚡ avx-cache</h3>
+                <p data-i18n="cacheDesc">Sistema de cache com LRU, LFU, FIFO e TTL</p>
+                <ul>
+                    <li>Múltiplas políticas de evicção</li>
+                    <li>Thread-safe com Arc</li>
+                    <li>Operações em batch</li>
+                    <li>Sharding distribuído</li>
+                </ul>
+                <a href="avx-cache.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+
+            <div class="module-card" onclick="window.location='avx-codec.html'">
+                <h3>🔐 avx-codec</h3>
+                <p data-i18n="codecDesc">Hex, Base64, Base58, Base32, Base85</p>
+                <ul>
+                    <li>Múltiplos formatos</li>
+                    <li>SIMD optimized</li>
+                    <li>Checksums integrados</li>
+                    <li>Zero dependencies</li>
+                </ul>
+                <a href="avx-codec.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+
+            <div class="module-card" onclick="window.location='avx-compress.html'">
+                <h3>📦 avx-compress</h3>
+                <p data-i18n="compressDesc">LZ4 ultra-rápido com SIMD</p>
+                <ul>
+                    <li>850 MB/s compressão</li>
+                    <li>3.2 GB/s descompressão</li>
+                    <li>Streaming support</li>
+                    <li>Columnar compression</li>
+                </ul>
+                <a href="avx-compress.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+
+            <div class="module-card" onclick="window.location='avx-db.html'">
+                <h3>💾 avx-db</h3>
+                <p data-i18n="dbDesc">NoSQL distribuído para Brasil</p>
+                <ul>
+                    <li>Documentos de 4 MB</li>
+                    <li>Busca vetorial HNSW</li>
+                    <li>5-10ms latência</li>
+                    <li>Multi-region writes</li>
+                </ul>
+                <a href="avx-db.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+
+            <div class="module-card" onclick="window.location='avx-pool.html'">
+                <h3>🔄 avx-pool</h3>
+                <p data-i18n="poolDesc">Gerenciamento de recursos</p>
+                <ul>
+                    <li>Pool genérico</li>
+                    <li>Factory pattern</li>
+                    <li>Thread-safe</li>
+                    <li>Zero allocations</li>
+                </ul>
+                <a href="avx-pool.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+
+            <div class="module-card" onclick="window.location='avx-serde.html'">
+                <h3>📄 avx-serde</h3>
+                <p data-i18n="serdeDesc">Framework completo de serialização</p>
+                <ul>
+                    <li>JSON, YAML, TOML, CBOR</li>
+                    <li>MessagePack, Bincode</li>
+                    <li>60% menor que serde</li>
+                    <li>Streaming support</li>
+                </ul>
+                <a href="avx-serde.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+
+            <div class="module-card" onclick="window.location='avx-serialize.html'">
+                <h3>⚙️ avx-serialize</h3>
+                <p data-i18n="serializeDesc">Zero-copy binário</p>
+                <ul>
+                    <li>Serialização binária</li>
+                    <li>Zero-copy</li>
+                    <li>Previsível</li>
+                    <li>Ultra-rápido</li>
+                </ul>
+                <a href="avx-serialize.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+
+            <div class="module-card" onclick="window.location='avx-storage.html'">
+                <h3>☁️ avx-storage</h3>
+                <p data-i18n="storageDesc">S3-compatible, 50% mais barato</p>
+                <ul>
+                    <li>API S3-compatible</li>
+                    <li>3-8ms latência</li>
+                    <li>Multipart uploads</li>
+                    <li>Compressão automática</li>
+                </ul>
+                <a href="avx-storage.html" class="cta-button" data-i18n="learnMore">Saiba Mais</a>
+            </div>
+        </section>
+
+        <section class="use-cases">
+            <h2 data-i18n="useCasesTitle">Casos de Uso</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">🛒</div>
+                    <h3 data-i18n="ecommerce">E-Commerce</h3>
+                    <p>Cache de produtos, sessões e carrinho de compras</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🎮</div>
+                    <h3 data-i18n="gaming">Gaming</h3>
+                    <p>Leaderboards, perfis e dados de partidas</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🌐</div>
+                    <h3 data-i18n="iot">IoT</h3>
+                    <p>Telemetria de sensores e dados de dispositivos</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🤖</div>
+                    <h3 data-i18n="ai">IA/ML</h3>
+                    <p>Busca vetorial, RAG e embeddings</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📊</div>
+                    <h3 data-i18n="logs">Logs</h3>
+                    <p>Coleta e análise de logs de aplicações</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🔌</div>
+                    <h3 data-i18n="apis">APIs</h3>
+                    <p>Serialização e cache de respostas REST</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="text-center mt-4 mb-4">
+            <h2>🚀 Comece Agora</h2>
+            <pre><code>// Cargo.toml
+[dependencies]
+avx-cache = "0.1.0"
+avx-codec = "0.1.0"
+avx-compress = "0.1.0"
+avx-db = "0.1.0"
+avx-pool = "0.1.0"
+avx-serde = "0.1.0"
+avx-serialize = "0.1.0"
+avx-storage = "0.1.0"</code></pre>
+        </section>
+
+        <section class="text-center mt-4">
+            <h2>📊 Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Módulo</th>
+                        <th>Operação</th>
+                        <th>Throughput</th>
+                        <th>Latência</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>avx-cache</td>
+                        <td>Insert</td>
+                        <td>15M ops/s</td>
+                        <td>66 ns</td>
+                    </tr>
+                    <tr>
+                        <td>avx-codec</td>
+                        <td>Base64 Encode</td>
+                        <td>4.5 GB/s</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>avx-compress</td>
+                        <td>LZ4 Compress</td>
+                        <td>850 MB/s</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>avx-db</td>
+                        <td>Get (cached)</td>
+                        <td>1M ops/s</td>
+                        <td>5 ms</td>
+                    </tr>
+                    <tr>
+                        <td>avx-serde</td>
+                        <td>JSON Parse</td>
+                        <td>620 MB/s</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>avx-storage</td>
+                        <td>Upload</td>
+                        <td>250 MB/s</td>
+                        <td>3 ms</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <p data-i18n="copyright">Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

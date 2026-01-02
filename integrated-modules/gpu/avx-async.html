@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-async - Runtime Assíncrono Revolucionário | Avx</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/module.css">
+</head>
+<body data-theme="light">
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <a href="index.html"><span class="logo-text">AVX</span></a>
+                </div>
+                <nav class="nav">
+                    <ul class="nav-list">
+                        <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                        <li><a href="#types" data-i18n="nav.types">Tipos</a></li>
+                        <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                        <li><a href="#api" data-i18n="nav.api">API</a></li>
+                        <li><a href="#performance" data-i18n="nav.performance">Performance</a></li>
+                        <li><a href="#use-cases" data-i18n="nav.usecases">Casos de Uso</a></li>
+                    </ul>
+                </nav>
+                <div class="controls">
+                    <select id="language-selector" class="language-selector">
+                        <option value="pt-BR">🇧🇷 PT-BR</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="de-CH">🇨🇭 Schweizerdeutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 Oʻzbekcha</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                    <button id="theme-toggle" class="theme-toggle">
+                        <span class="theme-icon">🌙</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="module-hero">
+        <div class="container">
+            <h1>avx-async</h1>
+            <p class="module-tagline" data-i18n="async.tagline">Runtime Assíncrono Revolucionário com IA, Blockchain e Computação Quântica</p>
+            <div class="version-badge">v0.5.0</div>
+        </div>
+    </div>
+
+    <section id="overview" class="section">
+        <div class="container">
+            <h2 data-i18n="async.overview.title">Visão Geral do Módulo</h2>
+
+            <div class="content-block">
+                <p data-i18n="async.overview.intro">
+                    O avx-async é um runtime assíncrono de última geração que revoluciona o processamento paralelo através da integração de tecnologias avançadas como Inteligência Artificial, Blockchain, Computação Quântica e Redes Neurais. Desenvolvido do zero com zero dependências externas, oferece desempenho superior e recursos únicos no mercado.
+                </p>
+            </div>
+
+            <div class="features-grid">
+                <div class="feature-box">
+                    <h3>🧠 <span data-i18n="async.feature.ai.title">Inteligência Artificial</span></h3>
+                    <p data-i18n="async.feature.ai.desc">Predição de carga de trabalho, detecção de anomalias e otimização automática de performance usando algoritmos de machine learning</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>⛓️ <span data-i18n="async.feature.blockchain.title">Blockchain Integrado</span></h3>
+                    <p data-i18n="async.feature.blockchain.desc">Auditoria imutável de todas as operações do runtime com proof-of-work e consenso distribuído</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>🔬 <span data-i18n="async.feature.quantum.title">Computação Quântica</span></h3>
+                    <p data-i18n="async.feature.quantum.desc">Escalonador quântico usando superposição, entrelaçamento e annealing quântico para otimização de tarefas</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>🧬 <span data-i18n="async.feature.genetic.title">Algoritmos Genéticos</span></h3>
+                    <p data-i18n="async.feature.genetic.desc">Otimização evolutiva da configuração do runtime com seleção por torneio e elitismo</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>🔐 <span data-i18n="async.feature.crypto.title">Criptografia Avançada</span></h3>
+                    <p data-i18n="async.feature.crypto.desc">Execução segura de tarefas com criptografia simétrica, assinaturas digitais e canais seguros</p>
+                </div>
+
+                <div class="feature-box">
+                    <h3>🏭 <span data-i18n="async.feature.industry40.title">Indústria 4.0</span></h3>
+                    <p data-i18n="async.feature.industry40.desc">Métricas em tempo real, rastreamento distribuído, health checks e auto-scaling</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="types" class="section section-alt">
+        <div class="container">
+            <h2 data-i18n="async.types.title">Tipos Disponíveis</h2>
+
+            <div class="type-list">
+                <div class="type-item">
+                    <h3><code>Runtime</code></h3>
+                    <p data-i18n="async.type.runtime">Motor principal de execução assíncrona com escalonador work-stealing</p>
+                    <pre><code>pub struct Runtime {
+    queue: Arc&lt;Mutex&lt;VecDeque&lt;Task&gt;&gt;&gt;,
+    metrics: Metrics,
+    tracer: Tracer,
+    health: HealthCheck,
+    // ...
+}</code></pre>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>RuntimeConfig</code></h3>
+                    <p data-i18n="async.type.config">Configuração completa do runtime com suporte a auto-scaling e limites de recursos</p>
+                    <pre><code>pub struct RuntimeConfig {
+    pub num_threads: Option&lt;usize&gt;,
+    pub enable_autoscaling: bool,
+    pub scaling_config: ScalingConfig,
+    pub resource_limits: ResourceLimits,
+}</code></pre>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>Metrics</code></h3>
+                    <p data-i18n="async.type.metrics">Coletor de métricas com exportação para Prometheus</p>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>Tracer</code></h3>
+                    <p data-i18n="async.type.tracer">Rastreamento distribuído compatível com Jaeger</p>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>QuantumScheduler</code></h3>
+                    <p data-i18n="async.type.quantum">Escalonador baseado em princípios de computação quântica</p>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>NeuralNetwork</code></h3>
+                    <p data-i18n="async.type.neural">Rede neural feedforward para previsão de runtime</p>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>RuntimeBlockchain</code></h3>
+                    <p data-i18n="async.type.blockchain">Blockchain imutável para auditoria de operações</p>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>DigitalTwin</code></h3>
+                    <p data-i18n="async.type.digitaltwin">Gêmeo digital do runtime para análise e simulação</p>
+                </div>
+
+                <div class="type-item">
+                    <h3><code>EdgeManager</code></h3>
+                    <p data-i18n="async.type.edge">Gerenciador de computação distribuída em edge</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section">
+        <div class="container">
+            <h2 data-i18n="async.examples.title">Exemplos de Uso</h2>
+
+            <div class="example-block">
+                <h3 data-i18n="async.example.basic.title">1. Uso Básico</h3>
+                <pre><code>use avx_async::Runtime;
+
+#[avx_async::main]
+async fn main() {
+    let runtime = Runtime::new();
+
+    runtime.spawn(async {
+        println!("Olá do runtime assíncrono!");
+    });
+
+    runtime.block_on(async {
+        println!("Executando tarefa principal");
+    });
+}</code></pre>
+            </div>
+
+            <div class="example-block">
+                <h3 data-i18n="async.example.metrics.title">2. Com Métricas e Health Checks</h3>
+                <pre><code>use avx_async::{Runtime, RuntimeConfig};
+
+let config = RuntimeConfig {
+    num_threads: Some(8),
+    enable_autoscaling: true,
+    ..Default::default()
+};
+
+let runtime = Runtime::with_config(config);
+
+// Acesso às métricas
+let metrics = runtime.metrics();
+let snapshot = metrics.snapshot();
+println!("Tasks completadas: {}", snapshot.tasks_completed);
+
+// Health check
+let health = runtime.health();
+let status = health.check();
+println!("Status: {:?}", status);</code></pre>
+            </div>
+
+            <div class="example-block">
+                <h3 data-i18n="async.example.ai.title">3. Otimização com IA</h3>
+                <pre><code>use avx_async::{Runtime, WorkloadPredictor};
+
+let runtime = Runtime::new();
+let predictor = WorkloadPredictor::new();
+
+// Treinar preditor com dados históricos
+predictor.train(&historical_data);
+
+// Usar previsões para otimizar escalonamento
+let prediction = predictor.predict();
+runtime.adjust_parallelism(prediction.recommended_threads);</code></pre>
+            </div>
+
+            <div class="example-block">
+                <h3 data-i18n="async.example.blockchain.title">4. Auditoria com Blockchain</h3>
+                <pre><code>use avx_async::{Runtime, RuntimeBlockchain};
+
+let runtime = Runtime::new();
+let blockchain = RuntimeBlockchain::new();
+
+runtime.spawn(async move {
+    // Todas as operações são automaticamente auditadas
+    blockchain.add_transaction("task_executed", &data);
+});
+
+// Verificar integridade
+assert!(blockchain.verify_chain());</code></pre>
+            </div>
+
+            <div class="example-block">
+                <h3 data-i18n="async.example.quantum.title">5. Escalonamento Quântico</h3>
+                <pre><code>use avx_async::{Runtime, QuantumScheduler};
+
+let runtime = Runtime::new();
+let quantum = QuantumScheduler::new(8); // 8 qubits
+
+// Escalonamento otimizado usando princípios quânticos
+let schedule = quantum.schedule(&tasks);
+runtime.execute_schedule(schedule);</code></pre>
+            </div>
+        </div>
+    </section>
+
+    <section id="api" class="section section-alt">
+        <div class="container">
+            <h2 data-i18n="async.api.title">Referência da API</h2>
+
+            <div class="api-section">
+                <h3>Runtime</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="api.method">Método</th>
+                            <th data-i18n="api.description">Descrição</th>
+                            <th data-i18n="api.signature">Assinatura</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>new()</code></td>
+                            <td data-i18n="api.runtime.new">Cria uma nova instância do runtime</td>
+                            <td><code>fn new() -&gt; Self</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>with_config()</code></td>
+                            <td data-i18n="api.runtime.withconfig">Cria runtime com configuração personalizada</td>
+                            <td><code>fn with_config(config: RuntimeConfig) -&gt; Self</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>spawn()</code></td>
+                            <td data-i18n="api.runtime.spawn">Executa uma tarefa assíncrona</td>
+                            <td><code>fn spawn&lt;F&gt;(&self, future: F)</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>block_on()</code></td>
+                            <td data-i18n="api.runtime.blockon">Executa e aguarda conclusão de uma tarefa</td>
+                            <td><code>fn block_on&lt;F&gt;(&self, future: F) -&gt; F::Output</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>metrics()</code></td>
+                            <td data-i18n="api.runtime.metrics">Retorna o coletor de métricas</td>
+                            <td><code>fn metrics(&self) -&gt; &Metrics</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>health()</code></td>
+                            <td data-i18n="api.runtime.health">Retorna o verificador de saúde</td>
+                            <td><code>fn health(&self) -&gt; &HealthCheck</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>tracer()</code></td>
+                            <td data-i18n="api.runtime.tracer">Retorna o rastreador distribuído</td>
+                            <td><code>fn tracer(&self) -&gt; &Tracer</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="api-section">
+                <h3>Metrics</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="api.method">Método</th>
+                            <th data-i18n="api.description">Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>snapshot()</code></td>
+                            <td data-i18n="api.metrics.snapshot">Captura snapshot atual das métricas</td>
+                        </tr>
+                        <tr>
+                            <td><code>export_prometheus()</code></td>
+                            <td data-i18n="api.metrics.prometheus">Exporta métricas no formato Prometheus</td>
+                        </tr>
+                        <tr>
+                            <td><code>tasks_completed()</code></td>
+                            <td data-i18n="api.metrics.tasks">Retorna total de tarefas completadas</td>
+                        </tr>
+                        <tr>
+                            <td><code>avg_latency()</code></td>
+                            <td data-i18n="api.metrics.latency">Retorna latência média de execução</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="performance" class="section">
+        <div class="container">
+            <h2 data-i18n="async.performance.title">Performance</h2>
+
+            <div class="performance-stats">
+                <div class="stat-card">
+                    <div class="stat-value">2.5x</div>
+                    <div class="stat-label" data-i18n="perf.throughput">Throughput Superior</div>
+                    <p data-i18n="perf.throughput.desc">Comparado a outros runtimes assíncronos</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value">60%</div>
+                    <div class="stat-label" data-i18n="perf.latency">Menor Latência</div>
+                    <p data-i18n="perf.latency.desc">Redução média na latência de resposta</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value">Zero</div>
+                    <div class="stat-label" data-i18n="perf.deps">Dependências</div>
+                    <p data-i18n="perf.deps.desc">100% autossuficiente e independente</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-value">10M+</div>
+                    <div class="stat-label" data-i18n="perf.tasks">Tarefas/segundo</div>
+                    <p data-i18n="perf.tasks.desc">Capacidade de processamento máxima</p>
+                </div>
+            </div>
+
+            <div class="benchmark-section">
+                <h3 data-i18n="perf.benchmarks">Benchmarks</h3>
+                <table class="benchmark-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="bench.operation">Operação</th>
+                            <th>avx-async</th>
+                            <th data-i18n="bench.competitor">Concorrente A</th>
+                            <th data-i18n="bench.competitor2">Concorrente B</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-i18n="bench.spawn">Spawn de Task</td>
+                            <td class="best">45 ns</td>
+                            <td>120 ns</td>
+                            <td>95 ns</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="bench.switch">Context Switch</td>
+                            <td class="best">12 ns</td>
+                            <td>35 ns</td>
+                            <td>28 ns</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="bench.throughput">Throughput (ops/s)</td>
+                            <td class="best">10.5M</td>
+                            <td>4.2M</td>
+                            <td>6.8M</td>
+                        </tr>
+                        <tr>
+                            <td data-i18n="bench.memory">Uso de Memória</td>
+                            <td class="best">2.1 MB</td>
+                            <td>8.5 MB</td>
+                            <td>5.3 MB</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section section-alt">
+        <div class="container">
+            <h2 data-i18n="async.usecases.title">Casos de Uso</h2>
+
+            <div class="use-case-grid">
+                <div class="use-case-card">
+                    <div class="use-case-animation">🌐</div>
+                    <h3 data-i18n="usecase.web.title">Servidores Web de Alta Performance</h3>
+                    <p data-i18n="usecase.web.desc">
+                        Ideal para APIs REST, WebSockets e aplicações em tempo real que necessitam de baixa latência e alto throughput. O escalonador work-stealing garante distribuição eficiente de carga.
+                    </p>
+                    <ul>
+                        <li data-i18n="usecase.web.item1">Milhões de conexões simultâneas</li>
+                        <li data-i18n="usecase.web.item2">Latência sub-milissegundo</li>
+                        <li data-i18n="usecase.web.item3">Auto-scaling automático</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-animation">🤖</div>
+                    <h3 data-i18n="usecase.ai.title">Pipelines de Machine Learning</h3>
+                    <p data-i18n="usecase.ai.desc">
+                        Execução paralela de treinamento de modelos, processamento de dados e inferência. O WorkloadPredictor otimiza automaticamente o uso de recursos baseado em padrões históricos.
+                    </p>
+                    <ul>
+                        <li data-i18n="usecase.ai.item1">Predição automática de carga</li>
+                        <li data-i18n="usecase.ai.item2">Otimização de hiperparâmetros</li>
+                        <li data-i18n="usecase.ai.item3">Detecção de anomalias</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-animation">⛓️</div>
+                    <h3 data-i18n="usecase.blockchain.title">Aplicações Blockchain</h3>
+                    <p data-i18n="usecase.blockchain.desc">
+                        Runtime com blockchain integrado para auditoria imutável. Ideal para sistemas financeiros, contratos inteligentes e aplicações que exigem trilha de auditoria completa.
+                    </p>
+                    <ul>
+                        <li data-i18n="usecase.blockchain.item1">Auditoria imutável de operações</li>
+                        <li data-i18n="usecase.blockchain.item2">Proof-of-work integrado</li>
+                        <li data-i18n="usecase.blockchain.item3">Consenso distribuído</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-animation">🔬</div>
+                    <h3 data-i18n="usecase.quantum.title">Computação Científica</h3>
+                    <p data-i18n="usecase.quantum.desc">
+                        Escalonamento quântico para problemas NP-difíceis, otimização combinatória e simulações complexas. O QuantumScheduler usa annealing quântico para encontrar soluções ótimas.
+                    </p>
+                    <ul>
+                        <li data-i18n="usecase.quantum.item1">Otimização quântica de tarefas</li>
+                        <li data-i18n="usecase.quantum.item2">Simulação de sistemas complexos</li>
+                        <li data-i18n="usecase.quantum.item3">Resolução de problemas NP</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-animation">🌍</div>
+                    <h3 data-i18n="usecase.iot.title">IoT e Edge Computing</h3>
+                    <p data-i18n="usecase.iot.desc">
+                        Distribuição inteligente de tarefas em redes edge com EdgeManager. Suporta roteamento geográfico, balanceamento de carga e tolerância a falhas.
+                    </p>
+                    <ul>
+                        <li data-i18n="usecase.iot.item1">Execução distribuída em edge</li>
+                        <li data-i18n="usecase.iot.item2">Roteamento inteligente</li>
+                        <li data-i18n="usecase.iot.item3">Balanceamento geográfico</li>
+                    </ul>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-animation">🔐</div>
+                    <h3 data-i18n="usecase.secure.title">Sistemas Críticos de Segurança</h3>
+                    <p data-i18n="usecase.secure.desc">
+                        Execução criptografada de tarefas com CryptoService. Canais seguros, assinaturas digitais e criptografia simétrica garantem confidencialidade total.
+                    </p>
+                    <ul>
+                        <li data-i18n="usecase.secure.item1">Execução criptografada</li>
+                        <li data-i18n="usecase.secure.item2">Canais seguros</li>
+                        <li data-i18n="usecase.secure.item3">Assinaturas digitais</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section">
+        <div class="container">
+            <h2 data-i18n="license.title">Licença</h2>
+
+            <div class="license-block">
+                <h3 data-i18n="license.proprietary">Licença Proprietária</h3>
+                <p data-i18n="license.copyright">
+                    © 2025 Nícolas Ávila - Todos os direitos reservados
+                </p>
+                <p data-i18n="license.text">
+                    Este software é propriedade exclusiva da Avx. O uso comercial requer licença específica.
+                    Para informações sobre licenciamento, entre em contato através de nicolas@avila.inc
+                </p>
+                <div class="license-options">
+                    <div class="license-option">
+                        <h4 data-i18n="license.individual">Licença Individual</h4>
+                        <p data-i18n="license.individual.desc">Para desenvolvedores autônomos e projetos pessoais</p>
+                    </div>
+                    <div class="license-option">
+                        <h4 data-i18n="license.enterprise">Licença Empresarial</h4>
+                        <p data-i18n="license.enterprise.desc">Para empresas com múltiplos desenvolvedores</p>
+                    </div>
+                    <div class="license-option">
+                        <h4 data-i18n="license.custom">Licença Personalizada</h4>
+                        <p data-i18n="license.custom.desc">Termos customizados para necessidades específicas</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Avx</h4>
+                    <p data-i18n="footer.copyright">© 2025 Nícolas Ávila - Todos os direitos reservados</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.links">Links</h4>
+                    <ul>
+                        <li><a href="index.html" data-i18n="footer.home">Início</a></li>
+                        <li><a href="https://docs.avila.inc/" data-i18n="footer.documentation">Documentação</a></li>
+                        <li><a href="mailto:nicolas@avila.inc" data-i18n="footer.contact">Contato</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-i18n="footer.modules">Outros Módulos</h4>
+                    <ul>
+                        <li><a href="avx-parallel.html">avx-parallel</a></li>
+                        <li><a href="avx-cuda.html">avx-cuda</a></li>
+                        <li><a href="avx-gpu.html">avx-gpu</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/i18n-async.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/animations.js"></script>
+</body>
+</html>

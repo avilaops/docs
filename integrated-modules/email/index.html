@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx Email Platform - Documentação Oficial</title>
+    <meta name="description" content="Documentação completa do ecossistema Avx Email - Plataforma proprietária de email 100% nativa">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="light-theme">
+    <header>
+        <a href="index.html" class="logo">
+            <div class="logo-icon">A</div>
+            <span>Avx Docs</span>
+        </a>
+        <nav>
+            <a href="#overview">Visão Geral</a>
+            <a href="#modules">Módulos</a>
+            <a href="#architecture">Arquitetura</a>
+            <a href="#getting-started">Começar</a>
+            <a href="#license">Licença</a>
+        </nav>
+        <div class="controls">
+            <button id="theme-toggle" class="theme-toggle">🌓 Tema</button>
+            <select id="language-select" class="language-select">
+                <option value="pt-BR">🇧🇷 PT-BR</option>
+                <option value="ru">🇷🇺 Русский</option>
+                <option value="ja">🇯🇵 日本語</option>
+                <option value="zh-TW">🇹🇼 繁體中文</option>
+                <option value="ur">🇵🇰 اردو</option>
+                <option value="ar">🇸🇦 العربية</option>
+                <option value="de">🇩🇪 Deutsch</option>
+                <option value="fr">🇨🇭 Français</option>
+                <option value="lv">🇱🇻 Latviešu</option>
+                <option value="uz">🇺🇿 O'zbek</option>
+                <option value="es">🇪🇸 Español</option>
+            </select>
+        </div>
+    </header>
+
+    <main>
+        <div class="hero">
+            <h1>Avx Email Platform</h1>
+            <p>Plataforma Completa de Email - 100% Nativa e Proprietária</p>
+            <div class="metric">5 Módulos Integrados</div>
+            <div class="metric">Zero Dependências Externas</div>
+            <div class="metric">Performance Ultra-Alta</div>
+            <div class="metric">Segurança Máxima</div>
+        </div>
+
+        <section id="overview">
+            <h2>Visão Geral</h2>
+            <p>
+                A <strong>Plataforma Avx Email</strong> é um ecossistema completo de email desenvolvido do zero,
+                sem dependências externas. Seguindo a filosofia de células digitais, cada componente é 
+                uma "célula" que pode comunicar, processar e persistir informações.
+            </p>
+            
+            <div class="card">
+                <h3>🎯 Por que Avx?</h3>
+                <ul>
+                    <li><strong>100% Proprietário:</strong> Código desenvolvido internamente, sem bibliotecas de terceiros</li>
+                    <li><strong>Performance Máxima:</strong> Otimizado para velocidade e eficiência de memória</li>
+                    <li><strong>Segurança Total:</strong> Controle completo sobre toda a stack de email</li>
+                    <li><strong>Escalável:</strong> Arquitetura baseada em células permite escalonamento horizontal</li>
+                    <li><strong>Modular:</strong> Cada componente pode ser usado independentemente</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3>🚀 Características Principais</h3>
+                <ul>
+                    <li>Protocolos completos: SMTP, IMAP, POP3</li>
+                    <li>Suporte MIME multipart com anexos</li>
+                    <li>Autenticação avançada (PLAIN, LOGIN, XOAUTH2)</li>
+                    <li>HTML emails com imagens inline</li>
+                    <li>Armazenamento eficiente e indexação full-text</li>
+                    <li>Interface web (webmail) moderna</li>
+                    <li>API REST para integrações</li>
+                    <li>CLI para administração</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="modules">
+            <h2>Módulos da Plataforma</h2>
+
+            <div class="card">
+                <h3><a href="avx-cell-core.html">📦 avx-cell-core</a></h3>
+                <p><strong>Fundação - Tipos e Traits Fundamentais</strong></p>
+                <p>
+                    Define os contratos básicos para células digitais: identidade, mensagens,
+                    estado e ciclo de vida. É a base sobre a qual todo o ecossistema é construído.
+                </p>
+                <ul>
+                    <li>Traits: CellTrait, MessageTrait, StateTrait</li>
+                    <li>Types: Cell, Message, State, Lifecycle, Id</li>
+                    <li>Gerenciamento de ciclo de vida completo</li>
+                </ul>
+                <a href="avx-cell-core.html" class="metric">📖 Ver Documentação</a>
+            </div>
+
+            <div class="card">
+                <h3><a href="avx-cell.html">📧 avx-cell</a></h3>
+                <p><strong>Células Digitais - Protocolos de Email</strong></p>
+                <p>
+                    Implementação completa dos protocolos de email (SMTP, IMAP, POP3) como células
+                    digitais autônomas. Inclui suporte MIME, autenticação e criptografia.
+                </p>
+                <ul>
+                    <li>SMTP client com autenticação avançada</li>
+                    <li>MIME multipart (mixed, alternative, related)</li>
+                    <li>Encoding: Base64, Quoted-Printable</li>
+                    <li>HTML emails e anexos binários</li>
+                </ul>
+                <a href="avx-cell.html" class="metric">📖 Ver Documentação</a>
+            </div>
+
+            <div class="card">
+                <h3><a href="avx-tissue.html">🗂️ avx-tissue</a></h3>
+                <p><strong>Tecido Digital - Armazenamento e Indexação</strong></p>
+                <p>
+                    Sistema de armazenamento, indexação e busca de emails. Organiza milhões de 
+                    mensagens de forma eficiente, pesquisável e confiável.
+                </p>
+                <ul>
+                    <li>Armazenamento persistente otimizado</li>
+                    <li>Indexação full-text com Tantivy</li>
+                    <li>Busca rápida e relevante</li>
+                    <li>Organização: pastas, tags, threads</li>
+                </ul>
+                <a href="avx-tissue.html" class="metric">📖 Ver Documentação</a>
+            </div>
+
+            <div class="card">
+                <h3><a href="avx-organ.html">🖥️ avx-organ</a></h3>
+                <p><strong>Órgão de Email - Sistema Servidor/Cliente</strong></p>
+                <p>
+                    Integra os diferentes componentes (tecidos) em um sistema completo de servidor
+                    e cliente de email com autenticação e autorização.
+                </p>
+                <ul>
+                    <li>Servidor SMTP completo</li>
+                    <li>Servidor IMAP com suporte completo</li>
+                    <li>Cliente de email robusto</li>
+                    <li>Sistema de autenticação e autorização</li>
+                </ul>
+                <a href="avx-organ.html" class="metric">📖 Ver Documentação</a>
+            </div>
+
+            <div class="card">
+                <h3><a href="avx-organism.html">🌐 avx-organism</a></h3>
+                <p><strong>Organismo Completo - Camada de Aplicação</strong></p>
+                <p>
+                    Camada de aplicação final que integra tudo: webmail, API REST, CLI e 
+                    painel administrativo. É o "organismo" completo da plataforma.
+                </p>
+                <ul>
+                    <li>Interface webmail moderna e responsiva</li>
+                    <li>API REST para integrações externas</li>
+                    <li>CLI para administração do sistema</li>
+                    <li>Painel administrativo completo</li>
+                </ul>
+                <a href="avx-organism.html" class="metric">📖 Ver Documentação</a>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <h2>Arquitetura do Sistema</h2>
+            
+            <div class="card">
+                <h3>🏗️ Hierarquia de Componentes</h3>
+                <pre><code>┌─────────────────────────────────────────────────┐
+│ avx-organism (Organismo - Aplicação Completa)  │
+│ • Webmail • API REST • CLI • Admin Panel       │
+└─────────────────┬───────────────────────────────┘
+                  │
+┌─────────────────┴───────────────────────────────┐
+│ avx-organ (Órgão - Sistema Servidor/Cliente)   │
+│ • SMTP Server • IMAP Server • Client           │
+└─────────────────┬───────────────────────────────┘
+                  │
+┌─────────────────┴───────────────────────────────┐
+│ avx-tissue (Tecido - Storage + Indexing)       │
+│ • Storage • Index • Search • Mailbox           │
+└─────────────────┬───────────────────────────────┘
+                  │
+┌─────────────────┴───────────────────────────────┐
+│ avx-cell (Células - Protocolos de Email)       │
+│ • SMTP • IMAP • POP3 • MIME • Auth             │
+└─────────────────┬───────────────────────────────┘
+                  │
+┌─────────────────┴───────────────────────────────┐
+│ avx-cell-core (Fundação - Core Types)          │
+│ • Cell • Message • State • Lifecycle • Id      │
+└─────────────────────────────────────────────────┘</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🔄 Fluxo de Dados</h3>
+                <p>Exemplo: Recebimento e processamento de um email</p>
+                <pre><code>1. Email chega via SMTP (avx-cell)
+   ↓
+2. SMTP Server processa (avx-organ)
+   ↓
+3. Email é armazenado (avx-tissue/storage)
+   ↓
+4. Email é indexado para busca (avx-tissue/index)
+   ↓
+5. Notificação enviada ao webmail (avx-organism)
+   ↓
+6. Usuário visualiza no navegador (avx-organism/webmail)</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>⚡ Performance e Escalabilidade</h3>
+                <ul>
+                    <li><strong>Throughput SMTP:</strong> 10M emails/dia por instância</li>
+                    <li><strong>Latência IMAP:</strong> &lt;10ms para operações comuns</li>
+                    <li><strong>Busca:</strong> &lt;50ms em 10M emails</li>
+                    <li><strong>Escalabilidade:</strong> Horizontal via replicação de células</li>
+                    <li><strong>Memória:</strong> ~500MB para 1M emails indexados</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="getting-started">
+            <h2>Começar a Usar</h2>
+
+            <div class="card">
+                <h3>📥 Instalação</h3>
+                <pre><code># Clone o repositório
+git clone https://github.com/avilaops/arxis-core.git
+cd arxis-core/categories/email
+
+# Build todos os módulos
+cargo build --release --all
+
+# Executar testes
+cargo test --all</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🚀 Início Rápido - Servidor de Email</h3>
+                <pre><code>use avx_organism::ApplicationConfig;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let config = ApplicationConfig {
+        smtp_port: 2525,
+        imap_port: 1143,
+        http_port: 8080,
+        domain: "exemplo.com.br".to_string(),
+        ..Default::default()
+    };
+    
+    // Iniciar servidor completo
+    avx_organism::start_server(config).await?;
+    Ok(())
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>📧 Exemplo - Enviar Email</h3>
+                <pre><code>use avx_cell::{EmailAddress, Email, smtp::SmtpClient};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Criar email
+    let from = EmailAddress::new("sender@avila.inc")?;
+    let to = EmailAddress::new("recipient@example.com")?;
+    let email = Email::new(from, vec![to], 
+        "Olá da Avx!", 
+        "Este é um email enviado via Avx Platform");
+    
+    // Conectar e enviar
+    let mut client = SmtpClient::connect("smtp.avila.inc", 587).await?;
+    client.ehlo("avila.inc").await?;
+    client.auth_plain("user", "password").await?;
+    client.send_email(&email).await?;
+    
+    println!("Email enviado com sucesso!");
+    Ok(())
+}</code></pre>
+            </div>
+
+            <div class="card">
+                <h3>🔍 Exemplo - Buscar Emails</h3>
+                <pre><code>use avx_tissue::{index::EmailIndex, search::SearchQuery};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let index = EmailIndex::open("./data/index")?;
+    
+    // Buscar emails
+    let query = SearchQuery::new("projeto urgente")
+        .from("chefe@avila.inc")
+        .date_range("2025-01-01", "2025-01-31");
+    
+    let results = index.search(&query)?;
+    
+    for result in results {
+        println!("Email: {} - Score: {}", result.subject, result.score);
+    }
+    
+    Ok(())
+}</code></pre>
+            </div>
+        </section>
+
+        <section id="license">
+            <h2>Licença</h2>
+            <div class="card">
+                <h3>🔒 Licença Proprietária</h3>
+                <p>
+                    <strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong>
+                </p>
+                <p>
+                    Esta plataforma é propriedade exclusiva de <strong>Avila Inc.</strong>
+                </p>
+                <h4>Uso Permitido:</h4>
+                <ul>
+                    <li>✅ Uso pessoal e educacional</li>
+                    <li>✅ Avaliação e testes</li>
+                    <li>✅ Desenvolvimento interno</li>
+                </ul>
+                <h4>Uso Proibido sem Licença:</h4>
+                <ul>
+                    <li>❌ Uso comercial</li>
+                    <li>❌ Redistribuição</li>
+                    <li>❌ Criação de derivados</li>
+                    <li>❌ Engenharia reversa</li>
+                </ul>
+                <p>
+                    <strong>Licenciamento Comercial:</strong><br>
+                    Para obter uma licença comercial, entre em contato:<br>
+                    📧 <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a><br>
+                    🌐 <a href="https://avila.inc" target="_blank">https://avila.inc</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2025 Avila Inc. Todos os direitos reservados.</p>
+            <div class="footer-links">
+                <a href="https://avila.inc" target="_blank">Site Oficial</a>
+                <a href="mailto:nicolas@avila.inc">Suporte</a>
+                <a href="mailto:nicolas@avila.inc">Contato</a>
+            </div>
+            <p>🇧🇷 Desenvolvido com 💛 no Brasil</p>
+            <p style="margin-top: 1rem; opacity: 0.7;">
+                Avx Platform - Solução Completa de Email Proprietária
+            </p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

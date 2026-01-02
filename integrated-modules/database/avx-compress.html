@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-compress - Native Compression | Avx Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="avx-cache.html">avx-cache</a></li>
+            <li><a href="avx-codec.html">avx-codec</a></li>
+            <li><a href="avx-compress.html" class="active">avx-compress</a></li>
+            <li><a href="avx-db.html">avx-db</a></li>
+            <li><a href="avx-pool.html">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html">avx-serialize</a></li>
+            <li><a href="avx-storage.html">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>📦 avx-compress</h1>
+            <p>Compressão nativa de alta performance</p>
+        </section>
+
+        <section>
+            <h2>🚀 Características</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>LZ4 Ultra-Rápido</h3>
+                    <ul>
+                        <li>850 MB/s compressão</li>
+                        <li>3.2 GB/s descompressão</li>
+                        <li>4 níveis de compressão</li>
+                        <li>Zero dependencies</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Features Avançadas</h3>
+                    <ul>
+                        <li>Streaming support</li>
+                        <li>Columnar compression</li>
+                        <li>Dictionary compression</li>
+                        <li>Parallel processing</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Otimizações</h3>
+                    <ul>
+                        <li>SIMD (AVX2/AVX-512)</li>
+                        <li>Checksums integrados</li>
+                        <li>Formato AVZ com metadados</li>
+                        <li>Compressão 2.8x-4.1x</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Instalação</h2>
+            <pre><code>[dependencies]
+avx-compress = "0.1.0"</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Exemplos</h2>
+
+            <h3>Compressão Básica</h3>
+            <pre><code>use avx_compress::{compress, decompress};
+
+let data = b"Hello, World! This is a test of LZ4 compression.";
+
+// Comprimir
+let compressed = compress(data).expect("compression failed");
+
+// Descomprimir
+let decompressed = decompress(&compressed).expect("decompression failed");
+assert_eq!(data, &decompressed[..]);</code></pre>
+
+            <h3>Níveis de Compressão</h3>
+            <pre><code>use avx_compress::lz4::{compress_with_level, Level};
+
+let data = b"Some data to compress...";
+
+// Fast - máxima velocidade
+let fast = compress_with_level(data, Level::Fast).unwrap();
+
+// Best - máxima compressão
+let best = compress_with_level(data, Level::Best).unwrap();</code></pre>
+
+            <h3>Streaming</h3>
+            <pre><code>use avx_compress::stream::{Compressor, Decompressor};
+
+// Comprimir arquivo grande
+let mut input = std::fs::File::open("large_file.txt")?;
+let mut output = std::fs::File::create("large_file.lz4")?;
+
+let mut compressor = Compressor::new(&mut output);
+std::io::copy(&mut input, &mut compressor)?;
+compressor.finish()?;</code></pre>
+        </section>
+
+        <section>
+            <h2>📊 Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nível</th>
+                        <th>Velocidade</th>
+                        <th>Taxa</th>
+                        <th>Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Fast</td>
+                        <td>850 MB/s</td>
+                        <td>2.1x</td>
+                        <td>Real-time, streaming</td>
+                    </tr>
+                    <tr>
+                        <td>Balanced</td>
+                        <td>520 MB/s</td>
+                        <td>2.8x</td>
+                        <td>Uso geral (padrão)</td>
+                    </tr>
+                    <tr>
+                        <td>Best</td>
+                        <td>180 MB/s</td>
+                        <td>3.5x</td>
+                        <td>Arquivos, backups</td>
+                    </tr>
+                    <tr>
+                        <td>Ultra</td>
+                        <td>95 MB/s</td>
+                        <td>4.1x</td>
+                        <td>Arquivamento</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="use-cases">
+            <h2>🎯 Casos de Uso</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">📝</div>
+                    <h3>Logs</h3>
+                    <p>Compressão de logs de aplicações</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">💾</div>
+                    <h3>Backups</h3>
+                    <p>Backup de bancos de dados</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>HTTP Cache</h3>
+                    <p>Cache de respostas HTTP</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Dados Científicos</h3>
+                    <p>Compressão columnar 15x-30x</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

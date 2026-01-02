@@ -1,0 +1,353 @@
+/* Copyright © 2025 Nícolas Ávila - Todos os direitos reservados */
+
+.module-hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 4rem 0 3rem;
+    text-align: center;
+}
+
+.module-hero h1 {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.module-tagline {
+    font-size: 1.3rem;
+    opacity: 0.95;
+    margin: 1rem 0;
+}
+
+.version-badge {
+    display: inline-block;
+    background: white;
+    color: var(--primary-color);
+    padding: 0.5rem 1.5rem;
+    border-radius: 25px;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+.content-block {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    border-left: 4px solid var(--primary-color);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.feature-box {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .feature-box,
+[data-theme="light"] .content-block {
+    background: white;
+}
+
+.feature-box:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--hover-shadow);
+}
+
+.feature-box h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.type-list {
+    display: grid;
+    gap: 2rem;
+}
+
+.type-item {
+    background: var(--surface-color);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border-left: 4px solid var(--primary-color);
+}
+
+[data-theme="light"] .type-item {
+    background: white;
+}
+
+.type-item h3 {
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.type-item pre {
+    margin-top: 1rem;
+    background: var(--bg-color);
+}
+
+.example-block {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    margin: 2rem 0;
+    border: 2px solid var(--border-color);
+}
+
+[data-theme="light"] .example-block {
+    background: white;
+}
+
+.example-block h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.api-section {
+    margin: 3rem 0;
+}
+
+.api-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.api-table {
+    width: 100%;
+    background: var(--surface-color);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px var(--shadow);
+}
+
+[data-theme="light"] .api-table {
+    background: white;
+}
+
+.api-table th {
+    background: var(--primary-color);
+    color: white;
+    padding: 1rem;
+    text-align: left;
+    font-weight: 600;
+}
+
+.api-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.api-table tr:last-child td {
+    border-bottom: none;
+}
+
+.api-table tr:hover {
+    background-color: var(--hover-shadow);
+}
+
+.api-table code {
+    background: var(--bg-color);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.performance-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+}
+
+.stat-card {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .stat-card {
+    background: white;
+}
+
+.stat-card:hover {
+    border-color: var(--primary-color);
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px var(--hover-shadow);
+}
+
+.stat-value {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.benchmark-section {
+    margin: 3rem 0;
+}
+
+.benchmark-section h3 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+}
+
+.benchmark-table {
+    width: 100%;
+    background: var(--surface-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+[data-theme="light"] .benchmark-table {
+    background: white;
+}
+
+.benchmark-table .best {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.use-case-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.use-case-card {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+[data-theme="light"] .use-case-card {
+    background: white;
+}
+
+.use-case-card:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px var(--hover-shadow);
+}
+
+.use-case-animation {
+    font-size: 3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.use-case-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.use-case-card ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 1rem;
+}
+
+.use-case-card li {
+    padding: 0.5rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.use-case-card li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.license-block {
+    background: var(--surface-color);
+    padding: 2rem;
+    border-radius: 12px;
+    border: 2px solid var(--primary-color);
+}
+
+[data-theme="light"] .license-block {
+    background: white;
+}
+
+.license-block h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.license-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.license-option {
+    background: var(--bg-color);
+    padding: 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.license-option h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .module-hero h1 {
+        font-size: 2rem;
+    }
+
+    .module-tagline {
+        font-size: 1rem;
+    }
+
+    .features-grid,
+    .use-case-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .performance-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

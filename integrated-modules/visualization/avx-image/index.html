@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx-Image - Visão Computacional e IA Generativa</title>
+    <meta name="description" content="Documentação completa do Avx-Image - Biblioteca avançada de visão computacional e IA generativa">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <a href="../index.html" class="logo">
+                <div class="logo-icon">🎨</div>
+                <div class="logo-text">
+                    <h1>Avx-Image</h1>
+                    <p>Computer Vision & AI</p>
+                </div>
+            </a>
+
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="../index.html">Início</a></li>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#modules">Módulos</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#api">API</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+
+                <div class="controls">
+                    <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+                    <select class="lang-select" onchange="changeLanguage(this.value)">
+                        <option value="pt-BR">🇧🇷 PT-BR</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <h1>🎨 Avx-Image</h1>
+            <p>Biblioteca Avançada de Visão Computacional e IA Generativa</p>
+            <div class="hero-buttons">
+                <a href="#examples" class="btn btn-primary">Ver Exemplos</a>
+                <a href="#api" class="btn btn-secondary">Referência da API</a>
+            </div>
+        </div>
+
+        <!-- Overview Section -->
+        <section id="overview">
+            <h2>Visão Geral do Módulo</h2>
+
+            <p style="font-size: 1.125rem; line-height: 1.8; color: var(--text-secondary);">
+                Avx-Image é uma biblioteca completa de visão computacional que combina técnicas tradicionais
+                de CV com IA generativa de ponta. 100% desenvolvida em Rust nativo, oferece performance
+                excepcional e zero dependências externas.
+            </p>
+
+            <div class="cards-grid" style="margin-top: 2rem;">
+                <div class="card">
+                    <div class="card-icon">👁️</div>
+                    <h3>Computer Vision</h3>
+                    <p>OCR, reconhecimento facial, detecção de objetos, optical flow.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3>IA Generativa</h3>
+                    <p>Stable Diffusion, ControlNet, DreamBooth para geração de imagens.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <h3>Imagem Médica</h3>
+                    <p>DICOM, segmentação de órgãos, renderização 3D de volumes.</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔬</div>
+                    <h3>Análise Forense</h3>
+                    <p>Impressões digitais, verificação de documentos, detecção de manipulação.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modules Section -->
+        <section id="modules">
+            <h2>Todos os Módulos Disponíveis</h2>
+
+            <h3>Core (Fundação)</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Buffer</h3>
+                    <p>Manipulação nativa de pixels (RGB, RGBA, Grayscale)</p>
+                    <div class="code-block">
+                        <pre><code>let img = NativeImageBuffer::new(1920, 1080, 3);
+let gray = img.to_grayscale();</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Color</h3>
+                    <p>Conversões de espaço de cor (RGB, HSV, LAB, YCbCr)</p>
+                    <div class="code-block">
+                        <pre><code>let hsv = rgb_to_hsv(r, g, b);
+let lab = rgb_to_lab(r, g, b);</code></pre>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Transform</h3>
+                    <p>Operações geométricas (resize, rotate, warp)</p>
+                    <div class="code-block">
+                        <pre><code>let resized = img.resize(800, 600);
+let rotated = img.rotate(45.0);</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <h3>Computer Vision (CV)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Módulo</th>
+                        <th>Funcionalidades</th>
+                        <th>Casos de Uso</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Edge Detection</strong></td>
+                        <td>Sobel, Canny, Laplacian</td>
+                        <td>Segmentação, detecção de contornos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Feature Detection</strong></td>
+                        <td>SIFT, SURF, ORB, FAST</td>
+                        <td>Matching, tracking, SLAM</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Object Detection</strong></td>
+                        <td>HOG, Haar Cascades</td>
+                        <td>Detecção de pessoas, rostos, objetos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Optical Flow</strong></td>
+                        <td>Lucas-Kanade, Farneback</td>
+                        <td>Rastreamento, análise de movimento</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Segmentation</strong></td>
+                        <td>Watershed, GrabCut, Superpixels</td>
+                        <td>Separação de objetos, ROI</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>IA Generativa (Synthesis)</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>🎨 Stable Diffusion</h3>
+                    <p>Geração texto-para-imagem de alta qualidade</p>
+                    <ul style="color: var(--text-secondary); margin-top: 1rem;">
+                        <li>Modelos: SD 1.5, SD 2.1, SDXL</li>
+                        <li>Resoluções: 512x512 até 1024x1024</li>
+                        <li>30 steps em ~2.3s</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🎮 ControlNet</h3>
+                    <p>Controle preciso de geração</p>
+                    <ul style="color: var(--text-secondary); margin-top: 1rem;">
+                        <li>Canny, Depth, Pose, Normal</li>
+                        <li>Controle de composição</li>
+                        <li>Geração condicionada</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🖼️ DreamBooth</h3>
+                    <p>Fine-tuning personalizado</p>
+                    <ul style="color: var(--text-secondary); margin-top: 1rem;">
+                        <li>Treinamento com poucas imagens</li>
+                        <li>Preservação de conceitos</li>
+                        <li>Geração personalizada</li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>🔍 Inpainting</h3>
+                    <p>Preenchimento inteligente</p>
+                    <ul style="color: var(--text-secondary); margin-top: 1rem;">
+                        <li>Remoção de objetos</li>
+                        <li>Preenchimento contextual</li>
+                        <li>Restauração de imagens</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples">
+            <h2>Exemplos de Uso</h2>
+
+            <h3>Exemplo 1: OCR (Reconhecimento de Texto)</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_image::ocr::*;
+
+// Inicializar OCR
+let mut ocr = OcrEngine::new()?;
+ocr.load_model("pt-BR")?;
+
+// Processar imagem
+let img = NativeImageBuffer::from_file("document.jpg")?;
+let result = ocr.recognize(&img)?;
+
+// Extrair texto
+for block in result.blocks() {
+    println!("{}: {}", block.confidence(), block.text());
+}</code></pre>
+            </div>
+
+            <h3>Exemplo 2: Reconhecimento Facial</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_image::face::*;
+
+// Detector de rostos
+let detector = FaceDetector::new()?;
+detector.load_model(FaceModel::RetinaFace)?;
+
+let img = NativeImageBuffer::from_file("photo.jpg")?;
+let faces = detector.detect(&img)?;
+
+for face in faces {
+    println!("Face: {:?}", face.bounding_box());
+    println!("Confiança: {:.2}%", face.confidence() * 100.0);
+
+    // Landmarks faciais (68 pontos)
+    let landmarks = face.landmarks();
+
+    // Reconhecimento de emoção
+    let emotion = face.emotion()?;
+    println!("Emoção: {:?}", emotion);
+}</code></pre>
+            </div>
+
+            <h3>Exemplo 3: Stable Diffusion</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_image::synthesis::*;
+
+// Inicializar Stable Diffusion
+let mut sd = StableDiffusion::new()?;
+sd.load_model("sd-v2.1")?;
+
+// Configuração
+let config = GenerationConfig {
+    width: 768,
+    height: 512,
+    steps: 30,
+    cfg_scale: 7.5,
+    seed: Some(42),
+};
+
+// Gerar imagem
+let prompt = "paisagem brasileira ao pôr do sol, detalhada";
+let negative = "baixa qualidade, desfocado";
+
+let generated = sd.generate(prompt, negative, &config)?;
+generated.save("output.png")?;</code></pre>
+            </div>
+
+            <h3>Exemplo 4: NeRF (Reconstrução 3D)</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_image::nerf::*;
+
+// Carregar imagens de diferentes ângulos
+let images = vec![
+    NativeImageBuffer::from_file("view_1.jpg")?,
+    NativeImageBuffer::from_file("view_2.jpg")?,
+    // ... mais imagens
+];
+
+let camera_poses = load_camera_poses("poses.json")?;
+
+// Treinar NeRF
+let mut nerf = NeRFScene::new()?;
+nerf.train(&images, &camera_poses, 10000)?;
+
+// Sintetizar nova visão
+let new_pose = CameraPose::from_position_target(
+    [0.0, 0.0, 5.0],
+    [0.0, 0.0, 0.0],
+    [0.0, 1.0, 0.0],
+);
+
+let synthesized = nerf.render(&new_pose, 512, 512)?;</code></pre>
+            </div>
+
+            <h3>Exemplo 5: Processamento Médico (DICOM)</h3>
+            <div class="code-block">
+                <div class="code-header">
+                    <span class="code-language">Rust</span>
+                </div>
+                <pre><code>use avx_image::medical::*;
+
+// Carregar DICOM
+let dicom = DicomImage::from_file("scan.dcm")?;
+
+println!("Paciente: {}", dicom.patient_name());
+println!("Modalidade: {}", dicom.modality());
+
+// Segmentação de órgãos
+let segmenter = OrganSegmenter::new()?;
+let segmented = segmenter.segment(&dicom, OrganType::Lung)?;
+
+// Medições
+let volume = segmented.calculate_volume()?;
+println!("Volume: {:.2} cm³", volume);
+
+// Renderização 3D
+let renderer = VolumeRenderer::new();
+let render_3d = renderer.render(&segmented)?;</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section id="api">
+            <h2>Referência da API</h2>
+
+            <h3>Core Operations</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Funções</th>
+                        <th>Descrição</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Filters</strong></td>
+                        <td><code>gaussian_blur</code>, <code>median_blur</code>, <code>bilateral_filter</code></td>
+                        <td>Filtros de suavização</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Transform</strong></td>
+                        <td><code>resize</code>, <code>rotate</code>, <code>warp</code></td>
+                        <td>Transformações geométricas</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Color</strong></td>
+                        <td><code>to_grayscale</code>, <code>adjust_brightness</code>, <code>color_balance</code></td>
+                        <td>Manipulação de cor</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Morphology</strong></td>
+                        <td><code>erode</code>, <code>dilate</code>, <code>open</code>, <code>close</code></td>
+                        <td>Operações morfológicas</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Computer Vision APIs</h3>
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>Edge Detection</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>canny(img, low, high)</code></li>
+                        <li><code>sobel(img, ksize)</code></li>
+                        <li><code>laplacian(img)</code></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Feature Detection</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>sift_detect(img)</code></li>
+                        <li><code>orb_detect(img)</code></li>
+                        <li><code>fast_corners(img)</code></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Object Detection</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>hog_detect(img)</code></li>
+                        <li><code>cascade_detect(img, cascade)</code></li>
+                    </ul>
+                </div>
+
+                <div class="card">
+                    <h3>Segmentation</h3>
+                    <ul style="color: var(--text-secondary);">
+                        <li><code>watershed(img)</code></li>
+                        <li><code>grabcut(img, rect)</code></li>
+                        <li><code>superpixels(img, n)</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance">
+            <h2>Performance</h2>
+
+            <h3>Benchmarks (Resolução 1920x1080)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Tempo</th>
+                        <th>Taxa</th>
+                        <th>Otimização</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Grayscale</td>
+                        <td>2.3 ms</td>
+                        <td>435 MP/s</td>
+                        <td>SIMD</td>
+                    </tr>
+                    <tr>
+                        <td>Gaussian Blur</td>
+                        <td>8.5 ms</td>
+                        <td>118 MP/s</td>
+                        <td>Separable + SIMD</td>
+                    </tr>
+                    <tr>
+                        <td>Canny Edge</td>
+                        <td>12.4 ms</td>
+                        <td>81 MP/s</td>
+                        <td>SIMD + Multi-thread</td>
+                    </tr>
+                    <tr>
+                        <td>Face Detection</td>
+                        <td>23 ms</td>
+                        <td>43 MP/s</td>
+                        <td>GPU accelerated</td>
+                    </tr>
+                    <tr>
+                        <td>OCR (page)</td>
+                        <td>165 ms</td>
+                        <td>6 pages/s</td>
+                        <td>Neural net optimized</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>IA Generativa (512x512)</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Modelo</th>
+                        <th>Tempo</th>
+                        <th>Steps</th>
+                        <th>Hardware</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Stable Diffusion 2.1</td>
+                        <td>2.3s</td>
+                        <td>30</td>
+                        <td>GPU (CUDA)</td>
+                    </tr>
+                    <tr>
+                        <td>ControlNet</td>
+                        <td>2.8s</td>
+                        <td>30</td>
+                        <td>GPU (CUDA)</td>
+                    </tr>
+                    <tr>
+                        <td>Upscaling 4x</td>
+                        <td>850ms</td>
+                        <td>-</td>
+                        <td>GPU (CUDA)</td>
+                    </tr>
+                    <tr>
+                        <td>NeRF Render</td>
+                        <td>180ms</td>
+                        <td>-</td>
+                        <td>GPU (CUDA)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Use Cases -->
+        <section id="use-cases">
+            <h2>Casos de Uso com Animações</h2>
+
+            <div class="cards-grid">
+                <div class="card pulse">
+                    <h3>📄 Automação de Documentos</h3>
+                    <p>OCR, extração de texto, validação de assinaturas e detecção de fraudes.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: var(--code-bg); border-radius: 0.5rem;">
+                        <strong>Economia:</strong> 95% redução tempo processamento
+                    </div>
+                </div>
+
+                <div class="card pulse">
+                    <h3>👁️ Vigilância Inteligente</h3>
+                    <p>Detecção e rastreamento em tempo real, reconhecimento facial.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: var(--code-bg); border-radius: 0.5rem;">
+                        <strong>Performance:</strong> 30 FPS @ 1080p
+                    </div>
+                </div>
+
+                <div class="card pulse">
+                    <h3>🏥 Diagnóstico Médico</h3>
+                    <p>Análise de exames, detecção de anomalias, segmentação de órgãos.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: var(--code-bg); border-radius: 0.5rem;">
+                        <strong>Precisão:</strong> 98.5% em detecção
+                    </div>
+                </div>
+
+                <div class="card pulse">
+                    <h3>🎨 Criação de Conteúdo</h3>
+                    <p>Geração de imagens e vídeos com IA para marketing e design.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: var(--code-bg); border-radius: 0.5rem;">
+                        <strong>Velocidade:</strong> 1 imagem a cada 2.3s
+                    </div>
+                </div>
+
+                <div class="card pulse">
+                    <h3>🏗️ Realidade Aumentada</h3>
+                    <p>Reconstrução 3D, rastreamento de poses, elementos virtuais.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: var(--code-bg); border-radius: 0.5rem;">
+                        <strong>Latência:</strong> &lt;16ms (60 FPS)
+                    </div>
+                </div>
+
+                <div class="card pulse">
+                    <h3>🔍 Controle de Qualidade</h3>
+                    <p>Inspeção automatizada, detecção de defeitos, medições precisas.</p>
+                    <div style="margin-top: 1rem; padding: 1rem; background: var(--code-bg); border-radius: 0.5rem;">
+                        <strong>Taxa de detecção:</strong> 99.9%
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section id="license">
+            <h2>Licença</h2>
+
+            <div class="card" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; padding: 2rem;">
+                <h3 style="color: white;">⚖️ Propriedade Exclusiva</h3>
+                <p style="color: rgba(255,255,255,0.95);">
+                    Este software é <strong>propriedade exclusiva de Nícolas Ávila</strong>.
+                    Todos os direitos reservados.
+                </p>
+                <p style="color: rgba(255,255,255,0.95); margin-top: 1rem;">
+                    Para licenciamento comercial, entre em contato:
+                </p>
+                <ul style="color: rgba(255,255,255,0.95); margin-top: 1rem;">
+                    <li>📧 nicolas@avila.inc</li>
+                    <li>🌐 https://avila.inc</li>
+                </ul>
+                <a href="../../LICENSE-PROPRIETARY.md" class="btn" style="background: white; color: var(--primary); margin-top: 1.5rem; display: inline-block;">Ver Licença Completa</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Avx-Image</h3>
+                <p>Visão computacional e IA generativa</p>
+                <p style="margin-top: 1rem;">
+                    <strong>Copyright © 2025 Nícolas Ávila</strong>
+                </p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Documentação</h3>
+                <ul>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#modules">Módulos</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#api">API</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Suporte</h3>
+                <ul>
+                    <li><a href="mailto:nicolas@avila.inc">📧 Email</a></li>
+                    <li><a href="https://avila.inc">🌐 Website</a></li>
+                    <li><a href="https://docs.avila.inc">📖 Docs</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>Desenvolvido com 🧡 por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

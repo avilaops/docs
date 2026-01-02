@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX KDF - Funções de derivação de chaves">
+    <title>AVX KDF - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="kdf.hero.title">AVX KDF</h1>
+            <p class="hero-subtitle" data-i18n="kdf.hero.subtitle">
+                Funções de derivação de chaves - PBKDF2, HKDF, scrypt, Argon2
+            </p>
+            <div class="hero-badges">
+                <span class="badge">PBKDF2</span>
+                <span class="badge">HKDF</span>
+                <span class="badge">Argon2</span>
+                <span class="badge">scrypt</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="kdf.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="kdf.overview.card1.title">🔑 Derivação de Chaves</h3>
+                    <p data-i18n="kdf.overview.card1.desc">
+                        Transforme senhas fracas em chaves criptográficas fortes. Proteção contra ataques de força bruta e rainbow tables.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="kdf.overview.card2.title">🛡️ Argon2</h3>
+                    <p data-i18n="kdf.overview.card2.desc">
+                        Vencedor da Password Hashing Competition. Resistente a ataques GPU/ASIC com uso de memória configurável.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="kdf.overview.card3.title">⚙️ HKDF</h3>
+                    <p data-i18n="kdf.overview.card3.desc">
+                        HMAC-based Key Derivation Function. Ideal para expandir material chave em múltiplas chaves derivadas.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="kdf.overview.card4.title">🔒 PBKDF2</h3>
+                    <p data-i18n="kdf.overview.card4.desc">
+                        Padrão NIST amplamente adotado. Múltiplas iterações para aumentar custo computacional de ataques.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Types Section -->
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="kdf.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="kdf.types.table.type">Tipo</th>
+                            <th data-i18n="kdf.types.table.description">Descrição</th>
+                            <th data-i18n="kdf.types.table.use">Uso Principal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Argon2id</code></td>
+                            <td data-i18n="kdf.types.argon2id">Argon2 modo híbrido</td>
+                            <td>Senhas de usuários</td>
+                        </tr>
+                        <tr>
+                            <td><code>Argon2i</code></td>
+                            <td data-i18n="kdf.types.argon2i">Resistente a side-channels</td>
+                            <td>Derivação de chaves</td>
+                        </tr>
+                        <tr>
+                            <td><code>Argon2d</code></td>
+                            <td data-i18n="kdf.types.argon2d">Máxima resistência a GPU</td>
+                            <td>Aplicações específicas</td>
+                        </tr>
+                        <tr>
+                            <td><code>Pbkdf2</code></td>
+                            <td data-i18n="kdf.types.pbkdf2">PBKDF2 com HMAC-SHA256</td>
+                            <td>Compatibilidade legada</td>
+                        </tr>
+                        <tr>
+                            <td><code>Hkdf</code></td>
+                            <td data-i18n="kdf.types.hkdf">HMAC-based KDF</td>
+                            <td>Expansão de chaves</td>
+                        </tr>
+                        <tr>
+                            <td><code>Scrypt</code></td>
+                            <td data-i18n="kdf.types.scrypt">Memory-hard KDF</td>
+                            <td>Derivação intensiva</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Examples Section -->
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="kdf.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="kdf.examples.argon2.title">Exemplo Básico - Argon2id</h3>
+            <pre><code class="language-rust">use avx_kdf::Argon2id;
+
+fn main() {
+    let password = b"senha_usuario_123";
+    let salt = b"salt_aleatorio_unico"; // 16+ bytes
+
+    // Configuração recomendada
+    let config = Argon2id::default_config()
+        .memory_cost(64 * 1024)  // 64 MB
+        .time_cost(3)             // 3 iterações
+        .parallelism(4);          // 4 threads
+
+    // Derivar chave de 32 bytes
+    let mut key = [0u8; 32];
+    Argon2id::derive_key(&config, password, salt, &mut key)
+        .expect("Falha na derivação");
+
+    println!("Chave derivada: {}", hex::encode(key));
+}</code></pre>
+
+            <h3 data-i18n="kdf.examples.hkdf.title">Exemplo - HKDF</h3>
+            <pre><code class="language-rust">use avx_kdf::Hkdf;
+use avx_hash::Sha256;
+
+fn main() {
+    // Material chave inicial
+    let ikm = b"material_chave_compartilhado";
+    let salt = b"application_salt";
+    let info = b"context_info";
+
+    // Extrair e expandir
+    let hkdf = Hkdf::<Sha256>::new(Some(salt), ikm);
+
+    // Derivar múltiplas chaves
+    let mut key1 = [0u8; 32];
+    let mut key2 = [0u8; 32];
+
+    hkdf.expand(b"encryption_key", &mut key1).unwrap();
+    hkdf.expand(b"mac_key", &mut key2).unwrap();
+
+    println!("✅ Chaves derivadas com HKDF!");
+}</code></pre>
+
+            <h3 data-i18n="kdf.examples.pbkdf2.title">Exemplo - PBKDF2</h3>
+            <pre><code class="language-rust">use avx_kdf::Pbkdf2;
+use avx_hash::Sha256;
+
+fn main() {
+    let password = b"SenhaForte!2024";
+    let salt = b"random_salt_16bytes";
+    let iterations = 100_000; // Recomendado: 100k+
+
+    let mut key = [0u8; 32];
+    Pbkdf2::<Sha256>::derive(
+        password,
+        salt,
+        iterations,
+        &mut key
+    ).expect("Erro no PBKDF2");
+
+    println!("PBKDF2 key: {}", hex::encode(key));
+}</code></pre>
+
+            <h3 data-i18n="kdf.examples.verify.title">Exemplo - Verificação de Senha</h3>
+            <pre><code class="language-rust">use avx_kdf::Argon2id;
+
+fn hash_password(password: &[u8]) -> String {
+    let salt = generate_random_salt();
+    let config = Argon2id::default_config();
+
+    let mut hash = [0u8; 32];
+    Argon2id::derive_key(&config, password, &salt, &mut hash)
+        .unwrap();
+
+    // Codificar hash + salt + params
+    encode_hash(&hash, &salt, &config)
+}
+
+fn verify_password(password: &[u8], encoded: &str) -> bool {
+    let (hash, salt, config) = decode_hash(encoded);
+
+    let mut computed = [0u8; 32];
+    Argon2id::derive_key(&config, password, &salt, &mut computed)
+        .unwrap();
+
+    // Comparação em tempo constante
+    constant_time_eq(&hash, &computed)
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- API Reference Section -->
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="kdf.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>Argon2id</h3>
+                <div class="api-method">
+                    <code>pub fn default_config() -> Config</code>
+                    <p data-i18n="kdf.api.argon2.config">Retorna configuração padrão recomendada.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn derive_key(config: &Config, password: &[u8], salt: &[u8], output: &mut [u8]) -> Result&lt;(), KdfError&gt;</code>
+                    <p data-i18n="kdf.api.argon2.derive">Deriva chave usando Argon2id.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Hkdf</h3>
+                <div class="api-method">
+                    <code>pub fn new(salt: Option&lt;&[u8]&gt;, ikm: &[u8]) -> Self</code>
+                    <p data-i18n="kdf.api.hkdf.new">Cria instância HKDF com salt opcional.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn expand(&self, info: &[u8], output: &mut [u8]) -> Result&lt;(), KdfError&gt;</code>
+                    <p data-i18n="kdf.api.hkdf.expand">Expande material chave com contexto.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Pbkdf2</h3>
+                <div class="api-method">
+                    <code>pub fn derive(password: &[u8], salt: &[u8], iterations: u32, output: &mut [u8]) -> Result&lt;(), KdfError&gt;</code>
+                    <p data-i18n="kdf.api.pbkdf2.derive">Deriva chave usando PBKDF2.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="kdf.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">~300ms</div>
+                    <div class="metric-label" data-i18n="kdf.performance.argon2">Argon2id</div>
+                    <div class="metric-detail">Config padrão</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~150ms</div>
+                    <div class="metric-label" data-i18n="kdf.performance.pbkdf2">PBKDF2</div>
+                    <div class="metric-detail">100k iterações</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">< 1ms</div>
+                    <div class="metric-label" data-i18n="kdf.performance.hkdf">HKDF</div>
+                    <div class="metric-detail">Expansão rápida</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">64 MB</div>
+                    <div class="metric-label" data-i18n="kdf.performance.memory">Memória</div>
+                    <div class="metric-detail">Argon2 padrão</div>
+                </div>
+            </div>
+
+            <div class="performance-chart">
+                <h3 data-i18n="kdf.performance.chart.title">Tempo de Derivação (ms)</h3>
+                <div class="chart-bars">
+                    <div class="chart-bar">
+                        <div class="bar-label">Argon2id (64MB)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 100%;" data-value="300 ms"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">scrypt (16MB)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 67%;" data-value="200 ms"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">PBKDF2 (100k)</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 50%;" data-value="150 ms"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">HKDF</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 1%;" data-value="< 1 ms"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="kdf.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="kdf.usecases.passwords.title">Armazenamento de Senhas</h3>
+                    <p data-i18n="kdf.usecases.passwords.desc">
+                        Hash seguro de senhas de usuários com Argon2id. Proteção contra rainbow tables e força bruta.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔑</div>
+                    <h3 data-i18n="kdf.usecases.encryption.title">Criptografia baseada em Senha</h3>
+                    <p data-i18n="kdf.usecases.encryption.desc">
+                        Derivar chaves de criptografia a partir de senhas para proteção de arquivos e dados.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔗</div>
+                    <h3 data-i18n="kdf.usecases.keyagreement.title">Acordo de Chaves</h3>
+                    <p data-i18n="kdf.usecases.keyagreement.desc">
+                        HKDF para derivar múltiplas chaves a partir de segredo compartilhado em protocolos como TLS.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🛡️</div>
+                    <h3 data-i18n="kdf.usecases.tokens.title">Tokens de Autenticação</h3>
+                    <p data-i18n="kdf.usecases.tokens.desc">
+                        Geração de tokens seguros e derivação de chaves de sessão para autenticação.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- License Section -->
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="kdf.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="kdf.license.desc">
+                    AVX KDF é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="kdf.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

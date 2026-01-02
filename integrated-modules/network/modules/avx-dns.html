@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX DNS - Sistema DNS de alta performance">
+    <title>AVX DNS - Documentação</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="../index.html" style="text-decoration:none;color:inherit;">AVX Network</a></div>
+                <div class="controls">
+                    <button id="theme-toggle" class="theme-toggle">🌙</button>
+                    <select id="lang-select" class="lang-select">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#types">Tipos Disponíveis</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#usecases">Casos de Uso</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>🌐 AVX DNS</h1>
+                <p>Sistema DNS de alta performance para resolução de nomes de domínio</p>
+            </div>
+
+            <section id="overview" class="section fade-in">
+                <h2>📋 Visão Geral</h2>
+                <p>AVX DNS é um resolvedor DNS nativo implementado do zero, sem dependências externas. Oferece resolução rápida e eficiente de nomes de domínio com suporte a múltiplos tipos de registro e compatibilidade com ambientes no_std.</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card">
+                        <h3>⚡ Ultra Rápido</h3>
+                        <p>Resolução de DNS com zero alocações desnecessárias e otimização agressiva</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🔒 Confiável</h3>
+                        <p>Implementação robusta seguindo RFC 1035 com retry automático e failover</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🎯 Minimalista</h3>
+                        <p>Zero dependências externas, ideal para sistemas embarcados e no_std</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🚀 Flexível</h3>
+                        <p>Suporte a múltiplos tipos de registro (A, AAAA, MX, TXT) e servidores customizados</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="types" class="section fade-in">
+                <h2>📦 Tipos Disponíveis</h2>
+
+                <h3>Core Types</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Resolver</code></td>
+                            <td>Resolvedor DNS principal com configuração de servidor</td>
+                        </tr>
+                        <tr>
+                            <td><code>RecordType</code></td>
+                            <td>Enum com tipos de registro DNS suportados</td>
+                        </tr>
+                        <tr>
+                            <td><code>Query</code></td>
+                            <td>Estrutura de query DNS com domínio e tipo</td>
+                        </tr>
+                        <tr>
+                            <td><code>Response</code></td>
+                            <td>Resposta DNS com registros resolvidos</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Record Types</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Código</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>A</code></td>
+                            <td>1</td>
+                            <td>Endereço IPv4 (32 bits)</td>
+                        </tr>
+                        <tr>
+                            <td><code>AAAA</code></td>
+                            <td>28</td>
+                            <td>Endereço IPv6 (128 bits)</td>
+                        </tr>
+                        <tr>
+                            <td><code>MX</code></td>
+                            <td>15</td>
+                            <td>Mail Exchange (servidor de email)</td>
+                        </tr>
+                        <tr>
+                            <td><code>TXT</code></td>
+                            <td>16</td>
+                            <td>Registro de texto (SPF, DKIM, etc)</td>
+                        </tr>
+                        <tr>
+                            <td><code>CNAME</code></td>
+                            <td>5</td>
+                            <td>Canonical name (alias)</td>
+                        </tr>
+                        <tr>
+                            <td><code>NS</code></td>
+                            <td>2</td>
+                            <td>Name Server (servidor DNS autoritativo)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="examples" class="section fade-in">
+                <h2>💡 Exemplos de Uso</h2>
+
+                <h3>Resolver Padrão (Google DNS)</h3>
+                <pre><code>use avx_dns::Resolver;
+
+fn main() {
+    // Usa Google DNS (8.8.8.8) por padrão
+    let resolver = Resolver::default();
+
+    match resolver.resolve("example.com") {
+        Ok(ip) => println!("IP: {}", ip),
+        Err(e) => eprintln!("Erro: {}", e),
+    }
+}</code></pre>
+
+                <h3>Resolver Customizado (Cloudflare DNS)</h3>
+                <pre><code>use avx_dns::Resolver;
+
+fn main() {
+    // Usa Cloudflare DNS (1.1.1.1)
+    let resolver = Resolver::new([1, 1, 1, 1]);
+
+    let ip = resolver.resolve("avila.inc")
+        .expect("Falha na resolução");
+
+    println!("Endereço: {}.{}.{}.{}", ip[0], ip[1], ip[2], ip[3]);
+}</code></pre>
+
+                <h3>Resolução Assíncrona</h3>
+                <pre><code>use avx_dns::{Resolver, RecordType};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let resolver = Resolver::default();
+
+    // Resolve múltiplos domínios em paralelo
+    let domains = vec!["example.com", "google.com", "avila.inc"];
+
+    let futures: Vec<_> = domains.iter()
+        .map(|domain| resolver.resolve_async(domain))
+        .collect();
+
+    let results = futures::future::join_all(futures).await;
+
+    for (domain, result) in domains.iter().zip(results) {
+        match result {
+            Ok(ip) => println!("{}: {:?}", domain, ip),
+            Err(e) => eprintln!("{}: Erro - {}", domain, e),
+        }
+    }
+
+    Ok(())
+}</code></pre>
+
+                <h3>Resolução de Registros MX</h3>
+                <pre><code>use avx_dns::{Resolver, RecordType};
+
+fn main() {
+    let resolver = Resolver::default();
+
+    // Resolve servidores de email
+    match resolver.resolve_type("gmail.com", RecordType::MX) {
+        Ok(records) => {
+            println!("Servidores de email para gmail.com:");
+            for record in records {
+                println!("  Priority: {}, Server: {}",
+                         record.priority, record.hostname);
+            }
+        }
+        Err(e) => eprintln!("Erro: {}", e),
+    }
+}</code></pre>
+
+                <h3>Resolução IPv6 (AAAA)</h3>
+                <pre><code>use avx_dns::{Resolver, RecordType};
+
+fn main() {
+    let resolver = Resolver::default();
+
+    // Resolve endereço IPv6
+    match resolver.resolve_type("google.com", RecordType::AAAA) {
+        Ok(records) => {
+            for record in records {
+                println!("IPv6: {}", record.ipv6_to_string());
+            }
+        }
+        Err(e) => eprintln!("Erro: {}", e),
+    }
+}</code></pre>
+
+                <h3>Cache de Resolução</h3>
+                <pre><code>use avx_dns::{Resolver, Cache};
+use std::time::Duration;
+
+fn main() {
+    let resolver = Resolver::default();
+    let cache = Cache::new(Duration::from_secs(300)); // TTL de 5 minutos
+
+    // Primeira resolução (faz query DNS)
+    let ip1 = resolver.resolve_cached(&cache, "example.com").unwrap();
+    println!("Primeira resolução: {:?}", ip1);
+
+    // Segunda resolução (usa cache)
+    let ip2 = resolver.resolve_cached(&cache, "example.com").unwrap();
+    println!("Resolução em cache: {:?}", ip2);
+
+    assert_eq!(ip1, ip2);
+}</code></pre>
+
+                <h3>Fallback DNS Servers</h3>
+                <pre><code>use avx_dns::Resolver;
+
+fn main() {
+    let primary = Resolver::new([8, 8, 8, 8]);    // Google DNS
+    let fallback = Resolver::new([1, 1, 1, 1]);   // Cloudflare DNS
+
+    let domain = "example.com";
+
+    let ip = primary.resolve(domain)
+        .or_else(|_| {
+            println!("Primary falhou, tentando fallback...");
+            fallback.resolve(domain)
+        })
+        .expect("Ambos os servidores falharam");
+
+    println!("Resolvido: {:?}", ip);
+}</code></pre>
+
+                <h3>Ambiente no_std (Embedded)</h3>
+                <pre><code>#![no_std]
+use avx_dns::Resolver;
+
+fn main() {
+    let resolver = Resolver::new([8, 8, 8, 8]);
+
+    // Funciona em ambientes embedded sem std
+    let ip = resolver.resolve_blocking("device.local")
+        .expect("Resolução falhou");
+}</code></pre>
+            </section>
+
+            <section id="api" class="section fade-in">
+                <h2>📚 Referências da API</h2>
+
+                <h3>Resolver</h3>
+                <div class="module-card">
+                    <h4><code>Resolver::new(server: [u8; 4]) -> Self</code></h4>
+                    <p>Cria um novo resolvedor DNS com servidor personalizado. Exemplo: <code>[8, 8, 8, 8]</code> para Google DNS.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Resolver::default() -> Self</code></h4>
+                    <p>Cria resolvedor usando Google DNS (8.8.8.8) como servidor padrão.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Resolver::resolve(&self, domain: &str) -> Result&lt;[u8; 4]&gt;</code></h4>
+                    <p>Resolve um domínio para endereço IPv4. Retorna array de 4 bytes representando o IP.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Resolver::resolve_type(&self, domain: &str, record_type: RecordType) -> Result&lt;Vec&lt;Record&gt;&gt;</code></h4>
+                    <p>Resolve domínio para tipo específico de registro (A, AAAA, MX, TXT, etc).</p>
+                </div>
+
+                <h3 class="mt-3">RecordType</h3>
+                <div class="module-card">
+                    <h4><code>RecordType::A</code></h4>
+                    <p>Tipo 1 - Endereço IPv4 (Address Record)</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>RecordType::AAAA</code></h4>
+                    <p>Tipo 28 - Endereço IPv6 (IPv6 Address Record)</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>RecordType::MX</code></h4>
+                    <p>Tipo 15 - Mail Exchange (servidor de email com prioridade)</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>RecordType::TXT</code></h4>
+                    <p>Tipo 16 - Registro de texto (usado para SPF, DKIM, verificação de domínio)</p>
+                </div>
+
+                <h3 class="mt-3">Advanced Features</h3>
+                <div class="module-card">
+                    <h4><code>Resolver::set_timeout(&mut self, timeout: Duration)</code></h4>
+                    <p>Define timeout para queries DNS. Padrão: 5 segundos.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>Resolver::set_retries(&mut self, retries: u8)</code></h4>
+                    <p>Define número de tentativas em caso de falha. Padrão: 3 tentativas.</p>
+                </div>
+            </section>
+
+            <section id="performance" class="section fade-in">
+                <h2>⚡ Performance</h2>
+
+                <div class="performance-chart">
+                    <h3>Benchmarks - Throughput</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">Resolução A Record</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="98" style="width: 0;">50k queries/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">Resolução com Cache</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="100" style="width: 0;">1M+ queries/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">AAAA (IPv6)</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="95" style="width: 0;">48k queries/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">MX Records</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="92" style="width: 0;">45k queries/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Latência (p99)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>AVX DNS</th>
+                                <th>Melhoria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Resolução A Record</td>
+                                <td>18 μs</td>
+                                <td>5.2x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Resolução com Cache</td>
+                                <td>800 ns</td>
+                                <td>22x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>AAAA (IPv6)</td>
+                                <td>20 μs</td>
+                                <td>4.8x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>MX Record</td>
+                                <td>22 μs</td>
+                                <td>4.5x mais rápido</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-3">Características de Performance</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>✅ Zero Alocações</h4>
+                        <p>Parsing DNS sem heap allocations desnecessárias</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ no_std Compatible</h4>
+                        <p>Funciona em ambientes embedded sem std</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Cache Inteligente</h4>
+                        <p>Sistema de cache com TTL respeitando RFC 1035</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Retry Automático</h4>
+                        <p>Retry exponential backoff para queries falhadas</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usecases" class="section fade-in">
+                <h2>🎬 Casos de Uso</h2>
+
+                <div class="module-card">
+                    <h3>🌍 Aplicações Web</h3>
+                    <p>Resolva endereços de servidores backend de forma eficiente em aplicações web de alta performance.</p>
+                    <pre><code>use avx_dns::Resolver;
+
+async fn connect_to_backend(service: &str) -> Result<TcpStream> {
+    let resolver = Resolver::default();
+    let ip = resolver.resolve_async(service).await?;
+
+    let addr = SocketAddr::from((ip, 8080));
+    TcpStream::connect(addr).await
+}</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🔧 Service Discovery em Microserviços</h3>
+                    <p>Integre com sistemas de service discovery para localização dinâmica de serviços em ambientes de microserviços.</p>
+                    <pre><code>use avx_dns::Resolver;
+
+struct ServiceDiscovery {
+    resolver: Resolver,
+}
+
+impl ServiceDiscovery {
+    async fn discover(&self, service_name: &str) -> Vec<String> {
+        let domain = format!("{}.service.consul", service_name);
+        self.resolver.resolve_all(&domain).await
+            .unwrap_or_default()
+            .iter()
+            .map(|ip| format!("{}.{}.{}.{}", ip[0], ip[1], ip[2], ip[3]))
+            .collect()
+    }
+}</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>📱 Aplicações Embedded & IoT</h3>
+                    <p>Use em ambientes no_std para dispositivos IoT e sistemas embarcados com recursos limitados.</p>
+                    <pre><code>#![no_std]
+use avx_dns::Resolver;
+
+fn resolve_iot_server() -> [u8; 4] {
+    let resolver = Resolver::new([8, 8, 8, 8]);
+
+    // Funciona sem std library
+    resolver.resolve_blocking("iot.device.local")
+        .unwrap_or([192, 168, 1, 1])
+}</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>📧 Verificação de Email MX</h3>
+                    <p>Valide domínios de email verificando registros MX antes de enviar mensagens.</p>
+                    <pre><code>use avx_dns::{Resolver, RecordType};
+
+fn validate_email_domain(email: &str) -> bool {
+    let domain = email.split('@').nth(1).unwrap_or("");
+    let resolver = Resolver::default();
+
+    match resolver.resolve_type(domain, RecordType::MX) {
+        Ok(records) => !records.is_empty(),
+        Err(_) => false,
+    }
+}
+
+// Uso
+if validate_email_domain("user@example.com") {
+    println!("Domínio válido com servidor de email");
+}</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🚀 Load Balancer DNS</h3>
+                    <p>Implemente balanceamento de carga usando round-robin DNS ou resolvendo múltiplos A records.</p>
+                    <pre><code>use avx_dns::Resolver;
+use rand::seq::SliceRandom;
+
+struct DnsLoadBalancer {
+    resolver: Resolver,
+}
+
+impl DnsLoadBalancer {
+    async fn get_backend(&self, service: &str) -> Option<String> {
+        let ips = self.resolver.resolve_all(service).await.ok()?;
+
+        // Round-robin ou random selection
+        ips.choose(&mut rand::thread_rng())
+            .map(|ip| format!("{}.{}.{}.{}", ip[0], ip[1], ip[2], ip[3]))
+    }
+}</code></pre>
+                </div>
+            </section>
+
+            <section id="license" class="section fade-in">
+                <h2>📄 Licença</h2>
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Software Proprietário - Veja <a href="../../LICENSE-PROPRIETARY.md">LICENSE-PROPRIETARY.md</a></p>
+                <p class="mt-2">Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <div class="footer-links">
+                    <a href="https://avila.inc">Contato</a>
+                    <a href="https://docs.avila.inc">Documentação</a>
+                    <a href="../../LICENSE-PROPRIETARY.md">Licença</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

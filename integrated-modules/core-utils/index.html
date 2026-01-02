@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Avila Core Utils - Biblioteca de utilidades de alto desempenho para Rust">
+    <meta name="keywords" content="Rust, Avila, Core, Utils, High Performance, Async Runtime">
+    <meta name="author" content="Nícolas Ávila">
+    <title>Avila Core Utils - Documentação</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">AVX</div>
+                <div class="logo-text">
+                    <h1 data-i18n="title">Avila Core Utils</h1>
+                    <p data-i18n="subtitle">Biblioteca de Utilidades de Alto Desempenho</p>
+                </div>
+            </div>
+            <div class="nav-controls">
+                <button id="theme-toggle" class="theme-toggle" data-i18n="themeToggle">🌓 Tema</button>
+                <select id="lang-selector" class="lang-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2 class="section-title" data-i18n="overview">Visão Geral</h2>
+            <div class="code-block">
+                <p>Avila Core Utils é uma coleção de bibliotecas Rust de alto desempenho desenvolvidas para aplicações críticas. Construído do zero com foco em:</p>
+                <ul style="margin-top: 1rem; padding-left: 2rem;">
+                    <li><strong>Zero-cost abstractions</strong> - Performance sem compromissos</li>
+                    <li><strong>No_std compatibility</strong> - Compatível com sistemas embarcados</li>
+                    <li><strong>Lock-free structures</strong> - Concorrência sem bloqueios</li>
+                    <li><strong>SIMD optimization</strong> - Aceleração vetorial</li>
+                    <li><strong>100% Rust puro</strong> - Sem dependências externas</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="modules">Módulos</h2>
+            <div id="modules-container" class="modules-grid">
+                <!-- Modules will be dynamically loaded here -->
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="performance">Performance</h2>
+            <div class="perf-chart">
+                <h3 style="margin-bottom: 1.5rem;">Comparativo de Performance</h3>
+
+                <div class="perf-bar">
+                    <div class="perf-label">avx-atom</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="95" style="width: 0%;">95%</div>
+                    </div>
+                </div>
+
+                <div class="perf-bar">
+                    <div class="perf-label">avx-runtime</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="92" style="width: 0%;">92%</div>
+                    </div>
+                </div>
+
+                <div class="perf-bar">
+                    <div class="perf-label">avx-events</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="89" style="width: 0%;">89%</div>
+                    </div>
+                </div>
+
+                <div class="perf-bar">
+                    <div class="perf-label">avx-queue</div>
+                    <div class="perf-bar-container">
+                        <div class="perf-bar-fill" data-width="91" style="width: 0%;">91%</div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 1.5rem; font-size: 0.9rem; color: var(--text-color); opacity: 0.8;">
+                    * Medido em operações por segundo comparado com bibliotecas padrão
+                </p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="useCases">Casos de Uso</h2>
+            <div class="use-cases">
+                <div class="use-case-card">
+                    <div class="use-case-icon">🏭</div>
+                    <h3>Indústria 4.0</h3>
+                    <p>Integração com MQTT, OPC-UA e sistemas de telemetria em tempo real</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>APIs de Alta Performance</h3>
+                    <p>Roteamento de eventos e processamento assíncrono de requisições</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">💾</div>
+                    <h3>Sistemas de Cache</h3>
+                    <p>Estruturas de dados otimizadas para caching distribuído</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔄</div>
+                    <h3>Event Sourcing</h3>
+                    <p>CQRS e event sourcing para arquiteturas distribuídas</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">⚡</div>
+                    <h3>Real-time Processing</h3>
+                    <p>Processamento de streams com latência sub-milissegundo</p>
+                </div>
+
+                <div class="use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>Sistemas Críticos</h3>
+                    <p>Aplicações com requisitos rigorosos de confiabilidade</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Instalação</h2>
+            <div class="code-block">
+                <pre># Adicione ao seu Cargo.toml
+[dependencies]
+avx-atom = "0.1.0"
+avx-runtime = "0.1.1"
+avx-events = "0.1.0"
+avx-queue = "0.1.0"
+
+# Ou use o workspace completo
+avx-core = { version = "0.1.0", features = ["full"] }</pre>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Exemplo Rápido</h2>
+            <div class="code-block">
+                <pre>use avx_runtime::Runtime;
+use avx_events::{EventBus, Event};
+
+#[derive(Event)]
+struct UserCreated {
+    id: u64,
+    name: String,
+}
+
+fn main() {
+    let rt = Runtime::new().unwrap();
+    let bus = EventBus::new();
+
+    // Subscribe to events
+    bus.subscribe::&lt;UserCreated&gt;(|event| {
+        println!("User created: {}", event.name);
+    });
+
+    // Publish event
+    rt.spawn(async move {
+        bus.publish(UserCreated {
+            id: 1,
+            name: "Avila".to_string(),
+        }).await;
+    });
+
+    rt.block_on();
+}</pre>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title" data-i18n="license">Licença</h2>
+            <div class="code-block">
+                <p><strong>Licença Proprietária</strong></p>
+                <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <p style="margin-top: 1rem;">
+                    Este software é propriedade exclusiva da Avila Inc. Para uso comercial,
+                    entre em contato: <a href="mailto:nicolas@avila.inc" style="color: var(--primary-color);">nicolas@avila.inc</a>
+                </p>
+                <p style="margin-top: 0.5rem;">
+                    Website: <a href="https://avila.inc" style="color: var(--primary-color);">https://avila.inc</a>
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">AVILA INC.</div>
+            <div class="footer-links">
+                <a href="https://avila.inc">Website</a>
+                <a href="mailto:nicolas@avila.inc">Contato</a>
+                <a href="https://github.com/avilaops">GitHub</a>
+                <a href="https://docs.avila.inc">Documentação</a>
+            </div>
+            <div>
+                <p style="font-size: 0.9rem; opacity: 0.8;">
+                    © 2025 Nícolas Ávila. Todos os direitos reservados.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/app.js"></script>
+    <script>
+        // Animate performance charts on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                window.avilaCore.animatePerformanceCharts();
+            }, 500);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+﻿[
+    {
+        "SourcePath":  "avx-buffer\\docs",
+        "Category":  "core",
+        "Module":  "avx-buffer",
+        "FileCount":  2,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\core\\avx-buffer"
+    },
+    {
+        "SourcePath":  "categories\\architecture\\docs",
+        "Category":  "architecture",
+        "Module":  "",
+        "FileCount":  9,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\architecture"
+    },
+    {
+        "SourcePath":  "categories\\auth\\docs",
+        "Category":  "auth",
+        "Module":  "",
+        "FileCount":  4,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\auth"
+    },
+    {
+        "SourcePath":  "categories\\cli\\docs",
+        "Category":  "cli",
+        "Module":  "",
+        "FileCount":  4,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\cli"
+    },
+    {
+        "SourcePath":  "categories\\cloud\\docs",
+        "Category":  "cloud",
+        "Module":  "",
+        "FileCount":  6,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\cloud"
+    },
+    {
+        "SourcePath":  "categories\\core-utils\\docs",
+        "Category":  "core-utils",
+        "Module":  "",
+        "FileCount":  4,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\core-utils"
+    },
+    {
+        "SourcePath":  "categories\\crypto-security\\docs",
+        "Category":  "crypto-security",
+        "Module":  "",
+        "FileCount":  28,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\crypto-security"
+    },
+    {
+        "SourcePath":  "categories\\database\\docs",
+        "Category":  "database",
+        "Module":  "",
+        "FileCount":  11,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\database"
+    },
+    {
+        "SourcePath":  "categories\\distributed\\docs",
+        "Category":  "distributed",
+        "Module":  "",
+        "FileCount":  16,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\distributed"
+    },
+    {
+        "SourcePath":  "categories\\email\\docs",
+        "Category":  "email",
+        "Module":  "",
+        "FileCount":  4,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\email"
+    },
+    {
+        "SourcePath":  "categories\\gpu\\docs",
+        "Category":  "gpu",
+        "Module":  "",
+        "FileCount":  7,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\gpu"
+    },
+    {
+        "SourcePath":  "categories\\math\\avx-bignum\\docs",
+        "Category":  "math",
+        "Module":  "avx-bignum",
+        "FileCount":  2,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\math\\avx-bignum"
+    },
+    {
+        "SourcePath":  "categories\\network\\docs",
+        "Category":  "network",
+        "Module":  "",
+        "FileCount":  15,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\network"
+    },
+    {
+        "SourcePath":  "categories\\observability\\docs",
+        "Category":  "observability",
+        "Module":  "",
+        "FileCount":  2,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\observability"
+    },
+    {
+        "SourcePath":  "categories\\rendering\\avx-quantum-render\\docs",
+        "Category":  "rendering",
+        "Module":  "avx-quantum-render",
+        "FileCount":  8,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\rendering\\avx-quantum-render"
+    },
+    {
+        "SourcePath":  "categories\\visualization\\docs",
+        "Category":  "visualization",
+        "Module":  "",
+        "FileCount":  6,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\visualization"
+    },
+    {
+        "SourcePath":  "categories\\visualization\\avx-arrow\\docs",
+        "Category":  "visualization",
+        "Module":  "avx-arrow",
+        "FileCount":  3,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\visualization\\avx-arrow"
+    },
+    {
+        "SourcePath":  "categories\\web\\docs",
+        "Category":  "web",
+        "Module":  "",
+        "FileCount":  3,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\web"
+    },
+    {
+        "SourcePath":  "categories\\web\\avx-browser\\docs",
+        "Category":  "web",
+        "Module":  "avx-browser",
+        "FileCount":  4,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\web\\avx-browser"
+    },
+    {
+        "SourcePath":  "docs\\docs",
+        "Category":  "core",
+        "Module":  "docs",
+        "FileCount":  6,
+        "DestPath":  "C:\\Users\\Administrador\\source\\repos\\arxis-core\\docs\\integrated-modules\\core\\docs"
+    }
+]

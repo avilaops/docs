@@ -39,17 +39,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const createMobileMenu = () => {
         const header = document.querySelector('.header .container');
         const nav = document.querySelector('.nav-menu');
-        
+
         if (window.innerWidth <= 768 && nav) {
             const menuBtn = document.createElement('button');
             menuBtn.className = 'mobile-menu-btn';
             menuBtn.innerHTML = '☰';
             menuBtn.style.cssText = 'background:none;border:none;color:var(--text);font-size:1.5rem;cursor:pointer;display:block;';
-            
+
             menuBtn.addEventListener('click', () => {
                 nav.classList.toggle('active');
             });
-            
+
             if (!document.querySelector('.mobile-menu-btn')) {
                 header.appendChild(menuBtn);
             }

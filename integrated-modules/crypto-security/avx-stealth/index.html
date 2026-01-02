@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Stealth - Endereços stealth e privacidade">
+    <title>AVX Stealth - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo"><span class="avx-gradient">AVX</span> Crypto Security</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><select id="language-selector"><option value="pt-BR">🇧🇷 PT</option><option value="en">🇺🇸 EN</option></select></li>
+                <li><button id="theme-toggle">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient">AVX Stealth</h1>
+            <p class="hero-subtitle">Endereços Stealth - Privacidade máxima em transações</p>
+            <div class="hero-badges">
+                <span class="badge">Stealth Addresses</span>
+                <span class="badge">Privacy</span>
+                <span class="badge">Unlinkable</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2>Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🕵️ Stealth Addresses</h3>
+                    <p>Endereços únicos para cada transação. Impossível vincular múltiplos pagamentos ao mesmo destinatário.</p>
+                </div>
+                <div class="card">
+                    <h3>🔐 Dual-Key Cryptography</h3>
+                    <p>Sistema de duas chaves: view key e spend key para controle granular de privacidade.</p>
+                </div>
+                <div class="card">
+                    <h3>👁️ View Keys</h3>
+                    <p>Permita auditoria seletiva sem comprometer capacidade de gastar fundos.</p>
+                </div>
+                <div class="card">
+                    <h3>⛓️ Blockchain Privacy</h3>
+                    <p>Usado em Monero e outras criptomoedas focadas em privacidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2>Exemplos de Uso</h2>
+            <h3>Gerar Endereço Stealth</h3>
+            <pre><code class="language-rust">use avx_stealth::StealthAddress;
+
+fn main() {
+    let (spend_key, view_key) = StealthAddress::generate_keys();
+    let stealth_addr = StealthAddress::derive(&spend_key, &view_key);
+    println!("Stealth: {}", stealth_addr.to_string());
+}</code></pre>
+
+            <h3>Enviar para Stealth Address</h3>
+            <pre><code class="language-rust">use avx_stealth::StealthTransaction;
+
+fn main() {
+    let one_time_address = StealthTransaction::create_one_time_address(
+        &recipient_stealth_address
+    );
+    send_payment(one_time_address, amount);
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">💰</div>
+                    <h3>Pagamentos Privados</h3>
+                    <p>Transações com privacidade total, sem revelar histórico de pagamentos.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏪</div>
+                    <h3>E-commerce Anônimo</h3>
+                    <p>Aceitar pagamentos sem expor endereço único publicamente.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

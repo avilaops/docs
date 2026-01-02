@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx Auth - Sistema de Autenticação e Autorização | Avila Inc</title>
+    <meta name="description" content="Sistema avançado de autenticação e autorização da Avila Platform - JWT, OAuth2, RBAC/ABAC, MFA e Zero Trust">
+    <style>
+        :root {
+            --primary-orange: #FF6B35;
+            --primary-yellow: #FFD23F;
+            --bg-light: #FFFFFF;
+            --text-light: #1A1A1A;
+            --card-light: #F5F5F5;
+            
+            --bg-dark: #0A0A0A;
+            --text-dark: #E0E0E0;
+            --card-dark: #1A1A1A;
+            --space-gray: #2D2D2D;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode {
+            background: var(--bg-light);
+            color: var(--text-light);
+        }
+
+        body.dark-mode {
+            background: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 3px solid var(--primary-orange);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        body.light-mode header {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        body.dark-mode header {
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: 2px solid var(--primary-orange);
+            background: transparent;
+            color: var(--primary-orange);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--primary-orange);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .lang-selector {
+            padding: 8px 12px;
+            border: 2px solid var(--primary-yellow);
+            border-radius: 6px;
+            background: transparent;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .lang-selector {
+            color: var(--text-light);
+        }
+
+        body.dark-mode .lang-selector {
+            color: var(--text-dark);
+        }
+
+        .lang-selector:hover {
+            background: var(--primary-yellow);
+            color: var(--text-light);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            animation: fadeInUp 1s ease;
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            color: white;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: var(--primary-orange);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            border-radius: 12px;
+            border: 2px solid var(--primary-orange);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        body.light-mode .feature-card {
+            background: var(--card-light);
+        }
+
+        body.dark-mode .feature-card {
+            background: var(--card-dark);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            color: var(--primary-orange);
+            margin-bottom: 12px;
+            font-size: 22px;
+        }
+
+        /* Code Examples */
+        .code-section {
+            padding: 60px 0;
+        }
+
+        .code-example {
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid var(--primary-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        body.light-mode .code-example {
+            background: #282c34;
+        }
+
+        body.dark-mode .code-example {
+            background: #1e1e1e;
+        }
+
+        .code-example pre {
+            overflow-x: auto;
+            margin: 0;
+        }
+
+        .code-example code {
+            color: #abb2bf;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Types Table */
+        .types-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--primary-orange);
+        }
+
+        .types-table th {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .types-table td {
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 107, 53, 0.2);
+        }
+
+        body.light-mode .types-table tr:hover {
+            background: rgba(255, 107, 53, 0.1);
+        }
+
+        body.dark-mode .types-table tr:hover {
+            background: rgba(255, 107, 53, 0.2);
+        }
+
+        /* Performance Section */
+        .performance-section {
+            padding: 60px 0;
+        }
+
+        .performance-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .perf-card {
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 2px solid var(--primary-yellow);
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .perf-card {
+            background: var(--card-light);
+        }
+
+        body.dark-mode .perf-card {
+            background: var(--card-dark);
+        }
+
+        .perf-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(255, 210, 63, 0.3);
+        }
+
+        .perf-metric {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary-orange);
+            margin: 10px 0;
+        }
+
+        /* Use Cases */
+        .use-cases {
+            padding: 60px 0;
+        }
+
+        .use-case {
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border-left: 5px solid var(--primary-orange);
+            animation: slideInLeft 0.6s ease;
+        }
+
+        body.light-mode .use-case {
+            background: var(--card-light);
+        }
+
+        body.dark-mode .use-case {
+            background: var(--card-dark);
+        }
+
+        .use-case h3 {
+            color: var(--primary-orange);
+            margin-bottom: 10px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 0;
+            text-align: center;
+            border-top: 3px solid var(--primary-orange);
+            margin-top: 80px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--primary-orange);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-yellow);
+            transform: translateY(-2px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body class="light-mode">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span>🔐</span>
+                    <span data-i18n="title">Avx Auth</span>
+                </div>
+                <div class="controls">
+                    <select class="lang-selector" id="langSelector">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="de-CH">🇨🇭 Schweizerdeutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                    <button class="btn" id="themeToggle" data-i18n="toggleTheme">🌙 Modo Escuro</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="version-badge" data-i18n="version">Versão 0.1.0</div>
+                <h1 class="float-animation" data-i18n="heroTitle">Sistema de Autenticação e Autorização de Classe Mundial</h1>
+                <p data-i18n="heroSubtitle">Autenticação JWT, OAuth2, MFA, RBAC/ABAC e Zero Trust para a Avila Platform</p>
+            </div>
+        </section>
+
+        <section class="features">
+            <div class="container">
+                <h2 class="section-title" data-i18n="featuresTitle">Características Principais</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎫</div>
+                        <h3 data-i18n="feature1Title">Autenticação JWT</h3>
+                        <p data-i18n="feature1Desc">Suporte a múltiplos algoritmos (RS256, ES256, HS256) com rotação automática de chaves e validação completa de claims.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔑</div>
+                        <h3 data-i18n="feature2Title">OAuth2 / OIDC</h3>
+                        <p data-i18n="feature2Desc">Implementação completa de OAuth 2.0 e OpenID Connect com suporte a todos os principais provedores de identidade.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🛡️</div>
+                        <h3 data-i18n="feature3Title">Multi-Factor Authentication</h3>
+                        <p data-i18n="feature3Desc">TOTP, WebAuthn/FIDO2 e autenticação biométrica para máxima segurança de contas.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3 data-i18n="feature4Title">RBAC + ABAC</h3>
+                        <p data-i18n="feature4Desc">Controle de acesso baseado em funções e atributos com políticas dinâmicas e herança de permissões.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔐</div>
+                        <h3 data-i18n="feature5Title">API Keys</h3>
+                        <p data-i18n="feature5Desc">Chaves de API com escopos granulares, rate limiting e rotação automática para segurança contínua.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🤖</div>
+                        <h3 data-i18n="feature6Title">Detecção de Anomalias</h3>
+                        <p data-i18n="feature6Desc">Sistema alimentado por ML para identificação proativa de ameaças e comportamentos suspeitos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="code-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="examplesTitle">Exemplos de Uso</h2>
+                
+                <h3 data-i18n="example1Title">Registro e Login</h3>
+                <div class="code-example">
+                    <pre><code>use avx_auth::{AuthClient, Credentials, Config};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let config = Config::default();
+    let auth = AuthClient::new(config).await?;
+
+    // Registrar novo usuário
+    let user_id = auth.register(
+        "usuario@exemplo.com",
+        "SenhaSegura123!@"
+    ).await?;
+
+    // Fazer login
+    let session = auth.login(Credentials {
+        email: "usuario@exemplo.com".to_string(),
+        password: "SenhaSegura123!@".to_string(),
+        device_id: Some("dispositivo_123".to_string()),
+        ip_address: Some("192.168.1.1".parse()?),
+    }).await?;
+
+    println!("Token: {}", session.access_token);
+    Ok(())
+}</code></pre>
+                </div>
+
+                <h3 data-i18n="example2Title">Verificação de Permissões</h3>
+                <div class="code-example">
+                    <pre><code>async fn verificar_acesso(auth: &AuthClient, user_id: Uuid) -> Result<()> {
+    let pode_editar = auth.check_permission(
+        user_id,
+        "posts",
+        "edit"
+    ).await?;
+
+    if pode_editar {
+        println!("✅ Usuário tem permissão para editar posts");
+    } else {
+        println!("❌ Acesso negado");
+    }
+    Ok(())
+}</code></pre>
+                </div>
+
+                <h3 data-i18n="example3Title">MFA com TOTP</h3>
+                <div class="code-example">
+                    <pre><code>async fn habilitar_mfa(auth: &AuthClient, user_id: Uuid) -> Result<String> {
+    // Gerar segredo TOTP
+    let secret = auth.generate_mfa_secret(user_id).await?;
+    
+    // Gerar QR code para app autenticador
+    let qr_code = auth.generate_mfa_qr_code(
+        &secret,
+        "usuario@exemplo.com"
+    ).await?;
+    
+    // Verificar código TOTP
+    let codigo = "123456";
+    auth.verify_mfa_code(user_id, codigo).await?;
+    
+    // Ativar MFA
+    auth.enable_mfa(user_id, MfaMethod::Totp).await?;
+    
+    Ok(qr_code)
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="types-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="typesTitle">Tipos Disponíveis</h2>
+                <table class="types-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="typeColumn">Tipo</th>
+                            <th data-i18n="descColumn">Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>AuthClient</code></td>
+                            <td data-i18n="typeAuth">Cliente principal para operações de autenticação e autorização</td>
+                        </tr>
+                        <tr>
+                            <td><code>Credentials</code></td>
+                            <td data-i18n="typeCred">Credenciais para login com email, senha e contexto do dispositivo</td>
+                        </tr>
+                        <tr>
+                            <td><code>User</code></td>
+                            <td data-i18n="typeUser">Representação de usuário com roles, permissões e metadados</td>
+                        </tr>
+                        <tr>
+                            <td><code>Session</code></td>
+                            <td data-i18n="typeSession">Sessão ativa com tokens de acesso e refresh</td>
+                        </tr>
+                        <tr>
+                            <td><code>Claims</code></td>
+                            <td data-i18n="typeClaims">Claims JWT para autorização com roles e permissões</td>
+                        </tr>
+                        <tr>
+                            <td><code>Role</code></td>
+                            <td data-i18n="typeRole">Definição de função com permissões e herança</td>
+                        </tr>
+                        <tr>
+                            <td><code>Permission</code></td>
+                            <td data-i18n="typePerm">Permissão granular para recurso e ação específicos</td>
+                        </tr>
+                        <tr>
+                            <td><code>Policy</code></td>
+                            <td data-i18n="typePolicy">Política ABAC com condições e efeitos dinâmicos</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="performance-section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="perfTitle">Performance</h2>
+                <div class="performance-grid">
+                    <div class="perf-card">
+                        <h4 data-i18n="perfJwtSign">JWT Sign (RS256)</h4>
+                        <div class="perf-metric">847 µs</div>
+                        <p data-i18n="perfThroughput">1,180 ops/s</p>
+                    </div>
+                    <div class="perf-card">
+                        <h4 data-i18n="perfJwtVerify">JWT Verify (RS256)</h4>
+                        <div class="perf-metric">289 µs</div>
+                        <p data-i18n="perfThroughput2">3,460 ops/s</p>
+                    </div>
+                    <div class="perf-card">
+                        <h4 data-i18n="perfPasswordHash">Password Hash</h4>
+                        <div class="perf-metric">52.3 ms</div>
+                        <p data-i18n="perfThroughput3">19 ops/s</p>
+                    </div>
+                    <div class="perf-card">
+                        <h4 data-i18n="perfPermCheck">Permission Check</h4>
+                        <div class="perf-metric">0.8 µs</div>
+                        <p data-i18n="perfThroughput4">1.25M ops/s</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="use-cases">
+            <div class="container">
+                <h2 class="section-title" data-i18n="useCasesTitle">Casos de Uso</h2>
+                <div class="use-case">
+                    <h3>🌐 <span data-i18n="useCase1Title">Aplicação Web SPA</span></h3>
+                    <p data-i18n="useCase1Desc">Autenticação JWT com refresh tokens automático e sessões distribuídas para aplicações single-page modernas.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🔌 <span data-i18n="useCase2Title">API REST</span></h3>
+                    <p data-i18n="useCase2Desc">API keys com rate limiting e escopos granulares por endpoint para controle preciso de acesso.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🏗️ <span data-i18n="useCase3Title">Microserviços</span></h3>
+                    <p data-i18n="useCase3Desc">Verificação de JWT stateless com chaves públicas compartilhadas para arquiteturas distribuídas.</p>
+                </div>
+                <div class="use-case">
+                    <h3>📱 <span data-i18n="useCase4Title">Aplicativos Mobile</span></h3>
+                    <p data-i18n="useCase4Desc">OAuth2 PKCE flow com device fingerprinting e detecção de anomalias para segurança móvel.</p>
+                </div>
+                <div class="use-case">
+                    <h3>🏢 <span data-i18n="useCase5Title">Enterprise SSO</span></h3>
+                    <p data-i18n="useCase5Desc">OpenID Connect com múltiplos identity providers e mapeamento automático de roles empresariais.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p data-i18n="copyright">Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+            <div class="footer-links">
+                <a href="https://avila.inc" data-i18n="website">Website</a>
+                <a href="https://docs.avila.inc" data-i18n="docs">Documentação</a>
+                <a href="mailto:nicolas@avila.inc" data-i18n="contact">Contato</a>
+            </div>
+            <p data-i18n="license">Licença Proprietária - Avila Inc</p>
+            <p data-i18n="madeWith">💙 Desenvolvido pela Avila Inc</p>
+        </div>
+    </footer>
+
+    <script>
+        // Traduções
+        const translations = {
+            'pt-BR': {
+                title: 'Avx Auth',
+                toggleTheme: '🌙 Modo Escuro',
+                toggleThemeLight: '☀️ Modo Claro',
+                version: 'Versão 0.1.0',
+                heroTitle: 'Sistema de Autenticação e Autorização de Classe Mundial',
+                heroSubtitle: 'Autenticação JWT, OAuth2, MFA, RBAC/ABAC e Zero Trust para a Avila Platform',
+                featuresTitle: 'Características Principais',
+                feature1Title: 'Autenticação JWT',
+                feature1Desc: 'Suporte a múltiplos algoritmos (RS256, ES256, HS256) com rotação automática de chaves e validação completa de claims.',
+                feature2Title: 'OAuth2 / OIDC',
+                feature2Desc: 'Implementação completa de OAuth 2.0 e OpenID Connect com suporte a todos os principais provedores de identidade.',
+                feature3Title: 'Multi-Factor Authentication',
+                feature3Desc: 'TOTP, WebAuthn/FIDO2 e autenticação biométrica para máxima segurança de contas.',
+                feature4Title: 'RBAC + ABAC',
+                feature4Desc: 'Controle de acesso baseado em funções e atributos com políticas dinâmicas e herança de permissões.',
+                feature5Title: 'API Keys',
+                feature5Desc: 'Chaves de API com escopos granulares, rate limiting e rotação automática para segurança contínua.',
+                feature6Title: 'Detecção de Anomalias',
+                feature6Desc: 'Sistema alimentado por ML para identificação proativa de ameaças e comportamentos suspeitos.',
+                examplesTitle: 'Exemplos de Uso',
+                example1Title: 'Registro e Login',
+                example2Title: 'Verificação de Permissões',
+                example3Title: 'MFA com TOTP',
+                typesTitle: 'Tipos Disponíveis',
+                typeColumn: 'Tipo',
+                descColumn: 'Descrição',
+                typeAuth: 'Cliente principal para operações de autenticação e autorização',
+                typeCred: 'Credenciais para login com email, senha e contexto do dispositivo',
+                typeUser: 'Representação de usuário com roles, permissões e metadados',
+                typeSession: 'Sessão ativa com tokens de acesso e refresh',
+                typeClaims: 'Claims JWT para autorização com roles e permissões',
+                typeRole: 'Definição de função com permissões e herança',
+                typePerm: 'Permissão granular para recurso e ação específicos',
+                typePolicy: 'Política ABAC com condições e efeitos dinâmicos',
+                perfTitle: 'Performance',
+                perfJwtSign: 'JWT Sign (RS256)',
+                perfJwtVerify: 'JWT Verify (RS256)',
+                perfPasswordHash: 'Password Hash',
+                perfPermCheck: 'Permission Check',
+                perfThroughput: '1,180 ops/s',
+                perfThroughput2: '3,460 ops/s',
+                perfThroughput3: '19 ops/s',
+                perfThroughput4: '1.25M ops/s',
+                useCasesTitle: 'Casos de Uso',
+                useCase1Title: 'Aplicação Web SPA',
+                useCase1Desc: 'Autenticação JWT com refresh tokens automático e sessões distribuídas para aplicações single-page modernas.',
+                useCase2Title: 'API REST',
+                useCase2Desc: 'API keys com rate limiting e escopos granulares por endpoint para controle preciso de acesso.',
+                useCase3Title: 'Microserviços',
+                useCase3Desc: 'Verificação de JWT stateless com chaves públicas compartilhadas para arquiteturas distribuídas.',
+                useCase4Title: 'Aplicativos Mobile',
+                useCase4Desc: 'OAuth2 PKCE flow com device fingerprinting e detecção de anomalias para segurança móvel.',
+                useCase5Title: 'Enterprise SSO',
+                useCase5Desc: 'OpenID Connect com múltiplos identity providers e mapeamento automático de roles empresariais.',
+                copyright: 'Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados',
+                website: 'Website',
+                docs: 'Documentação',
+                contact: 'Contato',
+                license: 'Licença Proprietária - Avila Inc',
+                madeWith: '💙 Desenvolvido pela Avila Inc'
+            },
+            'ru': {
+                title: 'Avx Auth',
+                toggleTheme: '🌙 Тёмный режим',
+                toggleThemeLight: '☀️ Светлый режим',
+                version: 'Версия 0.1.0',
+                heroTitle: 'Система аутентификации и авторизации мирового класса',
+                heroSubtitle: 'JWT аутентификация, OAuth2, MFA, RBAC/ABAC и Zero Trust для Avila Platform',
+                featuresTitle: 'Основные возможности',
+                feature1Title: 'JWT аутентификация',
+                feature1Desc: 'Поддержка нескольких алгоритмов (RS256, ES256, HS256) с автоматической ротацией ключей.',
+                feature2Title: 'OAuth2 / OIDC',
+                feature2Desc: 'Полная реализация OAuth 2.0 и OpenID Connect с поддержкой всех основных провайдеров.',
+                feature3Title: 'Многофакторная аутентификация',
+                feature3Desc: 'TOTP, WebAuthn/FIDO2 и биометрическая аутентификация для максимальной безопасности.',
+                feature4Title: 'RBAC + ABAC',
+                feature4Desc: 'Контроль доступа на основе ролей и атрибутов с динамическими политиками.',
+                feature5Title: 'API ключи',
+                feature5Desc: 'API ключи с детальными областями, ограничением скорости и автоматической ротацией.',
+                feature6Title: 'Обнаружение аномалий',
+                feature6Desc: 'Система на базе ML для проактивного выявления угроз и подозрительного поведения.',
+                examplesTitle: 'Примеры использования',
+                example1Title: 'Регистрация и вход',
+                example2Title: 'Проверка разрешений',
+                example3Title: 'MFA с TOTP',
+                typesTitle: 'Доступные типы',
+                typeColumn: 'Тип',
+                descColumn: 'Описание',
+                typeAuth: 'Основной клиент для операций аутентификации и авторизации',
+                typeCred: 'Учетные данные для входа с email, паролем и контекстом устройства',
+                typeUser: 'Представление пользователя с ролями, разрешениями и метаданными',
+                typeSession: 'Активная сессия с токенами доступа и обновления',
+                typeClaims: 'JWT утверждения для авторизации с ролями и разрешениями',
+                typeRole: 'Определение роли с разрешениями и наследованием',
+                typePerm: 'Детальное разрешение для конкретного ресурса и действия',
+                typePolicy: 'ABAC политика с динамическими условиями и эффектами',
+                perfTitle: 'Производительность',
+                useCasesTitle: 'Варианты использования',
+                useCase1Title: 'Веб-приложение SPA',
+                useCase1Desc: 'JWT аутентификация с автоматическим обновлением токенов для современных SPA.',
+                useCase2Title: 'REST API',
+                useCase2Desc: 'API ключи с ограничением скорости и детальными областями для точного контроля доступа.',
+                useCase3Title: 'Микросервисы',
+                useCase3Desc: 'Проверка JWT без состояния с общими публичными ключами для распределенных архитектур.',
+                useCase4Title: 'Мобильные приложения',
+                useCase4Desc: 'OAuth2 PKCE flow с отпечатками устройств и обнаружением аномалий.',
+                useCase5Title: 'Enterprise SSO',
+                useCase5Desc: 'OpenID Connect с несколькими провайдерами и автоматическим сопоставлением ролей.',
+                copyright: 'Copyright © 2025 Nícolas Ávila - Все права защищены',
+                website: 'Веб-сайт',
+                docs: 'Документация',
+                contact: 'Контакт',
+                license: 'Проприетарная лицензия - Avila Inc',
+                madeWith: '💙 Разработано Avila Inc'
+            },
+            'ja': {
+                title: 'Avx Auth',
+                toggleTheme: '🌙 ダークモード',
+                toggleThemeLight: '☀️ ライトモード',
+                version: 'バージョン 0.1.0',
+                heroTitle: '世界クラスの認証・認可システム',
+                heroSubtitle: 'Avila Platform向けのJWT認証、OAuth2、MFA、RBAC/ABAC、ゼロトラスト',
+                featuresTitle: '主な機能',
+                feature1Title: 'JWT認証',
+                feature1Desc: '複数のアルゴリズム（RS256、ES256、HS256）をサポートし、鍵の自動ローテーションを実現。',
+                feature2Title: 'OAuth2 / OIDC',
+                feature2Desc: 'OAuth 2.0およびOpenID Connectの完全な実装。すべての主要プロバイダーをサポート。',
+                feature3Title: '多要素認証',
+                feature3Desc: 'TOTP、WebAuthn/FIDO2、生体認証で最大限のアカウントセキュリティを実現。',
+                feature4Title: 'RBAC + ABAC',
+                feature4Desc: 'ロールおよび属性ベースのアクセス制御。動的ポリシーと権限の継承。',
+                feature5Title: 'APIキー',
+                feature5Desc: '詳細なスコープ、レート制限、自動ローテーションを備えたAPIキー。',
+                feature6Title: '異常検知',
+                feature6Desc: 'MLを活用した脅威と不審な行動の事前検知システム。',
+                examplesTitle: '使用例',
+                example1Title: '登録とログイン',
+                example2Title: '権限の確認',
+                example3Title: 'TOTPを使用したMFA',
+                typesTitle: '利用可能な型',
+                typeColumn: '型',
+                descColumn: '説明',
+                typeAuth: '認証・認可操作のメインクライアント',
+                typeCred: 'メール、パスワード、デバイスコンテキストを含むログイン資格情報',
+                typeUser: 'ロール、権限、メタデータを持つユーザー表現',
+                typeSession: 'アクセストークンとリフレッシュトークンを持つアクティブセッション',
+                typeClaims: 'ロールと権限を含む認可用のJWTクレーム',
+                typeRole: '権限と継承を持つロール定義',
+                typePerm: '特定のリソースとアクションに対する詳細な権限',
+                typePolicy: '動的な条件と効果を持つABACポリシー',
+                perfTitle: 'パフォーマンス',
+                useCasesTitle: 'ユースケース',
+                useCase1Title: 'Webアプリケーション SPA',
+                useCase1Desc: '最新のSPAアプリケーション向けの自動リフレッシュトークンとJWT認証。',
+                useCase2Title: 'REST API',
+                useCase2Desc: 'エンドポイントごとの詳細なスコープとレート制限を備えたAPIキー。',
+                useCase3Title: 'マイクロサービス',
+                useCase3Desc: '分散アーキテクチャ向けの共有公開鍵によるステートレスJWT検証。',
+                useCase4Title: 'モバイルアプリ',
+                useCase4Desc: 'デバイスフィンガープリントと異常検知を備えたOAuth2 PKCEフロー。',
+                useCase5Title: 'エンタープライズSSO',
+                useCase5Desc: '複数のIDプロバイダーと自動ロールマッピングを備えたOpenID Connect。',
+                copyright: 'Copyright © 2025 Nícolas Ávila - 無断転載禁止',
+                website: 'ウェブサイト',
+                docs: 'ドキュメント',
+                contact: 'お問い合わせ',
+                license: 'プロプライエタリライセンス - Avila Inc',
+                madeWith: '💙 Avila Incが開発'
+            },
+            'es': {
+                title: 'Avx Auth',
+                toggleTheme: '🌙 Modo Oscuro',
+                toggleThemeLight: '☀️ Modo Claro',
+                version: 'Versión 0.1.0',
+                heroTitle: 'Sistema de Autenticación y Autorización de Clase Mundial',
+                heroSubtitle: 'Autenticación JWT, OAuth2, MFA, RBAC/ABAC y Zero Trust para Avila Platform',
+                featuresTitle: 'Características Principales',
+                feature1Title: 'Autenticación JWT',
+                feature1Desc: 'Soporte para múltiples algoritmos (RS256, ES256, HS256) con rotación automática de claves.',
+                feature2Title: 'OAuth2 / OIDC',
+                feature2Desc: 'Implementación completa de OAuth 2.0 y OpenID Connect con soporte para todos los proveedores principales.',
+                feature3Title: 'Autenticación Multifactor',
+                feature3Desc: 'TOTP, WebAuthn/FIDO2 y autenticación biométrica para máxima seguridad de cuentas.',
+                feature4Title: 'RBAC + ABAC',
+                feature4Desc: 'Control de acceso basado en roles y atributos con políticas dinámicas y herencia de permisos.',
+                feature5Title: 'Claves API',
+                feature5Desc: 'Claves API con alcances granulares, limitación de velocidad y rotación automática.',
+                feature6Title: 'Detección de Anomalías',
+                feature6Desc: 'Sistema alimentado por ML para identificación proactiva de amenazas y comportamientos sospechosos.',
+                examplesTitle: 'Ejemplos de Uso',
+                example1Title: 'Registro e Inicio de Sesión',
+                example2Title: 'Verificación de Permisos',
+                example3Title: 'MFA con TOTP',
+                typesTitle: 'Tipos Disponibles',
+                typeColumn: 'Tipo',
+                descColumn: 'Descripción',
+                typeAuth: 'Cliente principal para operaciones de autenticación y autorización',
+                typeCred: 'Credenciales para inicio de sesión con email, contraseña y contexto del dispositivo',
+                typeUser: 'Representación de usuario con roles, permisos y metadatos',
+                typeSession: 'Sesión activa con tokens de acceso y actualización',
+                typeClaims: 'Claims JWT para autorización con roles y permisos',
+                typeRole: 'Definición de rol con permisos y herencia',
+                typePerm: 'Permiso granular para recurso y acción específicos',
+                typePolicy: 'Política ABAC con condiciones y efectos dinámicos',
+                perfTitle: 'Rendimiento',
+                useCasesTitle: 'Casos de Uso',
+                useCase1Title: 'Aplicación Web SPA',
+                useCase1Desc: 'Autenticación JWT con tokens de actualización automática y sesiones distribuidas.',
+                useCase2Title: 'API REST',
+                useCase2Desc: 'Claves API con limitación de velocidad y alcances granulares para control preciso de acceso.',
+                useCase3Title: 'Microservicios',
+                useCase3Desc: 'Verificación JWT sin estado con claves públicas compartidas para arquitecturas distribuidas.',
+                useCase4Title: 'Aplicaciones Móviles',
+                useCase4Desc: 'Flujo OAuth2 PKCE con huellas digitales de dispositivo y detección de anomalías.',
+                useCase5Title: 'SSO Empresarial',
+                useCase5Desc: 'OpenID Connect con múltiples proveedores de identidad y mapeo automático de roles.',
+                copyright: 'Copyright © 2025 Nícolas Ávila - Todos los Derechos Reservados',
+                website: 'Sitio Web',
+                docs: 'Documentación',
+                contact: 'Contacto',
+                license: 'Licencia Propietaria - Avila Inc',
+                madeWith: '💙 Desarrollado por Avila Inc'
+            },
+            'de': {
+                title: 'Avx Auth',
+                toggleTheme: '🌙 Dunkelmodus',
+                toggleThemeLight: '☀️ Hellmodus',
+                version: 'Version 0.1.0',
+                heroTitle: 'Weltklasse-Authentifizierungs- und Autorisierungssystem',
+                heroSubtitle: 'JWT-Authentifizierung, OAuth2, MFA, RBAC/ABAC und Zero Trust für die Avila Platform',
+                featuresTitle: 'Hauptmerkmale',
+                feature1Title: 'JWT-Authentifizierung',
+                feature1Desc: 'Unterstützung mehrerer Algorithmen (RS256, ES256, HS256) mit automatischer Schlüsselrotation.',
+                feature2Title: 'OAuth2 / OIDC',
+                feature2Desc: 'Vollständige Implementierung von OAuth 2.0 und OpenID Connect mit Unterstützung aller wichtigen Anbieter.',
+                feature3Title: 'Multi-Faktor-Authentifizierung',
+                feature3Desc: 'TOTP, WebAuthn/FIDO2 und biometrische Authentifizierung für maximale Kontosicherheit.',
+                feature4Title: 'RBAC + ABAC',
+                feature4Desc: 'Rollen- und attributbasierte Zugriffskontrolle mit dynamischen Richtlinien und Berechtigungsvererbung.',
+                feature5Title: 'API-Schlüssel',
+                feature5Desc: 'API-Schlüssel mit granularen Bereichen, Ratenbegrenzung und automatischer Rotation.',
+                feature6Title: 'Anomalieerkennung',
+                feature6Desc: 'ML-gestütztes System zur proaktiven Erkennung von Bedrohungen und verdächtigem Verhalten.',
+                examplesTitle: 'Verwendungsbeispiele',
+                example1Title: 'Registrierung und Anmeldung',
+                example2Title: 'Berechtigungsprüfung',
+                example3Title: 'MFA mit TOTP',
+                typesTitle: 'Verfügbare Typen',
+                typeColumn: 'Typ',
+                descColumn: 'Beschreibung',
+                typeAuth: 'Hauptclient für Authentifizierungs- und Autorisierungsoperationen',
+                typeCred: 'Anmeldeinformationen mit E-Mail, Passwort und Gerätekontext',
+                typeUser: 'Benutzerdarstellung mit Rollen, Berechtigungen und Metadaten',
+                typeSession: 'Aktive Sitzung mit Zugriffs- und Aktualisierungstoken',
+                typeClaims: 'JWT-Claims für Autorisierung mit Rollen und Berechtigungen',
+                typeRole: 'Rollendefinition mit Berechtigungen und Vererbung',
+                typePerm: 'Granulare Berechtigung für spezifische Ressource und Aktion',
+                typePolicy: 'ABAC-Richtlinie mit dynamischen Bedingungen und Effekten',
+                perfTitle: 'Leistung',
+                useCasesTitle: 'Anwendungsfälle',
+                useCase1Title: 'Web-Anwendung SPA',
+                useCase1Desc: 'JWT-Authentifizierung mit automatischer Token-Aktualisierung für moderne SPAs.',
+                useCase2Title: 'REST API',
+                useCase2Desc: 'API-Schlüssel mit Ratenbegrenzung und granularen Bereichen für präzise Zugriffskontrolle.',
+                useCase3Title: 'Microservices',
+                useCase3Desc: 'Zustandslose JWT-Überprüfung mit gemeinsamen öffentlichen Schlüsseln für verteilte Architekturen.',
+                useCase4Title: 'Mobile Anwendungen',
+                useCase4Desc: 'OAuth2 PKCE-Flow mit Device Fingerprinting und Anomalieerkennung.',
+                useCase5Title: 'Enterprise SSO',
+                useCase5Desc: 'OpenID Connect mit mehreren Identitätsanbietern und automatischem Rollen-Mapping.',
+                copyright: 'Copyright © 2025 Nícolas Ávila - Alle Rechte vorbehalten',
+                website: 'Webseite',
+                docs: 'Dokumentation',
+                contact: 'Kontakt',
+                license: 'Proprietäre Lizenz - Avila Inc',
+                madeWith: '💙 Entwickelt von Avila Inc'
+            },
+            'ar': {
+                title: 'Avx Auth',
+                toggleTheme: '🌙 الوضع الداكن',
+                toggleThemeLight: '☀️ الوضع الفاتح',
+                version: 'الإصدار 0.1.0',
+                heroTitle: 'نظام مصادقة وتفويض عالمي المستوى',
+                heroSubtitle: 'مصادقة JWT وOAuth2 وMFA وRBAC/ABAC وZero Trust لمنصة Avila',
+                featuresTitle: 'الميزات الرئيسية',
+                feature1Title: 'مصادقة JWT',
+                feature1Desc: 'دعم خوارزميات متعددة (RS256، ES256، HS256) مع تدوير تلقائي للمفاتيح.',
+                feature2Title: 'OAuth2 / OIDC',
+                feature2Desc: 'تنفيذ كامل لـ OAuth 2.0 و OpenID Connect مع دعم جميع مقدمي الخدمة الرئيسيين.',
+                feature3Title: 'المصادقة متعددة العوامل',
+                feature3Desc: 'TOTP وWebAuthn/FIDO2 والمصادقة البيومترية لأقصى أمان للحسابات.',
+                feature4Title: 'RBAC + ABAC',
+                feature4Desc: 'التحكم في الوصول القائم على الأدوار والسمات مع سياسات ديناميكية ووراثة الأذونات.',
+                feature5Title: 'مفاتيح API',
+                feature5Desc: 'مفاتيح API مع نطاقات دقيقة وتحديد المعدل والتدوير التلقائي.',
+                feature6Title: 'كشف الشذوذ',
+                feature6Desc: 'نظام يعتمد على ML للتعرف الاستباقي على التهديدات والسلوكيات المشبوهة.',
+                examplesTitle: 'أمثلة الاستخدام',
+                example1Title: 'التسجيل وتسجيل الدخول',
+                example2Title: 'التحقق من الأذونات',
+                example3Title: 'MFA مع TOTP',
+                typesTitle: 'الأنواع المتاحة',
+                typeColumn: 'النوع',
+                descColumn: 'الوصف',
+                typeAuth: 'العميل الرئيسي لعمليات المصادقة والتفويض',
+                typeCred: 'بيانات الاعتماد لتسجيل الدخول مع البريد الإلكتروني وكلمة المرور وسياق الجهاز',
+                typeUser: 'تمثيل المستخدم بالأدوار والأذونات والبيانات الوصفية',
+                typeSession: 'جلسة نشطة مع رموز الوصول والتحديث',
+                typeClaims: 'مطالبات JWT للتفويض مع الأدوار والأذونات',
+                typeRole: 'تعريف الدور مع الأذونات والوراثة',
+                typePerm: 'إذن دقيق لمورد وإجراء محددين',
+                typePolicy: 'سياسة ABAC مع شروط وتأثيرات ديناميكية',
+                perfTitle: 'الأداء',
+                useCasesTitle: 'حالات الاستخدام',
+                useCase1Title: 'تطبيق ويب SPA',
+                useCase1Desc: 'مصادقة JWT مع تحديث تلقائي للرموز وجلسات موزعة للتطبيقات الحديثة.',
+                useCase2Title: 'واجهة REST API',
+                useCase2Desc: 'مفاتيح API مع تحديد المعدل ونطاقات دقيقة للتحكم الدقيق في الوصول.',
+                useCase3Title: 'الخدمات الصغيرة',
+                useCase3Desc: 'التحقق من JWT بدون حالة مع مفاتيح عامة مشتركة للبنى الموزعة.',
+                useCase4Title: 'تطبيقات الجوال',
+                useCase4Desc: 'تدفق OAuth2 PKCE مع بصمة الجهاز وكشف الشذوذ.',
+                useCase5Title: 'SSO المؤسسي',
+                useCase5Desc: 'OpenID Connect مع مقدمي هوية متعددين وتعيين تلقائي للأدوار.',
+                copyright: 'حقوق النشر © 2025 نيكولاس أفيلا - جميع الحقوق محفوظة',
+                website: 'الموقع الإلكتروني',
+                docs: 'التوثيق',
+                contact: 'اتصل بنا',
+                license: 'ترخيص خاص - Avila Inc',
+                madeWith: '💙 تم التطوير بواسطة Avila Inc'
+            }
+        };
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = false;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            body.className = isDark ? 'dark-mode' : 'light-mode';
+            updateThemeButton();
+        });
+
+        function updateThemeButton() {
+            const lang = document.getElementById('langSelector').value;
+            const key = isDark ? 'toggleThemeLight' : 'toggleTheme';
+            themeToggle.textContent = translations[lang][key] || translations['pt-BR'][key];
+        }
+
+        // Language Selector
+        const langSelector = document.getElementById('langSelector');
+        
+        langSelector.addEventListener('change', (e) => {
+            changeLanguage(e.target.value);
+        });
+
+        function changeLanguage(lang) {
+            const t = translations[lang] || translations['pt-BR'];
+            
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (t[key]) {
+                    element.textContent = t[key];
+                }
+            });
+
+            updateThemeButton();
+            document.documentElement.lang = lang;
+        }
+
+        // Initialize
+        changeLanguage('pt-BR');
+    </script>
+</body>
+</html>

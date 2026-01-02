@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx Observability - Documentação</title>
+    <style>
+        :root {
+            --primary: #FF8C00;
+            --secondary: #FFD700;
+            --background: #FFFFFF;
+            --surface: #F5F5F5;
+            --text: #1A1A1A;
+            --text-secondary: #666666;
+            --border: #E0E0E0;
+            --code-bg: #F8F8F8;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --primary: #FF8C00;
+            --secondary: #FFD700;
+            --background: #0A0E27;
+            --surface: #1A1F3A;
+            --text: #E8E8E8;
+            --text-secondary: #A0A0A0;
+            --border: #2A2F4A;
+            --code-bg: #151933;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Header */
+        header {
+            background: var(--surface);
+            border-bottom: 2px solid var(--primary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 25px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        /* Language Selector */
+        .lang-selector {
+            position: relative;
+        }
+
+        .lang-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px var(--shadow);
+            display: none;
+            min-width: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .lang-dropdown.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .lang-option {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .lang-option:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.95;
+        }
+
+        /* Module Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .module-card {
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .module-description {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .module-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .module-features li {
+            padding: 0.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        .module-features li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Features Section */
+        .features {
+            margin: 4rem 0;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--surface);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px var(--shadow);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--surface);
+            border-top: 2px solid var(--primary);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            color: var(--text-secondary);
+        }
+
+        .footer-links {
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .modules-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid var(--border);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">🔥 Avx Observability</div>
+            <div class="controls">
+                <button class="theme-toggle" onclick="toggleTheme()">
+                    <span id="theme-icon">🌙</span>
+                    <span id="theme-text" data-key="dark-mode">Modo Escuro</span>
+                </button>
+                <div class="lang-selector">
+                    <button class="lang-btn" onclick="toggleLangDropdown()">
+                        <span id="current-lang-flag">🇧🇷</span>
+                        <span id="current-lang">PT-BR</span>
+                        <span>▼</span>
+                    </button>
+                    <div class="lang-dropdown" id="lang-dropdown">
+                        <div class="lang-option" onclick="changeLang('pt-BR', '🇧🇷')">🇧🇷 Português (Brasil)</div>
+                        <div class="lang-option" onclick="changeLang('ru-RU', '🇷🇺')">🇷🇺 Русский</div>
+                        <div class="lang-option" onclick="changeLang('ja-JP', '🇯🇵')">🇯🇵 日本語</div>
+                        <div class="lang-option" onclick="changeLang('zh-TW', '🇹🇼')">🇹🇼 繁體中文</div>
+                        <div class="lang-option" onclick="changeLang('ur-PK', '🇵🇰')">🇵🇰 اردو</div>
+                        <div class="lang-option" onclick="changeLang('ar-SA', '🇸🇦')">🇸🇦 العربية</div>
+                        <div class="lang-option" onclick="changeLang('de-DE', '🇩🇪')">🇩🇪 Deutsch</div>
+                        <div class="lang-option" onclick="changeLang('de-CH', '🇨🇭')">🇨🇭 Schweizerdeutsch</div>
+                        <div class="lang-option" onclick="changeLang('lv-LV', '🇱🇻')">🇱🇻 Latviešu</div>
+                        <div class="lang-option" onclick="changeLang('uz-UZ', '🇺🇿')">🇺🇿 O'zbek</div>
+                        <div class="lang-option" onclick="changeLang('es-ES', '🇪🇸')">🇪🇸 Español</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1 data-key="hero-title">Ecossistema Avx de Observabilidade</h1>
+            <p data-key="hero-subtitle">Suite completa de ferramentas para monitoramento, logging, métricas e telemetria</p>
+        </div>
+
+        <div class="modules-grid">
+            <div class="module-card" onclick="navigateTo('avx-alert')">
+                <div class="module-icon">🚨</div>
+                <h3 class="module-title">Avx Alert</h3>
+                <p class="module-description" data-key="alert-desc">Sistema de alertas e notificações em tempo real</p>
+                <ul class="module-features">
+                    <li data-key="alert-f1">Múltiplos níveis de severidade</li>
+                    <li data-key="alert-f2">Formatação flexível (JSON, Text)</li>
+                    <li data-key="alert-f3">Handlers customizáveis</li>
+                    <li data-key="alert-f4">Zero dependências externas</li>
+                </ul>
+            </div>
+
+            <div class="module-card" onclick="navigateTo('avx-telemetry')">
+                <div class="module-icon">📡</div>
+                <h3 class="module-title">Avx Telemetry</h3>
+                <p class="module-description" data-key="telemetry-desc">Análise de séries temporais e previsão avançada</p>
+                <ul class="module-features">
+                    <li data-key="telemetry-f1">ARIMA, SARIMA, State Space</li>
+                    <li data-key="telemetry-f2">Detecção de anomalias</li>
+                    <li data-key="telemetry-f3">Golden Signals</li>
+                    <li data-key="telemetry-f4">Qualidade de dados NASA</li>
+                </ul>
+            </div>
+
+            <div class="module-card" onclick="navigateTo('avx-log')">
+                <div class="module-icon">📝</div>
+                <h3 class="module-title">Avx Log</h3>
+                <p class="module-description" data-key="log-desc">Logging estruturado de alto desempenho</p>
+                <ul class="module-features">
+                    <li data-key="log-f1">Logging estruturado</li>
+                    <li data-key="log-f2">Zero allocations</li>
+                    <li data-key="log-f3">Thread-safe</li>
+                    <li data-key="log-f4">< 500ns latência</li>
+                </ul>
+            </div>
+
+            <div class="module-card" onclick="navigateTo('avx-logger')">
+                <div class="module-icon">📊</div>
+                <h3 class="module-title">Avx Logger</h3>
+                <p class="module-description" data-key="logger-desc">Sistema avançado com múltiplos backends</p>
+                <ul class="module-features">
+                    <li data-key="logger-f1">Múltiplos backends</li>
+                    <li data-key="logger-f2">Rotação automática</li>
+                    <li data-key="logger-f3">Compressão de logs</li>
+                    <li data-key="logger-f4">Buffer assíncrono</li>
+                </ul>
+            </div>
+
+            <div class="module-card" onclick="navigateTo('avx-metrics')">
+                <div class="module-icon">📈</div>
+                <h3 class="module-title">Avx Metrics</h3>
+                <p class="module-description" data-key="metrics-desc">Coleta e agregação de métricas</p>
+                <ul class="module-features">
+                    <li data-key="metrics-f1">Counter, Gauge, Histogram</li>
+                    <li data-key="metrics-f2">Exportação Prometheus</li>
+                    <li data-key="metrics-f3">Labels dinâmicos</li>
+                    <li data-key="metrics-f4">< 100ns overhead</li>
+                </ul>
+            </div>
+
+            <div class="module-card" onclick="navigateTo('avx-monitor')">
+                <div class="module-icon">🔍</div>
+                <h3 class="module-title">Avx Monitor</h3>
+                <p class="module-description" data-key="monitor-desc">Monitoramento e health checks</p>
+                <ul class="module-features">
+                    <li data-key="monitor-f1">Health checks HTTP/TCP</li>
+                    <li data-key="monitor-f2">Circuit breakers</li>
+                    <li data-key="monitor-f3">Service discovery</li>
+                    <li data-key="monitor-f4">Alertas proativos</li>
+                </ul>
+            </div>
+
+            <div class="module-card" onclick="navigateTo('avx-observability')">
+                <div class="module-icon">🎯</div>
+                <h3 class="module-title">Avx Observability</h3>
+                <p class="module-description" data-key="observability-desc">Suite completa integrada</p>
+                <ul class="module-features">
+                    <li data-key="observability-f1">API unificada</li>
+                    <li data-key="observability-f2">Correlação automática</li>
+                    <li data-key="observability-f3">Context propagation</li>
+                    <li data-key="observability-f4">Auto-instrumentation</li>
+                </ul>
+            </div>
+
+            <div class="module-card" onclick="navigateTo('avx-tracing')">
+                <div class="module-icon">🔎</div>
+                <h3 class="module-title">Avx Tracing</h3>
+                <p class="module-description" data-key="tracing-desc">Distributed tracing OpenTelemetry</p>
+                <ul class="module-features">
+                    <li data-key="tracing-f1">OpenTelemetry compliant</li>
+                    <li data-key="tracing-f2">W3C Trace Context</li>
+                    <li data-key="tracing-f3">Span attributes</li>
+                    <li data-key="tracing-f4">Jaeger, Zipkin export</li>
+                </ul>
+            </div>
+        </div>
+
+        <section class="features">
+            <h2 data-key="features-title">Características Principais</h2>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <h3 class="feature-title" data-key="perf-title">Alto Desempenho</h3>
+                    <p data-key="perf-desc">Otimizado para latência mínima e throughput máximo</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🔒</div>
+                    <h3 class="feature-title" data-key="secure-title">Seguro e Confiável</h3>
+                    <p data-key="secure-desc">Thread-safe com garantias de memória do Rust</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">🎨</div>
+                    <h3 class="feature-title" data-key="flexible-title">Flexível</h3>
+                    <p data-key="flexible-desc">APIs ergonômicas e altamente configuráveis</p>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">📦</div>
+                    <h3 class="feature-title" data-key="zero-title">Zero Dependências</h3>
+                    <p data-key="zero-desc">Implementação Rust pura sem deps externas</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p data-key="copyright">Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p data-key="company">Avila Inc. - Soluções de Observabilidade de Classe Mundial</p>
+        <div class="footer-links">
+            <a href="mailto:nicolas@avila.inc" data-key="contact">Contato</a>
+            <a href="https://avila.inc" data-key="website">Website</a>
+            <a href="#" data-key="license">Licenciamento</a>
+        </div>
+    </footer>
+
+    <script>
+        // Traduções
+        const translations = {
+            'pt-BR': {
+                'dark-mode': 'Modo Escuro',
+                'light-mode': 'Modo Claro',
+                'hero-title': 'Ecossistema Avx de Observabilidade',
+                'hero-subtitle': 'Suite completa de ferramentas para monitoramento, logging, métricas e telemetria',
+                'alert-desc': 'Sistema de alertas e notificações em tempo real',
+                'telemetry-desc': 'Análise de séries temporais e previsão avançada',
+                'log-desc': 'Logging estruturado de alto desempenho',
+                'logger-desc': 'Sistema avançado com múltiplos backends',
+                'metrics-desc': 'Coleta e agregação de métricas',
+                'monitor-desc': 'Monitoramento e health checks',
+                'observability-desc': 'Suite completa integrada',
+                'tracing-desc': 'Distributed tracing OpenTelemetry',
+                'features-title': 'Características Principais',
+                'perf-title': 'Alto Desempenho',
+                'perf-desc': 'Otimizado para latência mínima e throughput máximo',
+                'secure-title': 'Seguro e Confiável',
+                'secure-desc': 'Thread-safe com garantias de memória do Rust',
+                'flexible-title': 'Flexível',
+                'flexible-desc': 'APIs ergonômicas e altamente configuráveis',
+                'zero-title': 'Zero Dependências',
+                'zero-desc': 'Implementação Rust pura sem deps externas',
+                'copyright': 'Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados',
+                'company': 'Avila Inc. - Soluções de Observabilidade de Classe Mundial',
+                'contact': 'Contato',
+                'website': 'Website',
+                'license': 'Licenciamento'
+            },
+            'en-US': {
+                'dark-mode': 'Dark Mode',
+                'light-mode': 'Light Mode',
+                'hero-title': 'Avx Observability Ecosystem',
+                'hero-subtitle': 'Complete suite of tools for monitoring, logging, metrics and telemetry',
+                'features-title': 'Key Features',
+                'copyright': 'Copyright © 2025 Nícolas Ávila - All Rights Reserved',
+                'company': 'Avila Inc. - World-Class Observability Solutions'
+            }
+            // Adicionar mais idiomas conforme necessário
+        };
+
+        let currentLang = 'pt-BR';
+        let currentTheme = 'light';
+
+        // Theme Toggle
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            document.getElementById('theme-icon').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            updateTranslation();
+            localStorage.setItem('theme', currentTheme);
+        }
+
+        // Language Toggle
+        function toggleLangDropdown() {
+            document.getElementById('lang-dropdown').classList.toggle('active');
+        }
+
+        function changeLang(lang, flag) {
+            currentLang = lang;
+            document.getElementById('current-lang').textContent = lang;
+            document.getElementById('current-lang-flag').textContent = flag;
+            document.getElementById('lang-dropdown').classList.remove('active');
+            updateTranslation();
+            localStorage.setItem('lang', lang);
+        }
+
+        function updateTranslation() {
+            const lang = translations[currentLang] || translations['pt-BR'];
+            document.querySelectorAll('[data-key]').forEach(el => {
+                const key = el.getAttribute('data-key');
+                if (lang[key]) {
+                    el.textContent = lang[key];
+                }
+            });
+
+            // Atualizar texto do tema
+            const themeKey = currentTheme === 'dark' ? 'light-mode' : 'dark-mode';
+            document.getElementById('theme-text').textContent = lang[themeKey] || lang['dark-mode'];
+        }
+
+        // Navigate to module
+        function navigateTo(module) {
+            window.location.href = `./${module}.html`;
+        }
+
+        // Load saved preferences
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            const savedLang = localStorage.getItem('lang');
+
+            if (savedTheme) {
+                currentTheme = savedTheme;
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                document.getElementById('theme-icon').textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            }
+
+            if (savedLang) {
+                currentLang = savedLang;
+                // Set flag based on lang
+                const flags = {
+                    'pt-BR': '🇧🇷',
+                    'ru-RU': '🇷🇺',
+                    'ja-JP': '🇯🇵',
+                    'zh-TW': '🇹🇼',
+                    'ur-PK': '🇵🇰',
+                    'ar-SA': '🇸🇦',
+                    'de-DE': '🇩🇪',
+                    'de-CH': '🇨🇭',
+                    'lv-LV': '🇱🇻',
+                    'uz-UZ': '🇺🇿',
+                    'es-ES': '🇪🇸'
+                };
+                document.getElementById('current-lang').textContent = savedLang;
+                document.getElementById('current-lang-flag').textContent = flags[savedLang] || '🌐';
+            }
+
+            updateTranslation();
+        });
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', (e) => {
+            if (!e.target.closest('.lang-selector')) {
+                document.getElementById('lang-dropdown').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

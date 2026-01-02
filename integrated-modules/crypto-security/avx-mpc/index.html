@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX MPC - Computação multipartidária segura">
+    <title>AVX MPC - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="mpc.hero.title">AVX MPC</h1>
+            <p class="hero-subtitle" data-i18n="mpc.hero.subtitle">
+                Computação Multipartidária Segura - Secure Multi-Party Computation
+            </p>
+            <div class="hero-badges">
+                <span class="badge">MPC</span>
+                <span class="badge">Secret Sharing</span>
+                <span class="badge">Privacy Preserving</span>
+                <span class="badge">Distributed</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mpc.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="mpc.overview.card1.title">🤝 Computação Colaborativa</h3>
+                    <p data-i18n="mpc.overview.card1.desc">
+                        Múltiplas partes computam funções sobre dados privados sem revelar suas entradas. Mantém privacidade total.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="mpc.overview.card2.title">🔐 Secret Sharing</h3>
+                    <p data-i18n="mpc.overview.card2.desc">
+                        Esquemas Shamir e Feldman para dividir segredos entre participantes. Recuperação com threshold configurável.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="mpc.overview.card3.title">🛡️ Privacy Preserving</h3>
+                    <p data-i18n="mpc.overview.card3.desc">
+                        Computação sem revelar dados sensíveis. Ideal para colaboração entre organizações com dados confidenciais.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="mpc.overview.card4.title">⚡ Protocolos Otimizados</h3>
+                    <p data-i18n="mpc.overview.card4.desc">
+                        Implementações eficientes de protocolos MPC modernos com mínima overhead de comunicação.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mpc.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="mpc.types.table.type">Tipo</th>
+                            <th data-i18n="mpc.types.table.description">Descrição</th>
+                            <th data-i18n="mpc.types.table.security">Modelo de Segurança</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ShamirSecretSharing</code></td>
+                            <td data-i18n="mpc.types.shamir">Compartilhamento de segredo Shamir</td>
+                            <td>Information-theoretic</td>
+                        </tr>
+                        <tr>
+                            <td><code>FeldmanVSS</code></td>
+                            <td data-i18n="mpc.types.feldman">Verifiable Secret Sharing</td>
+                            <td>Computational</td>
+                        </tr>
+                        <tr>
+                            <td><code>MpcProtocol</code></td>
+                            <td data-i18n="mpc.types.protocol">Protocolo MPC genérico</td>
+                            <td>Semi-honest / Malicious</td>
+                        </tr>
+                        <tr>
+                            <td><code>SecretShare</code></td>
+                            <td data-i18n="mpc.types.share">Compartilhamento individual</td>
+                            <td>Threshold-based</td>
+                        </tr>
+                        <tr>
+                            <td><code>MpcParty</code></td>
+                            <td data-i18n="mpc.types.party">Participante do protocolo</td>
+                            <td>Authenticated</td>
+                        </tr>
+                        <tr>
+                            <td><code>ThresholdScheme</code></td>
+                            <td data-i18n="mpc.types.threshold">Esquema de threshold</td>
+                            <td>(t, n)-threshold</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mpc.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="mpc.examples.shamir.title">Exemplo Básico - Shamir Secret Sharing</h3>
+            <pre><code class="language-rust">use avx_mpc::ShamirSecretSharing;
+
+fn main() {
+    // Configuração: (3, 5) threshold
+    // Necessário 3 de 5 shares para recuperar
+    let threshold = 3;
+    let total_shares = 5;
+
+    let secret = b"Segredo muito importante!";
+
+    // Dividir segredo
+    let sss = ShamirSecretSharing::new(threshold, total_shares);
+    let shares = sss.split(secret)
+        .expect("Falha ao dividir segredo");
+
+    println!("✅ Segredo dividido em {} shares", shares.len());
+
+    // Recuperar com 3 shares quaisquer
+    let recovered = sss.reconstruct(&shares[0..3])
+        .expect("Falha ao recuperar");
+
+    assert_eq!(secret, recovered.as_slice());
+    println!("✅ Segredo recuperado!");
+}</code></pre>
+
+            <h3 data-i18n="mpc.examples.feldman.title">Exemplo - Feldman VSS (Verifiable)</h3>
+            <pre><code class="language-rust">use avx_mpc::FeldmanVSS;
+
+fn main() {
+    let threshold = 2;
+    let n_parties = 4;
+
+    let secret = b"Chave mestra";
+
+    // Criar VSS verificável
+    let vss = FeldmanVSS::new(threshold, n_parties);
+    let (shares, commitments) = vss.share_secret(secret)
+        .expect("Erro ao compartilhar");
+
+    // Cada participante verifica seu share
+    for (i, share) in shares.iter().enumerate() {
+        let is_valid = vss.verify_share(share, &commitments);
+        assert!(is_valid);
+        println!("✅ Share {} verificado", i);
+    }
+
+    // Recuperar secreto
+    let recovered = vss.reconstruct(&shares[0..threshold])
+        .expect("Erro na recuperação");
+
+    assert_eq!(secret, recovered.as_slice());
+}</code></pre>
+
+            <h3 data-i18n="mpc.examples.mpc.title">Exemplo - Computação MPC</h3>
+            <pre><code class="language-rust">use avx_mpc::{MpcProtocol, MpcParty};
+
+fn main() {
+    // Criar 3 participantes
+    let party1 = MpcParty::new(1, vec![2, 3]);
+    let party2 = MpcParty::new(2, vec![1, 3]);
+    let party3 = MpcParty::new(3, vec![1, 2]);
+
+    // Cada um tem entrada privada
+    let input1 = 100u64;
+    let input2 = 200u64;
+    let input3 = 50u64;
+
+    // Computar soma sem revelar entradas individuais
+    let protocol = MpcProtocol::new(vec![party1, party2, party3]);
+
+    let result = protocol.compute_sum(&[
+        input1, input2, input3
+    ]).expect("Erro no MPC");
+
+    println!("Soma MPC: {}", result); // 350
+    // Nenhum participante conhece as entradas dos outros!
+}</code></pre>
+
+            <h3 data-i18n="mpc.examples.distributed.title">Exemplo - Assinatura Distribuída</h3>
+            <pre><code class="language-rust">use avx_mpc::{DistributedSignature, ThresholdScheme};
+
+fn main() {
+    // Chave privada dividida entre 5 partes
+    // Necessário 3 para assinar
+    let scheme = ThresholdScheme::new(3, 5);
+    let private_key = generate_key();
+
+    let key_shares = scheme.split_key(&private_key)
+        .expect("Erro ao dividir chave");
+
+    // 3 partes colaboram para assinar
+    let message = b"Transação importante";
+    let sig_shares = vec![
+        key_shares[0].sign(message),
+        key_shares[2].sign(message),
+        key_shares[4].sign(message),
+    ];
+
+    // Combinar assinaturas parciais
+    let signature = scheme.combine_signatures(&sig_shares)
+        .expect("Erro ao combinar");
+
+    // Verificar assinatura final
+    assert!(verify_signature(&public_key, message, &signature));
+    println!("✅ Assinatura distribuída criada!");
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mpc.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>ShamirSecretSharing</h3>
+                <div class="api-method">
+                    <code>pub fn new(threshold: usize, total: usize) -> Self</code>
+                    <p data-i18n="mpc.api.shamir.new">Cria esquema (t, n)-threshold.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn split(&self, secret: &[u8]) -> Result&lt;Vec&lt;SecretShare&gt;, MpcError&gt;</code>
+                    <p data-i18n="mpc.api.shamir.split">Divide segredo em shares.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn reconstruct(&self, shares: &[SecretShare]) -> Result&lt;Vec&lt;u8&gt;, MpcError&gt;</code>
+                    <p data-i18n="mpc.api.shamir.reconstruct">Recupera segredo de shares.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>FeldmanVSS</h3>
+                <div class="api-method">
+                    <code>pub fn new(threshold: usize, n_parties: usize) -> Self</code>
+                    <p data-i18n="mpc.api.feldman.new">Cria VSS verificável.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn share_secret(&self, secret: &[u8]) -> Result&lt;(Vec&lt;Share&gt;, Vec&lt;Commitment&gt;), MpcError&gt;</code>
+                    <p data-i18n="mpc.api.feldman.share">Compartilha com compromissos.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify_share(&self, share: &Share, commitments: &[Commitment]) -> bool</code>
+                    <p data-i18n="mpc.api.feldman.verify">Verifica validade do share.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>MpcProtocol</h3>
+                <div class="api-method">
+                    <code>pub fn new(parties: Vec&lt;MpcParty&gt;) -> Self</code>
+                    <p data-i18n="mpc.api.protocol.new">Inicializa protocolo MPC.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn compute_sum(&self, inputs: &[u64]) -> Result&lt;u64, MpcError&gt;</code>
+                    <p data-i18n="mpc.api.protocol.sum">Computa soma preservando privacidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mpc.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">< 10ms</div>
+                    <div class="metric-label" data-i18n="mpc.performance.sharing">Secret Sharing</div>
+                    <div class="metric-detail">5 shares</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">< 5ms</div>
+                    <div class="metric-label" data-i18n="mpc.performance.reconstruct">Reconstruction</div>
+                    <div class="metric-detail">Threshold 3/5</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~100ms</div>
+                    <div class="metric-label" data-i18n="mpc.performance.mpc">Computação MPC</div>
+                    <div class="metric-detail">3 parties</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">< 1ms</div>
+                    <div class="metric-label" data-i18n="mpc.performance.verify">Verificação VSS</div>
+                    <div class="metric-detail">Por share</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mpc.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔑</div>
+                    <h3 data-i18n="mpc.usecases.keymanagement.title">Gerenciamento de Chaves</h3>
+                    <p data-i18n="mpc.usecases.keymanagement.desc">
+                        Dividir chaves privadas entre múltiplos participantes. Nenhuma parte única tem controle total.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">✍️</div>
+                    <h3 data-i18n="mpc.usecases.signatures.title">Assinaturas Threshold</h3>
+                    <p data-i18n="mpc.usecases.signatures.desc">
+                        Assinaturas digitais que requerem colaboração de múltiplas partes para serem geradas.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">💰</div>
+                    <h3 data-i18n="mpc.usecases.wallets.title">Carteiras Multi-Sig</h3>
+                    <p data-i18n="mpc.usecases.wallets.desc">
+                        Carteiras criptográficas que exigem múltiplas aprovações para realizar transações.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏦</div>
+                    <h3 data-i18n="mpc.usecases.privacy.title">Análise Privada de Dados</h3>
+                    <p data-i18n="mpc.usecases.privacy.desc">
+                        Computação conjunta sobre dados sensíveis de múltiplas organizações sem revelar dados brutos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="mpc.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="mpc.license.desc">
+                    AVX MPC é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="mpc.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

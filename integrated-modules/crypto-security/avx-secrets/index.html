@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Secrets - Gerenciamento de segredos">
+    <title>AVX Secrets - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo"><span class="avx-gradient">AVX</span> Crypto Security</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><select id="language-selector"><option value="pt-BR">🇧🇷 PT</option><option value="en">🇺🇸 EN</option></select></li>
+                <li><button id="theme-toggle">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient">AVX Secrets</h1>
+            <p class="hero-subtitle">Gerenciamento seguro de segredos, chaves e credenciais</p>
+            <div class="hero-badges">
+                <span class="badge">Secrets Management</span>
+                <span class="badge">Vault</span>
+                <span class="badge">Key Rotation</span>
+                <span class="badge">Encryption</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2>Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🔐 Secrets Vault</h3>
+                    <p>Armazenamento criptografado de senhas, tokens, chaves API e certificados.</p>
+                </div>
+                <div class="card">
+                    <h3>🔄 Key Rotation</h3>
+                    <p>Rotação automática de chaves e segredos com versionamento completo.</p>
+                </div>
+                <div class="card">
+                    <h3>🔑 Access Control</h3>
+                    <p>Controle granular de acesso com políticas baseadas em roles e permissões.</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Audit Logs</h3>
+                    <p>Logging completo de acessos e modificações para compliance e auditoria.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2>Exemplos de Uso</h2>
+
+            <h3>Armazenar Segredo</h3>
+            <pre><code class="language-rust">use avx_secrets::SecretsVault;
+
+fn main() {
+    let mut vault = SecretsVault::new("master_password");
+
+    vault.store("db_password", "super_secret_123")
+        .expect("Erro ao armazenar");
+
+    vault.store("api_key", "sk_live_abc123xyz")
+        .expect("Erro ao armazenar");
+
+    println!("✅ Segredos armazenados!");
+}</code></pre>
+
+            <h3>Recuperar Segredo</h3>
+            <pre><code class="language-rust">use avx_secrets::SecretsVault;
+
+fn main() {
+    let vault = SecretsVault::open("master_password");
+
+    let db_password = vault.get("db_password")
+        .expect("Segredo não encontrado");
+
+    println!("Senha recuperada: {}", db_password);
+}</code></pre>
+
+            <h3>Rotação de Chaves</h3>
+            <pre><code class="language-rust">use avx_secrets::SecretsVault;
+
+fn main() {
+    let mut vault = SecretsVault::new("master_password");
+
+    // Rotacionar automaticamente
+    vault.rotate_key("api_key")
+        .expect("Erro na rotação");
+
+    // Versões antigas ainda acessíveis
+    let old_key = vault.get_version("api_key", 1);
+    let new_key = vault.get("api_key");
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔑</div>
+                    <h3>Credenciais de Aplicação</h3>
+                    <p>Senhas de banco de dados, chaves API e tokens de autenticação.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">☁️</div>
+                    <h3>Cloud Secrets</h3>
+                    <p>Gerenciamento de credenciais cloud (AWS, Azure, GCP) com rotação automática.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3>Certificados TLS</h3>
+                    <p>Armazenamento seguro e rotação de certificados e chaves privadas.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏢</div>
+                    <h3>Enterprise Vault</h3>
+                    <p>Vault corporativo com controle de acesso por departamentos e equipes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2>Licença</h2>
+            <div class="card">
+                <p>AVX Secrets é software proprietário desenvolvido pela Ávila Inc.</p>
+                <p>Contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

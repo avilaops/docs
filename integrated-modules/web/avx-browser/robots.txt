@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://browser.avx.inc/sitemap.xml
+
+
+
+
+

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Renderer - Avx Quantum Render</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="light-theme">
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h1>📐 Renderer Module</h1>
+            </div>
+            <nav>
+                <a href="../../index.html">← Voltar</a>
+                <a href="#overview">Visão Geral</a>
+                <a href="#api">API</a>
+                <a href="#examples">Exemplos</a>
+            </nav>
+            <button id="theme-toggle" class="theme-btn"></button>
+        </div>
+    </header>
+
+    <main>
+        <section id="overview" class="section">
+            <h2>⚛️ QEDRenderer - Renderizador Quântico</h2>
+            <div class="card">
+                <p>
+                    O <code>QEDRenderer</code> é o motor central de renderização que implementa Path Integral Monte Carlo
+                    para simular o comportamento quântico da luz. Cada pixel é renderizado através da soma de amplitudes
+                    de todos os caminhos possíveis que um fóton pode tomar.
+                </p>
+
+                <h3>🎯 Características Principais</h3>
+                <ul>
+                    <li><strong>Path Integral Formulation:</strong> Implementa a formulação de integrais de caminho de Feynman</li>
+                    <li><strong>Monte Carlo Sampling:</strong> Amostragem estatística de caminhos quânticos</li>
+                    <li><strong>Russian Roulette:</strong> Terminação probabilística para eficiência</li>
+                    <li><strong>Renderização Espectral:</strong> Suporta múltiplos comprimentos de onda simultaneamente</li>
+                    <li><strong>Paralelização Massiva:</strong> Otimizado para CPU multi-core e GPU</li>
+                </ul>
+            </div>
+        </section>
+
+        <section id="api" class="section">
+            <h2>📚 API Reference</h2>
+
+            <div class="api-item">
+                <h3><code>QEDRenderer</code></h3>
+                <div class="code-block">
+<pre>pub struct QEDRenderer {
+    config: RenderConfig,
+    seed: u64,
+}</pre>
+                </div>
+                <p>Estrutura principal do renderizador quântico.</p>
+
+                <h4>Construtores:</h4>
+                <div class="code-block">
+<pre>pub fn new(config: RenderConfig) -> Self
+pub fn with_seed(self, seed: u64) -> Self</pre>
+                </div>
+
+                <h4>Métodos Principais:</h4>
+                <div class="code-block">
+<pre>pub fn render(&self, scene: &Scene) -> ImageBuffer
+pub fn render_tile(&self, scene: &Scene, tile: TileConfig) -> ImageBuffer
+pub fn render_progressive(&self, scene: &Scene) -> ProgressiveRender</pre>
+                </div>
+            </div>
+
+            <div class="api-item">
+                <h3><code>RenderConfig</code></h3>
+                <div class="code-block">
+<pre>pub struct RenderConfig {
+    pub samples_per_pixel: usize,
+    pub max_path_depth: usize,
+    pub num_paths: usize,
+    pub parallel: bool,
+    pub rr_threshold: f64,
+    pub wavelength_bands: Option&lt;Vec&lt;f64&gt;&gt;,
+    pub enable_diagnostics: bool,
+}</pre>
+                </div>
+
+                <h4>Presets:</h4>
+                <div class="code-block">
+<pre>impl RenderConfig {
+    pub fn default() -> Self      // Qualidade padrão
+    pub fn preview() -> Self       // Rápido para preview
+    pub fn high_quality() -> Self  // Alta qualidade
+    pub fn with_wavelength_bands(self, wavelengths: Vec&lt;f64&gt;) -> Self
+    pub fn with_diagnostics(self, enabled: bool) -> Self
+}</pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="examples" class="section">
+            <h2>💡 Exemplos de Uso</h2>
+
+            <div class="example-box">
+                <h3>1. Renderização Básica</h3>
+                <div class="code-block">
+<pre>use avx_quantum_render::*;
+
+// Criar cena
+let mut scene = Scene::new();
+scene.add_light(Light::point([0.0, 5.0, 0.0], 100.0));
+scene.add_surface(Surface::lambertian([0.0, 0.0, 0.0], 0.8));
+
+// Configurar renderizador
+let config = RenderConfig::default();
+let renderer = QEDRenderer::new(config);
+
+// Renderizar
+let image = renderer.render(&scene);</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>2. Renderização Espectral RGB</h3>
+                <div class="code-block">
+<pre>// Configurar com comprimentos de onda específicos
+let config = RenderConfig::high_quality()
+    .with_wavelength_bands(vec![
+        650.0,  // Vermelho
+        510.0,  // Verde
+        475.0,  // Azul
+    ]);
+
+let renderer = QEDRenderer::new(config)
+    .with_seed(42); // Reprodutibilidade
+
+let image = renderer.render(&scene);</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>3. Renderização Progressiva</h3>
+                <div class="code-block">
+<pre>let config = RenderConfig::default()
+    .with_diagnostics(true);
+
+let renderer = QEDRenderer::new(config);
+let mut progressive = renderer.render_progressive(&scene);
+
+// Atualizar em tempo real
+while !progressive.is_complete() {
+    let preview = progressive.current_image();
+    display_image(&preview);
+
+    // Métricas de progresso
+    println!("Progresso: {}%", progressive.progress_percent());
+    println!("Raios/seg: {}", progressive.rays_per_second());
+}</pre>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h3>4. Renderização com Tiles (Paralelização)</h3>
+                <div class="code-block">
+<pre>use rayon::prelude::*;
+
+let tiles = TileConfig::subdivide(800, 600, 64, 64);
+
+let image_tiles: Vec&lt;_&gt; = tiles.par_iter()
+    .map(|tile| {
+        renderer.render_tile(&scene, *tile)
+    })
+    .collect();
+
+let final_image = ImageBuffer::merge_tiles(image_tiles, 800, 600);</pre>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>⚡ Performance Tips</h2>
+            <div class="card">
+                <ul>
+                    <li><strong>samples_per_pixel:</strong> Começar com 100-500 para preview, 1000-5000 para produção</li>
+                    <li><strong>max_path_depth:</strong> 5-8 é suficiente para a maioria das cenas</li>
+                    <li><strong>Russian Roulette:</strong> threshold de 0.05-0.1 balanceia qualidade/performance</li>
+                    <li><strong>Paralelização:</strong> Sempre habilitar <code>parallel: true</code> em CPUs multi-core</li>
+                    <li><strong>GPU:</strong> Para cenas complexas, considere usar <code>GpuPathTracingKernel</code></li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025-2026 Avx. Documentação do Módulo Renderer.</p>
+    </footer>
+
+    <script src="../theme.js"></script>
+</body>
+</html>

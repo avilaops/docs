@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Threshold - Criptografia threshold">
+    <title>AVX Threshold - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="threshold.hero.title">AVX Threshold</h1>
+            <p class="hero-subtitle" data-i18n="threshold.hero.subtitle">
+                Criptografia Threshold - Segurança distribuída com threshold
+            </p>
+            <div class="hero-badges">
+                <span class="badge">Threshold Crypto</span>
+                <span class="badge">Distributed Keys</span>
+                <span class="badge">TSS</span>
+                <span class="badge">Multi-Party</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="threshold.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="threshold.overview.card1.title">🔑 Threshold Signatures</h3>
+                    <p data-i18n="threshold.overview.card1.desc">
+                        Assinaturas que requerem colaboração de t-of-n participantes. Nenhuma parte individual pode assinar sozinha.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="threshold.overview.card2.title">🛡️ TSS (Threshold Signature Scheme)</h3>
+                    <p data-i18n="threshold.overview.card2.desc">
+                        Esquemas modernos como ECDSA e EdDSA threshold. Compatível com blockchains existentes.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="threshold.overview.card3.title">🔐 Distributed Key Generation</h3>
+                    <p data-i18n="threshold.overview.card3.desc">
+                        DKG para gerar chaves distribuídas sem trusted dealer. Segurança desde a criação.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="threshold.overview.card4.title">⚡ Key Refresh</h3>
+                    <p data-i18n="threshold.overview.card4.desc">
+                        Atualização proativa de shares sem alterar chave pública. Segurança contínua no tempo.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="threshold.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="threshold.types.table.type">Tipo</th>
+                            <th data-i18n="threshold.types.table.description">Descrição</th>
+                            <th data-i18n="threshold.types.table.scheme">Esquema</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ThresholdEcdsa</code></td>
+                            <td data-i18n="threshold.types.ecdsa">ECDSA threshold (GG20)</td>
+                            <td>(t, n)-threshold</td>
+                        </tr>
+                        <tr>
+                            <td><code>ThresholdEdDsa</code></td>
+                            <td data-i18n="threshold.types.eddsa">EdDSA threshold</td>
+                            <td>(t, n)-threshold</td>
+                        </tr>
+                        <tr>
+                            <td><code>ThresholdBls</code></td>
+                            <td data-i18n="threshold.types.bls">BLS threshold signatures</td>
+                            <td>Pairing-based</td>
+                        </tr>
+                        <tr>
+                            <td><code>DkgProtocol</code></td>
+                            <td data-i18n="threshold.types.dkg">Distributed Key Generation</td>
+                            <td>Feldman VSS</td>
+                        </tr>
+                        <tr>
+                            <td><code>KeyShare</code></td>
+                            <td data-i18n="threshold.types.keyshare">Share de chave privada</td>
+                            <td>Shamir-based</td>
+                        </tr>
+                        <tr>
+                            <td><code>PartialSignature</code></td>
+                            <td data-i18n="threshold.types.partial">Assinatura parcial</td>
+                            <td>Combinável</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="threshold.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="threshold.examples.ecdsa.title">Exemplo Básico - Threshold ECDSA</h3>
+            <pre><code class="language-rust">use avx_threshold::ThresholdEcdsa;
+
+fn main() {
+    // Configuração: 2-of-3 threshold
+    let threshold = 2;
+    let n_parties = 3;
+
+    // DKG: gerar chave distribuída
+    let parties = ThresholdEcdsa::distributed_keygen(
+        threshold,
+        n_parties
+    ).expect("Erro no DKG");
+
+    let key_shares = parties.iter()
+        .map(|p| p.key_share())
+        .collect::<Vec<_>>();
+
+    let public_key = parties[0].public_key();
+
+    // Assinar com 2 partes (threshold = 2)
+    let message = b"Transação importante";
+
+    let sig1 = key_shares[0].sign_partial(message)
+        .expect("Erro na assinatura parcial");
+    let sig2 = key_shares[2].sign_partial(message)
+        .expect("Erro na assinatura parcial");
+
+    // Combinar assinaturas parciais
+    let signature = ThresholdEcdsa::combine_signatures(&[sig1, sig2])
+        .expect("Erro ao combinar");
+
+    // Verificar (compatível com ECDSA padrão!)
+    assert!(public_key.verify(message, &signature));
+    println!("✅ Threshold ECDSA funcional!");
+}</code></pre>
+
+            <h3 data-i18n="threshold.examples.dkg.title">Exemplo - Distributed Key Generation</h3>
+            <pre><code class="language-rust">use avx_threshold::{DkgProtocol, Party};
+
+fn main() {
+    let threshold = 3;
+    let n_parties = 5;
+
+    // Cada participante inicia DKG
+    let mut parties: Vec<Party> = (0..n_parties)
+        .map(|id| Party::new(id, threshold, n_parties))
+        .collect();
+
+    // Fase 1: Broadcast de compromissos
+    let commitments: Vec<_> = parties.iter()
+        .map(|p| p.generate_commitments())
+        .collect();
+
+    // Fase 2: Troca de shares secretos
+    for i in 0..n_parties {
+        for j in 0..n_parties {
+            if i != j {
+                let share = parties[i].generate_share_for(j);
+                parties[j].receive_share(i, share);
+            }
+        }
+    }
+
+    // Fase 3: Verificação
+    for party in &mut parties {
+        party.verify_shares(&commitments)
+            .expect("Verificação falhou");
+    }
+
+    // Chave pública gerada (igual para todos)
+    let public_key = parties[0].compute_public_key();
+    println!("✅ DKG completo! PK: {}", hex::encode(public_key));
+}</code></pre>
+
+            <h3 data-i18n="threshold.examples.bls.title">Exemplo - BLS Threshold</h3>
+            <pre><code class="language-rust">use avx_threshold::ThresholdBls;
+
+fn main() {
+    // BLS: agregação eficiente de assinaturas
+    let threshold = 2;
+    let n_parties = 4;
+
+    let (key_shares, public_key) = ThresholdBls::keygen(
+        threshold,
+        n_parties
+    ).expect("Erro no keygen");
+
+    let message = b"Mensagem a assinar";
+
+    // Cada parte assina
+    let signatures: Vec<_> = key_shares.iter()
+        .take(threshold) // Apenas threshold necessário
+        .map(|share| share.sign(message))
+        .collect();
+
+    // Agregar assinaturas (muito eficiente!)
+    let aggregated = ThresholdBls::aggregate(&signatures)
+        .expect("Erro ao agregar");
+
+    // Verificar assinatura agregada
+    assert!(ThresholdBls::verify(&public_key, message, &aggregated));
+    println!("✅ BLS threshold verificado!");
+}</code></pre>
+
+            <h3 data-i18n="threshold.examples.refresh.title">Exemplo - Key Refresh</h3>
+            <pre><code class="language-rust">use avx_threshold::{ThresholdEcdsa, KeyShare};
+
+fn main() {
+    // Key shares existentes
+    let mut key_shares: Vec<KeyShare> = load_existing_shares();
+    let old_public_key = key_shares[0].public_key();
+
+    // Refresh proativo (a cada X tempo)
+    // Shares mudam, mas chave pública permanece igual
+    ThresholdEcdsa::refresh_shares(&mut key_shares)
+        .expect("Erro no refresh");
+
+    let new_public_key = key_shares[0].public_key();
+
+    // Chave pública inalterada
+    assert_eq!(old_public_key, new_public_key);
+
+    // Mas shares foram renovados (segurança proativa)
+    println!("✅ Shares atualizados!");
+    println!("Chave pública mantida: {}", hex::encode(new_public_key));
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="threshold.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>ThresholdEcdsa</h3>
+                <div class="api-method">
+                    <code>pub fn distributed_keygen(threshold: usize, n_parties: usize) -> Result&lt;Vec&lt;Party&gt;, ThresholdError&gt;</code>
+                    <p data-i18n="threshold.api.ecdsa.keygen">Gera chave distribuída via DKG.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn combine_signatures(partial_sigs: &[PartialSignature]) -> Result&lt;Signature, ThresholdError&gt;</code>
+                    <p data-i18n="threshold.api.ecdsa.combine">Combina assinaturas parciais.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn refresh_shares(shares: &mut [KeyShare]) -> Result&lt;(), ThresholdError&gt;</code>
+                    <p data-i18n="threshold.api.ecdsa.refresh">Atualiza shares proativamente.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>KeyShare</h3>
+                <div class="api-method">
+                    <code>pub fn sign_partial(&self, message: &[u8]) -> Result&lt;PartialSignature, ThresholdError&gt;</code>
+                    <p data-i18n="threshold.api.keyshare.sign">Gera assinatura parcial.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn public_key(&self) -> PublicKey</code>
+                    <p data-i18n="threshold.api.keyshare.pubkey">Retorna chave pública completa.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>DkgProtocol</h3>
+                <div class="api-method">
+                    <code>pub fn new(party_id: usize, threshold: usize, n_parties: usize) -> Self</code>
+                    <p data-i18n="threshold.api.dkg.new">Inicia protocolo DKG.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn generate_commitments(&self) -> Vec&lt;Commitment&gt;</code>
+                    <p data-i18n="threshold.api.dkg.commit">Gera compromissos verificáveis.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="threshold.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">~500ms</div>
+                    <div class="metric-label" data-i18n="threshold.performance.dkg">DKG Setup</div>
+                    <div class="metric-detail">5 participantes</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~100ms</div>
+                    <div class="metric-label" data-i18n="threshold.performance.sign">Assinatura Parcial</div>
+                    <div class="metric-detail">ECDSA</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~50ms</div>
+                    <div class="metric-label" data-i18n="threshold.performance.combine">Combinação</div>
+                    <div class="metric-detail">3-of-5</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~10ms</div>
+                    <div class="metric-label" data-i18n="threshold.performance.verify">Verificação</div>
+                    <div class="metric-detail">Padrão ECDSA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="threshold.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">💰</div>
+                    <h3 data-i18n="threshold.usecases.wallets.title">Carteiras Multi-Assinatura</h3>
+                    <p data-i18n="threshold.usecases.wallets.desc">
+                        Carteiras corporativas que requerem múltiplas aprovações. Compatível com Bitcoin, Ethereum, etc.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏦</div>
+                    <h3 data-i18n="threshold.usecases.custody.title">Custódia de Ativos</h3>
+                    <p data-i18n="threshold.usecases.custody.desc">
+                        Gerenciamento seguro de chaves privadas em custódia institucional de criptoativos.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="threshold.usecases.ca.title">Autoridade Certificadora</h3>
+                    <p data-i18n="threshold.usecases.ca.desc">
+                        CAs distribuídas onde múltiplas partes devem aprovar emissão de certificados.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">⚖️</div>
+                    <h3 data-i18n="threshold.usecases.governance.title">Governança Descentralizada</h3>
+                    <p data-i18n="threshold.usecases.governance.desc">
+                        DAOs e protocolos que requerem consenso distribuído para operações críticas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="threshold.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="threshold.license.desc">
+                    AVX Threshold é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="threshold.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

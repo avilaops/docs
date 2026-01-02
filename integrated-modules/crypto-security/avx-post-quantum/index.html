@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Post-Quantum - Criptografia pós-quântica">
+    <title>AVX Post-Quantum - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="pq.hero.title">AVX Post-Quantum</h1>
+            <p class="hero-subtitle" data-i18n="pq.hero.subtitle">
+                Criptografia resistente a computadores quânticos - NIST PQC
+            </p>
+            <div class="hero-badges">
+                <span class="badge">CRYSTALS-Kyber</span>
+                <span class="badge">CRYSTALS-Dilithium</span>
+                <span class="badge">SPHINCS+</span>
+                <span class="badge">Quantum-Safe</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="pq.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="pq.overview.card1.title">🔮 Kyber KEM</h3>
+                    <p data-i18n="pq.overview.card1.desc">
+                        Key Encapsulation Mechanism pós-quântico. Vencedor do NIST PQC para criptografia de chave pública.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="pq.overview.card2.title">✍️ Dilithium</h3>
+                    <p data-i18n="pq.overview.card2.desc">
+                        Assinaturas digitais resistentes a quantum. Vencedor do NIST PQC para assinaturas digitais.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="pq.overview.card3.title">🌳 SPHINCS+</h3>
+                    <p data-i18n="pq.overview.card3.desc">
+                        Assinaturas stateless baseadas em hash. Segurança conservadora sem pressupostos matemáticos.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="pq.overview.card4.title">🛡️ Hybrid Crypto</h3>
+                    <p data-i18n="pq.overview.card4.desc">
+                        Combinação de algoritmos clássicos e pós-quânticos. Segurança contra adversários atuais e futuros.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="pq.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="pq.types.table.type">Tipo</th>
+                            <th data-i18n="pq.types.table.description">Descrição</th>
+                            <th data-i18n="pq.types.table.level">Nível NIST</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>Kyber512</code></td>
+                            <td data-i18n="pq.types.kyber512">Kyber nível 1</td>
+                            <td>NIST Level 1</td>
+                        </tr>
+                        <tr>
+                            <td><code>Kyber768</code></td>
+                            <td data-i18n="pq.types.kyber768">Kyber nível 3 (recomendado)</td>
+                            <td>NIST Level 3</td>
+                        </tr>
+                        <tr>
+                            <td><code>Kyber1024</code></td>
+                            <td data-i18n="pq.types.kyber1024">Kyber nível 5</td>
+                            <td>NIST Level 5</td>
+                        </tr>
+                        <tr>
+                            <td><code>Dilithium2</code></td>
+                            <td data-i18n="pq.types.dilithium2">Dilithium nível 2</td>
+                            <td>NIST Level 2</td>
+                        </tr>
+                        <tr>
+                            <td><code>Dilithium3</code></td>
+                            <td data-i18n="pq.types.dilithium3">Dilithium nível 3</td>
+                            <td>NIST Level 3</td>
+                        </tr>
+                        <tr>
+                            <td><code>Dilithium5</code></td>
+                            <td data-i18n="pq.types.dilithium5">Dilithium nível 5</td>
+                            <td>NIST Level 5</td>
+                        </tr>
+                        <tr>
+                            <td><code>SphincsPlusShake256</code></td>
+                            <td data-i18n="pq.types.sphincs">SPHINCS+ com SHAKE256</td>
+                            <td>Variável</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="pq.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="pq.examples.kyber.title">Exemplo Básico - Kyber KEM</h3>
+            <pre><code class="language-rust">use avx_post_quantum::Kyber768;
+
+fn main() {
+    // Gerar par de chaves
+    let (public_key, secret_key) = Kyber768::keypair()
+        .expect("Erro ao gerar chaves");
+
+    println!("Chave pública: {} bytes", public_key.len());
+
+    // Encapsular (gera chave compartilhada)
+    let (ciphertext, shared_secret_alice) =
+        Kyber768::encapsulate(&public_key)
+            .expect("Erro ao encapsular");
+
+    // Desencapsular
+    let shared_secret_bob = Kyber768::decapsulate(
+        &ciphertext,
+        &secret_key
+    ).expect("Erro ao desencapsular");
+
+    // Segredos devem ser iguais!
+    assert_eq!(shared_secret_alice, shared_secret_bob);
+    println!("✅ Kyber KEM funcional!");
+    println!("Segredo compartilhado: {} bytes", shared_secret_alice.len());
+}</code></pre>
+
+            <h3 data-i18n="pq.examples.dilithium.title">Exemplo - Dilithium Signatures</h3>
+            <pre><code class="language-rust">use avx_post_quantum::Dilithium3;
+
+fn main() {
+    // Gerar par de chaves para assinaturas
+    let (public_key, secret_key) = Dilithium3::keypair()
+        .expect("Erro ao gerar chaves");
+
+    // Assinar mensagem
+    let message = b"Documento importante";
+    let signature = Dilithium3::sign(message, &secret_key)
+        .expect("Erro ao assinar");
+
+    println!("Assinatura: {} bytes", signature.len());
+
+    // Verificar assinatura
+    let is_valid = Dilithium3::verify(
+        message,
+        &signature,
+        &public_key
+    );
+
+    assert!(is_valid);
+    println!("✅ Dilithium assinatura verificada!");
+}</code></pre>
+
+            <h3 data-i18n="pq.examples.sphincs.title">Exemplo - SPHINCS+</h3>
+            <pre><code class="language-rust">use avx_post_quantum::SphincsPlusShake256;
+
+fn main() {
+    // SPHINCS+: stateless, baseado em hash
+    let (public_key, secret_key) =
+        SphincsPlusShake256::keypair_128f() // Fast variant
+            .expect("Erro ao gerar chaves");
+
+    let message = b"Mensagem para assinar";
+
+    // Assinar (stateless, sem estado)
+    let signature = SphincsPlusShake256::sign(
+        message,
+        &secret_key
+    ).expect("Erro ao assinar");
+
+    // Verificar
+    let is_valid = SphincsPlusShake256::verify(
+        message,
+        &signature,
+        &public_key
+    );
+
+    assert!(is_valid);
+    println!("✅ SPHINCS+ verificado!");
+    println!("Segurança conservadora: baseado em hash");
+}</code></pre>
+
+            <h3 data-i18n="pq.examples.hybrid.title">Exemplo - Hybrid Cryptography</h3>
+            <pre><code class="language-rust">use avx_post_quantum::{Kyber768, HybridKem};
+use avx_crypto::curves::X25519;
+
+fn main() {
+    // Combinar X25519 (clássico) + Kyber768 (PQC)
+    let hybrid = HybridKem::new();
+
+    // Gerar chaves híbridas
+    let (pk_classical, sk_classical) = X25519::keypair();
+    let (pk_pqc, sk_pqc) = Kyber768::keypair().unwrap();
+
+    // Encapsulação híbrida
+    let (ct_classical, ct_pqc, shared_secret) =
+        hybrid.encapsulate(&pk_classical, &pk_pqc)
+            .expect("Erro ao encapsular");
+
+    // Desencapsulação híbrida
+    let recovered = hybrid.decapsulate(
+        &ct_classical,
+        &ct_pqc,
+        &sk_classical,
+        &sk_pqc
+    ).expect("Erro ao desencapsular");
+
+    assert_eq!(shared_secret, recovered);
+    println!("✅ Criptografia híbrida!");
+    println!("Seguro contra ameaças clássicas E quânticas");
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="pq.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>Kyber768</h3>
+                <div class="api-method">
+                    <code>pub fn keypair() -> Result&lt;(PublicKey, SecretKey), PqError&gt;</code>
+                    <p data-i18n="pq.api.kyber.keypair">Gera par de chaves Kyber-768.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn encapsulate(pk: &PublicKey) -> Result&lt;(Ciphertext, SharedSecret), PqError&gt;</code>
+                    <p data-i18n="pq.api.kyber.encap">Encapsula gerando segredo compartilhado.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn decapsulate(ct: &Ciphertext, sk: &SecretKey) -> Result&lt;SharedSecret, PqError&gt;</code>
+                    <p data-i18n="pq.api.kyber.decap">Desencapsula recuperando segredo.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Dilithium3</h3>
+                <div class="api-method">
+                    <code>pub fn keypair() -> Result&lt;(PublicKey, SecretKey), PqError&gt;</code>
+                    <p data-i18n="pq.api.dilithium.keypair">Gera par de chaves Dilithium-3.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn sign(message: &[u8], sk: &SecretKey) -> Result&lt;Signature, PqError&gt;</code>
+                    <p data-i18n="pq.api.dilithium.sign">Assina mensagem.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn verify(message: &[u8], sig: &Signature, pk: &PublicKey) -> bool</code>
+                    <p data-i18n="pq.api.dilithium.verify">Verifica assinatura Dilithium.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="pq.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">~0.5ms</div>
+                    <div class="metric-label" data-i18n="pq.performance.kyber">Kyber Encap/Decap</div>
+                    <div class="metric-detail">Muito rápido</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~2ms</div>
+                    <div class="metric-label" data-i18n="pq.performance.dilithium">Dilithium Sign</div>
+                    <div class="metric-detail">Nível 3</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~1ms</div>
+                    <div class="metric-label" data-i18n="pq.performance.verify">Dilithium Verify</div>
+                    <div class="metric-detail">Verificação rápida</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">~50ms</div>
+                    <div class="metric-label" data-i18n="pq.performance.sphincs">SPHINCS+ Sign</div>
+                    <div class="metric-detail">Trade-off segurança</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="pq.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="pq.usecases.tls.title">TLS Pós-Quântico</h3>
+                    <p data-i18n="pq.usecases.tls.desc">
+                        Proteção de comunicações contra "harvest now, decrypt later". Kyber para key exchange.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📜</div>
+                    <h3 data-i18n="pq.usecases.pki.title">PKI do Futuro</h3>
+                    <p data-i18n="pq.usecases.pki.desc">
+                        Certificados digitais resistentes a quantum. Dilithium para assinaturas de longa duração.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">💰</div>
+                    <h3 data-i18n="pq.usecases.blockchain.title">Blockchain Quântico-Seguro</h3>
+                    <p data-i18n="pq.usecases.blockchain.desc">
+                        Proteger criptomoedas e ativos digitais de futuras ameaças quânticas.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🏛️</div>
+                    <h3 data-i18n="pq.usecases.government.title">Segurança Governamental</h3>
+                    <p data-i18n="pq.usecases.government.desc">
+                        Proteção de informações classificadas com prazo de sigilo de décadas.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="pq.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="pq.license.desc">
+                    AVX Post-Quantum é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="pq.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

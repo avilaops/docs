@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-storage (AVL Storage) - S3-Compatible Object Storage | Avx Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="avx-cache.html">avx-cache</a></li>
+            <li><a href="avx-codec.html">avx-codec</a></li>
+            <li><a href="avx-compress.html">avx-compress</a></li>
+            <li><a href="avx-db.html">avx-db</a></li>
+            <li><a href="avx-pool.html">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html">avx-serialize</a></li>
+            <li><a href="avx-storage.html" class="active">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>☁️ avx-storage (AVL Storage)</h1>
+            <p>Object storage compatível com S3, otimizado para Brasil e 50% mais barato</p>
+        </section>
+
+        <section>
+            <h2>🚀 Características</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>S3-Compatible</h3>
+                    <ul>
+                        <li>API compatível com AWS S3</li>
+                        <li>Drop-in replacement</li>
+                        <li>Multipart uploads</li>
+                        <li>Versionamento</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Performance Brasil</h3>
+                    <ul>
+                        <li>3-8ms latência</li>
+                        <li>250 MB/s upload</li>
+                        <li>400 MB/s download</li>
+                        <li>Otimizado para LATAM</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Economia</h3>
+                    <ul>
+                        <li>50% mais barato</li>
+                        <li>Compressão automática</li>
+                        <li>3 storage classes</li>
+                        <li>Lifecycle policies</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Instalação</h2>
+            <pre><code>[dependencies]
+avx-storage = "0.1.0"
+tokio = { version = "1", features = ["full"] }</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Exemplos</h2>
+
+            <h3>Upload Simples</h3>
+            <pre><code>use avl_storage::{StorageClient, PutObjectRequest};
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = StorageClient::connect("https://storage.avila.cloud").await?;
+
+    // Upload de arquivo
+    client.put_object(PutObjectRequest {
+        bucket: "my-bucket".to_string(),
+        key: "documents/report.pdf".to_string(),
+        body: std::fs::read("report.pdf")?,
+        content_type: Some("application/pdf".to_string()),
+        ..Default::default()
+    }).await?;
+
+    Ok(())
+}</code></pre>
+
+            <h3>Download</h3>
+            <pre><code>use avl_storage::GetObjectRequest;
+
+let response = client.get_object(GetObjectRequest {
+    bucket: "my-bucket".to_string(),
+    key: "documents/report.pdf".to_string(),
+    ..Default::default()
+}).await?;
+
+std::fs::write("downloaded_report.pdf", response.body)?;</code></pre>
+
+            <h3>Multipart Upload (Arquivos Grandes)</h3>
+            <pre><code>use avl_storage::multipart::*;
+
+// 1. Iniciar
+let init_response = client.initiate_multipart_upload(
+    InitiateMultipartUploadRequest {
+        bucket: "my-bucket".to_string(),
+        key: "large-video.mp4".to_string(),
+        ..Default::default()
+    }
+).await?;
+
+// 2. Upload de partes (5 MB cada)
+let file = std::fs::read("large-video.mp4")?;
+let chunk_size = 5 * 1024 * 1024;
+let mut parts = vec![];
+
+for (i, chunk) in file.chunks(chunk_size).enumerate() {
+    let part = client.upload_part(UploadPartRequest {
+        bucket: "my-bucket".to_string(),
+        key: "large-video.mp4".to_string(),
+        upload_id: init_response.upload_id.clone(),
+        part_number: (i + 1) as u32,
+        body: chunk.to_vec(),
+    }).await?;
+    parts.push(part);
+}
+
+// 3. Completar
+client.complete_multipart_upload(CompleteMultipartUploadRequest {
+    bucket: "my-bucket".to_string(),
+    key: "large-video.mp4".to_string(),
+    upload_id: init_response.upload_id,
+    parts,
+}).await?;</code></pre>
+
+            <h3>Storage Classes</h3>
+            <pre><code>use avl_storage::{PutObjectRequest, StorageClass};
+
+// Standard - hot data
+client.put_object(PutObjectRequest {
+    bucket: "my-bucket".to_string(),
+    key: "active-data.json".to_string(),
+    body: data.clone(),
+    storage_class: Some(StorageClass::Standard),
+    ..Default::default()
+}).await?;
+
+// Infrequent Access - warm data
+client.put_object(PutObjectRequest {
+    storage_class: Some(StorageClass::InfrequentAccess),
+    ..Default::default()
+}).await?;
+
+// Archive - cold data
+client.put_object(PutObjectRequest {
+    storage_class: Some(StorageClass::Archive),
+    ..Default::default()
+}).await?;</code></pre>
+        </section>
+
+        <section>
+            <h2>📊 Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Região</th>
+                        <th>Upload</th>
+                        <th>Download</th>
+                        <th>List</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>BR-South (SP)</td>
+                        <td>3ms</td>
+                        <td>2ms</td>
+                        <td>5ms</td>
+                    </tr>
+                    <tr>
+                        <td>BR-Southeast (RJ)</td>
+                        <td>5ms</td>
+                        <td>4ms</td>
+                        <td>8ms</td>
+                    </tr>
+                    <tr>
+                        <td>LATAM (Buenos Aires)</td>
+                        <td>8ms</td>
+                        <td>7ms</td>
+                        <td>12ms</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section>
+            <h2>💰 Comparação de Custos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Provedor</th>
+                        <th>Storage (GB/mês)</th>
+                        <th>GET (1M req)</th>
+                        <th>PUT (1M req)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight">AVL Storage</td>
+                        <td>$0.012</td>
+                        <td>$0.20</td>
+                        <td>$0.30</td>
+                    </tr>
+                    <tr>
+                        <td>AWS S3 Standard</td>
+                        <td>$0.023</td>
+                        <td>$0.40</td>
+                        <td>$0.50</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight">Economia</td>
+                        <td class="highlight">48%</td>
+                        <td class="highlight">50%</td>
+                        <td class="highlight">40%</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="use-cases">
+            <h2>🎯 Casos de Uso</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">💾</div>
+                    <h3>Backups</h3>
+                    <p>Backup de arquivos e bancos</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>CDN Origin</h3>
+                    <p>Origin para conteúdo estático</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📝</div>
+                    <h3>Logs</h3>
+                    <p>Armazenamento de logs</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📊</div>
+                    <h3>Data Lake</h3>
+                    <p>Analytics e big data</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🎮</div>
+                    <h3>Assets de Games</h3>
+                    <p>Texturas e modelos 3D</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📹</div>
+                    <h3>Mídia</h3>
+                    <p>Vídeos, imagens, áudio</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

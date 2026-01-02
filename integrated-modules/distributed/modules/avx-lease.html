@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-lease - Avx Documentation</title>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <a href="../index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+                    <span>⚡</span>
+                    <span>Avx Distributed Systems</span>
+                </a>
+            </div>
+            <div class="nav-controls">
+                <button class="theme-toggle" onclick="toggleTheme()">☀️ Modo Claro</button>
+                <div class="language-selector">
+                    <button class="language-btn" onclick="toggleLanguageDropdown()">🌍 Idioma</button>
+                    <div class="language-dropdown"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div style="margin-bottom: 2rem;">
+            <a href="../index.html" style="color: var(--primary-orange);">← Voltar</a>
+        </div>
+
+        <!-- Module Header -->
+        <section class="section">
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                <span style="font-size: 3rem;">⏰</span>
+                <h1 class="section-title">avx-lease</h1>
+            </div>
+            <p style="font-size: 1.2rem; opacity: 0.8;">
+                Gerenciamento de leases temporários para coordenação distribuída com tempo limitado.
+            </p>
+        </section>
+
+        <!-- Overview -->
+        <section class="section">
+            <h2 class="section-title">Visão Geral</h2>
+            <div class="code-block">
+                <p><strong>avx-lease</strong> implementa sistema de leases com expiração automática:</p>
+                <ul>
+                    <li>⏰ <strong>Time-Based Leases</strong> - Concessões com tempo de expiração</li>
+                    <li>🔄 <strong>Renewal Automático</strong> - Renovação periódica de leases ativos</li>
+                    <li>⚡ <strong>Revogação Imediata</strong> - Cancelamento instantâneo de leases</li>
+                    <li>🔒 <strong>Exclusão Mútua</strong> - Apenas um holder por lease</li>
+                    <li>📊 <strong>Lease Monitoring</strong> - Rastreamento de leases ativos</li>
+                    <li>🎯 <strong>Fencing Tokens</strong> - Proteção contra múltiplos holders</li>
+                    <li>💾 <strong>Persistência</strong> - Leases sobrevivem a restarts</li>
+                    <li>🚀 <strong>Alta Performance</strong> - Aquisição em microssegundos</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Types -->
+        <section class="section">
+            <h2 class="section-title">Tipos Disponíveis</h2>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Descrição</th>
+                        <th>Uso Principal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>LeaseManager</code></td>
+                        <td>Gerenciador de leases</td>
+                        <td>Controle centralizado</td>
+                    </tr>
+                    <tr>
+                        <td><code>Lease</code></td>
+                        <td>Representação de um lease</td>
+                        <td>Concessão ativa</td>
+                    </tr>
+                    <tr>
+                        <td><code>LeaseId</code></td>
+                        <td>Identificador único de lease</td>
+                        <td>Referência a leases</td>
+                    </tr>
+                    <tr>
+                        <td><code>LeaseHolder</code></td>
+                        <td>Cliente que possui o lease</td>
+                        <td>Ownership tracking</td>
+                    </tr>
+                    <tr>
+                        <td><code>FencingToken</code></td>
+                        <td>Token monotônico crescente</td>
+                        <td>Proteção contra split-brain</td>
+                    </tr>
+                    <tr>
+                        <td><code>LeaseConfig</code></td>
+                        <td>Configuração de leases</td>
+                        <td>Parâmetros de TTL e renewal</td>
+                    </tr>
+                    <tr>
+                        <td><code>LeaseMetrics</code></td>
+                        <td>Métricas de uso</td>
+                        <td>Observabilidade</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Examples -->
+        <section class="section">
+            <h2 class="section-title">Exemplos de Uso</h2>
+            
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Adquirir Lease</h3>
+            <div class="code-block">
+                <pre><code>use avx_lease::{LeaseManager, Duration};
+
+let manager = LeaseManager::new();
+
+// Adquirir lease por 30 segundos
+let lease = manager.acquire(
+    "database-master",
+    "node-1",
+    Duration::from_secs(30)
+)?;
+
+println!("Lease adquirido: {:?}", lease.id());
+println!("Fencing token: {}", lease.fencing_token());
+
+// Trabalhar com o recurso...
+
+// Liberar lease
+manager.release(lease.id())?;</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Renovação Automática</h3>
+            <div class="code-block">
+                <pre><code>use avx_lease::{LeaseManager, LeaseConfig};
+
+let config = LeaseConfig {
+    ttl: Duration::from_secs(30),
+    renewal_interval: Duration::from_secs(10),
+    auto_renew: true,
+};
+
+let manager = LeaseManager::with_config(config);
+let lease = manager.acquire("resource", "client-1", config.ttl)?;
+
+// Lease será renovado automaticamente a cada 10 segundos
+// Enquanto o cliente estiver ativo</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Verificar Lease Ativo</h3>
+            <div class="code-block">
+                <pre><code>use avx_lease::LeaseManager;
+
+let manager = LeaseManager::new();
+
+// Tentar adquirir lease já ocupado
+match manager.try_acquire("resource", "client-2", Duration::from_secs(30)) {
+    Ok(lease) => {
+        println!("Lease adquirido!");
+    }
+    Err(e) if e.is_already_held() => {
+        println!("Lease já está sendo usado");
+        
+        // Obter holder atual
+        let holder = manager.get_holder("resource")?;
+        println!("Holder: {}", holder);
+    }
+    Err(e) => return Err(e),
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Fencing Tokens</h3>
+            <div class="code-block">
+                <pre><code>use avx_lease::{LeaseManager, FencingToken};
+
+let manager = LeaseManager::new();
+let lease1 = manager.acquire("resource", "client-1", Duration::from_secs(30))?;
+
+let token1 = lease1.fencing_token();
+
+// Lease expira e outro cliente adquire
+std::thread::sleep(Duration::from_secs(31));
+
+let lease2 = manager.acquire("resource", "client-2", Duration::from_secs(30))?;
+let token2 = lease2.fencing_token();
+
+// token2 > token1 (monotonicamente crescente)
+assert!(token2 > token1);
+
+// Use token para proteger operações
+if current_token >= token1 {
+    // Seguro executar operação
+}</code></pre>
+            </div>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Revogar Lease</h3>
+            <div class="code-block">
+                <pre><code>use avx_lease::LeaseManager;
+
+let manager = LeaseManager::new();
+let lease = manager.acquire("resource", "client-1", Duration::from_secs(60))?;
+
+// Administrador revoga o lease
+manager.revoke(lease.id())?;
+
+// Cliente detecta revogação
+if !manager.is_valid(lease.id()) {
+    println!("Lease foi revogado!");
+    // Parar operações imediatamente
+}</code></pre>
+            </div>
+        </section>
+
+        <!-- API Reference -->
+        <section class="section">
+            <h2 class="section-title">Referência da API</h2>
+            
+            <h3 style="color: var(--primary-orange);">LeaseManager</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>new()</code></td>
+                        <td>Cria manager com config padrão</td>
+                        <td><code>LeaseManager</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>acquire(name, holder, ttl)</code></td>
+                        <td>Adquire novo lease</td>
+                        <td><code>Result&lt;Lease&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>try_acquire(name, holder, ttl)</code></td>
+                        <td>Tenta adquirir (não bloqueia)</td>
+                        <td><code>Result&lt;Lease&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>renew(id)</code></td>
+                        <td>Renova lease existente</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>release(id)</code></td>
+                        <td>Libera lease</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>revoke(id)</code></td>
+                        <td>Revoga lease forçadamente</td>
+                        <td><code>Result&lt;()&gt;</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>is_valid(id)</code></td>
+                        <td>Verifica se lease é válido</td>
+                        <td><code>bool</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>get_holder(name)</code></td>
+                        <td>Obtém holder atual</td>
+                        <td><code>Option&lt;String&gt;</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="color: var(--primary-orange); margin-top: 2rem;">Lease</h3>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Método</th>
+                        <th>Descrição</th>
+                        <th>Retorno</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>id()</code></td>
+                        <td>Obtém ID do lease</td>
+                        <td><code>LeaseId</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>fencing_token()</code></td>
+                        <td>Obtém fencing token</td>
+                        <td><code>FencingToken</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>expires_at()</code></td>
+                        <td>Timestamp de expiração</td>
+                        <td><code>Instant</code></td>
+                    </tr>
+                    <tr>
+                        <td><code>time_remaining()</code></td>
+                        <td>Tempo até expirar</td>
+                        <td><code>Duration</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Performance -->
+        <section class="section">
+            <h2 class="section-title">Performance</h2>
+            <div class="animation-showcase">
+                <div class="animated-element">
+                    ⏰ Leases Ultra-Rápidos
+                </div>
+                <div style="margin-top: 2rem; text-align: left; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    <h3 style="color: var(--primary-orange);">Benchmarks</h3>
+                    <table class="api-table">
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>Tempo</th>
+                                <th>Throughput</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Acquire Lease</td>
+                                <td>~5μs</td>
+                                <td>200K ops/s</td>
+                            </tr>
+                            <tr>
+                                <td>Renew Lease</td>
+                                <td>~2μs</td>
+                                <td>500K ops/s</td>
+                            </tr>
+                            <tr>
+                                <td>Release Lease</td>
+                                <td>~3μs</td>
+                                <td>333K ops/s</td>
+                            </tr>
+                            <tr>
+                                <td>Validity Check</td>
+                                <td>~100ns</td>
+                                <td>10M ops/s</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3 style="color: var(--primary-orange); margin-top: 2rem;">Otimizações</h3>
+                    <ul>
+                        <li>✅ Lock-free lease tracking</li>
+                        <li>✅ Zero-allocation validity checks</li>
+                        <li>✅ Efficient expiration scanning</li>
+                        <li>✅ Batched renewals</li>
+                        <li>✅ Memory-mapped persistence</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases -->
+        <section class="section">
+            <h2 class="section-title">Casos de Uso</h2>
+            
+            <div class="module-card animated-element">
+                <h3 class="module-title">🗄️ Eleição de Master</h3>
+                <p>Use leases para garantir apenas um master ativo por vez.</p>
+                <div class="code-block">
+                    <pre><code>let manager = LeaseManager::new();
+
+// Tentar se tornar master
+match manager.try_acquire("db-master", node_id, Duration::from_secs(30)) {
+    Ok(lease) => {
+        println!("Sou o master!");
+        
+        // Renovar periodicamente enquanto master
+        loop {
+            manager.renew(lease.id())?;
+            tokio::time::sleep(Duration::from_secs(10)).await;
+        }
+    }
+    Err(_) => {
+        println!("Outro nó é master");
+    }
+}</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">🔐 Acesso Exclusivo a Recurso</h3>
+                <p>Garanta que apenas um worker processe um recurso por vez.</p>
+                <div class="code-block">
+                    <pre><code>// Worker tenta adquirir lease para processar
+let lease = manager.acquire(
+    &format!("job-{}", job_id),
+    worker_id,
+    Duration::from_secs(300)
+)?;
+
+// Processar job com exclusividade
+process_job(job_id)?;
+
+// Liberar quando terminar
+manager.release(lease.id())?;</code></pre>
+                </div>
+            </div>
+
+            <div class="module-card animated-element" style="margin-top: 2rem;">
+                <h3 class="module-title">⚙️ Cache Distribuído</h3>
+                <p>Use leases para gerenciar ownership de cache entries.</p>
+                <div class="code-block">
+                    <pre><code>// Nó adquire lease para fazer cache
+let lease = manager.acquire(
+    &format!("cache-{}", key),
+    node_id,
+    Duration::from_secs(60)
+)?;
+
+// Carregar dados e fazer cache
+let data = load_data(key)?;
+cache.set(key, data);
+
+// Renovar enquanto dados estão quentes
+// Expirar automaticamente se não renovado</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- License -->
+        <section class="section">
+            <h2 class="section-title">Licença</h2>
+            <div class="code-block">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Este módulo faz parte do ecossistema proprietário Avx.</p>
+                <p>Para uso comercial, entre em contato:</p>
+                <ul>
+                    <li>📧 Email: nicolas@avila.inc</li>
+                    <li>🌐 Website: https://avila.inc</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+        <p>avx-lease - Software Proprietário</p>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

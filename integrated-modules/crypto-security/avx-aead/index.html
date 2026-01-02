@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX AEAD - Cifras autenticadas com dados associados">
+    <title>AVX AEAD - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo">
+                <span class="avx-gradient">AVX</span> Crypto Security
+            </a>
+            <ul class="nav-links">
+                <li><a href="../index.html" data-i18n="nav.home">Início</a></li>
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li>
+                    <select id="language-selector" aria-label="Selecionar idioma">
+                        <option value="pt-BR">🇧🇷 PT</option>
+                        <option value="en">🇺🇸 EN</option>
+                        <option value="ru">🇷🇺 RU</option>
+                        <option value="ja">🇯🇵 JA</option>
+                        <option value="zh-TW">🇹🇼 ZH</option>
+                        <option value="ur">🇵🇰 UR</option>
+                        <option value="ar">🇸🇦 AR</option>
+                        <option value="de">🇩🇪 DE</option>
+                        <option value="de-CH">🇨🇭 DE-CH</option>
+                        <option value="lv">🇱🇻 LV</option>
+                        <option value="uz">🇺🇿 UZ</option>
+                        <option value="es">🇪🇸 ES</option>
+                    </select>
+                </li>
+                <li><button id="theme-toggle" aria-label="Alternar tema">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient" data-i18n="aead.hero.title">AVX AEAD</h1>
+            <p class="hero-subtitle" data-i18n="aead.hero.subtitle">
+                Cifras autenticadas com dados associados - ChaCha20-Poly1305, AES-GCM
+            </p>
+            <div class="hero-badges">
+                <span class="badge">ChaCha20-Poly1305</span>
+                <span class="badge">AES-GCM</span>
+                <span class="badge">Authenticated Encryption</span>
+                <span class="badge">no_std</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Overview Section -->
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="aead.overview.title">Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3 data-i18n="aead.overview.card1.title">🔒 AEAD (Authenticated Encryption with Associated Data)</h3>
+                    <p data-i18n="aead.overview.card1.desc">
+                        Cifras que fornecem confidencialidade e autenticidade simultaneamente. Protege contra adulteração e garante integridade dos dados.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="aead.overview.card2.title">⚡ ChaCha20-Poly1305</h3>
+                    <p data-i18n="aead.overview.card2.desc">
+                        Cifra de fluxo moderna com autenticação Poly1305. Excelente desempenho em software e resistente a ataques de timing.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="aead.overview.card3.title">🛡️ AES-GCM</h3>
+                    <p data-i18n="aead.overview.card3.desc">
+                        Advanced Encryption Standard no modo Galois/Counter Mode. Aprovado pelo NIST e acelerado por hardware AES-NI.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 data-i18n="aead.overview.card4.title">🔐 Dados Associados</h3>
+                    <p data-i18n="aead.overview.card4.desc">
+                        Suporte para dados adicionais não criptografados mas autenticados (AAD), ideal para headers e metadados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Available Types Section -->
+    <section id="types" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="aead.types.title">Tipos Disponíveis</h2>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th data-i18n="aead.types.table.type">Tipo</th>
+                            <th data-i18n="aead.types.table.description">Descrição</th>
+                            <th data-i18n="aead.types.table.keysize">Tamanho da Chave</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>ChaCha20Poly1305</code></td>
+                            <td data-i18n="aead.types.chacha">Cifra de fluxo ChaCha20 com MAC Poly1305</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>XChaCha20Poly1305</code></td>
+                            <td data-i18n="aead.types.xchacha">Variante com nonce estendido (192 bits)</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>AesGcm128</code></td>
+                            <td data-i18n="aead.types.aes128">AES-128 no modo GCM</td>
+                            <td>128 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>AesGcm192</code></td>
+                            <td data-i18n="aead.types.aes192">AES-192 no modo GCM</td>
+                            <td>192 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>AesGcm256</code></td>
+                            <td data-i18n="aead.types.aes256">AES-256 no modo GCM</td>
+                            <td>256 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>Nonce</code></td>
+                            <td data-i18n="aead.types.nonce">Número usado uma vez (nonce)</td>
+                            <td>96/192 bits</td>
+                        </tr>
+                        <tr>
+                            <td><code>Tag</code></td>
+                            <td data-i18n="aead.types.tag">Tag de autenticação</td>
+                            <td>128 bits</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Usage Examples Section -->
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="aead.examples.title">Exemplos de Uso</h2>
+
+            <h3 data-i18n="aead.examples.chacha.title">Exemplo Básico - ChaCha20-Poly1305</h3>
+            <pre><code class="language-rust">use avx_aead::{ChaCha20Poly1305, Nonce};
+
+fn main() {
+    // Chave de 256 bits
+    let key = [0u8; 32];
+    let cipher = ChaCha20Poly1305::new(&key);
+
+    // Nonce único de 96 bits
+    let nonce = Nonce::from_slice(&[0u8; 12]);
+
+    // Dados associados (não criptografados)
+    let aad = b"metadata";
+
+    // Criptografar
+    let plaintext = b"Mensagem secreta AVX";
+    let ciphertext = cipher.encrypt(&nonce, aad, plaintext)
+        .expect("Falha na criptografia");
+
+    // Descriptografar
+    let decrypted = cipher.decrypt(&nonce, aad, &ciphertext)
+        .expect("Falha na descriptografia");
+
+    assert_eq!(plaintext, &decrypted[..]);
+    println!("✅ ChaCha20-Poly1305 funcional!");
+}</code></pre>
+
+            <h3 data-i18n="aead.examples.aes.title">Exemplo - AES-256-GCM</h3>
+            <pre><code class="language-rust">use avx_aead::{AesGcm256, Nonce};
+
+fn main() {
+    // Chave de 256 bits
+    let key = [0u8; 32];
+    let cipher = AesGcm256::new(&key);
+
+    // Nonce de 96 bits
+    let nonce = Nonce::from_slice(&[1u8; 12]);
+
+    // Dados associados
+    let aad = b"header_info";
+
+    // Criptografar com autenticação
+    let plaintext = b"Dados confidenciais";
+    let ciphertext = cipher.encrypt(&nonce, aad, plaintext)
+        .expect("Erro ao criptografar");
+
+    // Descriptografar e verificar autenticidade
+    let decrypted = cipher.decrypt(&nonce, aad, &ciphertext)
+        .expect("Falha na autenticação ou descriptografia");
+
+    assert_eq!(plaintext, &decrypted[..]);
+    println!("✅ AES-GCM verificado!");
+}</code></pre>
+
+            <h3 data-i18n="aead.examples.streaming.title">Exemplo - Criptografia Streaming</h3>
+            <pre><code class="language-rust">use avx_aead::{ChaCha20Poly1305, Nonce};
+
+fn main() {
+    let key = [0u8; 32];
+    let cipher = ChaCha20Poly1305::new(&key);
+    let nonce = Nonce::from_slice(&[2u8; 12]);
+
+    // Processar grandes volumes de dados em chunks
+    let mut ciphertext = Vec::new();
+    for chunk in data_stream.chunks(4096) {
+        let encrypted = cipher.encrypt_chunk(&nonce, chunk)
+            .expect("Erro no chunk");
+        ciphertext.extend_from_slice(&encrypted);
+    }
+
+    println!("✅ Stream processado: {} bytes", ciphertext.len());
+}</code></pre>
+        </div>
+    </section>
+
+    <!-- API Reference Section -->
+    <section id="api" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="aead.api.title">Referências da API</h2>
+
+            <div class="api-section">
+                <h3>ChaCha20Poly1305</h3>
+                <div class="api-method">
+                    <code>pub fn new(key: &[u8; 32]) -> Self</code>
+                    <p data-i18n="aead.api.chacha.new">Cria uma nova instância com chave de 256 bits.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn encrypt(&self, nonce: &Nonce, aad: &[u8], plaintext: &[u8]) -> Result&lt;Vec&lt;u8&gt;, AeadError&gt;</code>
+                    <p data-i18n="aead.api.chacha.encrypt">Criptografa dados com autenticação.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn decrypt(&self, nonce: &Nonce, aad: &[u8], ciphertext: &[u8]) -> Result&lt;Vec&lt;u8&gt;, AeadError&gt;</code>
+                    <p data-i18n="aead.api.chacha.decrypt">Descriptografa e verifica autenticidade.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>AesGcm256</h3>
+                <div class="api-method">
+                    <code>pub fn new(key: &[u8; 32]) -> Self</code>
+                    <p data-i18n="aead.api.aes.new">Cria instância AES-256-GCM.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn encrypt(&self, nonce: &Nonce, aad: &[u8], plaintext: &[u8]) -> Result&lt;Vec&lt;u8&gt;, AeadError&gt;</code>
+                    <p data-i18n="aead.api.aes.encrypt">Criptografa com AES-GCM.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn decrypt(&self, nonce: &Nonce, aad: &[u8], ciphertext: &[u8]) -> Result&lt;Vec&lt;u8&gt;, AeadError&gt;</code>
+                    <p data-i18n="aead.api.aes.decrypt">Descriptografa com verificação de tag.</p>
+                </div>
+            </div>
+
+            <div class="api-section">
+                <h3>Nonce</h3>
+                <div class="api-method">
+                    <code>pub fn from_slice(bytes: &[u8]) -> Self</code>
+                    <p data-i18n="aead.api.nonce.from">Cria nonce a partir de slice.</p>
+                </div>
+                <div class="api-method">
+                    <code>pub fn random() -> Self</code>
+                    <p data-i18n="aead.api.nonce.random">Gera nonce aleatório criptograficamente seguro.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Performance Section -->
+    <section id="performance" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="aead.performance.title">Métricas de Performance</h2>
+            <div class="grid">
+                <div class="card metric-card">
+                    <div class="metric-value">5.2 GB/s</div>
+                    <div class="metric-label" data-i18n="aead.performance.chacha">ChaCha20-Poly1305</div>
+                    <div class="metric-detail">AVX2 otimizado</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">8.5 GB/s</div>
+                    <div class="metric-label" data-i18n="aead.performance.aes">AES-256-GCM</div>
+                    <div class="metric-detail">Com AES-NI</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">< 100ns</div>
+                    <div class="metric-label" data-i18n="aead.performance.latency">Latência</div>
+                    <div class="metric-detail">Por operação</div>
+                </div>
+                <div class="card metric-card">
+                    <div class="metric-value">Zero</div>
+                    <div class="metric-label" data-i18n="aead.performance.alloc">Alocações</div>
+                    <div class="metric-detail">no_std compatível</div>
+                </div>
+            </div>
+
+            <div class="performance-chart">
+                <h3 data-i18n="aead.performance.chart.title">Throughput Comparativo</h3>
+                <div class="chart-bars">
+                    <div class="chart-bar">
+                        <div class="bar-label">ChaCha20-Poly1305</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 65%;" data-value="5.2 GB/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">XChaCha20-Poly1305</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 62%;" data-value="4.8 GB/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">AES-128-GCM</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 90%;" data-value="7.5 GB/s"></div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="bar-label">AES-256-GCM</div>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 100%;" data-value="8.5 GB/s"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="aead.usecases.title">Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📡</div>
+                    <h3 data-i18n="aead.usecases.network.title">Protocolos de Rede</h3>
+                    <p data-i18n="aead.usecases.network.desc">
+                        TLS 1.3, QUIC, WireGuard e outros protocolos modernos que requerem AEAD para comunicação segura.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">💾</div>
+                    <h3 data-i18n="aead.usecases.storage.title">Armazenamento Criptografado</h3>
+                    <p data-i18n="aead.usecases.storage.desc">
+                        Criptografia de discos, bancos de dados e arquivos com verificação de integridade automática.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔐</div>
+                    <h3 data-i18n="aead.usecases.messaging.title">Mensagens Seguras</h3>
+                    <p data-i18n="aead.usecases.messaging.desc">
+                        Aplicações de mensagens end-to-end com proteção contra adulteração e replay attacks.
+                    </p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📦</div>
+                    <h3 data-i18n="aead.usecases.api.title">APIs REST/gRPC</h3>
+                    <p data-i18n="aead.usecases.api.desc">
+                        Autenticação de requests e responses com dados associados (headers, timestamps).
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- License Section -->
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2 data-i18n="aead.license.title">Licença</h2>
+            <div class="card">
+                <p data-i18n="aead.license.desc">
+                    AVX AEAD é software proprietário desenvolvido pela Ávila Inc. Todos os direitos reservados.
+                </p>
+                <p data-i18n="aead.license.contact">
+                    Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. <span data-i18n="footer.rights">Todos os direitos reservados.</span></p>
+            <p data-i18n="footer.author">Desenvolvido por Nícolas Ávila</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

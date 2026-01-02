@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVX Modular - Aritmética Modular</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">AVX</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#overview">Visão Geral</a></li>
+                    <li><a href="#examples">Exemplos</a></li>
+                    <li><a href="#performance">Performance</a></li>
+                </ul>
+            </nav>
+            <div class="controls">
+                <button id="theme-toggle" class="theme-toggle">🌙 Dark</button>
+                <select id="lang-selector" class="lang-selector">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="en">🇺🇸 English</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 繁體中文</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr">🇨🇭 Français</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                    <option value="es">🇪🇸 Español</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AVX Modular</h1>
+            <p>Aritmética Modular com SIMD para Criptografia</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <section id="overview" class="content-section">
+            <h2>📖 Visão Geral</h2>
+            <p>AVX Modular fornece aritmética modular otimizada para grandes inteiros, essencial para criptografia, teoria dos números e computação científica.</p>
+
+            <h3>Características</h3>
+            <ul style="line-height: 2; font-size: 1.1rem;">
+                <li>✅ <strong>Big Integer Support</strong>: U256, U512, U1024, U2048</li>
+                <li>✅ <strong>Montgomery Arithmetic</strong>: Otimização para multiplicação</li>
+                <li>✅ <strong>SIMD Acceleration</strong>: AVX2/AVX512</li>
+                <li>✅ <strong>Constant Time</strong>: Resistente a timing attacks</li>
+            </ul>
+        </section>
+
+        <section id="examples" class="content-section">
+            <h2>💻 Exemplos</h2>
+
+            <h3>Aritmética Modular Básica</h3>
+            <pre><code>use avx_modular::{ModularU256, U256};
+
+let modulus = U256::from(1000000007u64);
+let a = ModularU256::new(U256::from(123), modulus);
+let b = ModularU256::new(U256::from(456), modulus);
+
+let sum = a.add_mod(&b);
+let product = a.mul_mod(&b);
+let power = a.pow_mod(&U256::from(10));</code></pre>
+
+            <h3>Montgomery Multiplication</h3>
+            <pre><code>use avx_modular::{MontgomeryContext, U256};
+
+let modulus = U256::from(1000000007u64);
+let ctx = MontgomeryContext::new(modulus);
+
+let a_mont = ctx.to_montgomery(U256::from(123));
+let b_mont = ctx.to_montgomery(U256::from(456));
+
+let product = ctx.mul_montgomery(a_mont, b_mont);</code></pre>
+        </section>
+
+        <section id="performance" class="content-section">
+            <h2>⚡ Performance</h2>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>AVX Modular</th>
+                        <th>Biblioteca Padrão</th>
+                        <th>Speedup</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Mul Mod (256-bit)</td>
+                        <td>45ns</td>
+                        <td>180ns</td>
+                        <td>4x</td>
+                    </tr>
+                    <tr>
+                        <td>Pow Mod (2048-bit)</td>
+                        <td>2.3ms</td>
+                        <td>12ms</td>
+                        <td>5x</td>
+                    </tr>
+                    <tr>
+                        <td>Montgomery Mul</td>
+                        <td>15ns</td>
+                        <td>85ns</td>
+                        <td>5.6x</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="animation-demo">
+                <h3>Performance SIMD</h3>
+                <div class="demo-box"></div>
+                <p>Aceleração AVX2/AVX512 • Até 5x mais rápido</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>🎬 Casos de Uso</h2>
+
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Criptografia RSA</h3>
+                    <p>Implementar encriptação/decriptação RSA com chaves de 2048/4096 bits.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Blockchain</h3>
+                    <p>Assinaturas digitais e prova de trabalho.</p>
+                </div>
+                <div class="module-card">
+                    <h3>Zero-Knowledge Proofs</h3>
+                    <p>Aritmética modular em provas ZK-SNARK.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p><strong>Copyright © 2025 Nícolas Ávila</strong></p>
+            <div class="footer-links">
+                <a href="mailto:nicolas@avila.inc">📧 Contato</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

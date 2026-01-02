@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>avx-pool - Object Pooling | Avx Documentation</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">🚀 Avx</div>
+            <div class="controls">
+                <button id="theme-toggle">☀️ Claro</button>
+                <select id="lang-select">
+                    <option value="pt-BR">🇧🇷 Português</option>
+                    <option value="es">🇪🇸 Español</option>
+                    <option value="de">🇩🇪 Deutsch</option>
+                    <option value="fr-CH">🇨🇭 Français</option>
+                    <option value="ja">🇯🇵 日本語</option>
+                    <option value="zh-TW">🇹🇼 中文</option>
+                    <option value="ru">🇷🇺 Русский</option>
+                    <option value="ar">🇸🇦 العربية</option>
+                    <option value="ur">🇵🇰 اردو</option>
+                    <option value="lv">🇱🇻 Latviešu</option>
+                    <option value="uz">🇺🇿 O'zbek</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="avx-cache.html">avx-cache</a></li>
+            <li><a href="avx-codec.html">avx-codec</a></li>
+            <li><a href="avx-compress.html">avx-compress</a></li>
+            <li><a href="avx-db.html">avx-db</a></li>
+            <li><a href="avx-pool.html" class="active">avx-pool</a></li>
+            <li><a href="avx-serde.html">avx-serde</a></li>
+            <li><a href="avx-serialize.html">avx-serialize</a></li>
+            <li><a href="avx-storage.html">avx-storage</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1>🔄 avx-pool</h1>
+            <p>Sistema genérico de pooling de objetos e recursos</p>
+        </section>
+
+        <section>
+            <h2>🚀 Características</h2>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <h3>Pool Genérico</h3>
+                    <ul>
+                        <li>Funciona com qualquer tipo</li>
+                        <li>Factory pattern</li>
+                        <li>Capacidade configurável</li>
+                        <li>Métricas de uso</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Performance</h3>
+                    <ul>
+                        <li>12 ns acquire (hit)</li>
+                        <li>8 ns release</li>
+                        <li>150x mais rápido que new</li>
+                        <li>99.99% menos allocations</li>
+                    </ul>
+                </div>
+
+                <div class="module-card">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Thread-safe</li>
+                        <li>Zero allocations</li>
+                        <li>no_std compatible</li>
+                        <li>Reutilização eficiente</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>📦 Instalação</h2>
+            <pre><code>[dependencies]
+avx-pool = "0.1.0"</code></pre>
+        </section>
+
+        <section>
+            <h2>🎯 Exemplos</h2>
+
+            <h3>Pool Básico</h3>
+            <pre><code>use avx_pool::{SimplePool, Pool};
+
+// Pool de buffers reutilizáveis
+let mut pool = SimplePool::new(10, || vec![0u8; 1024]);
+
+// Adquirir buffer
+let mut buffer = pool.acquire().unwrap();
+buffer.fill(42);
+
+// Devolver ao pool
+pool.release(buffer);
+
+println!("Available: {}", pool.available());</code></pre>
+
+            <h3>Pool de Conexões HTTP</h3>
+            <pre><code>use avx_pool::{SimplePool, Pool};
+use reqwest::Client;
+
+let mut http_pool = SimplePool::new(20, || {
+    Client::builder()
+        .timeout(Duration::from_secs(30))
+        .build()
+        .unwrap()
+});
+
+// Usar conexão
+let client = http_pool.acquire().unwrap();
+let response = client.get("https://api.example.com").send().await?;
+
+// Devolver
+http_pool.release(client);</code></pre>
+
+            <h3>Pool Thread-Safe</h3>
+            <pre><code>use avx_pool::{SimplePool, Pool};
+use std::sync::{Arc, Mutex};
+
+let pool = Arc::new(Mutex::new(
+    SimplePool::new(100, || Vec::with_capacity(1024))
+));
+
+// Usar em múltiplas threads
+let pool_clone = pool.clone();
+thread::spawn(move || {
+    let mut p = pool_clone.lock().unwrap();
+    let buffer = p.acquire().unwrap();
+    // ...
+    p.release(buffer);
+});</code></pre>
+        </section>
+
+        <section>
+            <h2>📊 Performance</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Operação</th>
+                        <th>Tempo</th>
+                        <th>vs. New</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Acquire (hit)</td>
+                        <td>12 ns</td>
+                        <td>150x mais rápido</td>
+                    </tr>
+                    <tr>
+                        <td>Acquire (miss)</td>
+                        <td>180 ns</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>Release</td>
+                        <td>8 ns</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>New object</td>
+                        <td>1.8 µs</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><em>Benchmarks para objetos de 1KB</em></p>
+        </section>
+
+        <section class="use-cases">
+            <h2>🎯 Casos de Uso</h2>
+            <div class="use-case-grid">
+                <div class="use-case">
+                    <div class="use-case-icon">📦</div>
+                    <h3>Buffers I/O</h3>
+                    <p>Pool de buffers 64KB</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">🔌</div>
+                    <h3>HTTP Clients</h3>
+                    <p>Reutilizar conexões</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">📄</div>
+                    <h3>Parsers</h3>
+                    <p>JSON/XML decoders</p>
+                </div>
+
+                <div class="use-case">
+                    <div class="use-case-icon">⚙️</div>
+                    <h3>Workers</h3>
+                    <p>Pool de workers</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright © 2025 Nícolas Ávila. Todos os direitos reservados.</p>
+        <p>📧 nicolas@avila.inc | 🌐 <a href="https://docs.avila.inc" style="color: var(--secondary-yellow);">docs.avila.inc</a></p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

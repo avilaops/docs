@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Documentação completa do Avx Web Ecosystem - Framework e ferramentas web de alta performance">
+    <meta name="keywords" content="Avx, Rust, WebAssembly, Framework, Web Development, High Performance">
+    <meta name="author" content="Avila Inc.">
+    <title>Avx Web - Documentação</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧡</text></svg>">
+</head>
+<body class="light-theme">
+    <header>
+        <div class="logo">🧡 Avx Web</div>
+        <div class="nav-controls">
+            <button id="theme-toggle" class="theme-toggle"></button>
+            <div class="language-selector">
+                <button id="language-btn" class="language-btn"></button>
+                <div id="language-dropdown" class="language-dropdown"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1 data-translate="title">Documentação Avx Web</h1>
+        <p data-translate="subtitle">Ecossistema de tecnologias web de alta performance e segurança</p>
+    </div>
+
+    <div class="container">
+        <nav class="nav-menu">
+            <a href="#overview" class="nav-item" data-translate="overview">Visão Geral</a>
+            <a href="#modules" class="nav-item" data-translate="modules">Módulos</a>
+            <a href="#examples" class="nav-item" data-translate="examples">Exemplos</a>
+            <a href="#performance" class="nav-item" data-translate="performance">Performance</a>
+        </nav>
+
+        <!-- Overview Section -->
+        <section id="overview" class="section">
+            <h2 data-translate="overview">Visão Geral</h2>
+            <p>O ecossistema Avx Web fornece um conjunto completo de ferramentas e frameworks para desenvolvimento web moderno. Construído 100% em Rust com foco em performance, segurança e ergonomia.</p>
+            
+            <h3>🎯 Filosofia</h3>
+            <ul>
+                <li><strong>Independência Total:</strong> Zero dependências externas críticas</li>
+                <li><strong>Segurança First:</strong> Criptografia e privacidade em todas as camadas</li>
+                <li><strong>Performance Máxima:</strong> Otimizações SIMD e zero-copy</li>
+                <li><strong>Fundamentos Matemáticos:</strong> Soluções baseadas em ciência da computação</li>
+                <li><strong>Simplicidade Ergonômica:</strong> APIs intuitivas e fáceis de usar</li>
+            </ul>
+
+            <h3>📦 Instalação</h3>
+            <pre><code># Via Cargo
+cargo add avx-browser
+cargo add avx-framework
+cargo add avx-frontend
+cargo add avx-web
+cargo add avx-webframework
+
+# Build do projeto
+cargo build --release
+
+# Execute os testes
+cargo test --all</code></pre>
+        </section>
+
+        <!-- Modules Section -->
+        <section id="modules" class="section">
+            <h2 data-translate="modules">Módulos</h2>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🔒 avx-browser</h3>
+                    <p>Navegador web de alta segurança com arquitetura de roteamento onion de 7 camadas e garantias criptográficas de anonimato.</p>
+                    <ul>
+                        <li>Arquitetura multi-camada</li>
+                        <li>Perfect Forward Secrecy</li>
+                        <li>Resistência à análise de tráfego</li>
+                        <li>Protocolos HTTP, QUIC e DoH</li>
+                    </ul>
+                    <a href="avx-browser.html" class="nav-item">Ver Documentação →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎨 avx-framework</h3>
+                    <p>Framework frontend 100% Rust com fundamentos matemáticos para aplicações web de alta performance.</p>
+                    <ul>
+                        <li>Virtual DOM reativo</li>
+                        <li>Sistema de layout baseado em álgebra linear</li>
+                        <li>Rendering otimizado com SIMD</li>
+                        <li>Animações fluidas 60fps+</li>
+                    </ul>
+                    <a href="avx-framework.html" class="nav-item">Ver Documentação →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🚀 avx-frontend</h3>
+                    <p>Framework web completo para construção de aplicações web modernas 100% em Rust + WebAssembly.</p>
+                    <ul>
+                        <li>Compilação para WebAssembly</li>
+                        <li>API intuitiva e ergonômica</li>
+                        <li>Sistema de componentes</li>
+                        <li>Demonstrações interativas</li>
+                    </ul>
+                    <a href="avx-frontend.html" class="nav-item">Ver Documentação →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🏗️ avx-vizzio</h3>
+                    <p>Navegador especializado de alta segurança construído sobre o avx-browser para aplicações profissionais.</p>
+                    <ul>
+                        <li>Otimizado para engenharia</li>
+                        <li>Visualização 3D</li>
+                        <li>Colaboração em tempo real</li>
+                        <li>Interface especializada</li>
+                    </ul>
+                    <a href="avx-vizzio.html" class="nav-item">Ver Documentação →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🛠️ avx-web</h3>
+                    <p>Utilitários web essenciais para o ecossistema Avx com ferramentas HTTP/HTTPS completas.</p>
+                    <ul>
+                        <li>Cliente HTTP completo</li>
+                        <li>URL Parsing robusto</li>
+                        <li>Gerenciamento de cookies</li>
+                        <li>Sistema de middleware</li>
+                    </ul>
+                    <a href="avx-web.html" class="nav-item">Ver Documentação →</a>
+                </div>
+
+                <div class="card">
+                    <h3>⚡ avx-webframework</h3>
+                    <p>Framework web nativo server-side para construção de APIs e serviços de alta performance.</p>
+                    <ul>
+                        <li>Performance superior</li>
+                        <li>Async/await nativo</li>
+                        <li>Roteamento expressivo</li>
+                        <li>Middleware personalizável</li>
+                    </ul>
+                    <a href="avx-webframework.html" class="nav-item">Ver Documentação →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section id="examples" class="section">
+            <h2 data-translate="examples">Exemplos de Uso</h2>
+            
+            <h3>Servidor Web com avx-webframework</h3>
+            <pre><code>use avx_webframework::*;
+
+#[tokio::main]
+async fn main() {
+    let app = App::new()
+        .route("/", get(home))
+        .route("/api/data", get(api_data));
+    
+    println!("🚀 Servidor em http://localhost:3000");
+    app.listen("127.0.0.1:3000").await.unwrap();
+}
+
+async fn home() -> &'static str {
+    "Bem-vindo ao Avx Web!"
+}
+
+async fn api_data() -> Json<Response> {
+    Json(Response { 
+        status: "ok",
+        data: vec![1, 2, 3]
+    })
+}</code></pre>
+
+            <h3>Frontend WASM com avx-frontend</h3>
+            <pre><code>use avx_frontend::*;
+
+#[component]
+fn App() -> Element {
+    let (count, set_count) = use_state(0);
+    
+    html! {
+        &lt;div class="app"&gt;
+            &lt;h1&gt;"Contador: " {count}&lt;/h1&gt;
+            &lt;button onclick={move || set_count(count + 1)}&gt;
+                "Incrementar"
+            &lt;/button&gt;
+        &lt;/div&gt;
+    }
+}
+
+fn main() {
+    mount("root", App);
+}</code></pre>
+
+            <h3>Navegação Anônima com avx-browser</h3>
+            <pre><code>use avx_browser::*;
+
+#[tokio::main]
+async fn main() -> Result<(), BrowserError> {
+    // Configurar navegador com máxima segurança
+    let config = BrowserConfig::builder()
+        .layers(7)
+        .onion_hops(5)
+        .enable_doh(true)
+        .build();
+    
+    let browser = Browser::new(config)?;
+    
+    // Requisição anônima
+    let response = browser
+        .get("https://example.com")
+        .send()
+        .await?;
+    
+    println!("Status: {}", response.status());
+    
+    Ok(())
+}</code></pre>
+
+            <h3>Cliente HTTP com avx-web</h3>
+            <pre><code>use avx_web::*;
+
+#[tokio::main]
+async fn main() -> Result<(), WebError> {
+    let client = HttpClient::new();
+    
+    // GET request
+    let response = client
+        .get("https://api.example.com/users")
+        .header("Authorization", "Bearer token")
+        .send()
+        .await?;
+    
+    let users: Vec<User> = response.json().await?;
+    println!("Usuários: {:?}", users);
+    
+    Ok(())
+}</code></pre>
+        </section>
+
+        <!-- Performance Section -->
+        <section id="performance" class="section">
+            <h2 data-translate="performance">Performance</h2>
+            
+            <h3>⚡ Benchmarks</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Módulo</th>
+                        <th>Operação</th>
+                        <th>Tempo</th>
+                        <th>Throughput</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>avx-webframework</td>
+                        <td>HTTP Request</td>
+                        <td>0.7ms</td>
+                        <td>145,000 req/s</td>
+                    </tr>
+                    <tr>
+                        <td>avx-frontend</td>
+                        <td>Component Render</td>
+                        <td>0.15ms</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>avx-browser</td>
+                        <td>GET (3 hops)</td>
+                        <td>120ms</td>
+                        <td>8.3 req/s</td>
+                    </tr>
+                    <tr>
+                        <td>avx-web</td>
+                        <td>Simple GET</td>
+                        <td>12ms</td>
+                        <td>83 req/s</td>
+                    </tr>
+                    <tr>
+                        <td>avx-framework</td>
+                        <td>VDOM Diff (1000)</td>
+                        <td>1.2ms</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🎯 Otimizações</h3>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>⚡ SIMD</h3>
+                    <p>Operações vetorizadas para máxima performance em processamento de dados e criptografia.</p>
+                </div>
+                <div class="card">
+                    <h3>🔄 Zero-Copy</h3>
+                    <p>Minimização de alocações e cópias de memória para melhor uso de recursos.</p>
+                </div>
+                <div class="card">
+                    <h3>🎯 Async Nativo</h3>
+                    <p>Runtime assíncrono otimizado baseado em avx-async para máxima concorrência.</p>
+                </div>
+                <div class="card">
+                    <h3>🗜️ Compression</h3>
+                    <p>Suporte automático a gzip e brotli para redução de banda.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Use Cases Section -->
+        <section id="use-cases" class="section">
+            <h2 data-translate="useCases">Casos de Uso</h2>
+            
+            <div class="card-grid">
+                <div class="card">
+                    <h3>🌐 APIs RESTful</h3>
+                    <p>Construa APIs de alta performance com avx-webframework. Suporte completo a JSON, middleware, autenticação e rate limiting.</p>
+                </div>
+                <div class="card">
+                    <h3>📱 Aplicações Web Modernas</h3>
+                    <p>Desenvolva SPAs rápidas e responsivas com avx-frontend e avx-framework compilando para WebAssembly.</p>
+                </div>
+                <div class="card">
+                    <h3>🔒 Navegação Privada</h3>
+                    <p>Garanta anonimato e privacidade com avx-browser e sua arquitetura de 7 camadas de proteção.</p>
+                </div>
+                <div class="card">
+                    <h3>🤖 Web Scraping</h3>
+                    <p>Extraia dados da web de forma ética e eficiente com avx-web e avx-browser.</p>
+                </div>
+                <div class="card">
+                    <h3>🎮 Jogos Web</h3>
+                    <p>Crie jogos 2D/3D de alta performance no browser com avx-framework e Canvas API.</p>
+                </div>
+                <div class="card">
+                    <h3>📊 Dashboards</h3>
+                    <p>Desenvolva dashboards interativos e real-time com avx-frontend e WebSockets.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- License Section -->
+        <section id="license" class="section">
+            <h2 data-translate="license">Licença</h2>
+            <p><strong data-translate="proprietary">Proprietária - Copyright © 2025 Nícolas Ávila</strong></p>
+            <p>Todos os direitos reservados. Para licenciamento comercial, entre em contato:</p>
+            <ul>
+                <li>📧 Email: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></li>
+                <li>🌐 Website: <a href="https://avila.inc">https://avila.inc</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <footer>
+        <p><strong>Desenvolvido com 🧡 pela Avila Inc.</strong></p>
+        <p>© 2025 Nícolas Ávila - Todos os direitos reservados</p>
+        <p>
+            <a href="https://avila.inc">Website</a> |
+            <a href="mailto:nicolas@avila.inc">Contato</a> |
+            <a href="https://docs.avila.inc">Documentação</a>
+        </p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avx CLI Ecosystem - Documentação Oficial</title>
+    <style>
+        :root[data-theme="light"] {
+            --primary-orange: #FF8C00;
+            --secondary-yellow: #FFD700;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #F5F5F5;
+            --text-primary: #000000;
+            --text-secondary: #666666;
+            --border-color: #DDDDDD;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --code-bg: #F8F8F8;
+        }
+
+        :root[data-theme="dark"] {
+            --primary-orange: #FF8C00;
+            --secondary-yellow: #FFD700;
+            --bg-primary: #0A0E27;
+            --bg-secondary: #151932;
+            --text-primary: #FFFFFF;
+            --text-secondary: #AAAAAA;
+            --border-color: #2A2E47;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --code-bg: #1E2238;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-yellow));
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px var(--shadow);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #FFFFFF;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-toggle, .lang-select {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            color: #FFFFFF;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .theme-toggle:hover, .lang-select:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .lang-select {
+            appearance: none;
+            padding-right: 2rem;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='white' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+        }
+
+        .nav {
+            background-color: var(--bg-secondary);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px var(--shadow);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-orange);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-orange);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(180deg, var(--bg-primary), var(--bg-secondary));
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-orange), var(--secondary-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .content {
+            padding: 3rem 0;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .module-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .module-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--shadow);
+        }
+
+        .module-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-orange);
+        }
+
+        .module-desc {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .module-features {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .module-features li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .module-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary-yellow);
+            font-weight: bold;
+        }
+
+        .section {
+            margin: 4rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--secondary-yellow));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .code-example {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-example::before {
+            content: 'Rust';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: monospace;
+        }
+
+        .code-example code {
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-item {
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-orange);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-orange);
+        }
+
+        .performance-chart {
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .benchmark-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .benchmark-bar {
+            width: 60%;
+            height: 30px;
+            background: linear-gradient(90deg, var(--primary-orange), var(--secondary-yellow));
+            border-radius: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .benchmark-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .footer {
+            background: var(--bg-secondary);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            border-top: 3px solid var(--primary-orange);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary-orange);
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            display: block;
+            padding: 0.3rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary-orange);
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .modules {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">🚀 Avx CLI Ecosystem</div>
+                <div class="controls">
+                    <button class="theme-toggle" onclick="toggleTheme()">
+                        <span id="theme-icon">🌙</span>
+                    </button>
+                    <select class="lang-select" onchange="changeLanguage(this.value)">
+                        <option value="pt-br">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-tw">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="fr">🇨🇭 Français</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="nav">
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview" data-i18n="nav.overview">Visão Geral</a></li>
+                <li><a href="#modules" data-i18n="nav.modules">Módulos</a></li>
+                <li><a href="#examples" data-i18n="nav.examples">Exemplos</a></li>
+                <li><a href="#api" data-i18n="nav.api">API</a></li>
+                <li><a href="#performance" data-i18n="nav.performance">Performance</a></li>
+                <li><a href="#license" data-i18n="nav.license">Licença</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero animate-fade-in">
+        <div class="container">
+            <h1 data-i18n="hero.title">Ecossistema CLI de Alta Performance</h1>
+            <p data-i18n="hero.subtitle">
+                Bibliotecas Rust ultra-otimizadas para construir aplicações de linha de comando profissionais
+                com zero dependências externas e performance excepcional.
+            </p>
+        </div>
+    </section>
+
+    <main class="content">
+        <div class="container">
+            <section id="overview" class="section">
+                <h2 class="section-title" data-i18n="overview.title">Visão Geral do Ecossistema</h2>
+                <p style="text-align: center; color: var(--text-secondary); max-width: 800px; margin: 0 auto;">
+                    <span data-i18n="overview.description">
+                        O Avx CLI Ecosystem oferece um conjunto completo de ferramentas para desenvolvimento de aplicações
+                        CLI modernas, desde parsing de argumentos até interfaces TUI interativas, tudo com zero overhead
+                        e máxima eficiência.
+                    </span>
+                </p>
+            </section>
+
+            <section id="modules" class="section">
+                <h2 class="section-title" data-i18n="modules.title">Módulos Disponíveis</h2>
+                <div class="modules">
+                    <div class="module-card">
+                        <div class="module-icon">⚡</div>
+                        <h3 class="module-title">avx-cli</h3>
+                        <p class="module-desc" data-i18n="modules.cli.desc">
+                            Parser de argumentos de linha de comando ultra-rápido com validação avançada
+                            e autocompletion para múltiplos shells.
+                        </p>
+                        <ul class="module-features">
+                            <li data-i18n="modules.cli.feat1">Zero dependências externas</li>
+                            <li data-i18n="modules.cli.feat2">Saída colorida ANSI</li>
+                            <li data-i18n="modules.cli.feat3">Autocompletion (bash, zsh, fish)</li>
+                            <li data-i18n="modules.cli.feat4">Validação customizável</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-icon">🖥️</div>
+                        <h3 class="module-title">avx-console</h3>
+                        <p class="module-desc" data-i18n="modules.console.desc">
+                            Portal web completo para gerenciamento de plataforma com dashboard em tempo real
+                            e recursos avançados de observabilidade.
+                        </p>
+                        <ul class="module-features">
+                            <li data-i18n="modules.console.feat1">Dashboard real-time WebSocket</li>
+                            <li data-i18n="modules.console.feat2">Explorador de banco de dados</li>
+                            <li data-i18n="modules.console.feat3">Storage S3-compatível</li>
+                            <li data-i18n="modules.console.feat4">Assistente de IA integrado</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-icon">🎨</div>
+                        <h3 class="module-title">avx-term</h3>
+                        <p class="module-desc" data-i18n="modules.term.desc">
+                            Biblioteca minimalista para colorização e formatação de terminal com API intuitiva
+                            e performance otimizada.
+                        </p>
+                        <ul class="module-features">
+                            <li data-i18n="modules.term.feat1">16 cores + cores brilhantes</li>
+                            <li data-i18n="modules.term.feat2">Negrito, sublinhado, estilos</li>
+                            <li data-i18n="modules.term.feat3">API fluente chain methods</li>
+                            <li data-i18n="modules.term.feat4">Overhead mínimo</li>
+                        </ul>
+                    </div>
+
+                    <div class="module-card">
+                        <div class="module-icon">🖥️</div>
+                        <h3 class="module-title">avx-terminal</h3>
+                        <p class="module-desc" data-i18n="modules.terminal.desc">
+                            Biblioteca avançada de terminal com controle completo sobre cursor, layouts
+                            e interfaces TUI interativas.
+                        </p>
+                        <ul class="module-features">
+                            <li data-i18n="modules.terminal.feat1">256 cores + RGB</li>
+                            <li data-i18n="modules.terminal.feat2">Controle de cursor</li>
+                            <li data-i18n="modules.terminal.feat3">Widgets e layouts</li>
+                            <li data-i18n="modules.terminal.feat4">Cross-platform</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="examples" class="section">
+                <h2 class="section-title" data-i18n="examples.title">Exemplos de Uso</h2>
+
+                <h3 style="color: var(--primary-orange); margin: 2rem 0 1rem;">avx-cli <span data-i18n="examples.basic">- Básico</span></h3>
+                <div class="code-example">
+                    <code><pre>use avx_cli::{App, Arg};
+
+fn main() {
+    let matches = App::new("myapp")
+        .version("1.0.0")
+        .arg(Arg::new("verbose")
+            .short('v')
+            .long("verbose")
+            .help("Habilita modo verbose"))
+        .arg(Arg::new("output")
+            .short('o')
+            .long("output")
+            .takes_value(true)
+            .required(true))
+        .get_matches();
+
+    if matches.is_present("verbose") {
+        println!("Modo verbose ativado");
+    }
+}</pre></code>
+                </div>
+
+                <h3 style="color: var(--primary-orange); margin: 2rem 0 1rem;">avx-term <span data-i18n="examples.colors">- Cores</span></h3>
+                <div class="code-example">
+                    <code><pre>use avx_term::Colorize;
+
+fn main() {
+    println!("{}", "Sucesso!".green().bold());
+    println!("{}", "Aviso".yellow());
+    println!("{}", "Erro!".red().underline());
+}</pre></code>
+                </div>
+
+                <h3 style="color: var(--primary-orange); margin: 2rem 0 1rem;">avx-console <span data-i18n="examples.server">- Servidor</span></h3>
+                <div class="code-example">
+                    <code><pre>use avx_console::{Console, ConsoleConfig};
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let config = ConsoleConfig::from_env()?;
+    let console = Console::new(config).await?;
+
+    console.serve("0.0.0.0:8080".parse()?).await?;
+    Ok(())
+}</pre></code>
+                </div>
+            </section>
+
+            <section id="api" class="section">
+                <h2 class="section-title" data-i18n="api.title">Referências da API</h2>
+                <div class="features-grid">
+                    <div class="feature-item">
+                        <div class="feature-icon">📚</div>
+                        <h3 class="feature-title">App</h3>
+                        <p data-i18n="api.app">Estrutura principal para definir aplicações CLI com comandos e argumentos.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔧</div>
+                        <h3 class="feature-title">Arg</h3>
+                        <p data-i18n="api.arg">Definição de argumentos com validação, valores padrão e opções customizáveis.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">✅</div>
+                        <h3 class="feature-title">Validator</h3>
+                        <p data-i18n="api.validator">Validadores pré-definidos (port, email, URL) e customizáveis.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🎨</div>
+                        <h3 class="feature-title">Colorize</h3>
+                        <p data-i18n="api.colorize">Trait para adicionar cores e estilos a strings de terminal.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <h3 class="feature-title">Dashboard</h3>
+                        <p data-i18n="api.dashboard">Interface de dashboard com métricas e visualizações em tempo real.</p>
+                    </div>
+                    <div class="feature-item">
+                        <div class="feature-icon">🔍</div>
+                        <h3 class="feature-title">QueryBuilder</h3>
+                        <p data-i18n="api.query">Construtor de queries SQL com syntax highlighting e validação.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="performance" class="section">
+                <h2 class="section-title" data-i18n="performance.title">Performance</h2>
+                <div class="performance-chart">
+                    <div class="benchmark-item">
+                        <span><strong>Parsing de argumentos</strong></span>
+                        <div class="benchmark-bar" style="width: 10%;"></div>
+                        <span>~50ns</span>
+                    </div>
+                    <div class="benchmark-item">
+                        <span><strong>Validação</strong></span>
+                        <div class="benchmark-bar" style="width: 20%;"></div>
+                        <span>~100ns</span>
+                    </div>
+                    <div class="benchmark-item">
+                        <span><strong>Colorização</strong></span>
+                        <div class="benchmark-bar" style="width: 5%;"></div>
+                        <span>~10ns</span>
+                    </div>
+                    <div class="benchmark-item">
+                        <span><strong>Geração de help</strong></span>
+                        <div class="benchmark-bar" style="width: 30%;"></div>
+                        <span>~1µs</span>
+                    </div>
+                </div>
+                <p style="text-align: center; color: var(--text-secondary); margin-top: 2rem;">
+                    <span data-i18n="performance.note">
+                        Todas as operações são otimizadas para latência mínima com lookups O(1) e zero-copy parsing onde possível.
+                    </span>
+                </p>
+            </section>
+
+            <section id="license" class="section">
+                <h2 class="section-title" data-i18n="license.title">Licença</h2>
+                <div style="background: var(--bg-secondary); padding: 2rem; border-radius: 10px; border-left: 4px solid var(--primary-orange);">
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                        <strong data-i18n="license.proprietary">Software Proprietário</strong>
+                    </p>
+                    <p style="color: var(--text-secondary);">
+                        <span data-i18n="license.copyright">Copyright © 2025 Nícolas Ávila - Todos os direitos reservados</span>
+                    </p>
+                    <p style="color: var(--text-secondary); margin-top: 1rem;">
+                        <span data-i18n="license.contact">Para licenciamento comercial:</span> nicolas@avila.inc
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 data-i18n="footer.product">Produto</h3>
+                    <ul>
+                        <li><a href="#overview" data-i18n="footer.overview">Visão Geral</a></li>
+                        <li><a href="#modules" data-i18n="footer.modules">Módulos</a></li>
+                        <li><a href="#examples" data-i18n="footer.examples">Exemplos</a></li>
+                        <li><a href="#performance" data-i18n="footer.performance">Performance</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footer.docs">Documentação</h3>
+                    <ul>
+                        <li><a href="cli.html">avx-cli</a></li>
+                        <li><a href="console.html">avx-console</a></li>
+                        <li><a href="term.html">avx-term</a></li>
+                        <li><a href="terminal.html">avx-terminal</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 data-i18n="footer.company">Empresa</h3>
+                    <ul>
+                        <li><a href="https://avila.inc" data-i18n="footer.about">Sobre</a></li>
+                        <li><a href="#license" data-i18n="footer.license">Licença</a></li>
+                        <li><a href="mailto:nicolas@avila.inc" data-i18n="footer.contact">Contato</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p data-i18n="footer.copyright">
+                    © 2025 Nícolas Ávila. Todos os direitos reservados. Desenvolvido com ❤️ pela equipe Avx.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Translations
+        const translations = {
+            'pt-br': {
+                'nav.overview': 'Visão Geral',
+                'nav.modules': 'Módulos',
+                'nav.examples': 'Exemplos',
+                'nav.api': 'API',
+                'nav.performance': 'Performance',
+                'nav.license': 'Licença',
+                'hero.title': 'Ecossistema CLI de Alta Performance',
+                'hero.subtitle': 'Bibliotecas Rust ultra-otimizadas para construir aplicações de linha de comando profissionais com zero dependências externas e performance excepcional.',
+                'overview.title': 'Visão Geral do Ecossistema',
+                'modules.title': 'Módulos Disponíveis',
+                'examples.title': 'Exemplos de Uso',
+                'api.title': 'Referências da API',
+                'performance.title': 'Performance',
+                'license.title': 'Licença',
+                'license.proprietary': 'Software Proprietário',
+                'license.copyright': 'Copyright © 2025 Nícolas Ávila - Todos os direitos reservados',
+                'footer.copyright': '© 2025 Nícolas Ávila. Todos os direitos reservados. Desenvolvido com ❤️ pela equipe Avx.'
+            },
+            'es': {
+                'nav.overview': 'Resumen',
+                'nav.modules': 'Módulos',
+                'nav.examples': 'Ejemplos',
+                'nav.api': 'API',
+                'nav.performance': 'Rendimiento',
+                'nav.license': 'Licencia',
+                'hero.title': 'Ecosistema CLI de Alto Rendimiento',
+                'hero.subtitle': 'Bibliotecas Rust ultra-optimizadas para construir aplicaciones de línea de comandos profesionales con cero dependencias externas y rendimiento excepcional.',
+                'overview.title': 'Resumen del Ecosistema',
+                'modules.title': 'Módulos Disponibles',
+                'examples.title': 'Ejemplos de Uso',
+                'api.title': 'Referencias de la API',
+                'performance.title': 'Rendimiento',
+                'license.title': 'Licencia',
+                'license.proprietary': 'Software Propietario',
+                'license.copyright': 'Copyright © 2025 Nícolas Ávila - Todos los derechos reservados',
+                'footer.copyright': '© 2025 Nícolas Ávila. Todos los derechos reservados. Desarrollado con ❤️ por el equipo Avx.'
+            },
+            'de': {
+                'nav.overview': 'Übersicht',
+                'nav.modules': 'Module',
+                'nav.examples': 'Beispiele',
+                'nav.api': 'API',
+                'nav.performance': 'Leistung',
+                'nav.license': 'Lizenz',
+                'hero.title': 'Hochleistungs-CLI-Ökosystem',
+                'hero.subtitle': 'Ultra-optimierte Rust-Bibliotheken zum Erstellen professioneller Befehlszeilenanwendungen mit null externen Abhängigkeiten und außergewöhnlicher Leistung.',
+                'overview.title': 'Ökosystem-Übersicht',
+                'modules.title': 'Verfügbare Module',
+                'examples.title': 'Verwendungsbeispiele',
+                'api.title': 'API-Referenzen',
+                'performance.title': 'Leistung',
+                'license.title': 'Lizenz',
+                'license.proprietary': 'Proprietäre Software',
+                'license.copyright': 'Copyright © 2025 Nícolas Ávila - Alle Rechte vorbehalten',
+                'footer.copyright': '© 2025 Nícolas Ávila. Alle Rechte vorbehalten. Mit ❤️ vom Avx-Team entwickelt.'
+            }
+        };
+
+        // Theme Toggle
+        function toggleTheme() {
+            const root = document.documentElement;
+            const currentTheme = root.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            root.setAttribute('data-theme', newTheme);
+            document.getElementById('theme-icon').textContent = newTheme === 'light' ? '🌙' : '☀️';
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Language Change
+        function changeLanguage(lang) {
+            const trans = translations[lang] || translations['pt-br'];
+            document.querySelectorAll('[data-i18n]').forEach(elem => {
+                const key = elem.getAttribute('data-i18n');
+                if (trans[key]) {
+                    elem.textContent = trans[key];
+                }
+            });
+            localStorage.setItem('language', lang);
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedLang = localStorage.getItem('language') || 'pt-br';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            document.getElementById('theme-icon').textContent = savedTheme === 'light' ? '🌙' : '☀️';
+
+            const langSelect = document.querySelector('.lang-select');
+            langSelect.value = savedLang;
+            changeLanguage(savedLang);
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

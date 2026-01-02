@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX Onion Routing - Roteamento cebola e anonimato">
+    <title>AVX Onion Routing - Documentação | AVX Crypto Security</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <a href="../index.html" class="logo"><span class="avx-gradient">AVX</span> Crypto Security</a>
+            <ul class="nav-links">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><select id="language-selector"><option value="pt-BR">🇧🇷 PT</option><option value="en">🇺🇸 EN</option></select></li>
+                <li><button id="theme-toggle">🌙</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero fade-in">
+        <div class="container">
+            <h1 class="avx-gradient">AVX Onion Routing</h1>
+            <p class="hero-subtitle">Roteamento em camadas para comunicação anônima</p>
+            <div class="hero-badges">
+                <span class="badge">Onion Routing</span>
+                <span class="badge">Tor-like</span>
+                <span class="badge">Anonymous</span>
+                <span class="badge">Privacy</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="overview" class="section slide-up">
+        <div class="container">
+            <h2>Visão Geral</h2>
+            <div class="grid">
+                <div class="card">
+                    <h3>🧅 Onion Routing</h3>
+                    <p>Múltiplas camadas de criptografia através de nós intermediários para anonimato total.</p>
+                </div>
+                <div class="card">
+                    <h3>🌐 Circuit Building</h3>
+                    <p>Construção de circuitos através de múltiplos relays para ocultar origem e destino.</p>
+                </div>
+                <div class="card">
+                    <h3>🔐 End-to-End Encryption</h3>
+                    <p>Cada hop adiciona/remove uma camada de criptografia mantendo confidencialidade.</p>
+                </div>
+                <div class="card">
+                    <h3>🕵️ Traffic Analysis Resistance</h3>
+                    <p>Proteção contra análise de tráfego e correlação de timing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="examples" class="section slide-up">
+        <div class="container">
+            <h2>Exemplos de Uso</h2>
+
+            <h3>Criar Circuito Tor</h3>
+            <pre><code class="language-rust">use avx_darknet::{TorCircuit, RelayNode};
+
+fn main() {
+    // Construir circuito de 3 hops
+    let circuit = TorCircuit::builder()
+        .add_relay(RelayNode::random())
+        .add_relay(RelayNode::random())
+        .add_relay(RelayNode::random())
+        .build()
+        .expect("Erro ao construir circuito");
+
+    println!("✅ Circuito Tor estabelecido!");
+}</code></pre>
+
+            <h3>Enviar Mensagem Anônima</h3>
+            <pre><code class="language-rust">use avx_darknet::TorCircuit;
+
+fn main() {
+    let circuit = TorCircuit::establish()?;
+
+    let message = b"Mensagem anônima";
+    circuit.send(message, "destination.onion:80")
+        .expect("Erro ao enviar");
+
+    println!("Mensagem enviada anonimamente!");
+}</code></pre>
+
+            <h3>Hidden Service</h3>
+            <pre><code class="language-rust">use avx_darknet::HiddenService;
+
+fn main() {
+    let service = HiddenService::new()
+        .port(80)
+        .start()
+        .expect("Erro ao iniciar");
+
+    println!("Hidden service: {}.onion", service.address());
+}</code></pre>
+        </div>
+    </section>
+
+    <section id="use-cases" class="section slide-up">
+        <div class="container">
+            <h2>Casos de Uso</h2>
+            <div class="grid">
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🌐</div>
+                    <h3>Navegação Anônima</h3>
+                    <p>Acesso à internet com IP oculto e proteção contra tracking.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">📰</div>
+                    <h3>Jornalismo Investigativo</h3>
+                    <p>Proteção de fontes e comunicação segura para whistleblowers.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🔒</div>
+                    <h3>Hidden Services</h3>
+                    <p>Serviços .onion acessíveis apenas via Tor com localização oculta.</p>
+                </div>
+                <div class="card use-case-card">
+                    <div class="use-case-icon">🛡️</div>
+                    <h3>Censorship Circumvention</h3>
+                    <p>Contornar bloqueios e censura governamental de forma segura.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="license" class="section slide-up">
+        <div class="container">
+            <h2>Licença</h2>
+            <div class="card">
+                <p>AVX Onion Routing é software proprietário desenvolvido pela Ávila Inc.</p>
+                <p>Contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Ávila Inc. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../assets/js/i18n.js"></script>
+    <script src="../assets/js/theme.js"></script>
+    <script src="../assets/js/animations.js"></script>
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>

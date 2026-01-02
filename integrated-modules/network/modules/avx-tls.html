@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AVX TLS - Implementação TLS/SSL de alta performance">
+    <title>AVX TLS - Documentação</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo"><a href="../index.html" style="text-decoration:none;color:inherit;">AVX Network</a></div>
+                <div class="controls">
+                    <button id="theme-toggle" class="theme-toggle">🌙</button>
+                    <select id="lang-select" class="lang-select">
+                        <option value="pt-BR">🇧🇷 Português</option>
+                        <option value="ru">🇷🇺 Русский</option>
+                        <option value="ja">🇯🇵 日本語</option>
+                        <option value="zh-TW">🇹🇼 繁體中文</option>
+                        <option value="ur">🇵🇰 اردو</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="lv">🇱🇻 Latviešu</option>
+                        <option value="uz">🇺🇿 O'zbek</option>
+                        <option value="es">🇪🇸 Español</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul class="nav-links">
+                <li><a href="#overview">Visão Geral</a></li>
+                <li><a href="#types">Tipos Disponíveis</a></li>
+                <li><a href="#examples">Exemplos</a></li>
+                <li><a href="#api">API</a></li>
+                <li><a href="#performance">Performance</a></li>
+                <li><a href="#usecases">Casos de Uso</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            <div class="hero">
+                <h1>🔐 AVX TLS</h1>
+                <p>Implementação TLS/SSL de alta performance para comunicação segura</p>
+            </div>
+
+            <section id="overview" class="section fade-in">
+                <h2>📋 Visão Geral</h2>
+                <p>AVX TLS fornece uma implementação completa dos protocolos TLS 1.2 e TLS 1.3 otimizada para máxima performance e segurança. Suporta cipher suites modernos, session resumption, mTLS e integração transparente com streams TCP.</p>
+
+                <div class="modules-grid mt-3">
+                    <div class="module-card">
+                        <h3>🛡️ TLS 1.3</h3>
+                        <p>Protocolo TLS 1.3 com 0-RTT e handshake otimizado</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🔑 mTLS</h3>
+                        <p>Autenticação mútua com certificados cliente/servidor</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>⚡ Session Resumption</h3>
+                        <p>Resumo de sessão com tickets e cache de sessão</p>
+                    </div>
+                    <div class="module-card">
+                        <h3>🚀 Alta Performance</h3>
+                        <p>150k+ handshakes/s com hardware acceleration</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="types" class="section fade-in">
+                <h2>📦 Tipos Disponíveis</h2>
+
+                <h3>Core</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>TlsConnector</code></td>
+                            <td>Cliente TLS para conexões seguras</td>
+                        </tr>
+                        <tr>
+                            <td><code>TlsAcceptor</code></td>
+                            <td>Servidor TLS para aceitar conexões</td>
+                        </tr>
+                        <tr>
+                            <td><code>TlsStream</code></td>
+                            <td>Stream TLS sobre TCP</td>
+                        </tr>
+                        <tr>
+                            <td><code>TlsConfig</code></td>
+                            <td>Configuração TLS (protocolos, ciphers, certificados)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Cipher Suites (TLS 1.3)</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Suite</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>TLS_AES_128_GCM_SHA256</code></td>
+                            <td>AES-128-GCM com SHA256 (recomendado)</td>
+                        </tr>
+                        <tr>
+                            <td><code>TLS_AES_256_GCM_SHA384</code></td>
+                            <td>AES-256-GCM com SHA384 (máxima segurança)</td>
+                        </tr>
+                        <tr>
+                            <td><code>TLS_CHACHA20_POLY1305_SHA256</code></td>
+                            <td>ChaCha20-Poly1305 (mobile/embedded)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Protocol Versions</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Versão</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>TLS 1.3</code></td>
+                            <td>✅ Suportado (recomendado)</td>
+                        </tr>
+                        <tr>
+                            <td><code>TLS 1.2</code></td>
+                            <td>✅ Suportado (compatibilidade)</td>
+                        </tr>
+                        <tr>
+                            <td><code>TLS 1.1</code></td>
+                            <td>❌ Não suportado (inseguro)</td>
+                        </tr>
+                        <tr>
+                            <td><code>TLS 1.0</code></td>
+                            <td>❌ Não suportado (inseguro)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3 class="mt-3">Certificate Operations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>load_pem_cert</code></td>
+                            <td>Carrega certificado PEM</td>
+                        </tr>
+                        <tr>
+                            <td><code>load_pem_key</code></td>
+                            <td>Carrega chave privada PEM</td>
+                        </tr>
+                        <tr>
+                            <td><code>load_pkcs12</code></td>
+                            <td>Carrega bundle PKCS#12</td>
+                        </tr>
+                        <tr>
+                            <td><code>verify_hostname</code></td>
+                            <td>Valida hostname do certificado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="examples" class="section fade-in">
+                <h2>💡 Exemplos de Uso</h2>
+
+                <h3>Servidor TLS Básico</h3>
+                <pre><code>use avx_tls::{TlsAcceptor, TlsConfig};
+use avx_tcp::TcpListener;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    // Carregar certificado e chave
+    let cert = std::fs::read("server.crt")?;
+    let key = std::fs::read("server.key")?;
+
+    let config = TlsConfig::new()
+        .with_certificate(&cert, &key)?
+        .with_tls13()
+        .build();
+
+    let acceptor = TlsAcceptor::from(config);
+    let listener = TcpListener::bind("0.0.0.0:8443").await?;
+
+    println!("TLS server listening on :8443");
+
+    loop {
+        let (stream, addr) = listener.accept().await?;
+        let acceptor = acceptor.clone();
+
+        tokio::spawn(async move {
+            match acceptor.accept(stream).await {
+                Ok(tls_stream) => {
+                    println!("TLS connection from {}", addr);
+                    handle_client(tls_stream).await;
+                }
+                Err(e) => eprintln!("TLS error: {}", e),
+            }
+        });
+    }
+}</code></pre>
+
+                <h3>Cliente TLS</h3>
+                <pre><code>use avx_tls::{TlsConnector, TlsConfig};
+use avx_tcp::TcpStream;
+
+#[tokio::main]
+async fn main() -> Result<()> {
+    let config = TlsConfig::new()
+        .with_tls13()
+        .with_root_certificates_from_file("ca.crt")?
+        .build();
+
+    let connector = TlsConnector::from(config);
+
+    let stream = TcpStream::connect("example.com:443").await?;
+    let tls_stream = connector.connect("example.com", stream).await?;
+
+    println!("TLS connection established");
+
+    // Usar tls_stream como um stream normal
+    tls_stream.write_all(b"GET / HTTP/1.1\r\n\r\n").await?;
+
+    Ok(())
+}</code></pre>
+
+                <h3>mTLS (Mutual TLS)</h3>
+                <pre><code>use avx_tls::{TlsAcceptor, TlsConfig};
+
+// Servidor com mTLS
+let config = TlsConfig::new()
+    .with_certificate(&server_cert, &server_key)?
+    .with_client_auth_required()
+    .with_ca_certificates(&ca_cert)?
+    .with_tls13()
+    .build();
+
+let acceptor = TlsAcceptor::from(config);
+
+// Cliente com mTLS
+let client_config = TlsConfig::new()
+    .with_certificate(&client_cert, &client_key)?
+    .with_root_certificates(&ca_cert)?
+    .with_tls13()
+    .build();
+
+let connector = TlsConnector::from(client_config);</code></pre>
+
+                <h3>Session Resumption</h3>
+                <pre><code>use avx_tls::TlsConfig;
+
+let config = TlsConfig::new()
+    .with_certificate(&cert, &key)?
+    .with_session_tickets()
+    .with_session_cache_size(10000)
+    .with_tls13()
+    .build();</code></pre>
+
+                <h3>ALPN (Application-Layer Protocol Negotiation)</h3>
+                <pre><code>use avx_tls::TlsConfig;
+
+let config = TlsConfig::new()
+    .with_certificate(&cert, &key)?
+    .with_alpn_protocols(&["h2", "http/1.1"])
+    .build();
+
+// Verificar protocolo negociado
+let alpn_protocol = tls_stream.negotiated_alpn_protocol();
+println!("ALPN: {:?}", alpn_protocol);</code></pre>
+
+                <h3>SNI (Server Name Indication)</h3>
+                <pre><code>use avx_tls::{TlsAcceptor, TlsConfig};
+
+let default_config = TlsConfig::new()
+    .with_certificate(&default_cert, &default_key)?
+    .build();
+
+let example_config = TlsConfig::new()
+    .with_certificate(&example_cert, &example_key)?
+    .build();
+
+let acceptor = TlsAcceptor::builder()
+    .with_default_config(default_config)
+    .with_sni("example.com", example_config)
+    .with_sni("api.example.com", api_config)
+    .build();</code></pre>
+
+                <h3>Custom Cipher Suites</h3>
+                <pre><code>use avx_tls::{TlsConfig, CipherSuite};
+
+let config = TlsConfig::new()
+    .with_certificate(&cert, &key)?
+    .with_cipher_suites(&[
+        CipherSuite::TLS_AES_256_GCM_SHA384,
+        CipherSuite::TLS_CHACHA20_POLY1305_SHA256,
+    ])
+    .build();</code></pre>
+
+                <h3>Certificate Pinning</h3>
+                <pre><code>use avx_tls::TlsConnector;
+
+let connector = TlsConnector::builder()
+    .with_pinned_certificate(&expected_cert_hash)
+    .build();
+
+let tls_stream = connector.connect("secure.example.com", stream).await?;</code></pre>
+
+                <h3>TLS com Timeout</h3>
+                <pre><code>use std::time::Duration;
+use tokio::time::timeout;
+
+let result = timeout(
+    Duration::from_secs(10),
+    connector.connect("example.com", stream)
+).await;
+
+match result {
+    Ok(Ok(tls_stream)) => println!("Connected"),
+    Ok(Err(e)) => eprintln!("TLS error: {}", e),
+    Err(_) => eprintln!("Connection timeout"),
+}</code></pre>
+
+                <h3>Verificação de Certificado Customizada</h3>
+                <pre><code>use avx_tls::{TlsConfig, CertificateVerifier};
+
+struct CustomVerifier;
+
+impl CertificateVerifier for CustomVerifier {
+    fn verify(&self, cert_chain: &[Certificate]) -> Result<()> {
+        // Lógica customizada de verificação
+        if cert_chain.is_empty() {
+            return Err("Empty certificate chain".into());
+        }
+
+        // Verificar issuer, validade, etc.
+        Ok(())
+    }
+}
+
+let config = TlsConfig::new()
+    .with_certificate_verifier(Arc::new(CustomVerifier))
+    .build();</code></pre>
+
+                <h3>TLS com Logging</h3>
+                <pre><code>use avx_tls::TlsConfig;
+
+let config = TlsConfig::new()
+    .with_certificate(&cert, &key)?
+    .with_key_log_file("./sslkeylog.txt") // Para Wireshark
+    .build();</code></pre>
+
+                <h3>Zero-RTT (TLS 1.3)</h3>
+                <pre><code>use avx_tls::TlsConnector;
+
+// Primeira conexão
+let tls_stream = connector.connect("example.com", stream).await?;
+let session_data = tls_stream.export_session_data();
+
+// Segunda conexão com 0-RTT
+let connector = TlsConnector::builder()
+    .with_0rtt_enabled()
+    .with_session_data(session_data)
+    .build();
+
+let (tls_stream, early_data_accepted) =
+    connector.connect_with_0rtt("example.com", stream, b"Early data").await?;
+
+if early_data_accepted {
+    println!("0-RTT data accepted!");
+}</code></pre>
+
+                <h3>TLS Proxy/Termination</h3>
+                <pre><code>use avx_tls::{TlsAcceptor, TlsStream};
+use avx_tcp::TcpStream;
+
+async fn terminate_tls(tls_stream: TlsStream) -> Result<()> {
+    // Terminar TLS e conectar a backend não-criptografado
+    let backend = TcpStream::connect("backend:8080").await?;
+
+    // Proxy bidirecional
+    tokio::io::copy_bidirectional(&mut tls_stream, &mut backend).await?;
+
+    Ok(())
+}</code></pre>
+            </section>
+
+            <section id="api" class="section fade-in">
+                <h2>📚 Referências da API</h2>
+
+                <h3>TlsConnector</h3>
+                <div class="module-card">
+                    <h4><code>TlsConnector::from(config: TlsConfig) -> Self</code></h4>
+                    <p>Cria conector TLS cliente com configuração especificada.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>TlsConnector::connect(domain: &str, stream: TcpStream) -> Result&lt;TlsStream&gt;</code></h4>
+                    <p>Estabelece conexão TLS sobre stream TCP, validando certificado do servidor.</p>
+                </div>
+
+                <h3 class="mt-3">TlsAcceptor</h3>
+                <div class="module-card">
+                    <h4><code>TlsAcceptor::from(config: TlsConfig) -> Self</code></h4>
+                    <p>Cria acceptor TLS servidor com configuração especificada.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>TlsAcceptor::accept(stream: TcpStream) -> Result&lt;TlsStream&gt;</code></h4>
+                    <p>Aceita conexão TLS de cliente sobre stream TCP.</p>
+                </div>
+
+                <h3 class="mt-3">TlsConfig</h3>
+                <div class="module-card">
+                    <h4><code>TlsConfig::new() -> Builder</code></h4>
+                    <p>Inicia builder de configuração TLS.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>TlsConfig::with_certificate(cert: &[u8], key: &[u8]) -> Builder</code></h4>
+                    <p>Define certificado e chave privada do servidor.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>TlsConfig::with_tls13() -> Builder</code></h4>
+                    <p>Habilita TLS 1.3 (recomendado).</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>TlsConfig::with_client_auth_required() -> Builder</code></h4>
+                    <p>Requer autenticação do cliente (mTLS).</p>
+                </div>
+
+                <h3 class="mt-3">TlsStream</h3>
+                <div class="module-card">
+                    <h4><code>TlsStream::negotiated_cipher_suite() -> CipherSuite</code></h4>
+                    <p>Retorna cipher suite negociado.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>TlsStream::peer_certificate() -> Option&lt;Certificate&gt;</code></h4>
+                    <p>Retorna certificado do peer conectado.</p>
+                </div>
+
+                <div class="module-card">
+                    <h4><code>TlsStream::protocol_version() -> ProtocolVersion</code></h4>
+                    <p>Retorna versão do protocolo TLS negociada.</p>
+                </div>
+            </section>
+
+            <section id="performance" class="section fade-in">
+                <h2>⚡ Performance</h2>
+
+                <div class="performance-chart">
+                    <h3>Benchmarks - Handshake</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">TLS 1.3 Full Handshake</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="100" style="width: 0;">150k/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">TLS 1.3 Resumption</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="95" style="width: 0;">280k/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">TLS 1.3 0-RTT</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="98" style="width: 0;">350k/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">TLS 1.2 Handshake</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="75" style="width: 0;">95k/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Throughput (Encrypted)</h3>
+                    <div class="chart-bar">
+                        <div class="chart-label">AES-128-GCM (Hardware)</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="100" style="width: 0;">12 GB/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">AES-256-GCM (Hardware)</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="92" style="width: 0;">10.5 GB/s</div>
+                        </div>
+                    </div>
+                    <div class="chart-bar">
+                        <div class="chart-label">ChaCha20-Poly1305</div>
+                        <div class="chart-track">
+                            <div class="chart-fill" data-value="70" style="width: 0;">7.2 GB/s</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="performance-chart mt-3">
+                    <h3>Latência (p99)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operação</th>
+                                <th>AVX TLS</th>
+                                <th>Melhoria</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Full Handshake (TLS 1.3)</td>
+                                <td>1.8 ms</td>
+                                <td>2.8x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Session Resumption</td>
+                                <td>450 μs</td>
+                                <td>4.1x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>0-RTT Handshake</td>
+                                <td>120 μs</td>
+                                <td>12x mais rápido</td>
+                            </tr>
+                            <tr>
+                                <td>Encrypted Send (16KB)</td>
+                                <td>85 μs</td>
+                                <td>3.5x mais rápido</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-3">Características de Performance</h3>
+                <div class="modules-grid">
+                    <div class="module-card">
+                        <h4>✅ Hardware Acceleration</h4>
+                        <p>AES-NI e SHA extensions para máxima velocidade</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Zero-Copy Encryption</h4>
+                        <p>Criptografia in-place sem cópias extras</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ Session Caching</h4>
+                        <p>Cache de sessão para handshakes rápidos</p>
+                    </div>
+                    <div class="module-card">
+                        <h4>✅ TLS 1.3</h4>
+                        <p>Protocolo moderno com 0-RTT</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="usecases" class="section fade-in">
+                <h2>🎬 Casos de Uso</h2>
+
+                <div class="module-card">
+                    <h3>🌐 HTTPS Server</h3>
+                    <p>Servidor HTTPS de alta performance com TLS 1.3.</p>
+                    <pre><code>let acceptor = TlsAcceptor::from(config);
+let tls_stream = acceptor.accept(stream).await?;</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🔐 API Gateway</h3>
+                    <p>Gateway de API com terminação TLS e mTLS.</p>
+                    <pre><code>let config = TlsConfig::new()
+    .with_client_auth_required()
+    .build();</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>📱 Mobile Backend</h3>
+                    <p>Backend seguro para aplicações mobile com certificate pinning.</p>
+                    <pre><code>let connector = TlsConnector::builder()
+    .with_pinned_certificate(&cert_hash)
+    .build();</code></pre>
+                </div>
+
+                <div class="module-card mt-3">
+                    <h3>🏢 Enterprise Security</h3>
+                    <p>Comunicação segura entre microservices com mTLS.</p>
+                    <pre><code>let config = TlsConfig::new()
+    .with_certificate(&service_cert, &service_key)?
+    .with_ca_certificates(&ca_cert)?
+    .build();</code></pre>
+                </div>
+            </section>
+
+            <section id="license" class="section fade-in">
+                <h2>📄 Licença</h2>
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>Software Proprietário - Veja <a href="../../LICENSE-PROPRIETARY.md">LICENSE-PROPRIETARY.md</a></p>
+                <p class="mt-2">Para licenciamento comercial, entre em contato: <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2025 Nícolas Ávila - Todos os Direitos Reservados</p>
+                <div class="footer-links">
+                    <a href="https://avila.inc">Contato</a>
+                    <a href="https://docs.avila.inc">Documentação</a>
+                    <a href="../../LICENSE-PROPRIETARY.md">Licença</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../assets/js/main.js"></script>
+</body>
+</html>
