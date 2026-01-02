@@ -1,0 +1,242 @@
+/* Additional styles for documentation pages */
+
+.docs-container {
+    display: flex;
+    max-width: 1400px;
+    margin: 0 auto;
+    min-height: calc(100vh - 200px);
+}
+
+.docs-sidebar {
+    width: 280px;
+    background: var(--dark);
+    border-right: 1px solid var(--border);
+    padding: 2rem;
+    position: sticky;
+    top: 80px;
+    height: fit-content;
+}
+
+.docs-sidebar h3 {
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.sidebar-nav a {
+    color: var(--text-muted);
+    text-decoration: none;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s;
+}
+
+.sidebar-nav a:hover {
+    background: rgba(255, 140, 0, 0.1);
+    color: var(--primary);
+}
+
+.sidebar-nav a.active {
+    background: rgba(255, 140, 0, 0.2);
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.docs-content {
+    flex: 1;
+    padding: 3rem;
+    max-width: 900px;
+}
+
+.docs-content h1 {
+    font-size: 3rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+}
+
+.lead {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+}
+
+.doc-section {
+    margin-bottom: 4rem;
+}
+
+.doc-section h2 {
+    font-size: 2rem;
+    color: var(--secondary);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+}
+
+.doc-section h3 {
+    font-size: 1.5rem;
+    color: var(--text);
+    margin: 2rem 0 1rem;
+}
+
+.doc-section h4 {
+    font-size: 1.25rem;
+    color: var(--secondary);
+    margin: 1.5rem 0 0.75rem;
+}
+
+.doc-section ul, .doc-section ol {
+    margin: 1rem 0 1rem 2rem;
+    color: var(--text-muted);
+}
+
+.doc-section li {
+    margin: 0.5rem 0;
+}
+
+.doc-section code {
+    background: var(--code-bg);
+    color: var(--secondary);
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+}
+
+.doc-section pre {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+}
+
+.doc-section pre code {
+    background: none;
+    padding: 0;
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.card-link {
+    display: block;
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    text-decoration: none;
+    color: var(--text);
+    transition: all 0.3s;
+}
+
+.card-link:hover {
+    border-color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(255, 140, 0, 0.2);
+}
+
+.card-link h4 {
+    color: var(--secondary);
+    margin-bottom: 0.5rem;
+}
+
+.card-link p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.alert {
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    margin: 2rem 0;
+    border-left: 4px solid;
+}
+
+.alert-info {
+    background: rgba(255, 140, 0, 0.1);
+    border-color: var(--primary);
+}
+
+.alert-warning {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: var(--warning);
+}
+
+.alert-danger {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: var(--danger);
+}
+
+.alert h4 {
+    margin-bottom: 0.75rem;
+    color: var(--text);
+}
+
+.alert p {
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.alert a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.table-container {
+    overflow-x: auto;
+    margin: 2rem 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--dark);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+th {
+    background: var(--code-bg);
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+@media (max-width: 1024px) {
+    .docs-container {
+        flex-direction: column;
+    }
+
+    .docs-sidebar {
+        width: 100%;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+
+    .docs-content {
+        padding: 2rem 1rem;
+    }
+
+    .docs-content h1 {
+        font-size: 2rem;
+    }
+}

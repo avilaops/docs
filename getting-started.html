@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guia de Início - Arxis Core</title>
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/docs.css">
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="./index.html" class="logo">🏛️ Arxis Core</a>
+            <nav class="nav-menu">
+                <a href="./index.html">Início</a>
+                <a href="./packages/index.html">Pacotes</a>
+                <a href="./getting-started.html">Documentação</a>
+                <a href="./examples.html">Exemplos</a>
+                <a href="https://github.com/avilaops/arxis-core" target="_blank">GitHub</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="docs-container">
+        <aside class="docs-sidebar">
+            <h3>Documentação</h3>
+            <nav class="sidebar-nav">
+                <a href="./getting-started.html" class="active">Início Rápido</a>
+                <a href="./installation.html">Instalação</a>
+                <a href="./examples.html">Exemplos</a>
+                <a href="./architecture.html">Arquitetura</a>
+                <a href="./api.html">API Reference</a>
+                <a href="./license.html">Licenciamento</a>
+            </nav>
+        </aside>
+
+        <main class="docs-content">
+            <h1>🚀 Guia de Início Rápido</h1>
+            <p class="lead">Comece a usar Arxis Core em menos de 5 minutos</p>
+
+            <section class="doc-section">
+                <h2>Instalação</h2>
+                
+                <h3>Pré-requisitos</h3>
+                <ul>
+                    <li><strong>Rust</strong> 1.70 ou superior</li>
+                    <li><strong>Cargo</strong> (vem com Rust)</li>
+                    <li><strong>Git</strong> para clonar repositórios</li>
+                </ul>
+
+                <h3>Instalar Rust</h3>
+                <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
+
+                <h3>Adicionar Arxis ao Seu Projeto</h3>
+                <p>No seu <code>Cargo.toml</code>:</p>
+                <pre><code>[dependencies]
+avx-core = "0.1.0"
+avx-std = "0.1.0"
+avx-crypto = "0.1.0"</code></pre>
+            </section>
+
+            <section class="doc-section">
+                <h2>Primeiro Programa</h2>
+                
+                <p>Crie um novo projeto:</p>
+                <pre><code>cargo new my-arxis-app
+cd my-arxis-app</code></pre>
+
+                <p>Edite <code>src/main.rs</code>:</p>
+                <pre><code>use avx_core::prelude::*;
+
+fn main() {
+    println!("Bem-vindo ao Arxis Core! 🏛️");
+}</code></pre>
+
+                <p>Execute:</p>
+                <pre><code>cargo run</code></pre>
+            </section>
+
+            <section class="doc-section">
+                <h2>Exemplos Rápidos</h2>
+
+                <h3>Criptografia</h3>
+                <pre><code>use avx_crypto::{hash::Sha256, signature::Ed25519};
+
+fn main() {
+    // Hash dados
+    let data = b"Hello, Arxis!";
+    let hash = Sha256::hash(data);
+    println!("SHA-256: {:?}", hash);
+    
+    // Gerar par de chaves
+    let keypair = Ed25519::generate_keypair();
+    println!("Chave pública: {:?}", keypair.public());
+}</code></pre>
+
+                <h3>Servidor HTTP</h3>
+                <pre><code>use avx_http::{Server, Request, Response, StatusCode};
+
+#[tokio::main]
+async fn main() {
+    let server = Server::new("127.0.0.1:8080");
+    
+    server.route("/", |req: Request| async {
+        Response::new(StatusCode::OK)
+            .body("Hello from Arxis!")
+    }).await;
+    
+    println!("Servidor rodando em http://localhost:8080");
+    server.serve().await.unwrap();
+}</code></pre>
+
+                <h3>Operações com Tensores</h3>
+                <pre><code>use avx_tensor::Tensor;
+
+fn main() {
+    // Criar tensores
+    let a = Tensor::from_slice(&[1.0, 2.0, 3.0], &[3]);
+    let b = Tensor::from_slice(&[4.0, 5.0, 6.0], &[3]);
+    
+    // Operações
+    let c = &a + &b;
+    let dot = a.dot(&b);
+    
+    println!("Soma: {:?}", c);
+    println!("Produto escalar: {}", dot);
+}</code></pre>
+            </section>
+
+            <section class="doc-section">
+                <h2>Próximos Passos</h2>
+                
+                <div class="grid-2" style="margin-top: 2rem;">
+                    <a href="./packages/index.html" class="card-link">
+                        <h4>📦 Explorar Pacotes</h4>
+                        <p>Descubra os 120+ pacotes disponíveis</p>
+                    </a>
+
+                    <a href="./examples.html" class="card-link">
+                        <h4>💡 Ver Exemplos</h4>
+                        <p>Exemplos completos e tutoriais</p>
+                    </a>
+
+                    <a href="./architecture.html" class="card-link">
+                        <h4>🏗️ Arquitetura</h4>
+                        <p>Entenda a estrutura do sistema</p>
+                    </a>
+
+                    <a href="./api.html" class="card-link">
+                        <h4>📚 API Reference</h4>
+                        <p>Documentação completa da API</p>
+                    </a>
+                </div>
+            </section>
+
+            <section class="doc-section">
+                <div class="alert alert-info">
+                    <h4>💡 Precisa de Ajuda?</h4>
+                    <p>Confira nossa <a href="https://github.com/avilaops/arxis-core/issues">página de issues no GitHub</a> ou envie um email para <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="copyright">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>🇧🇷 Desenvolvido com 💙 no Brasil</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>

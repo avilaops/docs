@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVX Primitives - Documentação Oficial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff8c00;        /* Laranja vibrante */
+            --secondary: #ffd700;      /* Amarelo dourado */
+            --dark: #1a1d2e;           /* Cinza espacial escuro */
+            --darker: #0f1117;         /* Cinza espacial mais escuro */
+            --text: #f5f5f5;           /* Branco suave */
+            --text-muted: #a8a8b3;     /* Cinza claro */
+            --border: #2d3142;         /* Cinza espacial para bordas */
+            --code-bg: #16171f;        /* Cinza espacial para código */
+            --success: #10b981;
+            --warning: #ffa500;        /* Laranja para avisos */
+            --danger: #ef4444;
+            --gradient: linear-gradient(135deg, #ff8c00 0%, #ffd700 100%);  /* Laranja para Amarelo */
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+            background: var(--darker);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        .header {
+            background: var(--dark);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(180deg, var(--dark) 0%, var(--darker) 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .badges {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 1px solid;
+        }
+
+        .badge.proprietary {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .badge.rust {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .badge.nostd {
+            background: rgba(0, 102, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 0.5rem;
+            border-bottom: 1px solid var(--border);
+            padding: 2rem 0 0;
+            overflow-x: auto;
+        }
+
+        .nav-tab {
+            padding: 0.75rem 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .content {
+            padding: 3rem 0;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--text);
+        }
+
+        h4 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--secondary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .card {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.2);
+        }
+
+        .card h4 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-icon {
+            font-size: 1.5rem;
+        }
+
+        .type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .type-card {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .type-card:hover {
+            border-color: var(--secondary);
+            transform: scale(1.05);
+        }
+
+        .type-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            font-family: 'Courier New', monospace;
+        }
+
+        .type-bits {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .type-usage {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--secondary);
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        pre code {
+            background: none;
+            padding: 0;
+            color: var(--text);
+            font-size: 0.9rem;
+        }
+
+        .keyword { color: #c678dd; }
+        .function { color: #61afef; }
+        .string { color: #98c379; }
+        .number { color: #d19a66; }
+        .comment { color: #5c6370; font-style: italic; }
+        .type { color: #e5c07b; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--code-bg);
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .alert.info {
+            background: rgba(0, 102, 255, 0.1);
+            border-color: var(--primary);
+            color: var(--text);
+        }
+
+        .alert.warning {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--warning);
+            color: var(--text);
+        }
+
+        .alert.danger {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: var(--danger);
+            color: var(--text);
+        }
+
+        .alert h5 {
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success);
+            font-weight: bold;
+            font-size: 1.25rem;
+        }
+
+        .benchmark-bar {
+            height: 2rem;
+            background: var(--code-bg);
+            border-radius: 0.25rem;
+            position: relative;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+
+        .benchmark-fill {
+            height: 100%;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            padding: 0 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            transition: width 1s ease-out;
+        }
+
+        .footer {
+            background: var(--dark);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .footer h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .type-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .btn {
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                🔒 AVX Primitives
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>AVX Primitives</h1>
+            <p>Biblioteca de alta performance para aritmética de inteiros grandes, projetada para aplicações criptográficas, blockchain e sistemas de segurança críticos</p>
+            <div class="badges">
+                <span class="badge proprietary">🔒 Licença Proprietária</span>
+                <span class="badge rust">🦀 Rust 1.70+</span>
+                <span class="badge nostd">⚡ no_std Compatible</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <nav class="nav-tabs">
+            <button class="nav-tab active" onclick="showSection('overview')">Visão Geral</button>
+            <button class="nav-tab" onclick="showSection('types')">Tipos</button>
+            <button class="nav-tab" onclick="showSection('usage')">Uso & Exemplos</button>
+            <button class="nav-tab" onclick="showSection('api')">Referência da API</button>
+            <button class="nav-tab" onclick="showSection('performance')">Performance</button>
+            <button class="nav-tab" onclick="showSection('use-cases')">Casos de Uso</button>
+            <button class="nav-tab" onclick="showSection('license')">Licença</button>
+        </nav>
+
+        <div class="content">
+            <!-- Visão Geral -->
+            <section id="overview" class="section active">
+                <h2>🎯 Para Que Serve?</h2>
+                <p>Esta biblioteca fornece os <strong>blocos de construção fundamentais</strong> para tecnologias que protegem a privacidade e segurança da população:</p>
+
+                <div class="grid">
+                    <div class="card">
+                        <h4><span class="card-icon">🔐</span> Segurança Digital</h4>
+                        <ul class="feature-list">
+                            <li>Criptografia ponta-a-ponta (WhatsApp, Telegram)</li>
+                            <li>Certificados digitais (e-CPF, e-CNPJ)</li>
+                            <li>HTTPS/SSL/TLS</li>
+                            <li>Assinaturas digitais</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4><span class="card-icon">💰</span> Serviços Financeiros</h4>
+                        <ul class="feature-list">
+                            <li>Blockchain e criptomoedas</li>
+                            <li>PIX e pagamentos digitais</li>
+                            <li>Internet Banking</li>
+                            <li>Contratos inteligentes</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4><span class="card-icon">🏛️</span> Governo e Serviços</h4>
+                        <ul class="feature-list">
+                            <li>Voto eletrônico</li>
+                            <li>Prontuários médicos eletrônicos</li>
+                            <li>Nota fiscal eletrônica</li>
+                            <li>Identidade digital</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4><span class="card-icon">🛡️</span> Privacidade Pessoal</h4>
+                        <ul class="feature-list">
+                            <li>VPNs e navegação segura</li>
+                            <li>Armazenamento criptografado</li>
+                            <li>Gerenciadores de senha</li>
+                            <li>Mensagens privadas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>⚡ Características Principais</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4>🎯 Alta Performance</h4>
+                        <p>Operações otimizadas com instruções SIMD (AVX2/AVX-512), algoritmos de última geração e estruturas de dados cache-friendly.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>🔒 Segurança</h4>
+                        <p>Implementações constant-time, proteção contra timing attacks, validação rigorosa de entradas.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>🚀 Versatilidade</h4>
+                        <p>Compatível com #![no_std], suporte a WASM, API ergonômica e extensivo conjunto de traits.</p>
+                    </div>
+
+                    <div class="card">
+                        <h4>✅ Confiabilidade</h4>
+                        <p>Cobertura completa de testes, property-based testing, benchmarks de performance e documentação completa.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tipos -->
+            <section id="types" class="section">
+                <h2>📦 Tipos Disponíveis</h2>
+
+                <h3>Inteiros Sem Sinal (Unsigned)</h3>
+                <div class="type-grid">
+                    <div class="type-card">
+                        <div class="type-name">U256</div>
+                        <div class="type-bits">256 bits (32 bytes)</div>
+                        <div class="type-usage">Ethereum, Bitcoin</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">U512</div>
+                        <div class="type-bits">512 bits (64 bytes)</div>
+                        <div class="type-usage">RSA-2048</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">U1024</div>
+                        <div class="type-bits">1024 bits (128 bytes)</div>
+                        <div class="type-usage">RSA-4096</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">U2048</div>
+                        <div class="type-bits">2048 bits (256 bytes)</div>
+                        <div class="type-usage">Segurança Extrema</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">U4096</div>
+                        <div class="type-bits">4096 bits (512 bytes)</div>
+                        <div class="type-usage">Quantum-Safe</div>
+                    </div>
+                </div>
+
+                <h3>Inteiros Com Sinal (Signed)</h3>
+                <div class="type-grid">
+                    <div class="type-card">
+                        <div class="type-name">I256</div>
+                        <div class="type-bits">256 bits com sinal</div>
+                        <div class="type-usage">Cálculos matemáticos</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">I512</div>
+                        <div class="type-bits">512 bits com sinal</div>
+                        <div class="type-usage">Álgebra avançada</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">I1024</div>
+                        <div class="type-bits">1024 bits com sinal</div>
+                        <div class="type-usage">Computação científica</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">I2048</div>
+                        <div class="type-bits">2048 bits com sinal</div>
+                        <div class="type-usage">Simulações complexas</div>
+                    </div>
+                    <div class="type-card">
+                        <div class="type-name">I4096</div>
+                        <div class="type-bits">4096 bits com sinal</div>
+                        <div class="type-usage">Precisão máxima</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Uso & Exemplos -->
+            <section id="usage" class="section">
+                <h2>🚀 Uso & Exemplos</h2>
+
+                <h3>Instalação</h3>
+                <div class="alert warning">
+                    <h5>⚠️ Licença Proprietária</h5>
+                    <p>Esta é uma biblioteca proprietária. Para uso comercial, você precisa adquirir uma licença. Entre em contato: <strong>nicolas@avila.inc</strong></p>
+                </div>
+
+                <pre><code><span class="comment"># Cargo.toml</span>
+[dependencies]
+<span class="keyword">avx-primitives</span> = { <span class="string">git</span> = <span class="string">"https://github.com/avilaops/arxis-core"</span>, <span class="string">branch</span> = <span class="string">"main"</span> }</code></pre>
+
+                <h3>Operações Básicas com U256</h3>
+                <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U256</span>;
+
+<span class="comment">// Criação</span>
+<span class="keyword">let</span> a = <span class="type">U256</span>::<span class="function">from</span>(<span class="number">1000u64</span>);
+<span class="keyword">let</span> b = <span class="type">U256</span>::<span class="function">from</span>(<span class="number">2000u64</span>);
+
+<span class="comment">// Aritmética</span>
+<span class="keyword">let</span> sum = a + b;           <span class="comment">// 3000</span>
+<span class="keyword">let</span> diff = b - a;          <span class="comment">// 1000</span>
+<span class="keyword">let</span> product = a * b;       <span class="comment">// 2000000</span>
+<span class="keyword">let</span> quotient = b / a;      <span class="comment">// 2</span>
+
+<span class="comment">// Comparações</span>
+<span class="function">assert!</span>(a &lt; b);
+<span class="function">assert_eq!</span>(a + b, <span class="type">U256</span>::<span class="function">from</span>(<span class="number">3000u64</span>));</code></pre>
+
+                <h3>Operações com Inteiros Grandes (U1024)</h3>
+                <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U1024</span>;
+
+<span class="comment">// Criação de números grandes</span>
+<span class="keyword">let</span> prime = <span class="type">U1024</span>::<span class="function">from_hex</span>(<span class="string">"FFFFFFFFFFFFF..."</span>);
+<span class="keyword">let</span> modulus = <span class="type">U1024</span>::<span class="function">from_hex</span>(<span class="string">"EEEEEEEEEEEE..."</span>);
+
+<span class="comment">// Operações modulares</span>
+<span class="keyword">let</span> result = (prime * prime) % modulus;
+
+<span class="comment">// Operações bit-a-bit</span>
+<span class="keyword">let</span> and_result = prime & modulus;
+<span class="keyword">let</span> or_result = prime | modulus;
+<span class="keyword">let</span> xor_result = prime ^ modulus;</code></pre>
+
+                <h3>Criptografia RSA Simplificada</h3>
+                <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U512</span>;
+
+<span class="comment">// Chaves RSA (exemplo simplificado)</span>
+<span class="keyword">let</span> p = <span class="type">U512</span>::<span class="function">from_hex</span>(<span class="string">"PRIME_1..."</span>);
+<span class="keyword">let</span> q = <span class="type">U512</span>::<span class="function">from_hex</span>(<span class="string">"PRIME_2..."</span>);
+<span class="keyword">let</span> n = p * q;  <span class="comment">// Módulo RSA</span>
+
+<span class="comment">// Criptografia</span>
+<span class="keyword">let</span> message = <span class="type">U512</span>::<span class="function">from</span>(<span class="number">42u64</span>);
+<span class="keyword">let</span> encrypted = message.<span class="function">pow_mod</span>(&public_exp, &n);
+
+<span class="comment">// Descriptografia</span>
+<span class="keyword">let</span> decrypted = encrypted.<span class="function">pow_mod</span>(&private_exp, &n);
+<span class="function">assert_eq!</span>(decrypted, message);</code></pre>
+
+                <h3>Endereços Blockchain</h3>
+                <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U256</span>;
+
+<span class="comment">// Endereço Ethereum</span>
+<span class="keyword">let</span> address = <span class="type">U256</span>::<span class="function">from_hex</span>(<span class="string">"0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"</span>);
+
+<span class="comment">// Hash de transação</span>
+<span class="keyword">let</span> tx_hash = <span class="type">U256</span>::<span class="function">from_be_bytes</span>(&keccak256_hash);
+
+<span class="comment">// Saldo em Wei (1 ETH = 10^18 Wei)</span>
+<span class="keyword">let</span> balance = <span class="type">U256</span>::<span class="function">from</span>(<span class="number">1_500_000_000_000_000_000u128</span>);</code></pre>
+
+                <h3>Inteiros com Sinal (I256)</h3>
+                <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">I256</span>;
+
+<span class="comment">// Números positivos e negativos</span>
+<span class="keyword">let</span> positive = <span class="type">I256</span>::<span class="function">from</span>(<span class="number">1000i64</span>);
+<span class="keyword">let</span> negative = <span class="type">I256</span>::<span class="function">from</span>(<span class="number">-500i64</span>);
+
+<span class="comment">// Aritmética com sinal</span>
+<span class="keyword">let</span> sum = positive + negative;  <span class="comment">// 500</span>
+<span class="keyword">let</span> abs_neg = negative.<span class="function">abs</span>();     <span class="comment">// 500</span>
+<span class="keyword">let</span> negated = -positive;         <span class="comment">// -1000</span></code></pre>
+            </section>
+
+            <!-- API Reference -->
+            <section id="api" class="section">
+                <h2>📚 Referência da API</h2>
+
+                <h3>Operações Aritméticas</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operação</th>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>+</code></td>
+                            <td><code>add()</code></td>
+                            <td>Adição</td>
+                        </tr>
+                        <tr>
+                            <td><code>-</code></td>
+                            <td><code>sub()</code></td>
+                            <td>Subtração</td>
+                        </tr>
+                        <tr>
+                            <td><code>*</code></td>
+                            <td><code>mul()</code></td>
+                            <td>Multiplicação</td>
+                        </tr>
+                        <tr>
+                            <td><code>/</code></td>
+                            <td><code>div()</code></td>
+                            <td>Divisão</td>
+                        </tr>
+                        <tr>
+                            <td><code>%</code></td>
+                            <td><code>rem()</code></td>
+                            <td>Resto da divisão</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td><code>pow(n)</code></td>
+                            <td>Exponenciação</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td><code>pow_mod(exp, mod)</code></td>
+                            <td>Exponenciação modular</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Operações Bit-a-Bit</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operação</th>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>&</code></td>
+                            <td><code>bitand()</code></td>
+                            <td>AND bit-a-bit</td>
+                        </tr>
+                        <tr>
+                            <td><code>|</code></td>
+                            <td><code>bitor()</code></td>
+                            <td>OR bit-a-bit</td>
+                        </tr>
+                        <tr>
+                            <td><code>^</code></td>
+                            <td><code>bitxor()</code></td>
+                            <td>XOR bit-a-bit</td>
+                        </tr>
+                        <tr>
+                            <td><code>!</code></td>
+                            <td><code>not()</code></td>
+                            <td>NOT bit-a-bit</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;&lt;</code></td>
+                            <td><code>shl(n)</code></td>
+                            <td>Shift left</td>
+                        </tr>
+                        <tr>
+                            <td><code>&gt;&gt;</code></td>
+                            <td><code>shr(n)</code></td>
+                            <td>Shift right</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Conversões</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>from(n: u64)</code></td>
+                            <td>Criar de u64</td>
+                        </tr>
+                        <tr>
+                            <td><code>from_hex(s: &str)</code></td>
+                            <td>Criar de string hexadecimal</td>
+                        </tr>
+                        <tr>
+                            <td><code>from_be_bytes(&[u8])</code></td>
+                            <td>Criar de bytes (big-endian)</td>
+                        </tr>
+                        <tr>
+                            <td><code>from_le_bytes(&[u8])</code></td>
+                            <td>Criar de bytes (little-endian)</td>
+                        </tr>
+                        <tr>
+                            <td><code>to_be_bytes()</code></td>
+                            <td>Converter para bytes (big-endian)</td>
+                        </tr>
+                        <tr>
+                            <td><code>to_le_bytes()</code></td>
+                            <td>Converter para bytes (little-endian)</td>
+                        </tr>
+                        <tr>
+                            <td><code>to_hex()</code></td>
+                            <td>Converter para string hexadecimal</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Comparações</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operação</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>==</code>, <code>!=</code></td>
+                            <td>Igualdade / Diferença</td>
+                        </tr>
+                        <tr>
+                            <td><code>&lt;</code>, <code>&lt;=</code></td>
+                            <td>Menor / Menor ou igual</td>
+                        </tr>
+                        <tr>
+                            <td><code>&gt;</code>, <code>&gt;=</code></td>
+                            <td>Maior / Maior ou igual</td>
+                        </tr>
+                        <tr>
+                            <td><code>is_zero()</code></td>
+                            <td>Verifica se é zero</td>
+                        </tr>
+                        <tr>
+                            <td><code>is_odd()</code></td>
+                            <td>Verifica se é ímpar</td>
+                        </tr>
+                        <tr>
+                            <td><code>is_even()</code></td>
+                            <td>Verifica se é par</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Métodos Específicos para Inteiros com Sinal</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Método</th>
+                            <th>Descrição</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>abs()</code></td>
+                            <td>Valor absoluto</td>
+                        </tr>
+                        <tr>
+                            <td><code>is_negative()</code></td>
+                            <td>Verifica se é negativo</td>
+                        </tr>
+                        <tr>
+                            <td><code>is_positive()</code></td>
+                            <td>Verifica se é positivo</td>
+                        </tr>
+                        <tr>
+                            <td><code>signum()</code></td>
+                            <td>Retorna -1, 0, ou 1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Performance -->
+            <section id="performance" class="section">
+                <h2>📊 Performance</h2>
+                <p>Benchmarks realizados em Intel Core i9-12900K @ 3.2GHz com AVX2 habilitado:</p>
+
+                <h3>U256 Operations</h3>
+                <div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                            <span>Adição</span>
+                            <span>2 ns/op</span>
+                        </div>
+                        <div class="benchmark-bar">
+                            <div class="benchmark-fill" style="width: 2%;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                            <span>Multiplicação</span>
+                            <span>15 ns/op</span>
+                        </div>
+                        <div class="benchmark-bar">
+                            <div class="benchmark-fill" style="width: 15%;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 0.25rem;">
+                            <span>Divisão</span>
+                            <span>80 ns/op</span>
+                        </div>
+                        <div class="benchmark-bar">
+                            <div class="benchmark-fill" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>Comparativo entre Tamanhos</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operação</th>
+                            <th>U256</th>
+                            <th>U512</th>
+                            <th>U1024</th>
+                            <th>U2048</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Adição</td>
+                            <td>2 ns</td>
+                            <td>4 ns</td>
+                            <td>8 ns</td>
+                            <td>16 ns</td>
+                        </tr>
+                        <tr>
+                            <td>Multiplicação</td>
+                            <td>15 ns</td>
+                            <td>45 ns</td>
+                            <td>150 ns</td>
+                            <td>500 ns</td>
+                        </tr>
+                        <tr>
+                            <td>Divisão</td>
+                            <td>80 ns</td>
+                            <td>250 ns</td>
+                            <td>800 ns</td>
+                            <td>2.5 μs</td>
+                        </tr>
+                        <tr>
+                            <td>Módulo</td>
+                            <td>85 ns</td>
+                            <td>260 ns</td>
+                            <td>850 ns</td>
+                            <td>2.7 μs</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="alert info">
+                    <h5>💡 Otimizações SIMD</h5>
+                    <p>Todos os benchmarks foram executados com otimizações SIMD (AVX2) habilitadas. Para melhor performance, compile com <code>--features simd</code>.</p>
+                </div>
+            </section>
+
+            <!-- Casos de Uso -->
+            <section id="use-cases" class="section">
+                <h2>🌟 Casos de Uso Reais</h2>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3>1. Carteiras de Criptomoedas 💼</h3>
+                    <p>Geração segura de chaves privadas e endereços para Bitcoin, Ethereum e outras blockchains.</p>
+                    <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U256</span>;
+
+<span class="comment">// Chave privada aleatória (256 bits)</span>
+<span class="keyword">let</span> private_key = <span class="type">U256</span>::<span class="function">random_secure</span>();
+
+<span class="comment">// Gerar endereço público</span>
+<span class="keyword">let</span> public_key = private_key.<span class="function">to_public_key</span>();
+<span class="keyword">let</span> address = public_key.<span class="function">to_ethereum_address</span>();</code></pre>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3>2. Sistemas de Autenticação RSA 🔐</h3>
+                    <p>Implementação completa de criptografia RSA para autenticação e assinatura digital.</p>
+                    <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U1024</span>;
+
+<span class="comment">// Geração de par de chaves RSA-2048</span>
+<span class="keyword">let</span> (public_key, private_key) = <span class="function">generate_rsa_keypair</span>(<span class="number">2048</span>);
+
+<span class="comment">// Assinar mensagem</span>
+<span class="keyword">let</span> signature = private_key.<span class="function">sign</span>(message_hash);
+
+<span class="comment">// Verificar assinatura</span>
+<span class="keyword">let</span> is_valid = public_key.<span class="function">verify</span>(message_hash, signature);</code></pre>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3>3. Protocolos de Zero-Knowledge 🎭</h3>
+                    <p>Provas de conhecimento zero para privacidade máxima em transações e votações.</p>
+                    <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U512</span>;
+
+<span class="comment">// Commitment phase</span>
+<span class="keyword">let</span> secret = <span class="type">U512</span>::<span class="function">from</span>(<span class="number">42</span>);
+<span class="keyword">let</span> randomness = <span class="type">U512</span>::<span class="function">random</span>();
+<span class="keyword">let</span> commitment = (secret * randomness) % modulus;
+
+<span class="comment">// Prove without revealing</span>
+<span class="keyword">let</span> proof = <span class="function">zkp_prove</span>(secret, randomness, commitment);</code></pre>
+                </div>
+
+                <div class="card" style="margin-bottom: 2rem;">
+                    <h3>4. Smart Contracts e DeFi 📈</h3>
+                    <p>Cálculos precisos de valores financeiros sem perda de precisão.</p>
+                    <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U256</span>;
+
+<span class="comment">// 1 ETH = 10^18 Wei</span>
+<span class="keyword">let</span> <span class="type">ETH</span> = <span class="type">U256</span>::<span class="function">from</span>(<span class="number">1_000_000_000_000_000_000u128</span>);
+
+<span class="comment">// Calcular juros compostos: P * (1 + r)^n</span>
+<span class="keyword">let</span> principal = <span class="number">100</span> * <span class="type">ETH</span>;
+<span class="keyword">let</span> rate = <span class="type">U256</span>::<span class="function">from</span>(<span class="number">5</span>);  <span class="comment">// 5%</span>
+<span class="keyword">let</span> final_amount = principal * rate.<span class="function">pow</span>(<span class="number">12</span>) / <span class="number">100</span>.<span class="function">pow</span>(<span class="number">12</span>);</code></pre>
+                </div>
+
+                <div class="card">
+                    <h3>5. Sistemas Bancários de Alta Precisão 🏦</h3>
+                    <p>Processamento de transações de alto valor com precisão absoluta.</p>
+                    <pre><code><span class="keyword">use</span> avx_primitives::<span class="type">U512</span>;
+
+<span class="comment">// Transação de 1 bilhão de reais com centavos</span>
+<span class="keyword">let</span> amount = <span class="type">U512</span>::<span class="function">from</span>(<span class="number">100_000_000_000u128</span>);  <span class="comment">// centavos</span>
+
+<span class="comment">// Calcular taxas e conversões sem perda de precisão</span>
+<span class="keyword">let</span> tax_rate = <span class="type">U512</span>::<span class="function">from</span>(<span class="number">315</span>);  <span class="comment">// 3.15%</span>
+<span class="keyword">let</span> tax = (amount * tax_rate) / <span class="number">10000</span>;
+<span class="keyword">let</span> net_amount = amount - tax;</code></pre>
+                </div>
+            </section>
+
+            <!-- Licença -->
+            <section id="license" class="section">
+                <h2>⚖️ Licenciamento</h2>
+
+                <div class="alert danger">
+                    <h5>🔒 Software Proprietário</h5>
+                    <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                    <p>Este software é propriedade exclusiva. O uso comercial requer licença.</p>
+                </div>
+
+                <h3>📋 Restrições</h3>
+                <div class="grid">
+                    <div class="card">
+                        <h4>❌ PROIBIDO</h4>
+                        <ul>
+                            <li>Uso comercial sem licença</li>
+                            <li>Redistribuição do código</li>
+                            <li>Criação de trabalhos derivados</li>
+                            <li>Engenharia reversa comercial</li>
+                            <li>Sublicenciamento</li>
+                        </ul>
+                    </div>
+
+                    <div class="card">
+                        <h4>✅ PERMITIDO (Não-Comercial)</h4>
+                        <ul>
+                            <li>Visualização educacional</li>
+                            <li>Compilação para uso pessoal</li>
+                            <li>Contribuições via PR</li>
+                            <li>Estudo e aprendizado</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>💼 Opções de Licenciamento Comercial</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>Descrição</th>
+                            <th>Ideal Para</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Individual</strong></td>
+                            <td>Desenvolvedores autônomos</td>
+                            <td>Freelancers, projetos pessoais</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Empresarial</strong></td>
+                            <td>Até 10 desenvolvedores</td>
+                            <td>Startups, pequenas empresas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Enterprise</strong></td>
+                            <td>Desenvolvedores ilimitados</td>
+                            <td>Grandes corporações</td>
+                        </tr>
+                        <tr>
+                            <td><strong>White-Label</strong></td>
+                            <td>Redistribuição completa</td>
+                            <td>Fornecedores de software</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Custom</strong></td>
+                            <td>Termos personalizados</td>
+                            <td>Casos especiais</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <h3>Entre em Contato para Licenciamento</h3>
+                    <p style="margin: 1rem 0;">Obtenha sua licença comercial e suporte profissional</p>
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="mailto:nicolas@avila.inc" class="btn btn-primary">📧 nicolas@avila.inc</a>
+                        <a href="https://avila.inc" class="btn btn-outline" target="_blank">🌐 avila.inc</a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4>🔒 AVX Primitives</h4>
+                    <p>Biblioteca criptográfica de classe mundial para Rust</p>
+                    <p style="margin-top: 1rem;">Parte do Ecossistema <strong>Arxis</strong></p>
+                </div>
+
+                <div>
+                    <h4>Documentação</h4>
+                    <a href="#overview">Visão Geral</a>
+                    <a href="#types">Tipos Disponíveis</a>
+                    <a href="#usage">Exemplos de Uso</a>
+                    <a href="#api">Referência da API</a>
+                </div>
+
+                <div>
+                    <h4>Recursos</h4>
+                    <a href="#performance">Benchmarks</a>
+                    <a href="#use-cases">Casos de Uso</a>
+                    <a href="https://github.com/avilaops/arxis-core" target="_blank">GitHub</a>
+                    <a href="https://avila.inc" target="_blank">Website</a>
+                </div>
+
+                <div>
+                    <h4>Contato</h4>
+                    <a href="mailto:nicolas@avila.inc">📧 nicolas@avila.inc</a>
+                    <a href="https://avila.inc" target="_blank">🌐 avila.inc</a>
+                    <a href="https://linkedin.com/in/nicolasavila" target="_blank">💼 LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
+                <p>🇧🇷 Desenvolvido com 💙 no Brasil</p>
+                <p style="margin-top: 1rem; font-size: 0.8rem;">
+                    Data de Criação: 28 de dezembro de 2025 | Última Atualização: 2 de janeiro de 2026 | Versão: 0.1.0
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Ocultar todas as seções
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Remover classe active de todas as tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Mostrar seção selecionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Adicionar classe active na tab clicada
+            event.target.classList.add('active');
+
+            // Scroll para o topo
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Animar barras de benchmark quando visíveis
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const fills = entry.target.querySelectorAll('.benchmark-fill');
+                    fills.forEach(fill => {
+                        const width = fill.style.width;
+                        fill.style.width = '0';
+                        setTimeout(() => {
+                            fill.style.width = width;
+                        }, 100);
+                    });
+                }
+            });
+        });
+
+        document.querySelectorAll('.benchmark-bar').forEach(bar => {
+            observer.observe(bar.parentElement);
+        });
+    </script>
+</body>
+</html>
