@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instalação - Arxis Core Documentation</title>
+    <title>Installation - Arxis Core Documentation</title>
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/docs.css">
 </head>
@@ -27,97 +27,97 @@
     <div class="docs-container">
         <aside class="docs-sidebar">
             <nav>
-                <h3>Instalação</h3>
+                <h3>Installation</h3>
                 <ul>
-                    <li><a href="#requirements">Requisitos</a></li>
-                    <li><a href="#rust">Instalar Rust</a></li>
-                    <li><a href="#cargo">Configurar Cargo</a></li>
-                    <li><a href="#workspace">Setup do Workspace</a></li>
-                    <li><a href="#dependencies">Adicionar Dependências</a></li>
-                    <li><a href="#features">Features Opcionais</a></li>
-                    <li><a href="#gpu">Suporte GPU</a></li>
-                    <li><a href="#verification">Verificação</a></li>
+                    <li><a href="#requirements">Requirements</a></li>
+                    <li><a href="#rust">Install Rust</a></li>
+                    <li><a href="#cargo">Configure Cargo</a></li>
+                    <li><a href="#workspace">Workspace Setup</a></li>
+                    <li><a href="#dependencies">Add Dependencies</a></li>
+                    <li><a href="#features">Optional Features</a></li>
+                    <li><a href="#gpu">GPU Support</a></li>
+                    <li><a href="#verification">Verification</a></li>
                     <li><a href="#troubleshooting">Troubleshooting</a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="docs-content">
-            <h1>⚙️ Guia de Instalação</h1>
-            <p class="lead">Configuração completa do ambiente de desenvolvimento para o Arxis Core.</p>
+            <h1>⚙️ Installation Guide</h1>
+            <p class="lead">Complete development environment setup for Arxis Core.</p>
 
             <section id="requirements">
-                <h2>Requisitos do Sistema</h2>
+                <h2>System Requirements</h2>
 
-                <h3>Mínimos</h3>
+                <h3>Minimum</h3>
                 <ul>
                     <li><strong>OS:</strong> Linux (Ubuntu 20.04+), macOS (11+), Windows 10/11</li>
                     <li><strong>RAM:</strong> 4 GB (8 GB recomendado)</li>
-                    <li><strong>Disk:</strong> 2 GB de espaço livre</li>
-                    <li><strong>Rust:</strong> 1.75.0 ou superior</li>
+                    <li><strong>Disk:</strong> 2 GB free space</li>
+                    <li><strong>Rust:</strong> 1.75.0 or higher</li>
                 </ul>
 
-                <h3>Recomendados</h3>
+                <h3>Recommended</h3>
                 <ul>
-                    <li><strong>RAM:</strong> 16 GB ou mais</li>
+                    <li><strong>RAM:</strong> 16 GB or more</li>
                     <li><strong>CPU:</strong> 4+ cores</li>
-                    <li><strong>SSD:</strong> Para builds mais rápidos</li>
-                    <li><strong>GPU:</strong> NVIDIA (CUDA 11.8+) ou AMD (ROCm 5.0+) para features de GPU</li>
+                    <li><strong>SSD:</strong> For faster builds</li>
+                    <li><strong>GPU:</strong> NVIDIA (CUDA 11.8+) or AMD (ROCm 5.0+) for GPU features</li>
                 </ul>
 
                 <div class="info-box">
-                    <strong>💡 Nota:</strong> A maioria dos pacotes funciona sem GPU. Features específicas de GPU são opcionais e requerem hardware adicional.
+                    <strong>💡 Note:</strong> Most packages work without a GPU. GPU-specific features are optional and require additional hardware.
                 </div>
             </section>
 
             <section id="rust">
-                <h2>1. Instalar Rust</h2>
+                <h2>1. Install Rust</h2>
 
                 <h3>Linux e macOS</h3>
                 <pre><code class="language-bash">curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
 
                 <h3>Windows</h3>
-                <p>Baixe e execute o instalador do <a href="https://rustup.rs/" target="_blank">rustup</a>.</p>
+                <p>Download and run the <a href="https://rustup.rs/" target="_blank">rustup</a> installer.</p>
 
-                <h3>Verificar Instalação</h3>
+                <h3>Verify Installation</h3>
                 <pre><code class="language-bash">rustc --version
 cargo --version
 
-# Deve mostrar versão 1.75.0 ou superior</code></pre>
+# Should show version 1.75.0 or higher</code></pre>
 
-                <h3>Atualizar Rust</h3>
+                <h3>Update Rust</h3>
                 <pre><code class="language-bash">rustup update</code></pre>
 
-                <h3>Instalar Componentes Adicionais</h3>
+                <h3>Install Additional Components</h3>
                 <pre><code class="language-bash"># Formatter
 rustup component add rustfmt
 
 # Linter
 rustup component add clippy
 
-# Source code do Rust (para IDE)
+# Rust source code (for IDE)
 rustup component add rust-src
 
-# Análise para LSP
+# Analysis for LSP
 rustup component add rust-analyzer</code></pre>
             </section>
 
             <section id="cargo">
-                <h2>2. Configurar Cargo</h2>
+                <h2>2. Configure Cargo</h2>
 
-                <h3>Configuração Global</h3>
-                <p>Crie ou edite <code>~/.cargo/config.toml</code>:</p>
-                <pre><code class="language-toml"># Compilação incremental
+                <h3>Global Configuration</h3>
+                <p>Create or edit <code>~/.cargo/config.toml</code>:</p>
+                <pre><code class="language-toml"># Incremental compilation
 [build]
 incremental = true
-jobs = 8  # Ajuste para número de cores
+jobs = 8  # Adjust to number of cores
 
-# Usar mold linker (Linux) para builds mais rápidos
+# Use mold linker (Linux) for faster builds
 [target.x86_64-unknown-linux-gnu]
 linker = "clang"
 rustflags = ["-C", "link-arg=-fuse-ld=mold"]
 
-# Cache compartilhado
+# Shared cache
 [profile.dev]
 incremental = true
 debug = true
@@ -127,20 +127,20 @@ opt-level = 3
 lto = "thin"
 codegen-units = 1</code></pre>
 
-                <h3>Instalar Ferramentas Úteis</h3>
-                <pre><code class="language-bash"># cargo-watch - recompilação automática
+                <h3>Install Useful Tools</h3>
+                <pre><code class="language-bash"># cargo-watch - automatic recompilation
 cargo install cargo-watch
 
-# cargo-edit - gerenciamento de dependências
+# cargo-edit - dependency management
 cargo install cargo-edit
 
-# cargo-audit - auditoria de segurança
+# cargo-audit - security audit
 cargo install cargo-audit
 
-# cargo-deny - política de dependências
+# cargo-deny - dependency policy
 cargo install cargo-deny
 
-# cargo-nextest - test runner mais rápido
+# cargo-nextest - faster test runner
 cargo install cargo-nextest
 
 # cargo-criterion - benchmarks
@@ -148,41 +148,41 @@ cargo install cargo-criterion</code></pre>
             </section>
 
             <section id="workspace">
-                <h2>3. Setup do Workspace</h2>
+                <h2>3. Workspace Setup</h2>
 
-                <h3>Clonar Repositório (se aplicável)</h3>
+                <h3>Clone Repository (if applicable)</h3>
                 <pre><code class="language-bash">git clone https://github.com/avilaops/arxis-core.git
 cd arxis-core</code></pre>
 
-                <h3>Criar Novo Projeto</h3>
-                <pre><code class="language-bash"># Criar biblioteca
-cargo new --lib meu-projeto
-cd meu-projeto
+                <h3>Create New Project</h3>
+                <pre><code class="language-bash"># Create library
+cargo new --lib my-project
+cd my-project
 
-# Ou criar binário
-cargo new meu-app
-cd meu-app</code></pre>
+# Or create binary
+cargo new my-app
+cd my-app</code></pre>
 
-                <h3>Estrutura Recomendada</h3>
-                <pre><code class="language-text">meu-projeto/
-├── Cargo.toml          # Manifest do projeto
+                <h3>Recommended Structure</h3>
+                <pre><code class="language-text">my-project/
+├── Cargo.toml          # Project manifest
 ├── src/
-│   ├── lib.rs          # Root do módulo (para libs)
-│   └── main.rs         # Entry point (para binários)
-├── tests/              # Testes de integração
+│   ├── lib.rs          # Module root (for libs)
+│   └── main.rs         # Entry point (for binaries)
+├── tests/              # Integration tests
 │   └── integration_test.rs
 ├── benches/            # Benchmarks
 │   └── benchmark.rs
-└── examples/           # Exemplos
+└── examples/           # Examples
     └── example.rs</code></pre>
             </section>
 
             <section id="dependencies">
-                <h2>4. Adicionar Dependências do Arxis Core</h2>
+                <h2>4. Add Arxis Core Dependencies</h2>
 
-                <h3>Cargo.toml Básico</h3>
+                <h3>Basic Cargo.toml</h3>
                 <pre><code class="language-toml">[package]
-name = "meu-projeto"
+name = "my-project"
 version = "0.1.0"
 edition = "2021"
 
@@ -198,19 +198,19 @@ tokio = { version = "1.35", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"</code></pre>
 
-                <h3>Adicionar Pacotes Específicos</h3>
+                <h3>Add Specific Packages</h3>
                 <pre><code class="language-bash"># Usando cargo-edit
 cargo add avx-crypto
 cargo add avx-http
 cargo add avx-tensor --features gpu
 
-# Ou manualmente no Cargo.toml
+# Or manually in Cargo.toml
 [dependencies]
 avx-crypto = "0.1"
 avx-http = "0.1"
 avx-tensor = { version = "0.1", features = ["gpu"] }</code></pre>
 
-                <h3>Dependências para Diferentes Domínios</h3>
+                <h3>Dependencies for Different Domains</h3>
 
                 <h4>Web Development</h4>
                 <pre><code class="language-toml">[dependencies]
@@ -254,16 +254,16 @@ avx-quinn = "0.1"  # QUIC protocol</code></pre>
             </section>
 
             <section id="features">
-                <h2>5. Features Opcionais</h2>
+                <h2>5. Optional Features</h2>
 
-                <h3>Controle de Features</h3>
+                <h3>Feature Control</h3>
                 <pre><code class="language-toml">[features]
 default = ["std"]
 
 # Standard library
 std = ["avx-std"]
 
-# Allocator customizado
+# Custom allocator
 alloc = ["avx-alloc"]
 
 # Async support
@@ -284,32 +284,32 @@ http3 = ["avx-http/http3"]
 # Compression
 compression = ["zstd", "lz4"]</code></pre>
 
-                <h3>Compilar com Features Específicas</h3>
-                <pre><code class="language-bash"># Com feature GPU
+                <h3>Build with Specific Features</h3>
+                <pre><code class="language-bash"># With GPU feature
 cargo build --features gpu
 
-# Múltiplas features
+# Multiple features
 cargo build --features "gpu,simd,compression"
 
-# Sem features padrão
+# Without default features
 cargo build --no-default-features
 
-# Features específicas sem defaults
+# Specific features without defaults
 cargo build --no-default-features --features "alloc,async"</code></pre>
             </section>
 
             <section id="gpu">
-                <h2>6. Suporte GPU (Opcional)</h2>
+                <h2>6. GPU Support (Optional)</h2>
 
                 <h3>NVIDIA CUDA</h3>
-                <pre><code class="language-bash"># Instalar CUDA Toolkit 11.8+
+                <pre><code class="language-bash"># Install CUDA Toolkit 11.8+
 # Ubuntu
 wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.0-1_all.deb
 sudo dpkg -i cuda-keyring_1.0-1_all.deb
 sudo apt-get update
 sudo apt-get install cuda
 
-# Verificar instalação
+# Verify installation
 nvcc --version
 nvidia-smi</code></pre>
 
@@ -320,49 +320,49 @@ echo 'deb [arch=amd64] https://repo.radeon.com/rocm/apt/debian/ ubuntu main' | s
 sudo apt update
 sudo apt install rocm-dkms
 
-# Verificar
+# Verify
 rocm-smi</code></pre>
 
-                <h3>Configurar no Cargo.toml</h3>
+                <h3>Configure in Cargo.toml</h3>
                 <pre><code class="language-toml">[dependencies]
 avx-gpu = { version = "0.1", features = ["cuda"] }
 avx-tensor = { version = "0.1", features = ["gpu"] }
 
-# Variáveis de ambiente
+# Environment variables
 [env]
 CUDA_HOME = "/usr/local/cuda"
 LD_LIBRARY_PATH = "/usr/local/cuda/lib64"</code></pre>
 
-                <h3>Testar GPU</h3>
+                <h3>Test GPU</h3>
                 <pre><code class="language-rust">use avx_gpu::Device;
 
 fn main() {
     match Device::cuda_if_available() {
-        Some(device) => println!("GPU disponível: {:?}", device.name()),
-        None => println!("Usando CPU"),
+        Some(device) => println!("GPU available: {:?}", device.name()),
+        None => println!("Using CPU"),
     }
 }</code></pre>
             </section>
 
             <section id="verification">
-                <h2>7. Verificação da Instalação</h2>
+                <h2>7. Installation Verification</h2>
 
-                <h3>Criar Projeto de Teste</h3>
+                <h3>Create Test Project</h3>
                 <pre><code class="language-bash">cargo new --bin test-arxis
 cd test-arxis</code></pre>
 
-                <h3>Adicionar Dependências</h3>
+                <h3>Add Dependencies</h3>
                 <pre><code class="language-toml">[dependencies]
 avx-std = "0.1"
 avx-crypto = "0.1"
 tokio = { version = "1.35", features = ["full"] }</code></pre>
 
-                <h3>Código de Teste (src/main.rs)</h3>
+                <h3>Test Code (src/main.rs)</h3>
                 <pre><code class="language-rust">use avx_crypto::hash;
 
 #[tokio::main]
 async fn main() {
-    println!("🚀 Testando Arxis Core...");
+    println!("🚀 Testing Arxis Core...");
 
     // Test hash
     let data = b"Hello, Arxis!";
@@ -371,12 +371,12 @@ async fn main() {
 
     // Test async
     tokio::time::sleep(tokio::time::Duration::from_millis(100)).await;
-    println!("✓ Async funcionando");
+    println!("✓ Async working");
 
-    println!("✅ Instalação verificada com sucesso!");
+    println!("✅ Installation verified successfully!");
 }</code></pre>
 
-                <h3>Compilar e Executar</h3>
+                <h3>Build and Run</h3>
                 <pre><code class="language-bash"># Build
 cargo build
 
@@ -387,17 +387,17 @@ cargo run
 cargo build --release
 cargo run --release</code></pre>
 
-                <h3>Executar Testes</h3>
-                <pre><code class="language-bash"># Todos os testes
+                <h3>Run Tests</h3>
+                <pre><code class="language-bash"># All tests
 cargo test
 
-# Testes específicos
+# Specific tests
 cargo test test_name
 
-# Com output
+# With output
 cargo test -- --nocapture
 
-# Usando nextest (mais rápido)
+# Using nextest (faster)
 cargo nextest run</code></pre>
             </section>
 
@@ -417,7 +417,7 @@ xcode-select --install
 # Windows
 # Instalar Visual Studio Build Tools 2019+</code></pre>
 
-                <h3>Erro: "failed to compile openssl-sys"</h3>
+                <h3>Error: "failed to compile openssl-sys"</h3>
                 <pre><code class="language-bash"># Ubuntu/Debian
 sudo apt-get install pkg-config libssl-dev
 
@@ -428,71 +428,71 @@ sudo yum install pkgconfig openssl-devel
 brew install openssl
 export OPENSSL_DIR=$(brew --prefix openssl)</code></pre>
 
-                <h3>Build Lento</h3>
-                <pre><code class="language-bash"># Usar mold linker (Linux)
+                <h3>Slow Build</h3>
+                <pre><code class="language-bash"># Use mold linker (Linux)
 sudo apt-get install mold
 export RUSTFLAGS="-C link-arg=-fuse-ld=mold"
 
-# Aumentar paralelismo
+# Increase parallelism
 export CARGO_BUILD_JOBS=8
 
-# Usar sccache
+# Use sccache
 cargo install sccache
 export RUSTC_WRAPPER=sccache</code></pre>
 
-                <h3>Erro de Memória Durante Build</h3>
-                <pre><code class="language-bash"># Reduzir paralelismo
+                <h3>Memory Error During Build</h3>
+                <pre><code class="language-bash"># Reduce parallelism
 cargo build -j 2
 
-# Ou no .cargo/config.toml
+# Or in .cargo/config.toml
 [build]
 jobs = 2</code></pre>
 
-                <h3>GPU Não Detectada</h3>
-                <pre><code class="language-bash"># Verificar drivers NVIDIA
+                <h3>GPU Not Detected</h3>
+                <pre><code class="language-bash"># Check NVIDIA drivers
 nvidia-smi
 
-# Verificar CUDA
+# Check CUDA
 nvcc --version
 echo $CUDA_HOME
 
-# Verificar ROCm
+# Check ROCm
 rocm-smi
 echo $ROCM_PATH
 
-# Adicionar ao .bashrc ou .zshrc
+# Add to .bashrc or .zshrc
 export CUDA_HOME=/usr/local/cuda
 export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
 export PATH=$CUDA_HOME/bin:$PATH</code></pre>
 
-                <h3>Problemas com Dependências</h3>
-                <pre><code class="language-bash"># Limpar cache
+                <h3>Dependency Problems</h3>
+                <pre><code class="language-bash"># Clear cache
 cargo clean
 
-# Atualizar dependências
+# Update dependencies
 cargo update
 
-# Auditoria de segurança
+# Security audit
 cargo audit
 
-# Verificar licenças
+# Check licenses
 cargo deny check</code></pre>
             </section>
 
             <div class="next-steps">
-                <h2>Próximos Passos</h2>
+                <h2>Next Steps</h2>
                 <div class="cards-grid">
                     <a href="getting-started.html" class="card">
                         <h3>🚀 Getting Started</h3>
-                        <p>Comece a desenvolver agora</p>
+                        <p>Start developing now</p>
                     </a>
                     <a href="examples.html" class="card">
-                        <h3>💡 Exemplos</h3>
-                        <p>Veja exemplos de código</p>
+                        <h3>💡 Examples</h3>
+                        <p>See code examples</p>
                     </a>
                     <a href="packages/index.html" class="card">
-                        <h3>📦 Pacotes</h3>
-                        <p>Explore todos os pacotes</p>
+                        <h3>📦 Packages</h3>
+                        <p>Explore all packages</p>
                     </a>
                 </div>
             </div>
@@ -504,7 +504,7 @@ cargo deny check</code></pre>
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Arxis Core</h3>
-                    <p>Ecossistema completo de desenvolvimento em Rust</p>
+                    <p>Complete Rust development ecosystem</p>
                 </div>
                 <div class="footer-section">
                     <h3>Links</h3>
@@ -513,14 +513,14 @@ cargo deny check</code></pre>
                     <a href="packages/index.html">Packages</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Recursos</h3>
+                    <h3>Resources</h3>
                     <a href="examples.html">Examples</a>
                     <a href="architecture.html">Architecture</a>
                     <a href="license.html">License</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Avx. Todos os direitos reservados.</p>
+                <p>&copy; 2025 Avx. All rights reserved.</p>
             </div>
         </div>
     </footer>

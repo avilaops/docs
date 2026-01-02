@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Arquitetura - Arxis Core Documentation</title>
+    <title>Architecture - Arxis Core Documentation</title>
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="stylesheet" href="assets/css/docs.css">
 </head>
@@ -27,33 +27,33 @@
     <div class="docs-container">
         <aside class="docs-sidebar">
             <nav>
-                <h3>Arquitetura</h3>
+                <h3>Architecture</h3>
                 <ul>
                     <li><a href="#overview">Overview</a></li>
-                    <li><a href="#design-principles">Princípios de Design</a></li>
-                    <li><a href="#layers">Camadas</a></li>
+                    <li><a href="#design-principles">Design Principles</a></li>
+                    <li><a href="#layers">Layers</a></li>
                     <li><a href="#core-workspace">Core Workspace</a></li>
                     <li><a href="#ai-workspace">AI Workspace</a></li>
                     <li><a href="#geo-workspace">Geo Workspace</a></li>
-                    <li><a href="#dependencies">Gerenciamento de Dependências</a></li>
+                    <li><a href="#dependencies">Dependency Management</a></li>
                     <li><a href="#performance">Performance</a></li>
-                    <li><a href="#security">Segurança</a></li>
+                    <li><a href="#security">Security</a></li>
                 </ul>
             </nav>
         </aside>
 
         <main class="docs-content">
-            <h1>🏗️ Arquitetura do Arxis Core</h1>
-            <p class="lead">Entenda a arquitetura modular e escalável que torna o Arxis Core um dos ecossistemas mais completos em Rust.</p>
+            <h1>🏗️ Arxis Core Architecture</h1>
+            <p class="lead">Understand the modular and scalable architecture that makes Arxis Core one of the most comprehensive ecosystems in Rust.</p>
 
             <section id="overview">
                 <h2>Overview</h2>
-                <p>O Arxis Core é um ecossistema de mais de 120 pacotes Rust organizados em uma arquitetura modular de três camadas principais:</p>
+                <p>Arxis Core is an ecosystem of over 120 Rust packages organized into a modular architecture with three main layers:</p>
 
                 <div class="architecture-diagram">
                     <div class="arch-layer">
-                        <h3>🔷 Camada de Aplicação</h3>
-                        <p>Serviços e aplicações de alto nível</p>
+                        <h3>🔷 Application Layer</h3>
+                        <p>High-level services and applications</p>
                         <ul>
                             <li>arxis-analytics-server</li>
                             <li>avx-docs-site</li>
@@ -61,8 +61,8 @@
                         </ul>
                     </div>
                     <div class="arch-layer">
-                        <h3>🔶 Camada de Domínio</h3>
-                        <p>Workspaces especializados</p>
+                        <h3>🔶 Domain Layer</h3>
+                        <p>Specialized workspaces</p>
                         <ul>
                             <li>avx-ai-workspace (AI/ML)</li>
                             <li>avx-geo-workspace (GIS)</li>
@@ -70,8 +70,8 @@
                         </ul>
                     </div>
                     <div class="arch-layer">
-                        <h3>🔸 Camada de Infraestrutura</h3>
-                        <p>Primitivos e utilitários fundamentais</p>
+                        <h3>🔸 Infrastructure Layer</h3>
+                        <p>Fundamental primitives and utilities</p>
                         <ul>
                             <li>avx-std, avx-error, avx-sync</li>
                             <li>avx-alloc, avx-buffer, avx-time</li>
@@ -82,23 +82,23 @@
             </section>
 
             <section id="design-principles">
-                <h2>Princípios de Design</h2>
+                <h2>Design Principles</h2>
 
-                <h3>1. Modularidade</h3>
-                <p>Cada pacote tem uma responsabilidade única e bem definida. Dependências são explícitas e minimizadas.</p>
-                <pre><code class="language-toml"># Exemplo de dependências mínimas
+                <h3>1. Modularity</h3>
+                <p>Each package has a single, well-defined responsibility. Dependencies are explicit and minimized.</p>
+                <pre><code class="language-toml"># Example of minimal dependencies
 [dependencies]
 avx-error = { path = "../avx-error" }
 avx-std = { path = "../avx-std", optional = true }</code></pre>
 
                 <h3>2. Zero-Cost Abstractions</h3>
-                <p>As abstrações do Arxis Core não impõem custos de runtime. O código é otimizado em tempo de compilação.</p>
-                <pre><code class="language-rust">// Generic abstraction sem overhead
+                <p>Arxis Core abstractions impose no runtime costs. Code is optimized at compile time.</p>
+                <pre><code class="language-rust">// Generic abstraction with no overhead
 pub trait Processor<T> {
     fn process(&self, data: T) -> Result<T>;
 }
 
-// Monomorphized em compile-time
+// Monomorphized at compile-time
 impl Processor<u32> for MyProcessor {
     #[inline]
     fn process(&self, data: u32) -> Result<u32> {
@@ -107,20 +107,20 @@ impl Processor<u32> for MyProcessor {
 }</code></pre>
 
                 <h3>3. Safety-First</h3>
-                <p>Segurança de memória garantida pelo sistema de tipos de Rust. Uso mínimo de <code>unsafe</code> e sempre documentado.</p>
+                <p>Memory safety guaranteed by Rust's type system. Minimal use of <code>unsafe</code>, always documented.</p>
 
                 <h3>4. Async-Native</h3>
-                <p>Suporte nativo a operações assíncronas usando Tokio como runtime principal.</p>
+                <p>Native support for asynchronous operations using Tokio as the primary runtime.</p>
 
                 <h3>5. Platform-Agnostic</h3>
-                <p>Suporte para múltiplas plataformas: Linux, Windows, macOS, WebAssembly.</p>
+                <p>Support for multiple platforms: Linux, Windows, macOS, WebAssembly.</p>
             </section>
 
             <section id="layers">
-                <h2>Camadas da Arquitetura</h2>
+                <h2>Architecture Layers</h2>
 
-                <h3>Camada de Infraestrutura</h3>
-                <p>Fornece os blocos de construção fundamentais:</p>
+                <h3>Infrastructure Layer</h3>
+                <p>Provides fundamental building blocks:</p>
                 <ul>
                     <li><strong>avx-std</strong>: Extensões da biblioteca padrão</li>
                     <li><strong>avx-error</strong>: Sistema de erros unificado</li>
@@ -130,27 +130,27 @@ impl Processor<u32> for MyProcessor {
                     <li><strong>avx-id</strong>: Geração de identificadores únicos</li>
                 </ul>
 
-                <h3>Camada de Domínio</h3>
-                <p>Workspaces especializados para diferentes domínios:</p>
+                <h3>Domain Layer</h3>
+                <p>Specialized workspaces for different domains:</p>
                 <ul>
-                    <li><strong>AI/ML</strong>: Tensors, redes neurais, treinamento distribuído</li>
-                    <li><strong>GIS</strong>: Geometria, projeções, análise espacial</li>
-                    <li><strong>Network</strong>: Protocolos, servidores, clientes</li>
-                    <li><strong>Database</strong>: Armazenamento, indexação, consultas</li>
+                    <li><strong>AI/ML</strong>: Tensors, neural networks, distributed training</li>
+                    <li><strong>GIS</strong>: Geometry, projections, spatial analysis</li>
+                    <li><strong>Network</strong>: Protocols, servers, clients</li>
+                    <li><strong>Database</strong>: Storage, indexing, queries</li>
                 </ul>
 
-                <h3>Camada de Aplicação</h3>
-                <p>Serviços completos construídos sobre as camadas inferiores:</p>
+                <h3>Application Layer</h3>
+                <p>Complete services built on top of lower layers:</p>
                 <ul>
-                    <li><strong>Analytics Server</strong>: Processamento de dados em tempo real</li>
-                    <li><strong>Documentation Site</strong>: Sistema de documentação</li>
-                    <li><strong>Examples</strong>: Aplicações de demonstração</li>
+                    <li><strong>Analytics Server</strong>: Real-time data processing</li>
+                    <li><strong>Documentation Site</strong>: Documentation system</li>
+                    <li><strong>Examples</strong>: Demonstration applications</li>
                 </ul>
             </section>
 
             <section id="core-workspace">
                 <h2>Core Workspace</h2>
-                <p>O workspace principal contém os pacotes fundamentais:</p>
+                <p>The main workspace contains the fundamental packages:</p>
 
                 <pre><code class="language-toml">[workspace]
 members = [
@@ -173,20 +173,20 @@ tokio = { version = "1.35", features = ["full"] }
 serde = { version = "1.0", features = ["derive"] }
 thiserror = "1.0"</code></pre>
 
-                <h3>Características</h3>
+                <h3>Features</h3>
                 <ul>
-                    <li>Dependências compartilhadas no nível do workspace</li>
-                    <li>Compilação incremental otimizada</li>
-                    <li>Versionamento sincronizado</li>
-                    <li>Testes integrados</li>
+                    <li>Shared dependencies at workspace level</li>
+                    <li>Optimized incremental compilation</li>
+                    <li>Synchronized versioning</li>
+                    <li>Integrated tests</li>
                 </ul>
             </section>
 
             <section id="ai-workspace">
                 <h2>AI Workspace</h2>
-                <p>Workspace especializado para inteligência artificial e machine learning:</p>
+                <p>Specialized workspace for artificial intelligence and machine learning:</p>
 
-                <h3>Estrutura</h3>
+                <h3>Structure</h3>
                 <pre><code class="language-text">avx-ai-workspace/
 ├── avxdb-core/          # Banco de dados vetorial
 ├── avx-quinn/           # QUIC protocol
@@ -195,21 +195,21 @@ thiserror = "1.0"</code></pre>
 ├── avx-training/        # Treinamento distribuído
 └── avx-inference/       # Inferência otimizada</code></pre>
 
-                <h3>Features Chave</h3>
+                <h3>Key Features</h3>
                 <ul>
-                    <li>Suporte a GPU via CUDA e ROCm</li>
-                    <li>Operações vetorizadas (SIMD)</li>
-                    <li>Treinamento distribuído</li>
-                    <li>Graph computation otimizado</li>
-                    <li>Quantização e pruning</li>
+                    <li>GPU support via CUDA and ROCm</li>
+                    <li>Vectorized operations (SIMD)</li>
+                    <li>Distributed training</li>
+                    <li>Optimized graph computation</li>
+                    <li>Quantization and pruning</li>
                 </ul>
             </section>
 
             <section id="geo-workspace">
                 <h2>Geo Workspace</h2>
-                <p>Sistema completo para dados geoespaciais:</p>
+                <p>Complete system for geospatial data:</p>
 
-                <h3>Componentes</h3>
+                <h3>Components</h3>
                 <ul>
                     <li><strong>avx-geometry</strong>: Primitivos geométricos</li>
                     <li><strong>avx-projection</strong>: Sistemas de coordenadas</li>
@@ -218,8 +218,8 @@ thiserror = "1.0"</code></pre>
                     <li><strong>avx-raster</strong>: Processamento de imagens raster</li>
                 </ul>
 
-                <h3>Fluxo de Dados</h3>
-                <pre><code class="language-rust">// Pipeline de processamento GIS
+                <h3>Data Flow</h3>
+                <pre><code class="language-rust">// GIS processing pipeline
 use avx_gis::{Point, Polygon, SpatialIndex};
 
 let index = SpatialIndex::new();
@@ -231,10 +231,10 @@ let results = index.query_within_radius(&query_point, 10.0);</code></pre>
             </section>
 
             <section id="dependencies">
-                <h2>Gerenciamento de Dependências</h2>
+                <h2>Dependency Management</h2>
 
-                <h3>Hierarquia de Dependências</h3>
-                <p>As dependências seguem uma hierarquia estrita para evitar ciclos:</p>
+                <h3>Dependency Hierarchy</h3>
+                <p>Dependencies follow a strict hierarchy to avoid cycles:</p>
 
                 <pre><code class="language-text">Application Layer
     ↓
@@ -245,7 +245,7 @@ Infrastructure Layer (Primitives)
 External Dependencies (tokio, serde, etc.)</code></pre>
 
                 <h3>Shared Dependencies</h3>
-                <p>Dependências comuns são definidas no workspace raiz:</p>
+                <p>Common dependencies are defined at the root workspace:</p>
                 <pre><code class="language-toml">[workspace.dependencies]
 # Async runtime
 tokio = { version = "1.35", features = ["full"] }
@@ -267,7 +267,7 @@ hyper = "1.0"
 quinn = "0.10"</code></pre>
 
                 <h3>Feature Flags</h3>
-                <p>Controle fino sobre funcionalidades:</p>
+                <p>Fine-grained control over functionalities:</p>
                 <pre><code class="language-toml">[features]
 default = ["std"]
 std = ["avx-std"]
@@ -282,15 +282,15 @@ simd = []</code></pre>
             <section id="performance">
                 <h2>Performance</h2>
 
-                <h3>Estratégias de Otimização</h3>
+                <h3>Optimization Strategies</h3>
 
                 <h4>1. Zero-Copy Operations</h4>
-                <pre><code class="language-rust">// Usa slices para evitar cópias
+                <pre><code class="language-rust">// Use slices to avoid copies
 pub fn process_data(data: &[u8]) -> &[u8] {
     &data[10..20]  // Zero-copy slice
 }
 
-// Buffer reutilizável
+// Reusable buffer
 let mut buffer = Vec::with_capacity(1024);
 loop {
     buffer.clear();
@@ -316,7 +316,7 @@ fn vector_add_simd(a: &[f32], b: &[f32], c: &mut [f32]) {
 let pool = Pool::new(1024);
 let buf1 = pool.allocate(256);
 let buf2 = pool.allocate(512);
-// Buffers reutilizados automaticamente</code></pre>
+// Buffers automatically reused</code></pre>
 
                 <h4>4. Async Batching</h4>
                 <pre><code class="language-rust">use tokio::time::{interval, Duration};
@@ -343,7 +343,7 @@ loop {
 }</code></pre>
 
                 <h3>Benchmarks</h3>
-                <p>Todos os pacotes incluem benchmarks com Criterion:</p>
+                <p>All packages include benchmarks with Criterion:</p>
                 <pre><code class="language-rust">use criterion::{black_box, criterion_group, criterion_main, Criterion};
 
 fn benchmark_hash(c: &mut Criterion) {
@@ -360,19 +360,19 @@ criterion_main!(benches);</code></pre>
             </section>
 
             <section id="security">
-                <h2>Segurança</h2>
+                <h2>Security</h2>
 
-                <h3>Práticas de Segurança</h3>
+                <h3>Security Practices</h3>
 
                 <h4>1. Memory Safety</h4>
                 <ul>
-                    <li>Uso mínimo de <code>unsafe</code></li>
-                    <li>Todo <code>unsafe</code> é documentado e auditado</li>
-                    <li>Testes extensivos com Miri</li>
+                    <li>Minimal use of <code>unsafe</code></li>
+                    <li>All <code>unsafe</code> is documented and audited</li>
+                    <li>Extensive testing with Miri</li>
                 </ul>
 
                 <h4>2. Constant-Time Operations</h4>
-                <pre><code class="language-rust">// Comparação constant-time para prevenir timing attacks
+                <pre><code class="language-rust">// Constant-time comparison to prevent timing attacks
 use subtle::ConstantTimeEq;
 
 pub fn verify_mac(expected: &[u8], actual: &[u8]) -> bool {
@@ -380,11 +380,11 @@ pub fn verify_mac(expected: &[u8], actual: &[u8]) -> bool {
 }</code></pre>
 
                 <h4>3. Secure Defaults</h4>
-                <pre><code class="language-rust">// Defaults seguros
+                <pre><code class="language-rust">// Secure defaults
 impl Default for CryptoConfig {
     fn default() -> Self {
         Self {
-            algorithm: Algorithm::Aes256Gcm,  // Forte por padrão
+            algorithm: Algorithm::Aes256Gcm,  // Strong by default
             key_size: 256,
             iterations: 100_000,  // PBKDF2
         }
@@ -401,29 +401,29 @@ unmaintained = "warn"
 yanked = "deny"</code></pre>
 
                 <h3>Security Audits</h3>
-                <p>Pacotes críticos passam por auditorias regulares:</p>
+                <p>Critical packages undergo regular audits:</p>
                 <ul>
-                    <li>Auditoria de código por terceiros</li>
-                    <li>Fuzzing contínuo</li>
-                    <li>Análise estática com Clippy e cargo-audit</li>
-                    <li>Testes de penetração</li>
+                    <li>Third-party code auditing</li>
+                    <li>Continuous fuzzing</li>
+                    <li>Static analysis with Clippy and cargo-audit</li>
+                    <li>Penetration testing</li>
                 </ul>
             </section>
 
             <div class="next-steps">
-                <h2>Próximos Passos</h2>
+                <h2>Next Steps</h2>
                 <div class="cards-grid">
                     <a href="getting-started.html" class="card">
                         <h3>🚀 Getting Started</h3>
-                        <p>Comece a desenvolver com Arxis Core</p>
+                        <p>Start developing with Arxis Core</p>
                     </a>
                     <a href="packages/index.html" class="card">
-                        <h3>📦 Explorar Pacotes</h3>
-                        <p>Veja todos os pacotes disponíveis</p>
+                        <h3>📦 Explore Packages</h3>
+                        <p>See all available packages</p>
                     </a>
                     <a href="examples.html" class="card">
-                        <h3>💡 Exemplos</h3>
-                        <p>Aprenda com exemplos práticos</p>
+                        <h3>💡 Examples</h3>
+                        <p>Learn with practical examples</p>
                     </a>
                 </div>
             </div>
@@ -435,7 +435,7 @@ yanked = "deny"</code></pre>
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>Arxis Core</h3>
-                    <p>Ecossistema completo de desenvolvimento em Rust</p>
+                    <p>Complete Rust development ecosystem</p>
                 </div>
                 <div class="footer-section">
                     <h3>Links</h3>
@@ -444,14 +444,14 @@ yanked = "deny"</code></pre>
                     <a href="packages/index.html">Packages</a>
                 </div>
                 <div class="footer-section">
-                    <h3>Recursos</h3>
+                    <h3>Resources</h3>
                     <a href="examples.html">Examples</a>
                     <a href="architecture.html">Architecture</a>
                     <a href="license.html">License</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 Avx. Todos os direitos reservados.</p>
+                <p>&copy; 2025 Avx. All rights reserved.</p>
             </div>
         </div>
     </footer>
