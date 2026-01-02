@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cli - Avx Docs</title>
+    <title>CLI Tools - Avx Docs</title>
+    <meta name="description" content="Command-line interfaces, terminal utilities, and developer tools">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/docs.css">
     <link rel="stylesheet" href="../assets/css/modules.css">
@@ -14,7 +15,7 @@
             <a href="../index.html" class="logo">Avx <span class="gradient-text">Docs</span></a>
             <div class="nav-links">
                 <a href="../getting-started.html">Getting Started</a>
-                <a href="../packages/index.html">Packages</a>
+                <a href="./index.html">Categories</a>
                 <a href="../examples.html">Examples</a>
                 <a href="../architecture.html">Architecture</a>
                 <a href="https://github.com/avilaops/arxis-core" target="_blank">GitHub</a>
@@ -24,34 +25,83 @@
 
     <main class="docs-container">
         <aside class="docs-sidebar">
-            <h3>Cli</h3>
-            <ul>
+            <h3>💻 CLI Tools</h3>
+            <div class="sidebar-section">
+                <h4>Modules</h4>
+                <ul>
 
-            </ul>
+                </ul>
+            </div>
         </aside>
 
         <article class="docs-content">
-            <h1>Cli</h1>
-            <p class="lead">Command-line interface tools and utilities for developer productivity</p>
+            <div class="page-header">
+                <h1>💻 CLI Tools</h1>
+                <p class="lead">Command-line interfaces, terminal utilities, and developer tools</p>
+                <div class="badges">
+                    <span class="badge badge-primary">CLI</span>
+                    <span class="badge badge-primary">Terminal</span>
+                    <span class="badge badge-primary">Tools</span>
 
-            <div class="module-grid">
-
+                </div>
             </div>
+
+            <section class="overview-section">
+                <h2>Overview</h2>
+                <p>Command-line interfaces, terminal utilities, and developer tools</p>
+                
+                <div class="feature-highlights">
+                    <div class="highlight-card">
+                        <span class="highlight-icon">🎨</span>
+                        <h3>Beautiful UI</h3>
+                        <p>Colored output and progress bars</p>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-icon">⚡</span>
+                        <h3>Fast</h3>
+                        <p>Optimized for speed</p>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-icon">🔧</span>
+                        <h3>Easy CLI</h3>
+                        <p>Simple argument parsing</p>
+                    </div>
+
+                </div>
+            </section>
+
+            <section class="packages-section">
+                <h2>Packages</h2>
+
+            </section>
+
+            <section class="quick-start-section">
+                <h2>Quick Start Example</h2>
+                <p>Get started with CLI Tools:</p>
+                <pre><code>use avx_cli::{Cli, Arg};
+
+let cli = Cli::new("myapp")
+    .version("1.0.0")
+    .arg(Arg::new("input").required())
+    .arg(Arg::new("verbose").short('v'));
+
+let matches = cli.parse();</code></pre>
+            </section>
 
             <section class="related-docs">
                 <h2>Related Documentation</h2>
                 <div class="doc-cards">
                     <a href="../getting-started.html" class="doc-card">
-                        <h3>Getting Started</h3>
-                        <p>Quick start guide for new users</p>
+                        <h3>🚀 Getting Started</h3>
+                        <p>Quick start guide with examples</p>
                     </a>
                     <a href="../examples.html" class="doc-card">
-                        <h3>Examples</h3>
-                        <p>Code examples and tutorials</p>
+                        <h3>💡 Examples</h3>
+                        <p>Complete code examples and tutorials</p>
                     </a>
-                    <a href="../packages/index.html" class="doc-card">
-                        <h3>All Packages</h3>
-                        <p>Complete package index</p>
+                    <a href="./index.html" class="doc-card">
+                        <h3>📚 All Categories</h3>
+                        <p>Browse all documentation categories</p>
                     </a>
                 </div>
             </section>
@@ -63,5 +113,38 @@
             <p>&copy; 2025 Avila Inc. All rights reserved.</p>
         </div>
     </footer>
+
+    <style>
+        .page-header { margin-bottom: 3rem; }
+        .badges { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+        .badge { padding: 0.4rem 0.8rem; border-radius: 4px; font-size: 0.85rem; font-weight: 600; }
+        .badge-primary { background: rgba(255, 140, 0, 0.2); color: var(--primary); }
+        .badge-success { background: rgba(0, 255, 100, 0.2); color: #00ff64; }
+        .badge-info { background: rgba(0, 200, 255, 0.2); color: #00c8ff; }
+        .overview-section { background: var(--darker); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-bottom: 3rem; }
+        .feature-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .highlight-card { text-align: center; padding: 1.5rem; background: var(--dark); border-radius: 8px; border: 1px solid var(--border); }
+        .highlight-icon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+        .highlight-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--primary); }
+        .highlight-card p { font-size: 0.9rem; color: var(--text-muted); }
+        .packages-section { margin-bottom: 4rem; }
+        .module-card { background: var(--darker); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-bottom: 1.5rem; transition: all 0.3s ease; }
+        .module-card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 140, 0, 0.2); }
+        .module-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .module-header h3 { margin: 0; color: var(--primary); font-size: 1.4rem; }
+        .module-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+        .module-links a { color: var(--primary); text-decoration: none; padding: 0.5rem 1rem; border: 1px solid var(--primary); border-radius: 4px; font-size: 0.9rem; transition: all 0.3s ease; }
+        .module-links a:hover { background: var(--primary); color: var(--darker); }
+        .quick-start-section { background: var(--darker); border: 1px solid var(--border); border-radius: 8px; padding: 2rem; margin-bottom: 3rem; }
+        .quick-start-section pre { background: var(--dark); border: 1px solid var(--border); border-radius: 4px; padding: 1.5rem; overflow-x: auto; margin-top: 1rem; }
+        .quick-start-section code { color: var(--text); font-family: 'Consolas', 'Monaco', monospace; font-size: 0.9rem; line-height: 1.6; }
+        .sidebar-section { margin-bottom: 2rem; }
+        .sidebar-section h4 { color: var(--primary); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 0.8rem; }
+        .sidebar-section ul { list-style: none; padding: 0; }
+        .sidebar-section li { margin-bottom: 0.5rem; }
+        .sidebar-section a { color: var(--text-muted); text-decoration: none; transition: color 0.3s; font-size: 0.95rem; }
+        .sidebar-section a:hover { color: var(--primary); }
+        @media (max-width: 768px) { .feature-highlights { grid-template-columns: 1fr; } }
+    </style>
 </body>
 </html>
