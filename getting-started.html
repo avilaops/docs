@@ -3,173 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guia de Início - Arxis Core</title>
+    <title>Getting Started - Avx Docs</title>
+    <meta name="description" content="Quick start guide to get up and running with Avx in minutes">
     <link rel="stylesheet" href="./assets/css/main.css">
     <link rel="stylesheet" href="./assets/css/docs.css">
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <a href="./index.html" class="logo">🏛️ Arxis Core</a>
-            <nav class="nav-menu">
-                <a href="./index.html">Início</a>
-                <a href="./packages/index.html">Pacotes</a>
-                <a href="./getting-started.html">Documentação</a>
-                <a href="./examples.html">Exemplos</a>
+    <header>
+        <nav class="container">
+            <a href="./index.html" class="logo">Avx <span class="gradient-text">Docs</span></a>
+            <div class="nav-links">
+                <a href="./getting-started.html" class="active">Getting Started</a>
+                <a href="./categories/index.html">Categories</a>
+                <a href="./examples.html">Examples</a>
+                <a href="./architecture.html">Architecture</a>
                 <a href="https://github.com/avilaops/arxis-core" target="_blank">GitHub</a>
-            </nav>
-        </div>
+            </div>
+        </nav>
     </header>
 
     <div class="docs-container">
         <aside class="docs-sidebar">
-            <h3>Documentação</h3>
-            <nav class="sidebar-nav">
-                <a href="./getting-started.html" class="active">Início Rápido</a>
-                <a href="./installation.html">Instalação</a>
-                <a href="./examples.html">Exemplos</a>
-                <a href="./architecture.html">Arquitetura</a>
-                <a href="./api.html">API Reference</a>
-                <a href="./license.html">Licenciamento</a>
-            </nav>
+            <h3>🚀 Getting Started</h3>
+            <div class="sidebar-section">
+                <h4>Quick Start</h4>
+                <ul>
+                    <li><a href="#prerequisites">Prerequisites</a></li>
+                    <li><a href="#installation">Installation</a></li>
+                    <li><a href="#first-project">First Project</a></li>
+                    <li><a href="#examples">Examples</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h4>Next Steps</h4>
+                <ul>
+                    <li><a href="./categories/index.html">Browse Categories</a></li>
+                    <li><a href="./examples.html">Code Examples</a></li>
+                    <li><a href="./architecture.html">Architecture</a></li>
+                </ul>
+            </div>
         </aside>
 
         <main class="docs-content">
-            <h1>🚀 Guia de Início Rápido</h1>
-            <p class="lead">Comece a usar Arxis Core em menos de 5 minutos</p>
+            <div class="page-header">
+                <h1>🚀 Getting Started with Avx</h1>
+                <p class="lead">Get up and running with Avx in less than 5 minutes</p>
+                <div class="badges">
+                    <span class="badge badge-success">Rust 1.70+</span>
+                    <span class="badge badge-info">Cross-Platform</span>
+                    <span class="badge badge-primary">Production Ready</span>
+                </div>
+            </div>
 
-            <section class="doc-section">
-                <h2>Instalação</h2>
-
-                <h3>Pré-requisitos</h3>
-                <ul>
-                    <li><strong>Rust</strong> 1.70 ou superior</li>
-                    <li><strong>Cargo</strong> (vem com Rust)</li>
-                    <li><strong>Git</strong> para clonar repositórios</li>
-                </ul>
-
-                <h3>Instalar Rust</h3>
-                <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
-
-                <h3>Adicionar Arxis ao Seu Projeto</h3>
-                <p>No seu <code>Cargo.toml</code>:</p>
-                <pre><code>[dependencies]
-avx-core = "0.1.0"
-avx-std = "0.1.0"
-avx-crypto = "0.1.0"</code></pre>
+            <section id="prerequisites" class="doc-section">
+                <h2>📋 Prerequisites</h2>
+                <p>Before you begin, ensure you have the following installed:</p>
+                
+                <div class="prereq-grid">
+                    <div class="prereq-card">
+                        <h3>🦀 Rust</h3>
+                        <p>Version 1.70 or higher</p>
+                        <a href="https://rustup.rs" target="_blank" class="btn btn-outline">Install Rust</a>
+                    </div>
+                    <div class="prereq-card">
+                        <h3>📦 Cargo</h3>
+                        <p>Comes with Rust</p>
+                        <code>cargo --version</code>
+                    </div>
+                    <div class="prereq-card">
+                        <h3>🔧 Git</h3>
+                        <p>For cloning repositories</p>
+                        <a href="https://git-scm.com" target="_blank" class="btn btn-outline">Install Git</a>
+                    </div>
+                </div>
             </section>
 
-            <section class="doc-section">
-                <h2>Primeiro Programa</h2>
+            <section id="installation" class="doc-section">
+                <h2>⚙️ Installation</h2>
+                
+                <h3>Install Rust</h3>
+                <p>If you haven't installed Rust yet:</p>
+                <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
+                
+                <h3>Create a New Project</h3>
+                <pre><code>cargo new my-avx-app
+cd my-avx-app</code></pre>
 
-                <p>Crie um novo projeto:</p>
-                <pre><code>cargo new my-arxis-app
-cd my-arxis-app</code></pre>
+                <h3>Add Avx Dependencies</h3>
+                <p>Edit your <code>Cargo.toml</code>:</p>
+                <pre><code>[dependencies]
+avx-core = "0.1.0"
+avx-crypto = "0.1.0"
+avx-http = "0.1.0"</code></pre>
+            </section>
 
-                <p>Edite <code>src/main.rs</code>:</p>
+            <section id="first-project" class="doc-section">
+                <h2>💻 Your First Avx Program</h2>
+
+                <p>Replace the contents of <code>src/main.rs</code>:</p>
                 <pre><code>use avx_core::prelude::*;
 
-fn main() {
-    println!("Bem-vindo ao Arxis Core! 🏛️");
+fn main() -> Result<()> {
+    println!("Welcome to Avx! 🚀");
+    
+    // Your code here
+    
+    Ok(())
 }</code></pre>
 
-                <p>Execute:</p>
+                <p>Run your program:</p>
                 <pre><code>cargo run</code></pre>
             </section>
 
-            <section class="doc-section">
-                <h2>Exemplos Rápidos</h2>
+            <section id="examples" class="doc-section">
+                <h2>📝 Quick Examples</h2>
 
-                <h3>Criptografia</h3>
-                <pre><code>use avx_crypto::{hash::Sha256, signature::Ed25519};
+                <div class="example-grid">
+                    <div class="example-card">
+                        <h3>🔐 Cryptography</h3>
+                        <pre><code>use avx_crypto::{Sha256, Ed25519};
 
-fn main() {
-    // Hash dados
-    let data = b"Hello, Arxis!";
-    let hash = Sha256::hash(data);
-    println!("SHA-256: {:?}", hash);
+// Hash data
+let hash = Sha256::hash(b"Hello, Avx!");
 
-    // Gerar par de chaves
-    let keypair = Ed25519::generate_keypair();
-    println!("Chave pública: {:?}", keypair.public());
-}</code></pre>
+// Digital signature
+let keypair = Ed25519::generate();
+let signature = keypair.sign(b"message");
+assert!(keypair.verify(b"message", &signature));</code></pre>
+                    </div>
 
-                <h3>Servidor HTTP</h3>
-                <pre><code>use avx_http::{Server, Request, Response, StatusCode};
+                    <div class="example-card">
+                        <h3>🌐 HTTP Server</h3>
+                        <pre><code>use avx_http::{Server, Router};
 
 #[tokio::main]
-async fn main() {
-    let server = Server::new("127.0.0.1:8080");
-
-    server.route("/", |req: Request| async {
-        Response::new(StatusCode::OK)
-            .body("Hello from Arxis!")
-    }).await;
-
-    println!("Servidor rodando em http://localhost:8080");
-    server.serve().await.unwrap();
+async fn main() -> Result<()> {
+    let app = Router::new()
+        .get("/", |_| async { "Hello, Avx!" });
+    
+    Server::bind("0.0.0.0:8080")
+        .serve(app)
+        .await
 }</code></pre>
+                    </div>
 
-                <h3>Operações com Tensores</h3>
-                <pre><code>use avx_tensor::Tensor;
+                    <div class="example-card">
+                        <h3>💾 Database</h3>
+                        <pre><code>use avx_db::{Database, query};
 
-fn main() {
-    // Criar tensores
-    let a = Tensor::from_slice(&[1.0, 2.0, 3.0], &[3]);
-    let b = Tensor::from_slice(&[4.0, 5.0, 6.0], &[3]);
+let db = Database::connect("postgres://localhost").await?;
 
-    // Operações
-    let c = &a + &b;
-    let dot = a.dot(&b);
+let users = query("SELECT * FROM users")
+    .fetch_all::<User>(&db)
+    .await?;</code></pre>
+                    </div>
 
-    println!("Soma: {:?}", c);
-    println!("Produto escalar: {}", dot);
-}</code></pre>
+                    <div class="example-card">
+                        <h3>🎮 GPU Computing</h3>
+                        <pre><code>use avx_gpu::{Device, Kernel};
+
+let device = Device::cuda(0)?;
+let kernel = Kernel::from_source(&device, code)?;
+kernel.launch(grid, block, &args)?;</code></pre>
+                    </div>
+                </div>
             </section>
 
-            <section class="doc-section">
-                <h2>Próximos Passos</h2>
-
-                <div class="grid-2" style="margin-top: 2rem;">
-                    <a href="./packages/index.html" class="card-link">
-                        <h4>📦 Explorar Pacotes</h4>
-                        <p>Descubra os 120+ pacotes disponíveis</p>
+            <section class="next-steps-section">
+                <h2>🎯 Next Steps</h2>
+                <p>Now that you have Avx installed, explore these resources:</p>
+                
+                <div class="steps-grid">
+                    <a href="./categories/index.html" class="step-card">
+                        <span class="step-icon">📚</span>
+                        <h3>Browse Categories</h3>
+                        <p>Explore all 17 categories and 120+ packages</p>
                     </a>
-
-                    <a href="./examples.html" class="card-link">
-                        <h4>💡 Ver Exemplos</h4>
-                        <p>Exemplos completos e tutoriais</p>
+                    
+                    <a href="./examples.html" class="step-card">
+                        <span class="step-icon">💡</span>
+                        <h3>Code Examples</h3>
+                        <p>Production-ready examples and tutorials</p>
                     </a>
-
-                    <a href="./architecture.html" class="card-link">
-                        <h4>🏗️ Arquitetura</h4>
-                        <p>Entenda a estrutura do sistema</p>
+                    
+                    <a href="./architecture.html" class="step-card">
+                        <span class="step-icon">🏗️</span>
+                        <h3>Architecture Guide</h3>
+                        <p>Learn design patterns and best practices</p>
                     </a>
-
-                    <a href="./api.html" class="card-link">
-                        <h4>📚 API Reference</h4>
-                        <p>Documentação completa da API</p>
+                    
+                    <a href="https://github.com/avilaops/arxis-core" class="step-card" target="_blank">
+                        <span class="step-icon">🔗</span>
+                        <h3>GitHub Repository</h3>
+                        <p>View source code and contribute</p>
                     </a>
                 </div>
             </section>
 
-            <section class="doc-section">
-                <div class="alert alert-info">
-                    <h4>💡 Precisa de Ajuda?</h4>
-                    <p>Confira nossa <a href="https://github.com/avilaops/arxis-core/issues">página de issues no GitHub</a> ou envie um email para <a href="mailto:nicolas@avila.inc">nicolas@avila.inc</a></p>
+            <section class="help-section">
+                <h2>❓ Need Help?</h2>
+                <div class="help-grid">
+                    <div class="help-card">
+                        <h3>📖 Documentation</h3>
+                        <p>Browse comprehensive docs for all packages</p>
+                    </div>
+                    <div class="help-card">
+                        <h3>💬 Community</h3>
+                        <p>Join our Discord for support and discussions</p>
+                    </div>
+                    <div class="help-card">
+                        <h3>🐛 Issues</h3>
+                        <p>Report bugs or request features on GitHub</p>
+                    </div>
                 </div>
             </section>
-        </main>
+        </article>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="copyright">
-                <p><strong>Copyright © 2025 Nícolas Ávila - Todos os Direitos Reservados</strong></p>
-                <p>🇧🇷 Desenvolvido com 💙 no Brasil</p>
-            </div>
-        </div>
-    </footer>
+    <style>
+        .prereq-grid, .example-grid, .steps-grid, .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .prereq-card, .example-card, .step-card, .help-card {
+            background: linear-gradient(135deg, #1a1d2e 0%, #0f1117 100%);
+            border: 1px solid rgba(255, 140, 0, 0.2);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .prereq-card:hover, .example-card:hover, .step-card:hover, .help-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(255, 140, 0, 0.1);
+        }
+
+        .prereq-card h3, .example-card h3, .step-card h3, .help-card h3 {
+            color: var(--primary);
+            margin-top: 0;
+            font-size: 1.2rem;
+        }
+
+        .example-card pre {
+            background: #000;
+            border-radius: 4px;
+            padding: 1rem;
+            overflow-x: auto;
+            font-size: 0.85rem;
+        }
+
+        .next-steps-section, .help-section {
+            margin: 3rem 0;
+            padding: 2rem;
+            background: rgba(255, 140, 0, 0.03);
+            border-left: 4px solid var(--primary);
+            border-radius: 8px;
+        }
+
+        .step-card {
+            text-decoration: none;
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-card p, .help-card p {
+            color: var(--text-muted);
+            margin: 0.5rem 0 0;
+        }
+
+        .badge-container {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .badge {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: #000;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+    </style>
 
     <script src="./assets/js/main.js"></script>
 </body>
