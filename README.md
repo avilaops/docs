@@ -1,142 +1,124 @@
-# Arxis Documentation Site
+# 📚 Documentação Oficial Arxis Core
 
-Documentation site for Arxis Core built with [Docusaurus](https://docusaurus.io/).
+Portal de documentação completo do ecossistema Arxis Core, desenvolvido internamente pela Avx.
 
-## 🌐 Live Site
+## 🌐 Acesso
 
-Visit the live documentation at: **https://docs.avila.inc**
+- **Site**: https://docs.avila.inc
+- **Repositório**: https://github.com/avilaops/docs
 
-## 🚀 Development
+## 🏗️ Sobre o Portal
 
-### Prerequisites
+Este portal foi inteiramente desenvolvido pela equipe Avx usando tecnologia proprietária, apresentando:
 
-- Node.js 18+
-- npm or yarn
+- **120+ Pacotes Documentados** organizados em 18 categorias
+- **Sistema de Navegação Inteligente** com busca e filtros
+- **Exemplos de Código Interativos** para cada pacote
+- **Guias Detalhados** de instalação e uso
+- **Arquitetura Completa** do ecossistema Arxis
 
-### Installation
-
-```bash
-npm install
-```
-
-### Local Development
-
-```bash
-npm start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-### Build
-
-```bash
-npm run build
-```
-
-This command generates static content into the `build` directory that can be served using any static hosting service.
-
-### Deployment
-
-```bash
-npm run deploy
-```
-
-Deploys the site to GitHub Pages.
-
-## 📁 Structure
+## 📁 Estrutura
 
 ```
 docs/
-├── blog/                  # Blog posts
-├── docs/                  # Documentation pages
-│   ├── intro.md          # Introduction
-│   ├── getting-started/  # Getting started guides
-│   ├── architecture/     # Architecture documentation
-│   └── packages/         # Package-specific docs
-├── src/
-│   ├── components/       # React components
-│   ├── css/             # Custom CSS
-│   └── pages/           # Custom pages
-├── static/              # Static assets
-│   └── img/            # Images
-├── docusaurus.config.ts # Site configuration
-├── sidebars.ts          # Sidebar structure
-└── package.json         # Dependencies
+├── index.html              # Página principal
+├── getting-started.html    # Guia de início rápido
+├── packages/               # Documentação dos pacotes
+│   ├── index.html         # Índice de todos os pacotes
+│   ├── crypto.html        # Criptografia & Segurança
+│   ├── network.html       # Rede & Comunicação
+│   ├── distributed.html   # Sistemas Distribuídos
+│   └── ...                # Outras categorias
+├── assets/
+│   ├── css/               # Estilos visuais Avx
+│   └── js/                # Funcionalidades interativas
+└── api/                   # Referência completa da API
 ```
 
-## 📝 Writing Documentation
+## 🎨 Design Avx
 
-### Adding a New Page
+O portal utiliza a identidade visual proprietária Avx:
 
-1. Create a markdown file in the appropriate directory under `docs/`
-2. Add frontmatter:
+- **Esquema de Cores**: Gradiente laranja (#ff8c00) → amarelo (#ffd700)
+- **Tema Escuro**: Otimizado para leitura prolongada
+- **Responsivo**: Funciona em desktop, tablet e mobile
+- **Animações Suaves**: Transições e efeitos desenvolvidos internamente
 
-```markdown
----
-sidebar_position: 1
----
+## 📦 Categorias de Documentação
 
-# Page Title
+### 🔐 Crypto & Security (15 pacotes)
+Criptografia avançada, post-quantum, ZKP e MPC
 
-Content here...
+### 🌐 Network & Communication (13 pacotes)
+HTTP, gRPC, QUIC, WebSocket, TCP/UDP
+
+### 🔄 Distributed Systems (13 pacotes)
+Raft consensus, gossip protocols, coordenação distribuída
+
+### 💾 Database (9 pacotes)
+Engines de alta performance, SQL, otimizadores
+
+### 🤖 AI & Machine Learning (9 pacotes)
+Redes neurais, LLMs, visão computacional
+
+### 🎨 Math & Scientific Computing (16 pacotes)
+Tensores, álgebra linear, estatística
+
+### 🎮 GPU & Graphics (14 pacotes)
+CUDA, OpenCL, rendering, shaders
+
+### 🌍 GIS & Geospatial (10 pacotes)
+Sistemas geográficos e análise espacial
+
+### E mais...
+Web, Email, Observability, CLI Tools, Authentication
+
+## 📖 Conteúdo Disponível
+
+- ✅ **Guias de Instalação** - Para todos os ambientes
+- ✅ **Quick Start** - Comece em 5 minutos
+- ✅ **Exemplos Práticos** - Código real e funcional
+- ✅ **API Reference** - Documentação completa
+- ✅ **Arquitetura** - Design e estrutura do sistema
+- ✅ **Benchmarks** - Performance e otimizações
+- ✅ **Casos de Uso** - Aplicações reais
+
+## 🚀 Desenvolvimento Local
+
+Para trabalhar na documentação localmente:
+
+```bash
+# Clone o repositório
+git clone https://github.com/avilaops/docs.git
+cd docs
+
+# Abra no navegador
+# Utilize um servidor web local para visualizar
 ```
 
-3. The page will automatically appear in the sidebar
+## 🔄 Atualizações
 
-### Adding a Blog Post
+O portal é atualizado continuamente pela equipe Avx com:
 
-1. Create a markdown file in `blog/` with date prefix: `YYYY-MM-DD-title.md`
-2. Add frontmatter:
+- Novos pacotes e funcionalidades
+- Exemplos adicionais
+- Melhorias de performance
+- Correções e otimizações
 
-```markdown
----
-slug: url-slug
-title: Post Title
-authors: [nicolas]
-tags: [tag1, tag2]
----
+## 🔐 Licenciamento
 
-Content here...
-```
+**Software Proprietário** - Copyright © 2025 Nícolas Ávila
 
-## 🎨 Customization
+Todo o conteúdo e código deste portal são propriedade exclusiva da Avx. 
+Consulte [LICENSE-PROPRIETARY.md](../LICENSE-PROPRIETARY.md) para detalhes.
 
-- **Theme**: Edit `src/css/custom.css`
-- **Logo**: Replace files in `static/img/`
-- **Config**: Modify `docusaurus.config.ts`
-- **Sidebar**: Update `sidebars.ts`
-
-## 📦 Categories
-
-Documentation is organized into these main categories:
-
-- **Getting Started**: Installation and quick start
-- **Architecture**: System design and structure
-- **Packages**: Individual package documentation
-  - Crypto & Security
-  - Network & Communication
-  - Distributed Systems
-  - Database
-  - AI & Machine Learning
-  - Math & Scientific Computing
-  - And more...
-
-## 🔍 Search
-
-The site uses Algolia DocSearch for full-text search. Configure in `docusaurus.config.ts`.
-
-## 📄 License
-
-Copyright © 2025 Nícolas Ávila. All rights reserved.
-
-The documentation is proprietary. See the main [LICENSE](../LICENSE-PROPRIETARY.md) for details.
-
-## 🤝 Contributing
-
-Contributions to documentation are welcome! See [CONTRIBUTING.md](../CONTRIBUTING.md).
-
-## 📧 Contact
+## 📧 Suporte
 
 - **Website**: https://avilaops.com
 - **Email**: nicolas@avila.inc
-- **GitHub**: https://github.com/avilaops/arxis-core
+- **Código-base**: https://github.com/avilaops/arxis-core
+- **Documentação**: https://docs.avila.inc
+
+---
+
+**🇧🇷 Desenvolvido com 💙 no Brasil pela equipe Avx**
