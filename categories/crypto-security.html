@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crypto Security - Avx Docs</title>
+    <title>Cryptography & Security - Avx Docs</title>
+    <meta name="description" content="Enterprise-grade cryptographic primitives: post-quantum, ZKP, MPC, threshold cryptography and more">
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/docs.css">
     <link rel="stylesheet" href="../assets/css/modules.css">
@@ -14,7 +15,7 @@
             <a href="../index.html" class="logo">Avx <span class="gradient-text">Docs</span></a>
             <div class="nav-links">
                 <a href="../getting-started.html">Getting Started</a>
-                <a href="../packages/index.html">Packages</a>
+                <a href="./index.html">Categories</a>
                 <a href="../examples.html">Examples</a>
                 <a href="../architecture.html">Architecture</a>
                 <a href="https://github.com/avilaops/arxis-core" target="_blank">GitHub</a>
@@ -24,162 +25,393 @@
 
     <main class="docs-container">
         <aside class="docs-sidebar">
-            <h3>Crypto Security</h3>
-            <ul>
-                <li><a href="#assets">assets</a></li>
-                <li><a href="#avx-aead">avx-aead</a></li>
-                <li><a href="#avx-crypto">avx-crypto</a></li>
-                <li><a href="#avx-hash">avx-hash</a></li>
-                <li><a href="#avx-kdf">avx-kdf</a></li>
-                <li><a href="#avx-mac">avx-mac</a></li>
-                <li><a href="#avx-mpc">avx-mpc</a></li>
-                <li><a href="#avx-onion-routing">avx-onion-routing</a></li>
-                <li><a href="#avx-pki">avx-pki</a></li>
-                <li><a href="#avx-post-quantum">avx-post-quantum</a></li>
-                <li><a href="#avx-quantum">avx-quantum</a></li>
-                <li><a href="#avx-secrets">avx-secrets</a></li>
-                <li><a href="#avx-signature">avx-signature</a></li>
-                <li><a href="#avx-stealth">avx-stealth</a></li>
-                <li><a href="#avx-threshold">avx-threshold</a></li>
-                <li><a href="#avx-zkp">avx-zkp</a></li>
-
-            </ul>
+            <h3>🔐 Crypto & Security</h3>
+            <div class="sidebar-section">
+                <h4>Core Cryptography</h4>
+                <ul>
+                    <li><a href="#avx-crypto">avx-crypto</a></li>
+                    <li><a href="#avx-hash">avx-hash</a></li>
+                    <li><a href="#avx-aead">avx-aead</a></li>
+                    <li><a href="#avx-mac">avx-mac</a></li>
+                    <li><a href="#avx-kdf">avx-kdf</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h4>Advanced Crypto</h4>
+                <ul>
+                    <li><a href="#avx-post-quantum">avx-post-quantum</a></li>
+                    <li><a href="#avx-quantum">avx-quantum</a></li>
+                    <li><a href="#avx-zkp">avx-zkp</a></li>
+                    <li><a href="#avx-mpc">avx-mpc</a></li>
+                    <li><a href="#avx-threshold">avx-threshold</a></li>
+                </ul>
+            </div>
+            <div class="sidebar-section">
+                <h4>Security & Privacy</h4>
+                <ul>
+                    <li><a href="#avx-signature">avx-signature</a></li>
+                    <li><a href="#avx-pki">avx-pki</a></li>
+                    <li><a href="#avx-secrets">avx-secrets</a></li>
+                    <li><a href="#avx-stealth">avx-stealth</a></li>
+                    <li><a href="#avx-onion-routing">avx-onion-routing</a></li>
+                </ul>
+            </div>
         </aside>
 
         <article class="docs-content">
-            <h1>Crypto Security</h1>
-            <p class="lead">Cryptographic primitives and security tools for data protection</p>
-
-            <div class="module-grid">
-                <div class="module-card" id="assets">
-                    <h3>assets</h3>
-                    <p>Documentation for assets</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/assets" target="_blank">Source Code</a>
-                    </div>
+            <div class="page-header">
+                <h1>🔐 Cryptography & Security</h1>
+                <p class="lead">Enterprise-grade cryptographic primitives and security protocols for building secure, privacy-preserving applications</p>
+                <div class="badges">
+                    <span class="badge badge-primary">15 Packages</span>
+                    <span class="badge badge-success">Production Ready</span>
+                    <span class="badge badge-info">Post-Quantum</span>
+                    <span class="badge badge-warning">Zero-Knowledge</span>
                 </div>
-                <div class="module-card" id="avx-aead">
-                    <h3>avx-aead</h3>
-                    <p>Documentation for avx-aead</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-aead" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-crypto">
-                    <h3>avx-crypto</h3>
-                    <p>Documentation for avx-crypto</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-crypto" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-hash">
-                    <h3>avx-hash</h3>
-                    <p>Documentation for avx-hash</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-hash" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-kdf">
-                    <h3>avx-kdf</h3>
-                    <p>Documentation for avx-kdf</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-kdf" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-mac">
-                    <h3>avx-mac</h3>
-                    <p>Documentation for avx-mac</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-mac" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-mpc">
-                    <h3>avx-mpc</h3>
-                    <p>Documentation for avx-mpc</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-mpc" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-onion-routing">
-                    <h3>avx-onion-routing</h3>
-                    <p>Documentation for avx-onion-routing</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-onion-routing" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-pki">
-                    <h3>avx-pki</h3>
-                    <p>Documentation for avx-pki</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-pki" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-post-quantum">
-                    <h3>avx-post-quantum</h3>
-                    <p>Documentation for avx-post-quantum</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-post-quantum" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-quantum">
-                    <h3>avx-quantum</h3>
-                    <p>Documentation for avx-quantum</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-quantum" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-secrets">
-                    <h3>avx-secrets</h3>
-                    <p>Documentation for avx-secrets</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-secrets" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-signature">
-                    <h3>avx-signature</h3>
-                    <p>Documentation for avx-signature</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-signature" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-stealth">
-                    <h3>avx-stealth</h3>
-                    <p>Documentation for avx-stealth</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-stealth" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-threshold">
-                    <h3>avx-threshold</h3>
-                    <p>Documentation for avx-threshold</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-threshold" target="_blank">Source Code</a>
-                    </div>
-                </div>
-                <div class="module-card" id="avx-zkp">
-                    <h3>avx-zkp</h3>
-                    <p>Documentation for avx-zkp</p>
-                    <div class="module-links">
-                        <a href="https://github.com/avilaops/arxis-core/tree/main/avx-zkp" target="_blank">Source Code</a>
-                    </div>
-                </div>
-
             </div>
+
+            <section class="overview-section">
+                <h2>Overview</h2>
+                <p>The Avx cryptography suite provides a comprehensive collection of modern cryptographic primitives and security protocols. From basic symmetric encryption to cutting-edge post-quantum algorithms and zero-knowledge proofs, these packages are designed for high-performance, memory-safe implementations in Rust.</p>
+                
+                <div class="feature-highlights">
+                    <div class="highlight-card">
+                        <span class="highlight-icon">⚡</span>
+                        <h3>High Performance</h3>
+                        <p>SIMD-optimized implementations with constant-time operations</p>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-icon">🔒</span>
+                        <h3>Side-Channel Resistant</h3>
+                        <p>Protected against timing attacks and cache-timing vulnerabilities</p>
+                    </div>
+                    <div class="highlight-card">
+                        <span class="highlight-icon">🛡️</span>
+                        <h3>Post-Quantum Ready</h3>
+                        <p>NIST-approved algorithms for quantum-resistant security</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="packages-section">
+                <h2>Core Cryptography</h2>
+                <p>Foundation cryptographic primitives for everyday encryption needs</p>
+
+                <div class="module-card" id="avx-crypto">
+                    <div class="module-header">
+                        <h3>🔐 avx-crypto</h3>
+                        <span class="badge badge-primary">Core</span>
+                    </div>
+                    <p>Comprehensive cryptographic library with symmetric/asymmetric encryption, modern ciphers (AES-GCM, ChaCha20-Poly1305), and key exchange protocols (ECDH, X25519). The foundation for all cryptographic operations.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">AES-256</span>
+                        <span class="feature-tag">ChaCha20</span>
+                        <span class="feature-tag">ECDH</span>
+                        <span class="feature-tag">X25519</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-crypto/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-crypto" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-hash">
+                    <div class="module-header">
+                        <h3>🔑 avx-hash</h3>
+                        <span class="badge badge-primary">Core</span>
+                    </div>
+                    <p>High-performance cryptographic hash functions including SHA-2, SHA-3, BLAKE2, BLAKE3, and specialized hashes. Optimized with SIMD instructions for maximum throughput.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">SHA-256/512</span>
+                        <span class="feature-tag">SHA-3</span>
+                        <span class="feature-tag">BLAKE2/3</span>
+                        <span class="feature-tag">SIMD</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-hash/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-hash" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-aead">
+                    <div class="module-header">
+                        <h3>🛡️ avx-aead</h3>
+                        <span class="badge badge-primary">Core</span>
+                    </div>
+                    <p>Authenticated Encryption with Associated Data (AEAD) ciphers providing both confidentiality and authenticity. Includes AES-GCM, ChaCha20-Poly1305, and AES-GCM-SIV implementations.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">AES-GCM</span>
+                        <span class="feature-tag">ChaCha20-Poly1305</span>
+                        <span class="feature-tag">Authenticated</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-aead/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-aead" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-mac">
+                    <div class="module-header">
+                        <h3>✅ avx-mac</h3>
+                        <span class="badge badge-primary">Core</span>
+                    </div>
+                    <p>Message Authentication Codes (MAC) for verifying data integrity and authenticity. Implements HMAC, CMAC, Poly1305, and BLAKE3-MAC with constant-time verification.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">HMAC</span>
+                        <span class="feature-tag">CMAC</span>
+                        <span class="feature-tag">Poly1305</span>
+                        <span class="feature-tag">Constant-time</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-mac/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-mac" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-kdf">
+                    <div class="module-header">
+                        <h3>🔀 avx-kdf</h3>
+                        <span class="badge badge-primary">Core</span>
+                    </div>
+                    <p>Key Derivation Functions for generating cryptographic keys from passwords and secrets. Includes PBKDF2, Argon2, HKDF, and scrypt with memory-hard algorithms for password hashing.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">PBKDF2</span>
+                        <span class="feature-tag">Argon2</span>
+                        <span class="feature-tag">HKDF</span>
+                        <span class="feature-tag">scrypt</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-kdf/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-kdf" target="_blank">Source Code</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="packages-section">
+                <h2>Advanced Cryptography</h2>
+                <p>Cutting-edge cryptographic protocols for next-generation security</p>
+
+                <div class="module-card" id="avx-post-quantum">
+                    <div class="module-header">
+                        <h3>🌌 avx-post-quantum</h3>
+                        <span class="badge badge-info">Post-Quantum</span>
+                        <span class="badge badge-success">NIST</span>
+                    </div>
+                    <p>Post-quantum cryptography algorithms resistant to quantum computer attacks. Implements NIST-approved algorithms: CRYSTALS-Kyber, CRYSTALS-Dilithium, SPHINCS+, and Falcon for future-proof security.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">Kyber</span>
+                        <span class="feature-tag">Dilithium</span>
+                        <span class="feature-tag">SPHINCS+</span>
+                        <span class="feature-tag">Quantum-Safe</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-post-quantum/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-post-quantum" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-quantum">
+                    <div class="module-header">
+                        <h3>⚛️ avx-quantum</h3>
+                        <span class="badge badge-info">Experimental</span>
+                    </div>
+                    <p>Quantum cryptography protocols including Quantum Key Distribution (QKD), quantum-resistant primitives, and hybrid classical-quantum security schemes for the quantum era.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">QKD</span>
+                        <span class="feature-tag">BB84</span>
+                        <span class="feature-tag">Hybrid</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-quantum/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-quantum" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-zkp">
+                    <div class="module-header">
+                        <h3>🎭 avx-zkp</h3>
+                        <span class="badge badge-warning">Zero-Knowledge</span>
+                    </div>
+                    <p>Zero-Knowledge Proof systems enabling privacy-preserving authentication and verification. Implements zk-SNARKs, zk-STARKs, Bulletproofs, and Groth16 for blockchain and privacy applications.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">zk-SNARKs</span>
+                        <span class="feature-tag">zk-STARKs</span>
+                        <span class="feature-tag">Bulletproofs</span>
+                        <span class="feature-tag">Privacy</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-zkp/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-zkp" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-mpc">
+                    <div class="module-header">
+                        <h3>🤝 avx-mpc</h3>
+                        <span class="badge badge-warning">Multi-Party</span>
+                    </div>
+                    <p>Secure Multi-Party Computation protocols for collaborative computation without revealing private inputs. Includes Shamir's Secret Sharing, garbled circuits, and oblivious transfer primitives.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">Secret Sharing</span>
+                        <span class="feature-tag">Garbled Circuits</span>
+                        <span class="feature-tag">Secure Computation</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-mpc/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-mpc" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-threshold">
+                    <div class="module-header">
+                        <h3>🔢 avx-threshold</h3>
+                        <span class="badge badge-warning">Distributed</span>
+                    </div>
+                    <p>Threshold cryptography for distributed key management and signatures. Enables (t,n)-threshold schemes where t parties out of n are required for cryptographic operations.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">(t,n)-Threshold</span>
+                        <span class="feature-tag">TSS</span>
+                        <span class="feature-tag">Distributed Keys</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-threshold/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-threshold" target="_blank">Source Code</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="packages-section">
+                <h2>Security & Privacy Protocols</h2>
+                <p>Identity, access control, and anonymity solutions</p>
+
+                <div class="module-card" id="avx-signature">
+                    <div class="module-header">
+                        <h3>✍️ avx-signature</h3>
+                        <span class="badge badge-success">Production</span>
+                    </div>
+                    <p>Digital signature algorithms for authentication and non-repudiation. Supports ECDSA, EdDSA (Ed25519, Ed448), RSA-PSS, and BLS signatures with batch verification.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">ECDSA</span>
+                        <span class="feature-tag">Ed25519</span>
+                        <span class="feature-tag">BLS</span>
+                        <span class="feature-tag">Batch Verify</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-signature/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-signature" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-pki">
+                    <div class="module-header">
+                        <h3>📜 avx-pki</h3>
+                        <span class="badge badge-success">Production</span>
+                    </div>
+                    <p>Public Key Infrastructure for certificate management, X.509 certificates, certificate chains, CRL/OCSP verification, and CA operations for enterprise PKI deployments.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">X.509</span>
+                        <span class="feature-tag">CA</span>
+                        <span class="feature-tag">OCSP</span>
+                        <span class="feature-tag">Chain Verify</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-pki/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-pki" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-secrets">
+                    <div class="module-header">
+                        <h3>🗝️ avx-secrets</h3>
+                        <span class="badge badge-success">Production</span>
+                    </div>
+                    <p>Secrets management and secure storage for API keys, passwords, tokens, and credentials. Includes encrypted vaults, key rotation, access control, and audit logging.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">Vault</span>
+                        <span class="feature-tag">Key Rotation</span>
+                        <span class="feature-tag">Access Control</span>
+                        <span class="feature-tag">Audit</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-secrets/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-secrets" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-stealth">
+                    <div class="module-header">
+                        <h3>👻 avx-stealth</h3>
+                        <span class="badge badge-info">Privacy</span>
+                    </div>
+                    <p>Stealth addresses and privacy-preserving payment protocols. Enables anonymous transactions with one-time addresses, view keys, and spend keys for blockchain privacy.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">Stealth Addresses</span>
+                        <span class="feature-tag">View Keys</span>
+                        <span class="feature-tag">Privacy</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-stealth/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-stealth" target="_blank">Source Code</a>
+                    </div>
+                </div>
+
+                <div class="module-card" id="avx-onion-routing">
+                    <div class="module-header">
+                        <h3>🧅 avx-onion-routing</h3>
+                        <span class="badge badge-info">Anonymity</span>
+                    </div>
+                    <p>Onion routing protocol for anonymous communication. Multi-layer encryption, circuit building, relay selection, and Tor-compatible implementations for network anonymity.</p>
+                    <div class="module-features">
+                        <span class="feature-tag">Tor Protocol</span>
+                        <span class="feature-tag">Multi-hop</span>
+                        <span class="feature-tag">Anonymous</span>
+                    </div>
+                    <div class="module-links">
+                        <a href="../integrated-modules/crypto-security/avx-onion-routing/index.html">Documentation</a>
+                        <a href="https://github.com/avilaops/arxis-core/tree/main/categories/crypto-security/avx-onion-routing" target="_blank">Source Code</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="quick-start-section">
+                <h2>Quick Start Example</h2>
+                <p>Get started with Avx cryptography in minutes:</p>
+                <pre><code>use avx_crypto::{Cipher, KeyPair};
+use avx_hash::Hasher;
+use avx_aead::AesGcm;
+
+// Generate a key pair
+let keypair = KeyPair::generate()?;
+
+// Hash some data
+let hash = Hasher::sha3_256(b"Hello, Avx!");
+
+// Encrypt with AEAD
+let cipher = AesGcm::new(&key)?;
+let ciphertext = cipher.encrypt(b"secret data", &nonce, &aad)?;
+
+// Verify and decrypt
+let plaintext = cipher.decrypt(&ciphertext, &nonce, &aad)?;</code></pre>
+            </section>
 
             <section class="related-docs">
                 <h2>Related Documentation</h2>
                 <div class="doc-cards">
                     <a href="../getting-started.html" class="doc-card">
-                        <h3>Getting Started</h3>
-                        <p>Quick start guide for new users</p>
+                        <h3>🚀 Getting Started</h3>
+                        <p>Quick start guide with crypto examples</p>
                     </a>
                     <a href="../examples.html" class="doc-card">
-                        <h3>Examples</h3>
-                        <p>Code examples and tutorials</p>
+                        <h3>💡 Examples</h3>
+                        <p>Complete code examples and tutorials</p>
                     </a>
-                    <a href="../packages/index.html" class="doc-card">
-                        <h3>All Packages</h3>
-                        <p>Complete package index</p>
+                    <a href="./index.html" class="doc-card">
+                        <h3>📚 All Categories</h3>
+                        <p>Browse all documentation categories</p>
+                    </a>
+                    <a href="./network.html" class="doc-card">
+                        <h3>🌐 Network</h3>
+                        <p>TLS, secure protocols and communication</p>
                     </a>
                 </div>
             </section>
@@ -191,5 +423,176 @@
             <p>&copy; 2025 Avila Inc. All rights reserved.</p>
         </div>
     </footer>
+
+    <style>
+        .page-header {
+            margin-bottom: 3rem;
+        }
+
+        .badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .badge-primary { background: rgba(255, 140, 0, 0.2); color: var(--primary); }
+        .badge-success { background: rgba(0, 255, 100, 0.2); color: #00ff64; }
+        .badge-info { background: rgba(0, 200, 255, 0.2); color: #00c8ff; }
+        .badge-warning { background: rgba(255, 215, 0, 0.2); color: #ffd700; }
+
+        .overview-section {
+            background: var(--darker);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .highlight-card {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--dark);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .highlight-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .highlight-card p {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .packages-section {
+            margin-bottom: 4rem;
+        }
+
+        .packages-section > h2 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        .packages-section > p {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        .module-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .module-header h3 {
+            margin: 0;
+            flex: 1;
+        }
+
+        .module-features {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+        }
+
+        .feature-tag {
+            padding: 0.25rem 0.6rem;
+            background: rgba(255, 140, 0, 0.1);
+            border: 1px solid rgba(255, 140, 0, 0.3);
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--primary);
+        }
+
+        .quick-start-section {
+            background: var(--darker);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .quick-start-section pre {
+            background: var(--dark);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1.5rem;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        .quick-start-section code {
+            color: var(--text);
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .sidebar-section {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-section h4 {
+            color: var(--primary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.8rem;
+        }
+
+        .sidebar-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar-section a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .sidebar-section a:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .feature-highlights {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </body>
 </html>
