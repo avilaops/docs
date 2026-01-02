@@ -30,7 +30,7 @@ let auth_url = oauth.authorize_url(scopes);
 let token = oauth.exchange_code(code).await?;
 '@
     }
-    
+
     'distributed' = @{
         Title = 'Distributed Systems'
         Icon = '🔄'
@@ -54,7 +54,7 @@ let cluster = GossipCluster::new(bind_addr)?;
 cluster.join(seed_nodes).await?;
 '@
     }
-    
+
     'network' = @{
         Title = 'Network & Communication'
         Icon = '🌐'
@@ -81,7 +81,7 @@ let svc = ServiceBuilder::new()
     .serve(addr).await?;
 '@
     }
-    
+
     'database' = @{
         Title = 'Database & Storage'
         Icon = '💾'
@@ -108,7 +108,7 @@ let results = db.query("SELECT * FROM users WHERE age > ?")
 let cache = Cache::with_capacity(1000);
 '@
     }
-    
+
     'email' = @{
         Title = 'Email & Messaging'
         Icon = '📧'
@@ -133,7 +133,7 @@ let client = SmtpClient::new("smtp.gmail.com")?;
 client.send(email).await?;
 '@
     }
-    
+
     'cloud' = @{
         Title = 'Cloud Infrastructure'
         Icon = '☁️'
@@ -157,7 +157,7 @@ let cluster = Cluster::connect().await?;
 cluster.deploy(config).await?;
 '@
     }
-    
+
     'architecture' = @{
         Title = 'Architecture & Design'
         Icon = '🏗️'
@@ -184,7 +184,7 @@ let workflow = Orchestrator::new()
     .step(notify);
 '@
     }
-    
+
     'observability' = @{
         Title = 'Observability & Monitoring'
         Icon = '📊'
@@ -208,7 +208,7 @@ let span = Span::new("process_request");
 span.set_attribute("user_id", user_id);
 '@
     }
-    
+
     'gpu' = @{
         Title = 'GPU Computing'
         Icon = '🎮'
@@ -231,7 +231,7 @@ kernel.launch(grid, block, &[&input, &output])?;
 device.sync()?;
 '@
     }
-    
+
     'rendering' = @{
         Title = 'Rendering & Graphics'
         Icon = '🎨'
@@ -257,7 +257,7 @@ let scene = Scene::new()
 renderer.render(&scene)?;
 '@
     }
-    
+
     'visualization' = @{
         Title = 'Data Visualization'
         Icon = '📊'
@@ -282,7 +282,7 @@ chart.add_series(series);
 chart.render("output.png")?;
 '@
     }
-    
+
     'math' = @{
         Title = 'Mathematics & Computing'
         Icon = '🔢'
@@ -307,7 +307,7 @@ let big = BigInt::from(123456789);
 let result = big.pow(1000);
 '@
     }
-    
+
     'web' = @{
         Title = 'Web Development'
         Icon = '🌐'
@@ -330,7 +330,7 @@ let app = Router::new()
 app.listen("0.0.0.0:8080").await?;
 '@
     }
-    
+
     'core-utils' = @{
         Title = 'Core Utilities'
         Icon = '⚙️'
@@ -355,7 +355,7 @@ let mut map = HashMap::new();
 map.insert("key", "value");
 '@
     }
-    
+
     'cli' = @{
         Title = 'CLI Tools'
         Icon = '💻'
@@ -429,7 +429,7 @@ $htmlTemplate = @'
             <section class="overview-section">
                 <h2>Overview</h2>
                 <p>{OVERVIEW_TEXT}</p>
-                
+
                 <div class="feature-highlights">
 {HIGHLIGHTS_HTML}
                 </div>
@@ -513,20 +513,20 @@ Write-Host "Gerando páginas melhoradas...\n" -ForegroundColor Green
 foreach ($cat in $categoryData.Keys) {
     $data = $categoryData[$cat]
     $categoryPath = Join-Path $integratedPath $cat
-    
+
     if (-not (Test-Path $categoryPath)) {
         Write-Host "  ⊘ Skipping $cat (no integrated modules)" -ForegroundColor Yellow
         continue
     }
-    
+
     Write-Host "Processando: $cat" -ForegroundColor Cyan
-    
+
     # Gerar badges
     $badgesHtml = ""
     foreach ($badge in $data.Badges) {
         $badgesHtml += "                    <span class=`"badge badge-primary`">$badge</span>`n"
     }
-    
+
     # Gerar highlights
     $highlightsHtml = ""
     foreach ($highlight in $data.Highlights) {
@@ -539,16 +539,16 @@ foreach ($cat in $categoryData.Keys) {
 
 "@
     }
-    
+
     # Buscar módulos
     $modules = Get-ChildItem -Path $categoryPath -Directory -ErrorAction SilentlyContinue
     $sidebarLinks = ""
     $modulesHtml = ""
-    
+
     foreach ($module in $modules) {
         $moduleName = $module.Name
         $sidebarLinks += "                    <li><a href=`"#$moduleName`">$moduleName</a></li>`n"
-        
+
         $modulesHtml += @"
                 <div class="module-card" id="$moduleName">
                     <div class="module-header">
@@ -563,7 +563,7 @@ foreach ($cat in $categoryData.Keys) {
 
 "@
     }
-    
+
     # Gerar HTML
     $html = $htmlTemplate.Replace('{TITLE}', $data.Title)
     $html = $html.Replace('{ICON}', $data.Icon)
@@ -574,11 +574,11 @@ foreach ($cat in $categoryData.Keys) {
     $html = $html.Replace('{SIDEBAR_LINKS}', $sidebarLinks)
     $html = $html.Replace('{MODULES_HTML}', $modulesHtml)
     $html = $html.Replace('{QUICKSTART_CODE}', $data.QuickStart)
-    
+
     # Salvar
     $outputFile = "$categoriesPath\$cat.html"
     $html | Out-File -FilePath $outputFile -Encoding UTF8
-    
+
     Write-Host "  ✓ Criado: $cat.html" -ForegroundColor Green
 }
 

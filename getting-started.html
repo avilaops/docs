@@ -58,7 +58,7 @@
             <section id="prerequisites" class="doc-section">
                 <h2>📋 Prerequisites</h2>
                 <p>Before you begin, ensure you have the following installed:</p>
-                
+
                 <div class="prereq-grid">
                     <div class="prereq-card">
                         <h3>🦀 Rust</h3>
@@ -80,11 +80,11 @@
 
             <section id="installation" class="doc-section">
                 <h2>⚙️ Installation</h2>
-                
+
                 <h3>Install Rust</h3>
                 <p>If you haven't installed Rust yet:</p>
                 <pre><code>curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh</code></pre>
-                
+
                 <h3>Create a New Project</h3>
                 <pre><code>cargo new my-avx-app
 cd my-avx-app</code></pre>
@@ -105,9 +105,9 @@ avx-http = "0.1.0"</code></pre>
 
 fn main() -> Result<()> {
     println!("Welcome to Avx! 🚀");
-    
+
     // Your code here
-    
+
     Ok(())
 }</code></pre>
 
@@ -140,7 +140,7 @@ assert!(keypair.verify(b"message", &signature));</code></pre>
 async fn main() -> Result<()> {
     let app = Router::new()
         .get("/", |_| async { "Hello, Avx!" });
-    
+
     Server::bind("0.0.0.0:8080")
         .serve(app)
         .await
@@ -172,26 +172,26 @@ kernel.launch(grid, block, &args)?;</code></pre>
             <section class="next-steps-section">
                 <h2>🎯 Next Steps</h2>
                 <p>Now that you have Avx installed, explore these resources:</p>
-                
+
                 <div class="steps-grid">
                     <a href="./categories/index.html" class="step-card">
                         <span class="step-icon">📚</span>
                         <h3>Browse Categories</h3>
                         <p>Explore all 17 categories and 120+ packages</p>
                     </a>
-                    
+
                     <a href="./examples.html" class="step-card">
                         <span class="step-icon">💡</span>
                         <h3>Code Examples</h3>
                         <p>Production-ready examples and tutorials</p>
                     </a>
-                    
+
                     <a href="./architecture.html" class="step-card">
                         <span class="step-icon">🏗️</span>
                         <h3>Architecture Guide</h3>
                         <p>Learn design patterns and best practices</p>
                     </a>
-                    
+
                     <a href="https://github.com/avilaops/arxis-core" class="step-card" target="_blank">
                         <span class="step-icon">🔗</span>
                         <h3>GitHub Repository</h3>
